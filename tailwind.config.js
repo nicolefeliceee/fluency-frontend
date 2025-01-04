@@ -6,7 +6,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Poppins", "sans-serif"]
+      sans: ["Poppins", "sans-serif"],
+      serif: ["Lora", "serif"]
     },
     extend: {
       colors: {
@@ -61,7 +62,9 @@ module.exports = {
       'header3': '1.5rem',
       'header4': '1.25rem',
       'header5': '1.125rem',
-      'header6': '1rem'
+      'header6': '1rem',
+      'body': '1rem',
+      'smalltext': '0.75rem'
     }
   },
   plugins: [],
