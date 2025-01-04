@@ -6,23 +6,40 @@
 .logo{
   width: 5.7%;
   height: 100%;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .middle{
-  width: 79%;
+  width: 77%;
   height: 100%;
-  background-color: yellow;
+  /* padding-top: 0.15rem; */
+  /* background-color: yellow; */
 }
 
 .end{
-  width: 15.3%;
+  width: 17.3%;
   height: 100%;
-  background-color: pink;
+  /* background-color: pink; */
 }
 
 .profile{
-  width: 100%;
+  width: 70%;
+}
+
+.saved{
+  /* background-color: blue; */
+  width: 15%;
+}
+
+.chat{
+  /* background-color: pink; */
+  width: 15%;
+}
+
+.name{
+  font-size: 0.875rem;
+  padding-left: 0.6rem;
+  font-weight: 500;
 }
 
 .picture{
@@ -34,4 +51,71 @@
   background-size: contain;
   /* background-image: url("artist.jpg"); */
   /* background-image: https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500; */
+}
+
+.bantu{
+  width: 1.5rem;
+}
+
+.menu{
+  /* background-color: blue; */
+  align-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  padding-bottom: 0.15rem;
+  height: 80%;
+}
+
+.menuActive{
+  box-sizing: content-box;
+  border-bottom: 4px;
+  border-color: #91A9FD;
+  border-style: solid;
+  padding-bottom: 0rem;
+}
+
+.menu:hover{
+  box-sizing: content-box;
+  border-bottom: 4px;
+  border-color: #91A9FD;
+  border-style: solid;
+  padding-bottom: 0rem;
+}
+
+.dropdown2{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  z-index: 1;
+  border: 2px;
+  border-color: #DFE1E2;
+  border-style: solid;
+  border-radius: 10px;
+  width: 11rem;
+  top: 3.6rem;
+  /* display: none; */
+}
+
+.menu2{
+  /* background-color: palegreen; */
+  padding-left: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 2rem;
+  align-content: center;
+}
+
+.menu2:hover{
+  background-color: #EDEEEE;
+  border-radius: 10%;
+  box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.04);
 }
