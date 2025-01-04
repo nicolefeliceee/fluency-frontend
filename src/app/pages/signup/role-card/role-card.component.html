@@ -1,0 +1,13 @@
+<div class="border rounded-[3rem] shadow-lg  bg-font-white p-8 text-center w-[19rem] h-[22rem] relative" (click)="selectOption()" [ngClass]="{'border-blue-80 border-[2px]': isSelected}">
+ <div *ngIf="isSelected" class="bg-blue-80 w-fit rounded-full absolute -top-2 left-1/2">
+  <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 13L10 18L19 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </span>
+ </div>
+  <div class=" container mx-auto w-3/4 h-3/4">
+    <img src="{{ imgSrc() }}" alt="" class="object-contain w-full h-full ">
+  </div>
+  <h1 class="text-header3 font-bold">{{ label() }}</h1>
+  <p class="text-smalltext font-serif">{{ description() }} </p>
+</div>

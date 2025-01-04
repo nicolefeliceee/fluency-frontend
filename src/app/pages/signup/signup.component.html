@@ -1,9 +1,16 @@
 <div class="container bg-background p-5">
-  <h1 class="text-header2 font-semibold text-center">What's your role?</h1>
-  <div class="container flex">
-    <div class="border rounded bg-font-white p-8">
-      <h1 class="text-header2 font-bold">BRAND OWNER</h1>
-      <p class="text-smalltext font-serif">For those who have business and need influencer to promote their brands</p>
-    </div>
+  <h1 class="text-header2 font-semibold text-center mb-7 ">What's your role?</h1>
+  <div class="container flex col-span-2 gap-10 w-fit mx-auto">
+    <app-role-card label="BRAND OWNER" imgSrc="/assets/images/choose role brand.png" description="For those who have business and need influencer to promote their brands"
+    option="brand" [isSelected]="selectedOption === 'brand'" (optionSelected)="onOptionSelected($event)"></app-role-card>
+    <app-role-card label="INFLUENCER" imgSrc="/assets/images/choose role influencer.png" description="For creators who want to collaborate with brands and showcase their talents"
+    option="influencer" [isSelected]="selectedOption === 'influencer'" (optionSelected)="onOptionSelected($event)"></app-role-card>
+  </div>
+
+  <div class="flex justify-center mt-10">
+    <button (click)="signUp()" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Next <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4707 8.53015C13.397 8.46149 13.3379 8.37869 13.2969 8.28669C13.2559 8.19469 13.2338 8.09538 13.2321 7.99468C13.2303 7.89397 13.2488 7.79394 13.2865 7.70056C13.3243 7.60717 13.3804 7.52233 13.4516 7.45112C13.5228 7.3799 13.6077 7.32375 13.7011 7.28603C13.7945 7.24831 13.8945 7.22979 13.9952 7.23156C14.0959 7.23334 14.1952 7.25538 14.2872 7.29637C14.3792 7.33736 14.462 7.39647 14.5307 7.47015L18.5307 11.4702C18.6711 11.6108 18.75 11.8014 18.75 12.0002C18.75 12.1989 18.6711 12.3895 18.5307 12.5302L14.5307 16.5302C14.462 16.6038 14.3792 16.6629 14.2872 16.7039C14.1952 16.7449 14.0959 16.767 13.9952 16.7687C13.8945 16.7705 13.7945 16.752 13.7011 16.7143C13.6077 16.6766 13.5228 16.6204 13.4516 16.5492C13.3804 16.478 13.3243 16.3931 13.2865 16.2998C13.2488 16.2064 13.2303 16.1063 13.2321 16.0056C13.2338 15.9049 13.2559 15.8056 13.2969 15.7136C13.3379 15.6216 13.397 15.5388 13.4707 15.4702L16.1907 12.7502L6.50066 12.7502C6.30175 12.7502 6.11098 12.6711 5.97033 12.5305C5.82968 12.3898 5.75066 12.1991 5.75066 12.0002C5.75066 11.8012 5.82968 11.6105 5.97033 11.4698C6.11098 11.3292 6.30175 11.2502 6.50066 11.2502L16.1907 11.2502L13.4707 8.53015Z" fill="white"/>
+      </svg>
+      </button>
   </div>
 </div>
