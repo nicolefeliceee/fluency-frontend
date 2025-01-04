@@ -1,1 +1,34 @@
-<p>login works!</p>
+<div class="login bg-background flex">
+  <div class="kiri items-center justify-center content-center">
+    <div class="foto ms-auto" style="background-image: url(../assets/images/login.png);"></div>
+  </div>
+  <div class="kanan">
+    <div class="judul">
+      Brand Login
+    </div>
+    <p class="desc text-font-darkGrey">Welcome Back! Please login to your account.</p>
+    <form action="">
+      <div class="inputContainer">
+        <label for="email" class="inputLabel text-font-darkGrey">Email</label>
+        <input type="email" id="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com">
+      </div>
+      <div class="inputContainer">
+        <label for="password" class="inputLabel text-font-darkGrey">Password</label>
+        <input [type]="passwordVisible? 'text' : 'password'" id="password" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="Password">
+        <div class="eyeIcon eyeVisible" *ngIf="!passwordVisible" (click)="togglePassword()">
+          <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.0621 15.75C13.5621 15.75 16.5896 13.8075 18.1471 10.9375C16.5896 8.0675 13.5621 6.125 10.0621 6.125C6.56207 6.125 3.53457 8.0675 1.97707 10.9375C3.53457 13.8075 6.56207 15.75 10.0621 15.75ZM10.0621 5.25C14.0521 5.25 17.4996 7.56875 19.1271 10.9375C17.4996 14.3062 14.0521 16.625 10.0621 16.625C6.07207 16.625 2.62457 14.3062 0.99707 10.9375C2.62457 7.56875 6.07207 5.25 10.0621 5.25ZM10.0621 7C12.2496 7 13.9996 8.75 13.9996 10.9375C13.9996 13.125 12.2496 14.875 10.0621 14.875C7.87457 14.875 6.12457 13.125 6.12457 10.9375C6.12457 8.75 7.87457 7 10.0621 7ZM10.0621 7.875C9.24984 7.875 8.47089 8.19766 7.89656 8.77199C7.32223 9.34632 6.99957 10.1253 6.99957 10.9375C6.99957 11.7497 7.32223 12.5287 7.89656 13.103C8.47089 13.6773 9.24984 14 10.0621 14C10.8743 14 11.6533 13.6773 12.2276 13.103C12.8019 12.5287 13.1246 11.7497 13.1246 10.9375C13.1246 10.1253 12.8019 9.34632 12.2276 8.77199C11.6533 8.19766 10.8743 7.875 10.0621 7.875Z" fill="#494F50"/>
+            </svg>
+        </div>
+        <div class="eyeIcon eyeNotVisible" *ngIf="passwordVisible" (click)="togglePassword()">
+          <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.22305 4.12125L2.8443 3.5L17.5005 18.1563L16.8793 18.7775L13.9568 15.8463C12.758 16.345 11.4455 16.625 10.063 16.625C6.07305 16.625 2.62555 14.3063 0.998047 10.9375C1.8468 9.1875 3.1768 7.72625 4.81305 6.72L2.22305 4.12125ZM10.063 15.75C11.1918 15.75 12.2768 15.5488 13.2743 15.1725L12.2943 14.1837C11.6555 14.6212 10.8943 14.875 10.063 14.875C7.87555 14.875 6.12555 13.125 6.12555 10.9375C6.12555 10.1063 6.3793 9.345 6.8168 8.70625L5.46055 7.35875C3.99549 8.21229 2.79134 9.44972 1.97805 10.9375C3.53555 13.8075 6.56305 15.75 10.063 15.75ZM18.148 10.9375C16.5905 8.0675 13.563 6.125 10.063 6.125C9.0568 6.125 8.0768 6.29125 7.1668 6.58875L6.4843 5.90625C7.59555 5.4775 8.80305 5.25 10.063 5.25C14.053 5.25 17.5005 7.56875 19.128 10.9375C18.3329 12.5876 17.1013 13.9886 15.5668 14.9888L14.9368 14.35C16.2755 13.51 17.3868 12.3375 18.148 10.9375ZM10.063 7C12.2505 7 14.0005 8.75 14.0005 10.9375C14.0005 11.655 13.808 12.32 13.4755 12.8975L12.828 12.25C13.0205 11.8475 13.1255 11.41 13.1255 10.9375C13.1255 10.1253 12.8029 9.34632 12.2286 8.77199C11.6542 8.19766 10.8753 7.875 10.063 7.875C9.59055 7.875 9.15305 7.98 8.75055 8.1725L8.10305 7.525C8.68055 7.1925 9.34555 7 10.063 7ZM7.00055 10.9375C7.00055 11.7497 7.3232 12.5287 7.89753 13.103C8.47186 13.6773 9.25082 14 10.063 14C10.6493 14 11.1918 13.8338 11.6555 13.5625L7.43805 9.345C7.1668 9.80875 7.00055 10.3513 7.00055 10.9375Z" fill="#494F50"/>
+            </svg>
+        </div>
+      </div>
+      <button type="submit" class="button bg-blue-80 text-font-white m-auto">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
