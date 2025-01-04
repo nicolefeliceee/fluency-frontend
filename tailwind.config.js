@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/**/*.{html,js}"
@@ -9,6 +10,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        background: 'rgb(var(--color-background))',
         blue: {
           100: 'rgb(var(--color-blue-100))',
           80: 'rgb(var(--color-blue-80))',

@@ -4,6 +4,10 @@
 
 @layer base  {
   :root{
+
+    /* F2F4F0 */
+    --color-background: 242 244 240;
+
     /* #091B39 */
     --color-blue-100: 9 27 57;
 
