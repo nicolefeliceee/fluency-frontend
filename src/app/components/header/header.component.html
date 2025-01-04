@@ -1,27 +1,33 @@
-<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-    <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>
+<div class="navbar bg-blue-500 px-4 flex">
+  <div class="logo content-center">
+    <p>L O G O</p>
+    <!-- <img class="logoImg" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company"> -->
   </div>
-  <div class="block lg:hidden">
-    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
+  <div class="middle flex content-center justify-center items-center">
+    <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a>
+    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
+    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
+    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
   </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Docs
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Examples
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-        Blog
-      </a>
+  <div class="end content-center items-center flex">
+    <div class="chat bg-teal-100">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 19.25C12.6317 19.25 14.2267 18.7662 15.5835 17.8596C16.9402 16.9531 17.9976 15.6646 18.622 14.1571C19.2464 12.6497 19.4098 10.9909 19.0915 9.39051C18.7732 7.79017 17.9874 6.32016 16.8336 5.16637C15.6798 4.01259 14.2098 3.22685 12.6095 2.90853C11.0092 2.5902 9.35035 2.75357 7.84286 3.378C6.33537 4.00242 5.0469 5.05984 4.14038 6.41655C3.23385 7.77325 2.75 9.36831 2.75 11C2.75 12.32 3.05983 13.5667 3.61167 14.6731C4.02692 15.5082 3.44942 16.6348 3.22942 17.457C3.18068 17.6389 3.18067 17.8303 3.22939 18.0122C3.27812 18.1941 3.37385 18.3599 3.50698 18.493C3.64011 18.6262 3.80594 18.7219 3.9878 18.7706C4.16966 18.8193 4.36114 18.8193 4.543 18.7706C5.36525 18.5506 6.49183 17.9731 7.32692 18.3893C8.46836 18.956 9.72559 19.2506 11 19.25Z" stroke="#262A10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
-    <div>
-      <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Download</a>
+    <div class="saved bg-amber-200">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.5 5.68333C5.5 4.65667 5.5 4.14333 5.73314 3.751C5.9382 3.40605 6.26539 3.1256 6.66783 2.94983C7.12556 2.75 7.72444 2.75 8.92222 2.75H14.9111C16.1089 2.75 16.7078 2.75 17.1655 2.94983C17.5679 3.1256 17.8951 3.40605 18.1002 3.751C18.3333 4.14333 18.3333 4.65667 18.3333 5.68333V17.8796C18.3333 18.3251 18.3333 18.5478 18.2253 18.6698C18.1786 18.7228 18.1191 18.7665 18.0508 18.7978C17.9824 18.8291 17.907 18.8474 17.8296 18.8513C17.651 18.8604 17.435 18.7367 17.0029 18.4901L11.9167 15.5833L6.83039 18.4892C6.39833 18.7367 6.18231 18.8604 6.00264 18.8513C5.92546 18.8473 5.85022 18.829 5.78209 18.7976C5.71396 18.7663 5.65457 18.7227 5.60801 18.6698C5.5 18.5478 5.5 18.3251 5.5 17.8796V5.68333Z" stroke="#262A10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    <div class="profile bg-green-200 flex items-center">
+      <div class="picture bg-slate-500" style="background-image: url('https://picsum.photos/200');"></div>
+      <div class="name">Karina</div>
+      <div class="dropdown ms-auto">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.58335 10.8333L13 16.25L18.4167 10.8333" stroke="#262A10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      </div>
     </div>
   </div>
-</nav>
+</div>
