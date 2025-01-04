@@ -1,3 +1,96 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base  {
+  :root{
+    /* #091B39 */
+    --color-blue-100: 9 27 57;
+
+    /* #5876F9 */
+    --color-blue-80: 88 118 249;
+
+    /* #91A9FD */
+    --color-blue-60: 145 169 253;
+
+    /* #FDA348 */
+    --color-yellow-80: 253 163 72;
+
+    /* #FDD7B1 */
+    --color-yellow-60: 253 215 177;
+
+    /* #DF2935 */
+    --color-primary-red: 223 41 53;
+
+    /* #06D6A0 */
+    --color-primary-green: 6 214 160;
+
+    /* #262A10 */
+    --color-font-black: 38 42 16;
+
+    /* #494F50 */
+    --color-font-dark-grey: 73 79 80;
+
+    /* #949C9E */
+    --color-font-light-grey: 148 156 158;
+
+    /* #FFFFFF */
+    --color-font-white: 255 255 255;
+
+    /* #FF669E */
+    --color-colorful-pink: 255 102 158;
+
+    /* #2E9AFF */
+    --color-colorful-blue: 46 154 255;
+
+    /* #4DDC57 */
+    --color-colorful-green: 77 220 87;
+
+    /* #FF772E */
+    --color-colorful-orange: 255 119 46;
+
+    /* #D46FFF */
+    --color-colorful-purple: 212 111 255;
+
+    /* #FF4646 */
+    --color-colorful-red: 255 70 70;
+
+    /* #87E1E1 */
+    --color-pastel-1: 135 225 225;
+
+    /* #F7ABC7 */
+    --color-pastel-2: 247 171 199;
+
+    /* #C5EA8B */
+    --color-pastel-3: 197 234 139;
+
+    /* #FDE781 */
+    --color-pastel-4: 253 231 129;
+
+    /* #B494C5 */
+    --color-pastel-5: 180 148 197;
+
+    /* #ABD4F4 */
+    --color-pastel-6: 171 212 244;
+
+    /* #FFD5A5 */
+    --color-pastel-7: 255 213 165;
+
+    /* #C4D6CA */
+    --color-pastel-8: 196 214 202;
+
+    /* #EEC9E8 */
+    --color-pastel-9: 238 201 232;
+
+    /* #EE9293 */
+    --color-pastel-10: 238 146 147;
+
+    /* #B2E5FF */
+    --color-pastel-11: 178 229 255;
+
+    /* #F2D1CC */
+    --color-pastel-12: 242 209 204;
+
+  }
+}
