@@ -4,6 +4,9 @@ module.exports = {
     "./src/**/*.{html,js}"
   ],
   theme: {
+    fontFamily: {
+      sans: ['"Poppin"', 'sans-serif']
+    },
     extend: {
       colors: {
         blue: {
@@ -49,6 +52,15 @@ module.exports = {
         }
       }
     },
+    fontSize: {
+      'title': '4rem',
+      'header1': '2.5rem',
+      'header2': '2rem',
+      'header3': '1.5rem',
+      'header4': '1.25rem',
+      'header5': '1.125rem',
+      'header6': '1rem'
+    }
   },
   plugins: [],
 }
