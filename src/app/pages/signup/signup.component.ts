@@ -3,6 +3,7 @@ import { HeaderComponent } from "../../components/header/header.component";
 import { RoleCardComponent } from "./role-card/role-card.component";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,6 +16,8 @@ export class SignupComponent {
   constructor(private router: Router) {}
 
   selectedOption: string | null = null;
+
+  example: any;
 
   onOptionSelected(option: string) {
     this.selectedOption = option;
