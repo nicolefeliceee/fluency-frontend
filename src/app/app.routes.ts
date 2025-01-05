@@ -9,12 +9,15 @@ import { CompleteProfileComponent } from './pages/signup/signup-forms/complete-p
 import { ChooseCategoryComponent } from './pages/signup/signup-forms/choose-category/choose-category.component';
 import { BrandTargetMarketComponent } from './pages/signup/signup-forms/brand-target-market/brand-target-market.component';
 import { LoginRoleComponent } from './pages/login/login-role/login-role.component';
+import { LoginInterceptorComponent } from './components/login-interceptor/login-interceptor.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
   {path:'home', component: HomeComponent},
   {path:'signup', component: SignupComponent},
   {path:'login', component: LoginRoleComponent},
+  {path:'login/brand', component: LoginComponent},
+  {path:'login/interceptor', component: LoginInterceptorComponent},
   {path:'about-us', component: AboutUsComponent},
   {path:'header', component: HeaderComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },

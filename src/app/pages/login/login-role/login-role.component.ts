@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RoleCardComponent } from "../../signup/role-card/role-card.component";
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-login-role',
@@ -10,8 +11,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login-role.component.html',
   styleUrl: './login-role.component.css'
 })
-export class LoginRoleComponent {
-  constructor(private router: Router) {}
+export class LoginRoleComponent{
+  // userService: any;
+  constructor(private router: Router, private userService: UserService) {}
 
     selectedOption: string | null = null;
 
@@ -21,12 +23,13 @@ export class LoginRoleComponent {
       this.selectedOption = option;
     }
 
-    signUp() {
+    login() {
       if (this.selectedOption === "brand") {
-        // redirect ke page complete profile
-        this.router.navigate(['/signup/brand/profile']);
+        // redirect ke page login
+        this.router.navigate(['/login/brand']);
       } else if(this.selectedOption === "influencer") {
         // redirect ke api instagram
+        this.userService.loginInfluencer();
       }
     }
 }
