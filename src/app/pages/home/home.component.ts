@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 
 @Component({
@@ -9,5 +9,7 @@ import { HeaderComponent } from "../../components/header/header.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  // ngOnInit(){
+  //   console.log(localStorage.getItem('long_lived_token'));
+  // }
 }
