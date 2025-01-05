@@ -1,6 +1,7 @@
 .navbar{
   width: 100%;
-  height: 4rem;
+  height: 3.7rem;
+  background-color: white;
 }
 
 .logo{
@@ -37,7 +38,7 @@
 }
 
 .name{
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   padding-left: 0.6rem;
   font-weight: 500;
 }
@@ -60,17 +61,17 @@
 .menu{
   /* background-color: blue; */
   align-content: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   padding-bottom: 0.15rem;
   height: 80%;
 }
 
 .menuActive{
   box-sizing: content-box;
-  border-bottom: 4px;
+  border-bottom: 3.5px;
   border-color: #91A9FD;
   border-style: solid;
   padding-bottom: 0rem;
