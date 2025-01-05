@@ -12,7 +12,7 @@
         <label for="email" class="inputLabel text-font-darkGrey">Email</label>
         <input [(ngModel)]="email" type="email" id="email" name="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com">
       </div>
-      <div class="inputContainer">
+      <div class="inputContainer" id="inputpass">
         <label for="password" class="inputLabel text-font-darkGrey">Password</label>
         <input [(ngModel)]="password" [type]="passwordVisible? 'text' : 'password'" id="password" name="password" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="Password">
         <div class="eyeIcon eyeVisible" *ngIf="!passwordVisible" (click)="togglePassword()">
