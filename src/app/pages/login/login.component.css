@@ -65,11 +65,12 @@
   margin-top: 3px;
   padding-left: 15px;
   padding-bottom: 2px;
+  font-size: 0.85rem;
   /* position: relative; */
 }
 
 .inputBox::placeholder{
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: rgb(148, 156, 158, 0.5);
 }
