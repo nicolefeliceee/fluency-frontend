@@ -59,7 +59,7 @@ export class UserService {
   // private tokenUrl="http://localhost:8080/user/token";
   sendToken(token: string):Observable<object>{
     console.log(token);
-    return this.httpClient.post(this.baseUrl + "/user/token",token);
+    return this.httpClient.post(this.baseUrl + "/user/token",{token});
   }
 
 }
