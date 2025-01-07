@@ -99,8 +99,8 @@
   border-color: #DFE1E2;
   border-style: solid;
   border-radius: 10px;
-  width: 11rem;
-  top: 3.6rem;
+  width: 10rem;
+  top: 3.4rem;
   /* display: none; */
 }
 
@@ -109,7 +109,7 @@
   padding-left: 0.6rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 500;
   height: 2rem;
   align-content: center;
