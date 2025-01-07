@@ -63,8 +63,8 @@ module.exports = {
       'header4': '1.25rem',
       'header5': '1.125rem',
       'header6': '1rem',
-      'body': '1rem',
-      'smalltext': '0.75rem'
+      'body': '0.9rem',
+      'smalltext': '0.7rem'
     }
   },
   plugins: [],

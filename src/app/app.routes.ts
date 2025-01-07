@@ -10,6 +10,8 @@ import { ChooseCategoryComponent } from './pages/signup/signup-forms/choose-cate
 import { BrandTargetMarketComponent } from './pages/signup/signup-forms/brand-target-market/brand-target-market.component';
 import { LoginRoleComponent } from './pages/login/login-role/login-role.component';
 import { LoginInterceptorComponent } from './components/login-interceptor/login-interceptor.component';
+import { InfluencerComponent } from './pages/influencer/influencer.component';
+import { InfluencerCardComponent } from './components/influencer-card/influencer-card.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -20,6 +22,8 @@ export const routes: Routes = [
   {path:'login/interceptor', component: LoginInterceptorComponent},
   {path:'about-us', component: AboutUsComponent},
   {path:'header', component: HeaderComponent},
+  {path:'influencer', component: InfluencerComponent},
+  {path:'influencer-card', component: InfluencerCardComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },
   { path: 'signup/brand/category', component: ChooseCategoryComponent },
   { path: 'signup/brand/target', component: BrandTargetMarketComponent }

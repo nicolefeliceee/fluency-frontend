@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  box-sizing: border-box;
+}
+
+/* body */
 body {
   background-color: #F2F4F0;
+  letter-spacing: -0.4px;
 }
 
 @layer base  {
