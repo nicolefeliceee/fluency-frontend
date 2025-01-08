@@ -1,0 +1,20 @@
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filterInput{
+  border: 1px solid rgb(73, 79, 80, 0.5);
+}
+
+.filterInput::placeholder{
+  color: rgba(148, 156, 158, 0.5);
+}
+
+input[type=number]:focus {
+  /* color: rgba(148, 156, 158, 0.5); */
+  border: 1px solid rgb(73, 79, 80);
+  outline: none;
+}
