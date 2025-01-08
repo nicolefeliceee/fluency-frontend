@@ -1,15 +1,104 @@
 <div class="container bg-background p-5">
   <h1 class="text-header2 font-semibold text-center mb-7 ">Complete Your Profile</h1>
-  <div class="container">
-    <div class="basis-1/5">
-      img
-    </div>
-    <div class="basis-4/5">
-      <div class="cols-2">
-        <div class="">
+  <div class="container p-5">
+    <form class="p-5" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex w-10/12 mx-auto">
+        <div class="basis-1/4">
+          <div class="m-0 p-0 relative">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Picture" class="w-5/6 h-5/6 rounded-full object-cover mb-4 border-[6px]   border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+            <img *ngIf="!imagePreview" src="../../../../../assets/images/empty profile pic.png" alt="Profile Picture" class="w-5/6 h-5/6 rounded-full object-cover mb-4 ">
+            <div class="bg-blue-80 rounded-full w-fit p-2 absolute right-16   bottom-4" (click)="triggerFileInput()">
+            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.906 2.09493C16.6171 1.80571 16.2739 1.57627 15.8963 1.41973C15.5186 1.26319 15.1138 1.18262 14.705 1.18262C14.2961 1.18262 13.8913 1.26319 13.5137 1.41973C13.136 1.57627 12.7929 1.80571 12.5039 2.09493L3.15594 11.4429C2.7122 11.8874 2.39564 12.4426 2.23919 13.0508L1.20606 17.0717C1.18044 17.1717 1.18136 17.2767 1.20872 17.3763C1.23609 17.4759 1.28895 17.5666 1.3621 17.6395C1.43524 17.7124 1.52614 17.765 1.62581 17.792C1.72548 17.8191 1.83048 17.8196 1.93044 17.7937L5.95012 16.7617C6.55858 16.6058 7.11392 16.2892 7.558 15.845L16.906 6.49699C17.1952 6.20805 17.4247 5.86493 17.5812 5.48727C17.7377 5.1096 17.8183 4.70478 17.8183 4.29596C17.8183 3.88713 17.7377 3.48232 17.5812 3.10465C17.4247 2.72698 17.1952 2.38387 16.906 2.09493ZM13.3435 2.93449C13.7046 2.57341 14.1943 2.37055 14.705 2.37055C15.2156 2.37055 15.7054 2.57341 16.0664 2.93449C16.4275 3.29557 16.6304 3.78531 16.6304 4.29596C16.6304 4.80661 16.4275 5.29634 16.0664 5.65743L15.1414 6.58249L12.4184 3.85955L13.3435 2.93449ZM11.5789 4.69911L14.3018 7.42205L6.71844 15.0054C6.42452 15.2991 6.05701 15.5083 5.65444 15.6111L2.60612 16.3948L3.38987 13.3465C3.49209 12.9437 3.70135 12.576 3.9955 12.2825L11.5789 4.69911Z" fill="white" stroke="white" stroke-width="0.3"/>
+              </svg>
+
+            </div>
+          </div>
+          <!-- custom button -->
+
+          <!-- Hidden File Input -->
+            <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            hidden
+          />
 
         </div>
+        <div class="basis-3/4 grid grid-cols-2 gap-x-7 ">
+          <div class="inputContainer">
+            <label for="name" class="inputLabel text-font-darkGrey">Name</label>
+            <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['name'].touched|| submitted) && profileFormControl['name'].errors?.['required']">Name is required</span>
+            
+          </div>
+
+
+          <div class="inputContainer">
+            <label for="location" class="inputLabel text-font-darkGrey">Location</label>
+            <select class="inputBox" name="location" id="location" formControlName="location" required>
+              <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
+            </select>
+
+            <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['location'].touched|| submitted) && profileFormControl['location'].errors?.['required']">Location is required</span>
+          </div>
+
+          <div class="inputContainer">
+            <label for="email" class="inputLabel text-font-darkGrey">Email</label>
+          <input type="email" id="email" name="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com" required formControlName="email">
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
+
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+          </div>
+
+
+
+          <div class="inputContainer">
+            <label for="phone" class="inputLabel text-font-darkGrey">Phone number</label>
+            <div class="flex" id="inputBoxPhone">
+              <div class="phonePrefix text-center content-center">+62</div>
+              <input type="phone" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Phone number" required formControlName="phone">
+            </div>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['required']">Phone number is required</span>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['pattern']">Invalid phone number</span>
+          </div>
+
+          <div class="inputContainer" id="inputpass">
+            <label for="password" class="inputLabel text-font-darkGrey">Password</label>
+            <input [type]="passwordVisible? 'text' : 'password'" id="password" name="password" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="Password" required formControlName="password">
+            <div class="eyeIcon eyeVisible" *ngIf="!passwordVisible" (click)="togglePassword()">
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.0621 15.75C13.5621 15.75 16.5896 13.8075 18.1471 10.9375C16.5896 8.0675 13.5621 6.125 10.0621 6.125C6.56207 6.125 3.53457 8.0675 1.97707 10.9375C3.53457 13.8075 6.56207 15.75 10.0621 15.75ZM10.0621 5.25C14.0521 5.25 17.4996 7.56875 19.1271 10.9375C17.4996 14.3062 14.0521 16.625 10.0621 16.625C6.07207 16.625 2.62457 14.3062 0.99707 10.9375C2.62457 7.56875 6.07207 5.25 10.0621 5.25ZM10.0621 7C12.2496 7 13.9996 8.75 13.9996 10.9375C13.9996 13.125 12.2496 14.875 10.0621 14.875C7.87457 14.875 6.12457 13.125 6.12457 10.9375C6.12457 8.75 7.87457 7 10.0621 7ZM10.0621 7.875C9.24984 7.875 8.47089 8.19766 7.89656 8.77199C7.32223 9.34632 6.99957 10.1253 6.99957 10.9375C6.99957 11.7497 7.32223 12.5287 7.89656 13.103C8.47089 13.6773 9.24984 14 10.0621 14C10.8743 14 11.6533 13.6773 12.2276 13.103C12.8019 12.5287 13.1246 11.7497 13.1246 10.9375C13.1246 10.1253 12.8019 9.34632 12.2276 8.77199C11.6533 8.19766 10.8743 7.875 10.0621 7.875Z" fill="#494F50"/>
+                </svg>
+            </div>
+            <div class="eyeIcon eyeNotVisible" *ngIf="passwordVisible" (click)="togglePassword()">
+              <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.22305 4.12125L2.8443 3.5L17.5005 18.1563L16.8793 18.7775L13.9568 15.8463C12.758 16.345 11.4455 16.625 10.063 16.625C6.07305 16.625 2.62555 14.3063 0.998047 10.9375C1.8468 9.1875 3.1768 7.72625 4.81305 6.72L2.22305 4.12125ZM10.063 15.75C11.1918 15.75 12.2768 15.5488 13.2743 15.1725L12.2943 14.1837C11.6555 14.6212 10.8943 14.875 10.063 14.875C7.87555 14.875 6.12555 13.125 6.12555 10.9375C6.12555 10.1063 6.3793 9.345 6.8168 8.70625L5.46055 7.35875C3.99549 8.21229 2.79134 9.44972 1.97805 10.9375C3.53555 13.8075 6.56305 15.75 10.063 15.75ZM18.148 10.9375C16.5905 8.0675 13.563 6.125 10.063 6.125C9.0568 6.125 8.0768 6.29125 7.1668 6.58875L6.4843 5.90625C7.59555 5.4775 8.80305 5.25 10.063 5.25C14.053 5.25 17.5005 7.56875 19.128 10.9375C18.3329 12.5876 17.1013 13.9886 15.5668 14.9888L14.9368 14.35C16.2755 13.51 17.3868 12.3375 18.148 10.9375ZM10.063 7C12.2505 7 14.0005 8.75 14.0005 10.9375C14.0005 11.655 13.808 12.32 13.4755 12.8975L12.828 12.25C13.0205 11.8475 13.1255 11.41 13.1255 10.9375C13.1255 10.1253 12.8029 9.34632 12.2286 8.77199C11.6542 8.19766 10.8753 7.875 10.063 7.875C9.59055 7.875 9.15305 7.98 8.75055 8.1725L8.10305 7.525C8.68055 7.1925 9.34555 7 10.063 7ZM7.00055 10.9375C7.00055 11.7497 7.3232 12.5287 7.89753 13.103C8.47186 13.6773 9.25082 14 10.063 14C10.6493 14 11.1918 13.8338 11.6555 13.5625L7.43805 9.345C7.1668 9.80875 7.00055 10.3513 7.00055 10.9375Z" fill="#494F50"/>
+                </svg>
+            </div>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['password'].touched|| submitted) && profileFormControl['password'].errors?.['required']">Password is required</span>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['password'].touched|| submitted) && profileFormControl['password'].errors?.['minlength']">Minimum length is 8</span>
+          </div>
+        </div>
       </div>
-    </div>
+
+
+      <div class="flex gap-3 justify-end mt-10 w-10/12 mx-auto">
+        <button (click)="prevStep()" class=" bg-font-white text-header6 text-blue-80 border-[1px] border-blue-80 font-semibold flex py-3 px-7 rounded-xl"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.5293 15.4698C10.603 15.5385 10.6621 15.6213 10.7031 15.7133C10.7441 15.8053 10.7662 15.9046 10.7679 16.0053C10.7697 16.106 10.7512 16.2061 10.7135 16.2994C10.6757 16.3928 10.6196 16.4777 10.5484 16.5489C10.4772 16.6201 10.3923 16.6762 10.2989 16.714C10.2055 16.7517 10.1055 16.7702 10.0048 16.7684C9.90412 16.7667 9.8048 16.7446 9.7128 16.7036C9.6208 16.6626 9.538 16.6035 9.46934 16.5298L5.46934 12.5298C5.32889 12.3892 5.25 12.1986 5.25 11.9998C5.25 11.8011 5.32889 11.6105 5.46934 11.4698L9.46934 7.46985C9.538 7.39616 9.6208 7.33706 9.7128 7.29607C9.8048 7.25507 9.90412 7.23303 10.0048 7.23126C10.1055 7.22948 10.2055 7.248 10.2989 7.28572C10.3923 7.32344 10.4772 7.37959 10.5484 7.45081C10.6196 7.52203 10.6757 7.60686 10.7135 7.70025C10.7512 7.79364 10.7697 7.89367 10.7679 7.99437C10.7662 8.09507 10.7441 8.19439 10.7031 8.28638C10.6621 8.37838 10.603 8.46118 10.5293 8.52985L7.80934 11.2498L17.4993 11.2498C17.6983 11.2498 17.889 11.3289 18.0297 11.4695C18.1703 11.6102 18.2493 11.8009 18.2493 11.9998C18.2493 12.1988 18.1703 12.3895 18.0297 12.5302C17.889 12.6708 17.6983 12.7498 17.4993 12.7498L7.80934 12.7498L10.5293 15.4698Z" fill="#5876F9"/>
+          </svg>
+           Previous
+          </button>
+
+
+
+        <button type="submit" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Next <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.4707 8.53015C13.397 8.46149 13.3379 8.37869 13.2969 8.28669C13.2559 8.19469 13.2338 8.09538 13.2321 7.99468C13.2303 7.89397 13.2488 7.79394 13.2865 7.70056C13.3243 7.60717 13.3804 7.52233 13.4516 7.45112C13.5228 7.3799 13.6077 7.32375 13.7011 7.28603C13.7945 7.24831 13.8945 7.22979 13.9952 7.23156C14.0959 7.23334 14.1952 7.25538 14.2872 7.29637C14.3792 7.33736 14.462 7.39647 14.5307 7.47015L18.5307 11.4702C18.6711 11.6108 18.75 11.8014 18.75 12.0002C18.75 12.1989 18.6711 12.3895 18.5307 12.5302L14.5307 16.5302C14.462 16.6038 14.3792 16.6629 14.2872 16.7039C14.1952 16.7449 14.0959 16.767 13.9952 16.7687C13.8945 16.7705 13.7945 16.752 13.7011 16.7143C13.6077 16.6766 13.5228 16.6204 13.4516 16.5492C13.3804 16.478 13.3243 16.3931 13.2865 16.2998C13.2488 16.2064 13.2303 16.1063 13.2321 16.0056C13.2338 15.9049 13.2559 15.8056 13.2969 15.7136C13.3379 15.6216 13.397 15.5388 13.4707 15.4702L16.1907 12.7502L6.50066 12.7502C6.30175 12.7502 6.11098 12.6711 5.97033 12.5305C5.82968 12.3898 5.75066 12.1991 5.75066 12.0002C5.75066 11.8012 5.82968 11.6105 5.97033 11.4698C6.11098 11.3292 6.30175 11.2502 6.50066 11.2502L16.1907 11.2502L13.4707 8.53015Z" fill="white"/>
+          </svg>
+          </button>
+
+      </div>
+    </form>
   </div>
 </div>

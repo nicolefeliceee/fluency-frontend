@@ -2,7 +2,8 @@
 
 module.exports = {
   content: [
-    "./src/**/*.{html,js}"
+    "./src/**/*.{html,js}",
+    'node_modules/preline/dist/*.js'
   ],
   theme: {
     fontFamily: {
@@ -67,6 +68,8 @@ module.exports = {
       'smalltext': '0.7rem'
     }
   },
-  plugins: [],
+  plugins: [
+    require('preline/plugin'),
+  ],
 }
 

@@ -4,6 +4,8 @@ import { RoleCardComponent } from "./role-card/role-card.component";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
+import { SignupUser } from '../../models/signup-user';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-signup',
@@ -23,10 +25,24 @@ export class SignupComponent {
     this.selectedOption = option;
   }
 
+  newUser: SignupUser = new SignupUser(
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    [],
+    [],
+    [],
+    []
+  );
+
   signUp() {
     if (this.selectedOption === "brand") {
+      this.newUser.userType = "brand";
       // redirect ke page complete profile
-      this.router.navigate(['/signup/brand/profile']);
+      this.router.navigate(['/signup/brand/profile'], { state: { newUser: this.newUser } });
     } else if(this.selectedOption === "influencer") {
       // redirect ke api instagram
     }
