@@ -22,5 +22,17 @@
   font-size: 1.6rem;
 }
 
+.line{
+  background-color: rgb(73, 79, 80, 0.3);
+}
+
+.filterChoice{
+  background-color: rgba(148, 156, 158, 0.1);
+}
+
+.filterChoice:hover{
+  background-color: #91A9FD;
+}
+
 
 
