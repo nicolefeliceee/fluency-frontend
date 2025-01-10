@@ -13,6 +13,7 @@ import { LoginInterceptorComponent } from './components/login-interceptor/login-
 import { InfluencerComponent } from './pages/influencer/influencer.component';
 import { InfluencerCardComponent } from './components/influencer-card/influencer-card.component';
 import { InfluencerRateCardComponent } from './pages/signup/signup-forms/influencer-rate-card/influencer-rate-card.component';
+import { ProfileBrandComponent } from './pages/profile-brand/profile-brand.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -30,5 +31,6 @@ export const routes: Routes = [
   { path: 'signup/brand/target', component: BrandTargetMarketComponent },
   { path: 'signup/influencer/profile', component: CompleteProfileComponent },
   { path: 'signup/influencer/category', component: ChooseCategoryComponent },
-  { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent }
+  { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent },
+  {path:'profile-brand', component: ProfileBrandComponent}
 ];
