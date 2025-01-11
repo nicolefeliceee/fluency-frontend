@@ -1,9 +1,10 @@
 import { Component, OnInit, output, Output } from '@angular/core';
-import { SignupUser } from '../../../../models/signup-user';
+import { SignupBrand } from '../../../../models/signup-brand';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../../../../services/location.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-complete-profile',
@@ -14,14 +15,16 @@ import { LocationService } from '../../../../services/location.service';
 })
 export class CompleteProfileComponent implements OnInit{
   imagePreview: string | ArrayBuffer | null = null;
-  newUser: SignupUser;
+  newUser: SignupBrand;
   profileForm!: FormGroup;
   submitted = false;
+  emailExist = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private userService: UserService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.newUser = navigation?.extras.state?.['newUser'];
@@ -81,20 +84,37 @@ export class CompleteProfileComponent implements OnInit{
 
   onSubmit() {
     this.submitted = true;
-    if (this.profileForm.valid) {
-      this.newUser.name = this.profileForm.get('name')?.value;
-      this.newUser.email = this.profileForm.get('email')?.value;
-      this.newUser.phone = this.profileForm.get('phone')?.value;
-      this.newUser.password = this.profileForm.get('password')?.value;
-      this.newUser.location = this.profileForm.get('location')?.value;
-      this.nextStep();
-    } else {
-      console.log("error");
+    this.emailExist = false;
+
+    let email = this.profileForm.get('email')?.value;
+
+    // jika email udh diisi, validasi email
+    if (email !== "") {
+      this.userService.validateEmail(email).subscribe(
+        (data) => {
+          // if email doesnt exist
+          if (data.length == 0) {
+            if (this.profileForm.valid) {
+              this.newUser.name = this.profileForm.get('name')?.value;
+              this.newUser.email = this.profileForm.get('email')?.value;
+              this.newUser.phone = this.profileForm.get('phone')?.value;
+              this.newUser.password = this.profileForm.get('password')?.value;
+              this.newUser.location = this.profileForm.get('location')?.value;
+              this.nextStep();
+            }
+          } else { // if email exist, show error
+            this.emailExist = true;
+          }
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
     }
+
   }
 
   nextStep(): void {
-    // if (this.validateField()) {
 
       if (this.newUser?.userType === 'brand') {
         this.router.navigate(['/signup/brand/category'], { state: { newUser: this.newUser } });
@@ -102,11 +122,39 @@ export class CompleteProfileComponent implements OnInit{
         this.router.navigate(['/signup/influencer/category'],  { state: { newUser: this.newUser } });
       }
 
-    // }
+
   }
 
   prevStep(): void {
     this.router.navigate(['/signup']);
+  }
+
+  async validateEmail(): Promise<boolean> {
+
+    let email = this.profileForm.get('email')?.value;
+
+    if (email === "") {
+      return true;
+    }
+
+    await this.userService.validateEmail(email).subscribe(
+      (data) => {
+        console.log(data);
+        if (data.length == 0) {
+          console.log("masuk true");
+          return true;
+        } else {
+          console.log("masuk false");
+          return false;
+        }
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+    console.log("keluar if");
+
+    return false;
   }
 
 
