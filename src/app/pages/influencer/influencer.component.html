@@ -34,13 +34,17 @@
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Followers</div>
         <app-range-filter></app-range-filter>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let followerRange of followerRanges">
+            <input type="checkbox" [value]="followerRange" [checked]="isFilterActive('followers', followerRange)" (change)="toggleFilter('followers',followerRange)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('followers', followerRange)}">{{ followerRange }}</div>
+          </label>
         </div>
       </div>
+      <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
       <!-- Ini filter by media type -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Media Type</div>

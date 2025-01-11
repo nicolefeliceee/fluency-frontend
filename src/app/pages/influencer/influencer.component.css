@@ -34,5 +34,18 @@
   background-color: #91A9FD;
 }
 
+.active-filter{
+  background-color: #91A9FD;
+  /* background-color: pink; */
+
+}
+
+.inactive-filter{
+  /* background-color: pink; */
+  /* background-color: pink; */
+  /* background-color: white; */
+
+}
+
 
 
