@@ -60,5 +60,14 @@ input[type=number]:focus {
   outline: none;
 }
 
+.button{
+  width: 42%;
+  height: 2.8rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 
 

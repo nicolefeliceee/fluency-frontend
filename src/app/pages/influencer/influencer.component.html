@@ -3,191 +3,227 @@
 <app-tab></app-tab>
 <div class="bawah flex flex-row w-full mb-16">
   <div class="kiri">
-    <div class="judulKiri ms-1 font-semibold my-7 flex items-center">
-      <div class="svgFilter">
-        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.5002 22.1356V9.26579M12.5002 4.72308V2.86475M12.5002 4.72308C13.1025 4.72308 13.6801 4.96233 14.1059 5.38819C14.5318 5.81406 14.771 6.39165 14.771 6.99391C14.771 7.59618 14.5318 8.17377 14.1059 8.59964C13.6801 9.0255 13.1025 9.26475 12.5002 9.26475C11.8979 9.26475 11.3203 9.0255 10.8945 8.59964C10.4686 8.17377 10.2294 7.59618 10.2294 6.99391C10.2294 6.39165 10.4686 5.81406 10.8945 5.38819C11.3203 4.96233 11.8979 4.72308 12.5002 4.72308ZM5.6179 22.1356V16.1481M5.6179 16.1481C5.0155 16.1481 4.43726 15.9083 4.01129 15.4823C3.58533 15.0563 3.34603 14.4786 3.34603 13.8762C3.34603 13.2739 3.58632 12.6963 4.01218 12.2705C4.43805 11.8446 5.01564 11.6054 5.6179 11.6054M5.6179 16.1481C6.2203 16.1481 6.79751 15.9083 7.22347 15.4823C7.64944 15.0563 7.88874 14.4786 7.88874 13.8762C7.88874 13.2739 7.64949 12.6963 7.22363 12.2705C6.79776 11.8446 6.22017 11.6054 5.6179 11.6054M5.6179 11.6054V2.86475M19.3825 22.1356V18.9012M19.3825 14.3585V2.86475M19.3825 14.3585C19.9847 14.3585 20.5623 14.5977 20.9882 15.0236C21.4141 15.4495 21.6533 16.0271 21.6533 16.6293C21.6533 16.9275 21.5946 17.2228 21.4805 17.4983C21.3663 17.7739 21.1991 18.0242 20.9882 18.2351C20.7773 18.4459 20.527 18.6132 20.2515 18.7273C19.976 18.8414 19.6807 18.9002 19.3825 18.9002C19.0843 18.9002 18.789 18.8414 18.5135 18.7273C18.238 18.6132 17.9876 18.4459 17.7768 18.2351C17.5659 18.0242 17.3986 17.7739 17.2845 17.4983C17.1704 17.2228 17.1117 16.9275 17.1117 16.6293C17.1117 16.0271 17.3509 15.4495 17.7768 15.0236C18.2026 14.5977 18.7802 14.3585 19.3825 14.3585Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-          </svg>
-      </div>
-      <div class="filtertext ms-[6px] text-[1.05rem] font-semibold">Filters</div>
-      <div class="line w-[2px] h-[25px] mx-2"></div>
-      <div class="sortByText mt-[1px] text-[0.8rem] font-normal">Sort by : </div>
-      <div class="dropdownText ms-2 text-[1.1rem] font-semibold">Popular</div>
-      <div class="arrowSvg">
-        <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_2532_731)">
-          <path d="M11.6129 1.63466L12.3195 2.34199L8.46818 6.19466C8.40647 6.25676 8.33309 6.30605 8.25226 6.33968C8.17142 6.37331 8.08474 6.39063 7.99718 6.39063C7.90963 6.39063 7.82295 6.37331 7.74211 6.33968C7.66128 6.30605 7.5879 6.25676 7.52619 6.19466L3.67285 2.34199L4.37952 1.63532L7.99619 5.25132L11.6129 1.63466Z" fill="black"/>
-          </g>
-          <defs>
-          <clipPath id="clip0_2532_731">
-          <rect width="8" height="16" fill="white" transform="matrix(0 1 -1 0 16 0)"/>
-          </clipPath>
-          </defs>
-          </svg>
-      </div>
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+      <div class="judulKiri ms-1 font-semibold my-7 flex items-center">
+        <div class="svgFilter">
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5002 22.1356V9.26579M12.5002 4.72308V2.86475M12.5002 4.72308C13.1025 4.72308 13.6801 4.96233 14.1059 5.38819C14.5318 5.81406 14.771 6.39165 14.771 6.99391C14.771 7.59618 14.5318 8.17377 14.1059 8.59964C13.6801 9.0255 13.1025 9.26475 12.5002 9.26475C11.8979 9.26475 11.3203 9.0255 10.8945 8.59964C10.4686 8.17377 10.2294 7.59618 10.2294 6.99391C10.2294 6.39165 10.4686 5.81406 10.8945 5.38819C11.3203 4.96233 11.8979 4.72308 12.5002 4.72308ZM5.6179 22.1356V16.1481M5.6179 16.1481C5.0155 16.1481 4.43726 15.9083 4.01129 15.4823C3.58533 15.0563 3.34603 14.4786 3.34603 13.8762C3.34603 13.2739 3.58632 12.6963 4.01218 12.2705C4.43805 11.8446 5.01564 11.6054 5.6179 11.6054M5.6179 16.1481C6.2203 16.1481 6.79751 15.9083 7.22347 15.4823C7.64944 15.0563 7.88874 14.4786 7.88874 13.8762C7.88874 13.2739 7.64949 12.6963 7.22363 12.2705C6.79776 11.8446 6.22017 11.6054 5.6179 11.6054M5.6179 11.6054V2.86475M19.3825 22.1356V18.9012M19.3825 14.3585V2.86475M19.3825 14.3585C19.9847 14.3585 20.5623 14.5977 20.9882 15.0236C21.4141 15.4495 21.6533 16.0271 21.6533 16.6293C21.6533 16.9275 21.5946 17.2228 21.4805 17.4983C21.3663 17.7739 21.1991 18.0242 20.9882 18.2351C20.7773 18.4459 20.527 18.6132 20.2515 18.7273C19.976 18.8414 19.6807 18.9002 19.3825 18.9002C19.0843 18.9002 18.789 18.8414 18.5135 18.7273C18.238 18.6132 17.9876 18.4459 17.7768 18.2351C17.5659 18.0242 17.3986 17.7739 17.2845 17.4983C17.1704 17.2228 17.1117 16.9275 17.1117 16.6293C17.1117 16.0271 17.3509 15.4495 17.7768 15.0236C18.2026 14.5977 18.7802 14.3585 19.3825 14.3585Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="filtertext ms-[6px] text-[1.05rem] font-semibold">Filters</div>
+        <div class="line w-[2px] h-[25px] mx-2"></div>
+        <div class="sortByText mt-[1px] text-[0.8rem] font-normal">Sort by : </div>
+        <div class="dropdownText ms-2 text-[1.1rem] font-semibold">Popular</div>
+        <div class="arrowSvg">
+          <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2532_731)">
+            <path d="M11.6129 1.63466L12.3195 2.34199L8.46818 6.19466C8.40647 6.25676 8.33309 6.30605 8.25226 6.33968C8.17142 6.37331 8.08474 6.39063 7.99718 6.39063C7.90963 6.39063 7.82295 6.37331 7.74211 6.33968C7.66128 6.30605 7.5879 6.25676 7.52619 6.19466L3.67285 2.34199L4.37952 1.63532L7.99619 5.25132L11.6129 1.63466Z" fill="black"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_2532_731">
+            <rect width="8" height="16" fill="white" transform="matrix(0 1 -1 0 16 0)"/>
+            </clipPath>
+            </defs>
+            </svg>
+        </div>
 
-    </div>
-    <div class="influencerFilter me-10">
-      <div class="infText font-semibold text-[1.05rem]">Influencer Metric</div>
-      <!-- Ini filter by followers -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Followers</div>
-        <!-- range -->
-        <div class="range flex justify-between items-center">
-          <input type="number" [(ngModel)]="minFollowers" (input)="onRangeInputChange('follower')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
-          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
-          <input type="number" name="" id="" [(ngModel)]="maxFollowers" (input)="onRangeInputChange('follower')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+      </div>
+      <div class="influencerFilter me-10">
+        <div class="infText font-semibold text-[1.05rem]">Influencer Metric</div>
+        <!-- Ini filter by followers -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Followers</div>
+          <!-- range -->
+          <div class="range flex justify-between items-center">
+            <input type="number" formControlName="minFollowers" (input)="onRangeInputChange('follower')" name="minFollowers" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+            <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+            <input type="number" name="maxFollowers" id="" formControlName="maxFollowers" (input)="onRangeInputChange('follower')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+          </div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let followerRange of followerRanges">
+              <input type="checkbox" [value]="followerRange" [checked]="isFilterActive('followers', followerRange)" (change)="toggleFilter('followers',followerRange)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('followers', followerRange)}">{{ followerRange }}</div>
+            </label>
+          </div>
+          <!-- Menampilkan pesan error jika validasi gagal -->
+          <div *ngIf="isInvalidRangeFoll" class="error text-red-600 text-smalltext text-center pt-3">
+            Min followers must be less than max followers
+          </div>
         </div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let followerRange of followerRanges">
-            <input type="checkbox" [value]="followerRange" [checked]="isFilterActive('followers', followerRange)" (change)="toggleFilter('followers',followerRange)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('followers', followerRange)}">{{ followerRange }}</div>
-          </label>
+        <!-- Ini filter by media type -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Media Type</div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let mediaType of mediaTypes">
+              <input type="checkbox" [value]="mediaType.id" [checked]="isFilterActive('media', mediaType.id)" (change)="toggleFilter('media',mediaType.id)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('media', mediaType.id)}">{{ mediaType.label }}</div>
+            </label>
+          </div>
+        </div>
+        <!-- Ini filter by engagement -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Engagement</div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let engagement of engagements">
+              <input type="checkbox" [value]="engagement" [checked]="isFilterActive('engagement', engagement)" (change)="toggleFilter('engagement',engagement)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('engagement', engagement)}">{{ engagement }}</div>
+            </label>
+          </div>
+        </div>
+        <!-- Ini filter by gender -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let gender of genders">
+              <input type="checkbox" [value]="gender.id" [checked]="isFilterActive('gender', gender.id)" (change)="toggleFilter('gender',gender.id)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('gender', gender.id)}">{{ gender.label }}</div>
+            </label>
+          </div>
+        </div>
+        <!-- Ini filter by age -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
+          <!-- <app-range-filter></app-range-filter> -->
+          <!-- range -->
+          <div class="range flex justify-between items-center">
+            <input type="number" formControlName="minAge" (input)="onRangeInputChange('age')" name="minAge" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+            <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+            <input type="number" name="maxAge" id="" formControlName="maxAge" (input)="onRangeInputChange('age')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+          </div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let age of ages">
+              <input type="checkbox" [value]="age" [checked]="isFilterActive('age', age)" (change)="toggleFilter('age',age)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('age', age)}">{{ age }}</div>
+            </label>
+          </div>
+          <!-- Menampilkan pesan error jika validasi gagal -->
+          <div *ngIf="isInvalidRangeAge" class="error text-red-600 text-smalltext text-center pt-3">
+            Min age must be less than max age
+          </div>
+        </div>
+        <!-- Ini filter by price -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Price</div>
+          <!-- <app-range-filter></app-range-filter> -->
+           <!-- range -->
+          <div class="range flex justify-between items-center">
+            <input type="number" formControlName="minPrice" (input)="onRangeInputChange('price')" name="minPrice" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+            <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+            <input type="number" name="maxPrice" id="" formControlName="maxPrice" (input)="onRangeInputChange('price')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+          </div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let price of prices">
+              <input type="checkbox" [value]="price" [checked]="isFilterActive('price', price)" (change)="toggleFilter('price',price)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('price', price)}">{{ price }}</div>
+            </label>
+          </div>
+          <!-- Menampilkan pesan error jika validasi gagal -->
+          <div *ngIf="isInvalidRangePrice" class="error text-red-600 text-smalltext text-center pt-3">
+            Min price must be less than max price
+          </div>
+        </div>
+        <!-- Ini filter by rating -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Rating</div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let rating of ratings">
+              <input type="checkbox" [value]="rating" [checked]="isFilterActive('rating', rating)" (change)="toggleFilter('rating',rating)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('rating', rating)}">{{ rating }}</div>
+            </label>
+          </div>
+        </div>
+        <!-- Ini filter by location (multiple select) -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
+          <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
+            <select multiple="" id="selectLocation" data-hs-select='{
+              "placeholder": "Location",
+              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-[25px] overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-[25px] focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+              "mode": "tags",
+              "wrapperClasses": "mt-2 relative ps-1 pe-9 py-1 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-[#A4A7A7] rounded-[25px] text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500",
+              "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-[#CFD2D3] shadow-[0_2px_3px_0px_rgba(0,0,0,0.1)] rounded-[25px] py-1 ps-3 pe-1 mx-[1px] my-[2px]\"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+              "tagsInputId": "hs-tags-input",
+              "tagsInputClasses": "py-1 px-3 rounded-[25px] order-1 text-sm outline-none",
+              "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 \" data-title></div><div class=\"text-xs text-gray-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733.0 1 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733.0 1 1-1.065.02L3.217 8.384a.757.757.0 1 1 0-1.06.733.733.0 1 1 1.047 0l3.052 3.093 5.4-6.425a.247.247.0 1 1 .02-.022Z\"/></svg></span></div></div>",
+              "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+            }' class="hidden" name="" formControlName="location" (change)="onRangeInputChange('location')">
+                  <option *ngFor="let location of locations" [value]="location.id">{{ location.label }}</option>
+            </select>
+            <!-- End Select -->
+          </div>
         </div>
       </div>
-      <!-- Ini filter by media type -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Media Type</div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let mediaType of mediaTypes">
-            <input type="checkbox" [value]="mediaType.id" [checked]="isFilterActive('media', mediaType.id)" (change)="toggleFilter('media',mediaType.id)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('media', mediaType.id)}">{{ mediaType.label }}</div>
-          </label>
+      <div class="audienceFilter me-10 mt-7">
+        <div class="infText font-semibold text-[1.05rem]">Audience Metric</div>
+        <!-- Ini filter by gender -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let genderAudience of genderAudiences">
+              <input type="checkbox" [value]="genderAudience.id" [checked]="isFilterActive('genderAudience', genderAudience.id)" (change)="toggleFilter('genderAudience',genderAudience.id)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('genderAudience', genderAudience.id)}">{{ genderAudience.label }}</div>
+            </label>
+          </div>
+        </div>
+        <!-- Ini filter by age -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
+          <!-- <app-range-filter></app-range-filter> -->
+          <!-- range -->
+          <div class="range flex justify-between items-center">
+            <input type="number" formControlName="minAgeAudience" (input)="onRangeInputChange('ageAudience')" name="minAgeAudience" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+            <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+            <input type="number" name="maxAgeAudience" id="" formControlName="maxAgeAudience" (input)="onRangeInputChange('ageAudience')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+          </div>
+          <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
+            <label *ngFor="let ageAudience of ageAudiences">
+              <input type="checkbox" [value]="ageAudience.label" [checked]="isFilterActive('ageAudience', ageAudience.label)" (change)="toggleFilter('ageAudience',ageAudience.label)" hidden>
+              <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+              [ngClass]="{'active-filter': isFilterActive('ageAudience', ageAudience.label)}">{{ ageAudience.label }}</div>
+            </label>
+          </div>
+          <!-- Menampilkan pesan error jika validasi gagal -->
+          <div *ngIf="isInvalidRangeAgeAudience" class="error text-red-600 text-smalltext text-center pt-3">
+            Min age must be less than max age
+          </div>
+        </div>
+        <!-- Ini filter by location (multiple select) -->
+        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
+          <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
+            <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
+            <select multiple="" id="selectLocationAudience" data-hs-select='{
+              "placeholder": "Location",
+              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-[25px] overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-[25px] focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+              "mode": "tags",
+              "wrapperClasses": "mt-2 relative ps-1 pe-9 py-1 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-[#A4A7A7] rounded-[25px] text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500",
+              "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-[#CFD2D3] shadow-[0_2px_3px_0px_rgba(0,0,0,0.1)] rounded-[25px] py-1 ps-3 pe-1 mx-[1px] my-[2px]\"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+              "tagsInputId": "hs-tags-input",
+              "tagsInputClasses": "py-1 px-3 rounded-[25px] order-1 text-sm outline-none",
+              "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 \" data-title></div><div class=\"text-xs text-gray-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733.0 1 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733.0 1 1-1.065.02L3.217 8.384a.757.757.0 1 1 0-1.06.733.733.0 1 1 1.047 0l3.052 3.093 5.4-6.425a.247.247.0 1 1 .02-.022Z\"/></svg></span></div></div>",
+              "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+            }' class="hidden" name="" formControlName="locationAudience" (change)="onRangeInputChange('locationAudience')">
+                  <option *ngFor="let locationAudience of locationAudiences" [value]="locationAudience.id">{{ locationAudience.label }}</option>
+            </select>
+            <!-- End Select -->
+          </div>
         </div>
       </div>
-      <!-- Ini filter by engagement -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Engagement</div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let engagement of engagements">
-            <input type="checkbox" [value]="engagement" [checked]="isFilterActive('engagement', engagement)" (change)="toggleFilter('engagement',engagement)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('engagement', engagement)}">{{ engagement }}</div>
-          </label>
-        </div>
+      <div class="end flex me-10 mt-6">
+        <button type="reset" (click)="resetForm()" class="button border-blue-80 border-[1px] text-blue-80 font-semibold m-auto">Reset Filter</button>
+        <button type="submit" class="button bg-blue-80 text-font-white m-auto font-semibold">Apply Filter</button>
       </div>
-      <!-- Ini filter by gender -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let gender of genders">
-            <input type="checkbox" [value]="gender.id" [checked]="isFilterActive('gender', gender.id)" (change)="toggleFilter('gender',gender.id)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('gender', gender.id)}">{{ gender.label }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by age -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
-        <!-- <app-range-filter></app-range-filter> -->
-        <!-- range -->
-        <div class="range flex justify-between items-center">
-          <input type="number" [(ngModel)]="minAge" (input)="onRangeInputChange('age')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
-          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
-          <input type="number" name="" id="" [(ngModel)]="maxAge" (input)="onRangeInputChange('age')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
-        </div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let age of ages">
-            <input type="checkbox" [value]="age" [checked]="isFilterActive('age', age)" (change)="toggleFilter('age',age)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('age', age)}">{{ age }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by price -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Price</div>
-        <!-- <app-range-filter></app-range-filter> -->
-         <!-- range -->
-        <div class="range flex justify-between items-center">
-          <input type="number" [(ngModel)]="minPrice" (input)="onRangeInputChange('price')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
-          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
-          <input type="number" name="" id="" [(ngModel)]="maxPrice" (input)="onRangeInputChange('price')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
-        </div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let price of prices">
-            <input type="checkbox" [value]="price" [checked]="isFilterActive('price', price)" (change)="toggleFilter('price',price)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('price', price)}">{{ price }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by rating -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Rating</div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let rating of ratings">
-            <input type="checkbox" [value]="rating" [checked]="isFilterActive('rating', rating)" (change)="toggleFilter('rating',rating)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('rating', rating)}">{{ rating }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by location (multiple select) -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
-        <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
-          <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
-          <select multiple="" data-hs-select='{
-            "placeholder": "Location",
-            "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
-            "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
-            "mode": "tags",
-            "wrapperClasses": "mt-2 relative ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-gray-200 rounded-lg text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
-            "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-full p-1 m-1 dark:bg-neutral-900 dark:border-neutral-700 \"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
-            "tagsInputId": "hs-tags-input",
-            "tagsInputClasses": "py-3 px-2 rounded-lg order-1 text-sm outline-none dark:bg-neutral-900 dark:placeholder-neutral-500 dark:text-neutral-400",
-            "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm font-semibold text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
-            "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-          }' class="hidden " name="" formControlName="">
-            <option *ngFor="let location of locations" [value]="location.id">{{ location.label }}</option>
-          </select>
-          <!-- End Select -->
-        </div>
-      </div>
-    </div>
-    <div class="audienceFilter me-10 mt-7">
-      <div class="infText font-semibold text-[1.05rem]">Audience Metric</div>
-      <!-- Ini filter by gender -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let genderAudience of genderAudiences">
-            <input type="checkbox" [value]="genderAudience.id" [checked]="isFilterActive('genderAudience', genderAudience.id)" (change)="toggleFilter('genderAudience',genderAudience.id)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('genderAudience', genderAudience.id)}">{{ genderAudience.label }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by age -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
-        <!-- <app-range-filter></app-range-filter> -->
-        <!-- range -->
-        <div class="range flex justify-between items-center">
-          <input type="number" [(ngModel)]="minAgeAudience" (input)="onRangeInputChange('ageAudience')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
-          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
-          <input type="number" name="" id="" [(ngModel)]="maxAgeAudience" (input)="onRangeInputChange('ageAudience')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
-        </div>
-        <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <label *ngFor="let ageAudience of ageAudiences">
-            <input type="checkbox" [value]="ageAudience.label" [checked]="isFilterActive('ageAudience', ageAudience.label)" (change)="toggleFilter('ageAudience',ageAudience.label)" hidden>
-            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
-            [ngClass]="{'active-filter': isFilterActive('ageAudience', ageAudience.label)}">{{ ageAudience.label }}</div>
-          </label>
-        </div>
-      </div>
-      <!-- Ini filter by location (multiple select) -->
-      <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
-        <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
-        <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-        </div>
-      </div>
-    </div>
+    </form>
 
   </div>
   <div class="kanan">
