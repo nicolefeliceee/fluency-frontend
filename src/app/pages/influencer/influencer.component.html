@@ -32,7 +32,12 @@
       <!-- Ini filter by followers -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Followers</div>
-        <app-range-filter></app-range-filter>
+        <!-- range -->
+        <div class="range flex justify-between items-center">
+          <input type="number" [(ngModel)]="minFollowers" (input)="onRangeInputChange('follower')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+          <input type="number" name="" id="" [(ngModel)]="maxFollowers" (input)="onRangeInputChange('follower')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+        </div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
           <label *ngFor="let followerRange of followerRanges">
             <input type="checkbox" [value]="followerRange" [checked]="isFilterActive('followers', followerRange)" (change)="toggleFilter('followers',followerRange)" hidden>
@@ -41,75 +46,106 @@
           </label>
         </div>
       </div>
-      <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-      <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
       <!-- Ini filter by media type -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Media Type</div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let mediaType of mediaTypes">
+            <input type="checkbox" [value]="mediaType.id" [checked]="isFilterActive('media', mediaType.id)" (change)="toggleFilter('media',mediaType.id)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('media', mediaType.id)}">{{ mediaType.label }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by engagement -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Engagement</div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let engagement of engagements">
+            <input type="checkbox" [value]="engagement" [checked]="isFilterActive('engagement', engagement)" (change)="toggleFilter('engagement',engagement)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('engagement', engagement)}">{{ engagement }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by gender -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let gender of genders">
+            <input type="checkbox" [value]="gender.id" [checked]="isFilterActive('gender', gender.id)" (change)="toggleFilter('gender',gender.id)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('gender', gender.id)}">{{ gender.label }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by age -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
-        <app-range-filter></app-range-filter>
+        <!-- <app-range-filter></app-range-filter> -->
+        <!-- range -->
+        <div class="range flex justify-between items-center">
+          <input type="number" [(ngModel)]="minAge" (input)="onRangeInputChange('age')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+          <input type="number" name="" id="" [(ngModel)]="maxAge" (input)="onRangeInputChange('age')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+        </div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let age of ages">
+            <input type="checkbox" [value]="age" [checked]="isFilterActive('age', age)" (change)="toggleFilter('age',age)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('age', age)}">{{ age }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by price -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Price</div>
-        <app-range-filter></app-range-filter>
+        <!-- <app-range-filter></app-range-filter> -->
+         <!-- range -->
+        <div class="range flex justify-between items-center">
+          <input type="number" [(ngModel)]="minPrice" (input)="onRangeInputChange('price')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+          <input type="number" name="" id="" [(ngModel)]="maxPrice" (input)="onRangeInputChange('price')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+        </div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let price of prices">
+            <input type="checkbox" [value]="price" [checked]="isFilterActive('price', price)" (change)="toggleFilter('price',price)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('price', price)}">{{ price }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by rating -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Rating</div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let rating of ratings">
+            <input type="checkbox" [value]="rating" [checked]="isFilterActive('rating', rating)" (change)="toggleFilter('rating',rating)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('rating', rating)}">{{ rating }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by location (multiple select) -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
         <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
+          <select multiple="" data-hs-select='{
+            "placeholder": "Location",
+            "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+            "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+            "mode": "tags",
+            "wrapperClasses": "mt-2 relative ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-gray-200 rounded-lg text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
+            "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-full p-1 m-1 dark:bg-neutral-900 dark:border-neutral-700 \"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+            "tagsInputId": "hs-tags-input",
+            "tagsInputClasses": "py-3 px-2 rounded-lg order-1 text-sm outline-none dark:bg-neutral-900 dark:placeholder-neutral-500 dark:text-neutral-400",
+            "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm font-semibold text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
+            "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+          }' class="hidden " name="" formControlName="">
+            <option *ngFor="let location of locations" [value]="location.id">{{ location.label }}</option>
+          </select>
+          <!-- End Select -->
         </div>
       </div>
     </div>
@@ -119,20 +155,29 @@
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let genderAudience of genderAudiences">
+            <input type="checkbox" [value]="genderAudience.id" [checked]="isFilterActive('genderAudience', genderAudience.id)" (change)="toggleFilter('genderAudience',genderAudience.id)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('genderAudience', genderAudience.id)}">{{ genderAudience.label }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by age -->
       <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
         <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Age</div>
-        <app-range-filter></app-range-filter>
+        <!-- <app-range-filter></app-range-filter> -->
+        <!-- range -->
+        <div class="range flex justify-between items-center">
+          <input type="number" [(ngModel)]="minAgeAudience" (input)="onRangeInputChange('ageAudience')" name="" id="" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MIN">
+          <div class="lineHelper bg-font-lightGrey w-[11px] h-[1px]"></div>
+          <input type="number" name="" id="" [(ngModel)]="maxAgeAudience" (input)="onRangeInputChange('ageAudience')" class="filterInput text-body text-center px-[10px] h-[2.2rem] w-[6.5rem] rounded-xl" placeholder="MAX">
+        </div>
         <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
-          <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div>
+          <label *ngFor="let ageAudience of ageAudiences">
+            <input type="checkbox" [value]="ageAudience.label" [checked]="isFilterActive('ageAudience', ageAudience.label)" (change)="toggleFilter('ageAudience',ageAudience.label)" hidden>
+            <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center cursor-pointer"
+            [ngClass]="{'active-filter': isFilterActive('ageAudience', ageAudience.label)}">{{ ageAudience.label }}</div>
+          </label>
         </div>
       </div>
       <!-- Ini filter by location (multiple select) -->
