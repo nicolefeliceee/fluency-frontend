@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit{
   userId!: any;
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem('user_id');
+    // this.userId = localStorage.getItem('user_id');
   }
 
 

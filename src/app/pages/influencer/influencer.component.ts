@@ -4,11 +4,12 @@ import { InfluencerCardComponent } from "../../components/influencer-card/influe
 import { TabComponent } from "../../components/tab/tab.component";
 import { RangeFilterComponent } from "../../components/range-filter/range-filter.component";
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AgeService } from '../../services/age.service';
 import { GenderService } from '../../services/gender.service';
 import { MediaTypeService } from '../../services/media-type.service';
 import { LocationService } from '../../services/location.service';
+import { InfluencerService } from '../../services/influencer.service';
 
 @Component({
   selector: 'app-influencer',
@@ -18,10 +19,26 @@ import { LocationService } from '../../services/location.service';
   styleUrl: './influencer.component.css'
 })
 export class InfluencerComponent implements OnInit{
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private ageService: AgeService,
+    private genderService: GenderService,
+    private mediaTypeService: MediaTypeService,
+    private locationService: LocationService,
+    private fb: FormBuilder,
+    private influencerService: InfluencerService
+  ) {}
+
+  filterForm!: FormGroup;
+
+
   ngOnInit(): void {
+    this.initializeForm();
+
     this.locationService.getAllLocations().subscribe(
       (data) => {
         this.locations = data;
+        this.locationAudiences = data;
       },
       (error) => {
         console.log(error);
@@ -57,13 +74,40 @@ export class InfluencerComponent implements OnInit{
     )
   }
 
-  // followerRanges = [
-  //   { label: '1k-10k', value: { min: 1000, max: 10000 } },
-  //   { label: '10k-100k', value: { min: 10000, max: 100000 } },
-  //   { label: '100k-500k', value: { min: 100000, max: 500000 } },
-  //   { label: '500k-1000k', value: { min: 500000, max: 1000000 } },
-  //   { label: '> 1000k', value: { min: 1000000, max: null } }
-  // ];
+  initializeForm(): void {
+    this.filterForm = this.fb.group({
+      // multiple select influencer
+      followers: [[]],
+      media: [[]],
+      engagement: [[]],
+      gender: [[]],
+      age: [[]],
+      price: [[]],
+      rating: [[]],
+      location: [[]],
+
+      // multiple select audience
+      genderAudience: [[]],
+      ageAudience: [[]],
+      locationAudience: [[]],
+
+      // customize range
+      minFollowers: [null],
+      maxFollowers: [null],
+      minAge: [null],
+      maxAge: [null],
+      minPrice: [null],
+      maxPrice: [null],
+      minAgeAudience: [null],
+      maxAgeAudience: [null]
+    });
+  }
+
+  // Validasi dan validasi kondisi (check range) di sini
+  get checkRange() {
+    return this.filterForm.controls;
+  }
+
   followerRanges = ['1k - 10k', '10k - 100k', '100k - 500k', '500k - 1000k', '> 1000k'];
   mediaTypes!: any[];
   engagements = ['Low', 'Average', 'High'];
@@ -74,6 +118,7 @@ export class InfluencerComponent implements OnInit{
   locations!: any[];
   genderAudiences!: any[];
   ageAudiences!: any[];
+  locationAudiences!: any[];
 
   selectedFilters = {
     followers: [] as string[],
@@ -83,20 +128,67 @@ export class InfluencerComponent implements OnInit{
     age: [] as string[],
     price: [] as string[],
     rating: [] as string[],
+    location: [] as string[],
     genderAudience: [] as string[],
-    ageAudience: [] as string[]
+    ageAudience: [] as string[],
+    locationAudience: [] as string[]
   };
 
-  constructor(private cdr: ChangeDetectorRef, private ageService: AgeService, private genderService: GenderService, private mediaTypeService: MediaTypeService, private locationService: LocationService) {}
+
+
+
+  resetForm(){
+    const selectLoc = document.querySelector('#selectLocation') as HTMLSelectElement;
+    const select = window.HSSelect.getInstance(selectLoc);
+    const selectLocAud = document.querySelector('#selectLocationAudience') as HTMLSelectElement;
+    const selectLA = window.HSSelect.getInstance(selectLocAud);
+    this.filterForm.reset({
+      isUsingRangeFilter: false,
+      minFollowers: null,
+      maxFollowers: null,
+      minAge: null,
+      maxAge: null,
+      minPrice: null,
+      maxPrice: null,
+      minAgeAudience: null,
+      maxAgeAudience: null,
+      location: null,
+      locationAudience: null
+    });
+    this.selectedFilters = {
+      followers: [],
+      media: [],
+      engagement: [],
+      gender: [],
+      age: [],
+      price: [],
+      rating: [],
+      location: [],
+      genderAudience: [],
+      ageAudience: [],
+      locationAudience: []
+    };
+    select.setValue([]);
+    selectLA.setValue([]);
+    this.isUsingRangeFilter = false;
+    this.isInvalidRangeFoll = false;
+    this.isInvalidRangeAge = false;
+    this.isInvalidRangePrice = false;
+    this.isInvalidRangeAgeAudience = false;
+    console.log(this.selectedFilters);
+  }
 
   // Toggle filter aktif atau tidak
   toggleFilter(type: string, value: string): void {
     if (type === 'followers') {
       if (this.isUsingRangeFilter) {
-        this.minFollowers = null;
-        this.maxFollowers = null;
+        this.filterForm.patchValue({
+          minFollowers: null,
+          maxFollowers: null
+        });
         // Nonaktifkan custom input range
         this.isUsingRangeFilter = false;
+        this.isInvalidRangeFoll = false;
         // Reset array
         this.selectedFilters.followers = [];
       }
@@ -139,10 +231,13 @@ export class InfluencerComponent implements OnInit{
     }
     else if (type === 'age') {
       if (this.isUsingRangeFilter) {
-        this.minAge = null;
-        this.maxAge = null;
+        this.filterForm.patchValue({
+          minAge: null,
+          maxAge: null
+        });
         // Nonaktifkan custom input range
         this.isUsingRangeFilter = false;
+        this.isInvalidRangeAge = false;
         // Reset array
         this.selectedFilters.age = [];
       }
@@ -156,10 +251,13 @@ export class InfluencerComponent implements OnInit{
     }
     else if (type === 'price') {
       if (this.isUsingRangeFilter) {
-        this.minPrice = null;
-        this.maxPrice = null;
+        this.filterForm.patchValue({
+          minPrice: null,
+          maxPrice: null
+        });
         // Nonaktifkan custom input range
         this.isUsingRangeFilter = false;
+        this.isInvalidRangePrice = false;
         // Reset array
         this.selectedFilters.price = [];
       }
@@ -191,14 +289,19 @@ export class InfluencerComponent implements OnInit{
     }
     else if (type === 'ageAudience') {
       if (this.isUsingRangeFilter) {
-        this.minAgeAudience = null;
-        this.maxAgeAudience = null;
+        this.filterForm.patchValue({
+          minAgeAudience: null,
+          maxAgeAudience: null
+        });
         // Nonaktifkan custom input range
         this.isUsingRangeFilter = false;
+        this.isInvalidRangeAgeAudience = false;
         // Reset array
         this.selectedFilters.ageAudience = [];
       }
       const index = this.selectedFilters.ageAudience.indexOf(value);
+      // console.log(value);
+      // console.log(index);
       if (index > -1) {
         this.selectedFilters.ageAudience.splice(index, 1);
       } else {
@@ -244,63 +347,129 @@ export class InfluencerComponent implements OnInit{
 
   // Untuk bagian range
   isUsingRangeFilter = false;  // To toggle between range filter and predefined select
-  minFollowers: number | null = null;
-  maxFollowers: number | null = null;
-  minAge: number | null = null;
-  maxAge: number | null = null;
-  minPrice: number | null = null;
-  maxPrice: number | null = null;
-  minAgeAudience: number | null = null;
-  maxAgeAudience: number | null = null;
+  isInvalidRangeFoll = false;  // To toggle between range filter and predefined select
+  isInvalidRangeAge = false;  // To toggle between range filter and predefined select
+  isInvalidRangePrice = false;  // To toggle between range filter and predefined select
+  isInvalidRangeAgeAudience = false;  // To toggle between range filter and predefined select
 
   // Handle input change in range filter
   onRangeInputChange(type: string) {
     if (type === 'follower') {
-      if (this.minFollowers !== null || this.maxFollowers !== null) {
+      const minFollowers = this.filterForm.get('minFollowers')?.value;
+      const maxFollowers = this.filterForm.get('maxFollowers')?.value;
+      if (minFollowers !== null || maxFollowers !== null) {
+        if (minFollowers !== null && maxFollowers !== null){
+          if(maxFollowers >= minFollowers){
+            this.isInvalidRangeFoll = false;
+          }else{
+            this.isInvalidRangeFoll = true;
+          }
+        }
         this.isUsingRangeFilter = true;
         // Reset selected filters when using custom range
         this.selectedFilters.followers = [];
         // Menambahkan range kustom yang sudah dikonversi ke dalam array followers
-        const customRange = this.convertToArray(this.minFollowers ?? 0, this.maxFollowers ?? 0);
+        const customRange = this.convertToArray(minFollowers ?? 0, maxFollowers ?? 0);
         this.selectedFilters.followers.push(customRange);
       } else {
         this.isUsingRangeFilter = false;
       }
     }
     else if (type === 'age') {
-      if (this.minAge !== null || this.maxAge !== null) {
+      const minAge = this.filterForm.get('minAge')?.value;
+      const maxAge = this.filterForm.get('maxAge')?.value;
+      if (minAge !== null || maxAge !== null) {
+        if (minAge !== null && maxAge !== null){
+          if(maxAge >= minAge){
+            this.isInvalidRangeAge = false;
+          }else{
+            this.isInvalidRangeAge = true;
+          }
+        }
         this.isUsingRangeFilter = true;
         // Reset selected filters when using custom range
         this.selectedFilters.age = [];
         // Menambahkan range kustom yang sudah dikonversi ke dalam array age
-        const customRange = this.convertToArrayAge(this.minAge ?? 0, this.maxAge ?? 0);
+        const customRange = this.convertToArrayAge(minAge ?? 0, maxAge ?? 0);
         this.selectedFilters.age.push(customRange);
       } else {
         this.isUsingRangeFilter = false;
       }
     }
     else if (type === 'price') {
-      if (this.minPrice !== null || this.maxPrice !== null) {
+      const minPrice = this.filterForm.get('minPrice')?.value;
+      const maxPrice = this.filterForm.get('maxPrice')?.value;
+      if (minPrice !== null || maxPrice !== null) {
+        if (minPrice !== null && maxPrice !== null){
+          if(maxPrice >= minPrice){
+            this.isInvalidRangePrice = false;
+          }else{
+            this.isInvalidRangePrice = true;
+          }
+        }
         this.isUsingRangeFilter = true;
         // Reset selected filters when using custom range
         this.selectedFilters.price = [];
         // Menambahkan range kustom yang sudah dikonversi ke dalam array price
-        const customRange = this.convertToArray(this.minPrice ?? 0, this.maxPrice ?? 0);
+        const customRange = this.convertToArray(minPrice ?? 0, maxPrice ?? 0);
         this.selectedFilters.price.push(customRange);
       } else {
         this.isUsingRangeFilter = false;
       }
     }
     else if (type === 'ageAudience') {
-      if (this.minAgeAudience !== null || this.maxAgeAudience !== null) {
+      const minAgeAudience = this.filterForm.get('minAgeAudience')?.value;
+      const maxAgeAudience = this.filterForm.get('maxAgeAudience')?.value;
+      if (minAgeAudience !== null || maxAgeAudience !== null) {
+        if (minAgeAudience !== null && maxAgeAudience !== null){
+          if(maxAgeAudience >= minAgeAudience){
+            this.isInvalidRangeAgeAudience = false;
+          }else{
+            this.isInvalidRangeAgeAudience = true;
+          }
+        }
         this.isUsingRangeFilter = true;
         // Reset selected filters when using custom range
         this.selectedFilters.ageAudience = [];
         // Menambahkan range kustom yang sudah dikonversi ke dalam array age
-        const customRange = this.convertToArrayAge(this.minAgeAudience ?? 0, this.maxAgeAudience ?? 0);
+        const customRange = this.convertToArrayAge(minAgeAudience ?? 0, maxAgeAudience ?? 0);
         this.selectedFilters.ageAudience.push(customRange);
       } else {
         this.isUsingRangeFilter = false;
+      }
+    }
+    else if (type === 'location') {
+      const location = this.filterForm.get('location')?.value;
+      // Pastikan lokasi yang dipilih adalah array
+      if (Array.isArray(location)) {
+        // Iterasi setiap lokasi yang dipilih
+        location.forEach(loc => {
+          // Jika lokasi belum ada dalam selectedFilters.location, tambahkan
+          if (!this.selectedFilters.location.includes(loc)) {
+            this.selectedFilters.location.push(loc);
+          }
+        });
+        // Hapus lokasi yang tidak ada di form (yaitu yang telah dihapus)
+        this.selectedFilters.location = this.selectedFilters.location.filter(
+          loc => location.includes(loc)
+        );
+      }
+    }
+    else if (type === 'locationAudience') {
+      const locationAudience = this.filterForm.get('locationAudience')?.value;
+      // Pastikan lokasi yang dipilih adalah array
+      if (Array.isArray(locationAudience)) {
+        // Iterasi setiap lokasi yang dipilih
+        locationAudience.forEach(locAud => {
+          // Jika lokasi belum ada dalam selectedFilters.location, tambahkan
+          if (!this.selectedFilters.locationAudience.includes(locAud)) {
+            this.selectedFilters.locationAudience.push(locAud);
+          }
+        });
+        // Hapus lokasi yang tidak ada di form (yaitu yang telah dihapus)
+        this.selectedFilters.locationAudience = this.selectedFilters.locationAudience.filter(
+          locAud => locationAudience.includes(locAud)
+        );
       }
     }
     console.log("Updated Filters:", this.selectedFilters);
@@ -331,6 +500,44 @@ export class InfluencerComponent implements OnInit{
     const maxConverted = convertToK(max);
 
     return `${minConverted} - ${maxConverted}`;
+  }
+
+  // export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const forbidden = nameRe.test(control.value);
+  //     return forbidden ? { forbiddenName: { value: control.value } } : null;
+  //   };
+  // }
+
+  // checkRange(min: number, max: number): boolean {
+  //   return max >= min; // Mengembalikan true jika max lebih besar dari min
+  // }
+
+  // Fungsi untuk menangani submit form
+  onSubmit(): void {
+    if (this.filterForm.valid) {
+      if (this.isInvalidRangeFoll || this.isInvalidRangeAge || this.isInvalidRangePrice || this.isInvalidRangeAgeAudience){
+        console.log('Form is not valid');
+      }
+      else{
+        // Mengirim data ke backend
+        this.influencerService.sendFilter(this.selectedFilters).subscribe(
+          response => {
+            console.log('Response from backend:', response);
+            // Anda bisa mengarahkan user ke halaman lain atau memberi notifikasi berhasil
+          },
+          error => {
+            console.error('Error occurred:', error);
+            // Menangani error jika ada masalah dengan request
+          }
+        );
+
+        console.log('Selected Filters:', this.selectedFilters);
+      }
+
+    } else {
+      console.log('Form is not valid');
+    }
   }
 
 
