@@ -1,4 +1,4 @@
-export class SignupUser {
+export class SignupBrand {
   userType!: string;
   name!: string;
   email!: string;

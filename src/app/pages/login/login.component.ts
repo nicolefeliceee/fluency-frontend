@@ -18,8 +18,12 @@ export class LoginComponent {
   passwordVisible: boolean = false;
   email: string = '';
   password: string = '';
+  signUpSuccess: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.signUpSuccess = navigation?.extras.state?.['status'];
+  }
 
   togglePassword():void{
     this.passwordVisible = !this.passwordVisible;
@@ -28,12 +32,14 @@ export class LoginComponent {
   userLogin(){
     // console.log(this.email);
     // console.log(this.password);
-    this.userService.loginUser(this.email,this.password).subscribe(data=>{
-      console.log(data)
-      this.router.navigate(['/home']);
-    },error=>{
-      console.log(error)
-    });
+    this.userService.loginUser(this.email, this.password).subscribe(
+      (data) => {
+        console.log(data);
+        localStorage.setItem('user_id', (data as any)['id']);
+        this.router.navigate(['/home']);
+      },error=>{
+        console.log(error)
+      });
   }
 
 }

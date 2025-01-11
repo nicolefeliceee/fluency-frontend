@@ -4,7 +4,7 @@ import { RoleCardComponent } from "./role-card/role-card.component";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
-import { SignupUser } from '../../models/signup-user';
+import { SignupBrand } from '../../models/signup-brand';
 import { state } from '@angular/animations';
 
 @Component({
@@ -25,7 +25,7 @@ export class SignupComponent {
     this.selectedOption = option;
   }
 
-  newUser: SignupUser = new SignupUser(
+  newUser: SignupBrand = new SignupBrand(
     "",
     "",
     "",

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SignupUser } from '../../../../models/signup-user';
+import { SignupBrand } from '../../../../models/signup-brand';
 import { LocationService } from '../../../../services/location.service';
 import { GenderService } from '../../../../services/gender.service';
 import { AgeService } from '../../../../services/age.service';
 import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from "../choose-category/category-card/category-card.component";
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-brand-target-market',
@@ -17,7 +18,7 @@ import { CategoryCardComponent } from "../choose-category/category-card/category
 })
 export class BrandTargetMarketComponent implements OnInit {
 
-  newUser: SignupUser;
+  newUser: SignupBrand;
   targetForm!: FormGroup;
     submitted = false;
 
@@ -30,7 +31,8 @@ export class BrandTargetMarketComponent implements OnInit {
     private locationService: LocationService,
     private genderService: GenderService,
     private ageService: AgeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.newUser = navigation?.extras.state?.['newUser'];
@@ -102,11 +104,19 @@ export class BrandTargetMarketComponent implements OnInit {
 
 
   onSubmit() {
-    this.newUser.targetLocation = this.targetForm.get('targetLocation')?.value;
-    this.newUser.targetAgeRange = this.targetForm.get('targetAge')?.value;
+    this.newUser.targetLocation = (this.targetForm.get('targetLocation')?.value);
+    this.newUser.targetAgeRange = (this.targetForm.get('targetAge')?.value);
     this.newUser.targetGender = this.selectedGender;
 
     console.log(this.newUser);
+
+    this.userService.signUpBrand(this.newUser).subscribe(
+      (data) => {
+        // redirect ke login
+        this.router.navigate(['/login/brand'], {state: { status: "success"}});
+      }
+    )
+
   }
 
   prevStep(): void {

@@ -31,7 +31,7 @@
             <label for="name" class="inputLabel text-font-darkGrey">Name</label>
             <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
             <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['name'].touched|| submitted) && profileFormControl['name'].errors?.['required']">Name is required</span>
-            
+
           </div>
 
 
@@ -50,6 +50,7 @@
           <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
 
           <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exists</span>
           </div>
 
 

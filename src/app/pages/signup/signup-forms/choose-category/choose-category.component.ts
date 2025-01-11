@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../services/category.service';
 import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from "./category-card/category-card.component";
-import { SignupUser } from '../../../../models/signup-user';
+import { SignupBrand } from '../../../../models/signup-brand';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ChooseCategoryComponent implements OnInit {
 
-  newUser: SignupUser;
+  newUser: SignupBrand;
   submitted = false;
 
   constructor(private router: Router, private categoryService: CategoryService) {

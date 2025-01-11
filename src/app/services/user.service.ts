@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { URLSearchParams } from 'url';
 import { environment } from '../../environments/environment';
+import { SignupBrand } from '../models/signup-brand';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,17 @@ export class UserService {
   sendToken(token: string):Observable<object>{
     console.log(token);
     return this.httpClient.post(this.baseUrl + "/user/token",{token});
+  }
+
+  signUpBrand(request: SignupBrand): Observable<object> {
+
+    return this.httpClient.post(this.baseUrl + "/user/brand/signup",request);
+  }
+
+  validateEmail(request: String): Observable<string> {
+    return this.httpClient.get(this.baseUrl + "/user/validation/email/" + request, {
+      responseType: 'text'
+    });
   }
 
 }

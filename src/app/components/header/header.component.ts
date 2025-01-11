@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   isDropdownVisible: boolean = false;
 
   toggleDropdown(event: MouseEvent): void {
@@ -22,6 +22,16 @@ export class HeaderComponent {
     // Close the dropdown if clicking outside
     this.isDropdownVisible = false;
   }
+
+  userId!: any;
+
+  ngOnInit(): void {
+    this.userId = localStorage.getItem('user_id');
+  }
+
+
+  // buat cek udh login ato blum
+
 
 
 }
