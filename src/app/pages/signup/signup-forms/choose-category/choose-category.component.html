@@ -1,11 +1,11 @@
 <div class="container bg-background p-5">
   <h1 class="text-header2 font-semibold text-center mb-3 ">Choose your campaign category</h1>
-  <p class="text-header6 text-font-darkGrey text-center" *ngIf="this.newUser?.userType === 'brand'">You can choose 1 category</p>
+  <p class="text-header6 text-font-darkGrey text-center" *ngIf="this.userType === 'brand'">You can choose 1 category</p>
   <p class="text-[0.75rem] text-primary-red text-center" *ngIf="submitted && selectedCategories.length == 0">No category selected yet</p>
-  <p class="text-header6 text-font-darkGrey text-center" *ngIf="this.newUser?.userType === 'influencer'">You can choose up to 5 categories</p>
+  <p class="text-header6 text-font-darkGrey text-center" *ngIf="this.userType === 'influencer'">You can choose up to 5 categories</p>
   <div class="container grid grid-cols-6 gap-5 mt-10 w-10/12 mx-auto">
     <div *ngFor="let item of categories">
-      <app-category-card [id]="item.id" [label]="item.label" [logo]="item.logo" [isSelected]="isSelected(item.id)" (categorySelected)="checkMaxLimit($event)"></app-category-card>
+      <app-category-card [id]="item.id" [label]="item.label" [logo]="item.logo" [activeLogo]="item.active_logo" [isSelected]="isSelected(item.id)" (categorySelected)="checkMaxLimit($event)"></app-category-card>
     </div>
   </div>
   <div class="flex gap-3 mx-auto justify-end w-10/12 mt-10">

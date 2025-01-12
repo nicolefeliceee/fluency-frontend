@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from "./category-card/category-card.component";
 import { SignupBrand } from '../../../../models/signup-brand';
 import { Router } from '@angular/router';
+import { SignupInfluencer } from '../../../../models/signup-influencer';
 
 @Component({
   selector: 'app-choose-category',
@@ -14,12 +15,22 @@ import { Router } from '@angular/router';
 })
 export class ChooseCategoryComponent implements OnInit {
 
-  newUser: SignupBrand;
+  newBrand: SignupBrand | null = null;
+  newInfluencer: SignupInfluencer | null = null;
+  userType: string;
   submitted = false;
 
   constructor(private router: Router, private categoryService: CategoryService) {
     const navigation = this.router.getCurrentNavigation();
-    this.newUser = navigation?.extras.state?.['newUser'];
+    this.userType = navigation?.extras.state?.['userType'];
+
+    if (this.userType === "brand") {
+      this.newBrand = navigation?.extras.state?.['newUser'];
+      this.selectedCategories = this.newBrand!.category;
+    } else {
+      this.newInfluencer = navigation?.extras.state?.['newUser'];
+      this.selectedCategories = this.newInfluencer!.category;
+    }
   }
 
   categories!: any[];
@@ -35,6 +46,7 @@ export class ChooseCategoryComponent implements OnInit {
         console.log(error);
       }
     )
+
   }
 
   checkMaxLimit(categoryId: number) {
@@ -43,13 +55,13 @@ export class ChooseCategoryComponent implements OnInit {
       this.selectedCategories.splice(this.selectedCategories.indexOf(categoryId), 1);
     } else {
       // brand
-      if (this.newUser?.userType === 'brand') {
+      if (this.userType === 'brand') {
         if (this.selectedCategories?.length >= 1) {
           console.log("max")
         } else {
           this.selectedCategories?.push(categoryId);
         }
-      } else if (this.newUser?.userType === 'influencer'){
+      } else if (this.userType === 'influencer'){
         if (this.selectedCategories?.length >= 5) {
           console.log("max")
         } else {
@@ -80,20 +92,32 @@ export class ChooseCategoryComponent implements OnInit {
       return;
     }
 
-    this.newUser.category = this.selectedCategories;
+    // this.newUser.category = this.selectedCategories;
 
-    if (this.newUser?.userType === 'brand') {
-      this.router.navigate(['/signup/brand/target'],  { state: { newUser: this.newUser } });
+    if (this.userType === 'brand') {
+      if (this.newBrand) {
+        this.newBrand.category = this.selectedCategories;
+      }
+      this.router.navigate(['/signup/brand/target'],  { state: { newUser: this.newBrand } });
     } else {
-      this.router.navigate(['/signup/influencer/rate-card'],  { state: { newUser: this.newUser } });
+      if (this.newInfluencer) {
+        this.newInfluencer.category = this.selectedCategories;
+      }
+      this.router.navigate(['/signup/influencer/rate-card'],  { state: { newUser: this.newInfluencer } });
     }
   }
 
   prevStep(): void {
-    if (this.newUser?.userType === 'brand') {
-      this.router.navigate(['/signup/brand/profile'],  { state: { newUser: this.newUser } });
+    if (this.userType === 'brand') {
+      if (this.newBrand) {
+        this.newBrand.category = this.selectedCategories;
+      }
+      this.router.navigate(['/signup/brand/profile'],  { state: { newUser: this.newBrand } });
     } else {
-      this.router.navigate(['/signup/influencer/profile'],  { state: { newUser: this.newUser } });
+      if (this.newInfluencer) {
+        this.newInfluencer.category = this.selectedCategories;
+      }
+      this.router.navigate(['/signup/influencer/profile'],  { state: { newUser: this.newInfluencer } });
     }
   }
 

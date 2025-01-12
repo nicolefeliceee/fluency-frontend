@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../services/user.service';
 import { error } from 'console';
 import { Router } from '@angular/router';
+import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
+import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,FormsModule,HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, AlertErrorComponent, AlertSuccessComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,6 +21,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   signUpSuccess: boolean = false;
+  loginError: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {
     const navigation = this.router.getCurrentNavigation();
@@ -30,15 +33,15 @@ export class LoginComponent {
   }
 
   userLogin(){
-    // console.log(this.email);
-    // console.log(this.password);
+
     this.userService.loginUser(this.email, this.password).subscribe(
       (data) => {
         console.log(data);
         localStorage.setItem('user_id', (data as any)['id']);
+        localStorage.setItem('name', (data as any)['name']);
         this.router.navigate(['/home']);
       },error=>{
-        console.log(error)
+        this.loginError = true;
       });
   }
 

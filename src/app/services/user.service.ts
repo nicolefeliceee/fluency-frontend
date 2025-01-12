@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { URLSearchParams } from 'url';
 import { environment } from '../../environments/environment';
 import { SignupBrand } from '../models/signup-brand';
+import { SignupInfluencer } from '../models/signup-influencer';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,14 @@ export class UserService {
   }
 
   // bagian ini untuk menredirect ke oauth
-  private clientId="1204386434205570";
+  private clientId = "1204386434205570";
+  private clientSecret = "03d0a9d4deadbfade7659460dee897c1";
   private redirect="http://localhost:4200/login/interceptor";
   private scope="instagram_basic,instagram_content_publish,instagram_manage_comments,instagram_manage_insights,instagram_shopping_tag_products,pages_show_list,pages_read_engagement";
   private responseType="token";
-  private oauthUrl="https://www.facebook.com/v21.0/dialog/oauth";
+  private oauthUrl = "https://www.facebook.com/v21.0/dialog/oauth";
+  private grantType = "fb_exchange_token";
+  private accessTokenUrl = "https://graph.facebook.com/v21.0/oauth/access_token";
 
   loginInfluencer(){
     const authUrl = `${this.oauthUrl}?
@@ -45,15 +49,41 @@ export class UserService {
   // bagian ini untuk mendapatkan longlivedtoken
   longLivedToken: string | null = null;
 
+  accessToken: string | null = null;
+
   getToken(){
     const fragment = window.location.hash.substring(1);
+    console.log(fragment);
     const params = new window.URLSearchParams(fragment);
 
-    this.longLivedToken = params.get('long_lived_token');
+    console.log(params);
+    this.accessToken = params.get('access_token');
+    console.log(params.get('access_token'));
+
+    this.getLongLivedToken().subscribe(
+      (data) => {
+        console.log(data);
+        localStorage.setItem('long_lived_token', (data as any)['access_token']);
+      }
+    );
 
     // console.log(this.longLivedToken);
-    localStorage.setItem('long_lived_token', this.longLivedToken || '');
     // console.log(localStorage.getItem('long_lived_token'));
+  }
+
+  getLongLivedToken() {
+    let params = new HttpParams();
+    params = params.append('grant_type', this.grantType);
+    params = params.append('client_id', this.clientId);
+    params = params.append('client_secret', this.clientSecret);
+    params = params.append('fb_exchange_token', this.accessToken || '');
+
+    console.log(params);
+
+    return this.httpClient.get(this.accessTokenUrl, {
+      params: params
+    });
+
   }
 
   // bagian ini untuk kirim token ke backend
@@ -64,14 +94,21 @@ export class UserService {
   }
 
   signUpBrand(request: SignupBrand): Observable<object> {
-
     return this.httpClient.post(this.baseUrl + "/user/brand/signup",request);
+  }
+
+  signUpInfluencer(request: SignupInfluencer): Observable<object> {
+    return this.httpClient.post(this.baseUrl + "/user/influencer/signup",request);
   }
 
   validateEmail(request: String): Observable<string> {
     return this.httpClient.get(this.baseUrl + "/user/validation/email/" + request, {
       responseType: 'text'
     });
+  }
+
+  getProfile(userId: string): Observable<object> {
+    return this.httpClient.get(this.baseUrl + "/user/profile/" + userId);
   }
 
 }

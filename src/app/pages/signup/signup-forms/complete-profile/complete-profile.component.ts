@@ -52,6 +52,14 @@ export class CompleteProfileComponent implements OnInit{
       password: ['', [Validators.required, Validators.minLength(8)]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
     });
+
+    this.profileForm.setValue({
+      name: this.newUser.name,
+      email:this.newUser.email,
+      location:this.newUser.location,
+      password:this.newUser.password,
+      phone:this.newUser.phone
+    })
   }
 
   get profileFormControl() {
@@ -88,6 +96,21 @@ export class CompleteProfileComponent implements OnInit{
 
     let email = this.profileForm.get('email')?.value;
 
+    if (!this.newUser) {
+      this.newUser = new SignupBrand(
+        "brand",
+        "",
+        "",
+        "",
+        "",
+        "",
+        [],
+        [],
+        [],
+        [],
+      )
+    }
+
     // jika email udh diisi, validasi email
     if (email !== "") {
       this.userService.validateEmail(email).subscribe(
@@ -116,11 +139,13 @@ export class CompleteProfileComponent implements OnInit{
 
   nextStep(): void {
 
-      if (this.newUser?.userType === 'brand') {
-        this.router.navigate(['/signup/brand/category'], { state: { newUser: this.newUser } });
-      } else {
-        this.router.navigate(['/signup/influencer/category'],  { state: { newUser: this.newUser } });
-      }
+    console.log(this.newUser.userType);
+
+    if (this.newUser?.userType === 'brand') {
+      this.router.navigate(['/signup/brand/category'], { state: { newUser: this.newUser, userType: "brand" } });
+    } else {
+      this.router.navigate(['/signup/influencer/category'],  { state: { newUser: this.newUser, userType: "influencer" } });
+    }
 
 
   }
@@ -128,37 +153,5 @@ export class CompleteProfileComponent implements OnInit{
   prevStep(): void {
     this.router.navigate(['/signup']);
   }
-
-  async validateEmail(): Promise<boolean> {
-
-    let email = this.profileForm.get('email')?.value;
-
-    if (email === "") {
-      return true;
-    }
-
-    await this.userService.validateEmail(email).subscribe(
-      (data) => {
-        console.log(data);
-        if (data.length == 0) {
-          console.log("masuk true");
-          return true;
-        } else {
-          console.log("masuk false");
-          return false;
-        }
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
-    console.log("keluar if");
-
-    return false;
-  }
-
-
-
-
 
 }

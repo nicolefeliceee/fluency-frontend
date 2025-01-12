@@ -9,8 +9,9 @@
       </span>
    </div>
 
-  <img [src]="'../../../../../../assets'+logo" class="mx-auto object-cover w-1/3" alt="">
+  <img *ngIf="!isSelected" [src]="'../../../../../../assets'+logo" class="mx-auto object-cover w-1/3" alt="">
+  <img *ngIf="isSelected" [src]="'../../../../../../assets'+activeLogo" class="mx-auto object-cover w-1/3" alt="">
 
- <p class="text-header6 font-medium mt-4"> {{ label }}</p>
+ <p class="text-header6 font-medium mt-4" [ngClass]="{'text-blue-80': isSelected}"> {{ label }}</p>
 
 </div>

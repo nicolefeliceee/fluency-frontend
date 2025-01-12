@@ -1,0 +1,67 @@
+.inputContainer{
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  /* background-color: #494F50; */
+  /* width: fit-content; */
+}
+
+#inputpass {
+  position: relative;
+}
+
+.inputLabel{
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.inputBox{
+  background-color: white;
+  /* width: 19rem; */
+  height: 2.69rem;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-bottom: 2px;
+  font-size: 0.85rem;
+  /* position: relative; */
+}
+
+#inputBoxPhone{
+  background-color: white;
+  /* width: 21rem; */
+  height: 2.69rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  /* position: relative; */
+}
+
+.phonePrefix {
+  width: 3rem;
+  background-color: #DFE1E2;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.inputBox::placeholder{
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgb(148, 156, 158, 0.5);
+}
+
+#phone::placeholder{
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgb(148, 156, 158, 0.5);
+}
+
+.inputBox:focus{
+  outline: 1px solid #494F50;
+}
+
+.eyeIcon{
+  position: absolute;
+  right:10px;
+  top: 50%;
+  /* left: 67.8rem;
+  top: 22.5rem; */
+}

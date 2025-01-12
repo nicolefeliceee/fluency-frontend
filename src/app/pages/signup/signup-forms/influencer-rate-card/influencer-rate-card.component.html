@@ -1,6 +1,59 @@
-<div class="container bg-background p-5">
+<div class="container bg-background p-5 justify-items-center">
   <h1 class="text-header2 font-semibold text-center mb-3 ">Complete your rate card</h1>
-  <p class="text-header6 text-font-darkGrey text-center" *ngIf="this.newUser?.userType === 'influencer'">Choose your available type of campaign and complete your rate card</p>
+  <p class="text-header6 text-font-darkGrey text-center mb-10">Choose your available type of campaign and complete your rate card</p>
+
+
+  <div class="w-5/12  px-5 bg-font-white content-center py-3 rounded-xl shadow-md">
+    <div class="flex justify-between ">
+      <p class="content-center">Feeds</p>
+      <button type="button" class="hs-collapse-toggle py-1 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent hover:bg-font-lightGrey/50  focus:outline-none disabled:opacity-50 disabled:pointer-events-none" id="hs-basic-collapse" aria-expanded="false" aria-controls="hs-basic-collapse-heading-feeds" data-hs-collapse="#hs-basic-collapse-heading-feeds">+</button>
+    </div>
+    <div id="hs-basic-collapse-heading-feeds" class="hs-collapse hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-collapse">
+      <div class="mt-1 pt-2 border-t-[1px] border-t-font-lightGrey/50">
+        <div class="inputContainer">
+          <div class="flex">
+            <div class="text-center content-center bg-font-lightGrey/50 p-2 px-5 rounded-l-md">Rp</div>
+            <input type="number" id="price-input" name="feedPrice" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Price" required [(ngModel)]="feedPrice">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-5/12 mt-5 px-5 bg-font-white content-center py-3 rounded-xl shadow-md">
+    <div class="flex justify-between ">
+      <p class="content-center">Reels</p>
+      <button type="button" class="hs-collapse-toggle py-1 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent hover:bg-font-lightGrey/50  focus:outline-none disabled:opacity-50 disabled:pointer-events-none" id="hs-basic-collapse" aria-expanded="false" aria-controls="hs-basic-collapse-heading-reels" data-hs-collapse="#hs-basic-collapse-heading-reels">+</button>
+    </div>
+    <div id="hs-basic-collapse-heading-reels" class="hs-collapse hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-collapse">
+      <div class="mt-1 pt-2 border-t-[1px] border-t-font-lightGrey/50">
+        <div class="inputContainer">
+          <div class="flex">
+            <div class="text-center content-center bg-font-lightGrey/50 p-2 px-5 rounded-l-md">Rp</div>
+            <input type="number" id="price-input" name="feedPrice" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Price" required [(ngModel)]="reelPrice">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-5/12 mt-5 px-5 bg-font-white content-center py-3 rounded-xl shadow-md">
+    <div class="flex justify-between ">
+      <p class="content-center">Story</p>
+      <button type="button" class="hs-collapse-toggle py-1 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent hover:bg-font-lightGrey/50  focus:outline-none disabled:opacity-50 disabled:pointer-events-none" id="hs-basic-collapse" aria-expanded="false" aria-controls="hs-basic-collapse-heading" data-hs-collapse="#hs-basic-collapse-heading">+</button>
+    </div>
+    <div id="hs-basic-collapse-heading" class="hs-collapse hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-collapse">
+      <div class="mt-1 pt-2 border-t-[1px] border-t-font-lightGrey/50">
+        <div class="inputContainer">
+          <div class="flex">
+            <div class="text-center content-center bg-font-lightGrey/50 p-2 px-5 rounded-l-md">Rp</div>
+            <input type="number" id="price-input" name="feedPrice" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Price" required [(ngModel)]="storyPrice">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="flex gap-3 mx-auto justify-end w-10/12 mt-10">
 

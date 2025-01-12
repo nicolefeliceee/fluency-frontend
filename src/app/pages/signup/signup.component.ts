@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { SignupBrand } from '../../models/signup-brand';
 import { state } from '@angular/animations';
+import { SignupInfluencer } from '../../models/signup-influencer';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +17,7 @@ import { state } from '@angular/animations';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   selectedOption: string | null = null;
 
@@ -25,8 +27,8 @@ export class SignupComponent {
     this.selectedOption = option;
   }
 
-  newUser: SignupBrand = new SignupBrand(
-    "",
+  newBrand: SignupBrand = new SignupBrand(
+    "brand",
     "",
     "",
     "",
@@ -40,11 +42,11 @@ export class SignupComponent {
 
   signUp() {
     if (this.selectedOption === "brand") {
-      this.newUser.userType = "brand";
       // redirect ke page complete profile
-      this.router.navigate(['/signup/brand/profile'], { state: { newUser: this.newUser } });
+      this.router.navigate(['/signup/brand/profile'], { state: { newUser: this.newBrand } });
     } else if(this.selectedOption === "influencer") {
       // redirect ke api instagram
+      this.userService.loginInfluencer();
     }
   }
 

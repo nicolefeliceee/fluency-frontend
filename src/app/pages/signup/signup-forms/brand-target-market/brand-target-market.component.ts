@@ -73,8 +73,14 @@ export class BrandTargetMarketComponent implements OnInit {
     this.targetForm = this.fb.group({
           targetLocation: ['', Validators.required],
           targetAge: ['', [Validators.required]],
-          targetGender: ['', [Validators.required]],
-        });
+    });
+
+    this.targetForm.setValue({
+      targetLocation: this.newUser.targetLocation,
+      targetAge: this.newUser.targetAgeRange
+    });
+
+    this.selectedGender = this.newUser.targetGender
   }
 
   selectedGender: any[] = [];
@@ -102,6 +108,7 @@ export class BrandTargetMarketComponent implements OnInit {
     }
   }
 
+  signUpError: boolean = false;
 
   onSubmit() {
     this.newUser.targetLocation = (this.targetForm.get('targetLocation')?.value);
@@ -114,14 +121,21 @@ export class BrandTargetMarketComponent implements OnInit {
       (data) => {
         // redirect ke login
         this.router.navigate(['/login/brand'], {state: { status: "success"}});
+      },
+      (error) => {
+        this.signUpError = true;
       }
     )
 
   }
 
   prevStep(): void {
+    this.newUser.targetAgeRange = this.targetForm.get('targetAge')?.value;
+    this.newUser.targetLocation = this.targetForm.get('targetLocation')?.value;
+    this.newUser.targetGender = this.selectedGender;
+    console.log(this.newUser);
     if (this.newUser?.userType === 'brand') {
-      this.router.navigate(['/signup/brand/category'],  { state: { newUser: this.newUser } });
+      this.router.navigate(['/signup/brand/category'],  { state: { newUser: this.newUser, userType: "brand" } });
     }
   }
 }

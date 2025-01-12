@@ -1,0 +1,98 @@
+<div class="container bg-background p-5">
+  <h1 class="text-header2 font-semibold text-center mb-7 ">Complete Your Profile</h1>
+  <div class="container p-5">
+    <form class="p-5" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex w-10/12 mx-auto">
+        <div class="basis-1/4">
+          <div class="m-0 p-0 relative me-5">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Picture" class="mx-auto w-5/6 h-5/6 rounded-full object-cover mb-4 border-[6px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+            <img *ngIf="!imagePreview" src="../../../../../assets/images/empty profile pic.png" alt="Profile Picture" class="w-5/6 h-5/6 rounded-full object-cover mb-4 ">
+
+            <div class="text-header3 font-semibold text-center">{{'@'+ username }}</div>
+
+          </div>
+
+
+        </div>
+        <div class="basis-3/4 grid grid-cols-2 gap-x-7 ">
+          <div class="inputContainer">
+            <label for="name" class="inputLabel text-font-darkGrey">Name</label>
+            <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['name'].touched|| submitted) && profileFormControl['name'].errors?.['required']">Name is required</span>
+
+          </div>
+
+
+          <div class="inputContainer">
+            <label for="location" class="inputLabel text-font-darkGrey">Gender</label>
+            <select class="inputBox" name="gender" id="gender" formControlName="gender" required>
+              <option *ngFor="let item of genderOptions" [value]="item.id">{{ item.label }}</option>
+            </select>
+
+            <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['gender'].touched|| submitted) && profileFormControl['gender'].errors?.['required']">Gender is required</span>
+          </div>
+
+          <div class="inputContainer">
+            <label for="email" class="inputLabel text-font-darkGrey">Email</label>
+          <input type="email" id="email" name="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com" required formControlName="email">
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
+
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+          <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exists</span>
+          </div>
+
+
+
+          <div class="inputContainer">
+            <label for="phone" class="inputLabel text-font-darkGrey">Contact Person</label>
+            <div class="flex" id="inputBoxPhone">
+              <div class="phonePrefix text-center content-center">+62</div>
+              <input type="phone" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Phone number" required formControlName="phone">
+            </div>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['required']">Phone number is required</span>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['pattern']">Invalid phone number</span>
+          </div>
+
+          <div class="inputContainer" id="inputpass">
+            <label for="dob" class="inputLabel text-font-darkGrey">Date of Birth</label>
+            <input type="date" id="dob" name="dob" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="Date of Birth" required formControlName="dob">
+            <div class="eyeIcon eyeVisible">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.5 9C1.5 6.17175 1.5 4.75725 2.379 3.879C3.258 3.00075 4.67175 3 7.5 3H10.5C13.3282 3 14.7427 3 15.621 3.879C16.4992 4.758 16.5 6.17175 16.5 9V10.5C16.5 13.3282 16.5 14.7427 15.621 15.621C14.742 16.4992 13.3282 16.5 10.5 16.5H7.5C4.67175 16.5 3.25725 16.5 2.379 15.621C1.50075 14.742 1.5 13.3282 1.5 10.5V9Z" stroke="#494F50"/>
+                <path d="M5.25 3V1.875M12.75 3V1.875M1.875 6.75H16.125" stroke="#494F50" stroke-linecap="round"/>
+                <path d="M13.5 12.75C13.5 12.9489 13.421 13.1397 13.2803 13.2803C13.1397 13.421 12.9489 13.5 12.75 13.5C12.5511 13.5 12.3603 13.421 12.2197 13.2803C12.079 13.1397 12 12.9489 12 12.75C12 12.5511 12.079 12.3603 12.2197 12.2197C12.3603 12.079 12.5511 12 12.75 12C12.9489 12 13.1397 12.079 13.2803 12.2197C13.421 12.3603 13.5 12.5511 13.5 12.75ZM13.5 9.75C13.5 9.94891 13.421 10.1397 13.2803 10.2803C13.1397 10.421 12.9489 10.5 12.75 10.5C12.5511 10.5 12.3603 10.421 12.2197 10.2803C12.079 10.1397 12 9.94891 12 9.75C12 9.55109 12.079 9.36032 12.2197 9.21967C12.3603 9.07902 12.5511 9 12.75 9C12.9489 9 13.1397 9.07902 13.2803 9.21967C13.421 9.36032 13.5 9.55109 13.5 9.75ZM9.75 12.75C9.75 12.9489 9.67098 13.1397 9.53033 13.2803C9.38968 13.421 9.19891 13.5 9 13.5C8.80109 13.5 8.61032 13.421 8.46967 13.2803C8.32902 13.1397 8.25 12.9489 8.25 12.75C8.25 12.5511 8.32902 12.3603 8.46967 12.2197C8.61032 12.079 8.80109 12 9 12C9.19891 12 9.38968 12.079 9.53033 12.2197C9.67098 12.3603 9.75 12.5511 9.75 12.75ZM9.75 9.75C9.75 9.94891 9.67098 10.1397 9.53033 10.2803C9.38968 10.421 9.19891 10.5 9 10.5C8.80109 10.5 8.61032 10.421 8.46967 10.2803C8.32902 10.1397 8.25 9.94891 8.25 9.75C8.25 9.55109 8.32902 9.36032 8.46967 9.21967C8.61032 9.07902 8.80109 9 9 9C9.19891 9 9.38968 9.07902 9.53033 9.21967C9.67098 9.36032 9.75 9.55109 9.75 9.75ZM6 12.75C6 12.9489 5.92098 13.1397 5.78033 13.2803C5.63968 13.421 5.44891 13.5 5.25 13.5C5.05109 13.5 4.86032 13.421 4.71967 13.2803C4.57902 13.1397 4.5 12.9489 4.5 12.75C4.5 12.5511 4.57902 12.3603 4.71967 12.2197C4.86032 12.079 5.05109 12 5.25 12C5.44891 12 5.63968 12.079 5.78033 12.2197C5.92098 12.3603 6 12.5511 6 12.75ZM6 9.75C6 9.94891 5.92098 10.1397 5.78033 10.2803C5.63968 10.421 5.44891 10.5 5.25 10.5C5.05109 10.5 4.86032 10.421 4.71967 10.2803C4.57902 10.1397 4.5 9.94891 4.5 9.75C4.5 9.55109 4.57902 9.36032 4.71967 9.21967C4.86032 9.07902 5.05109 9 5.25 9C5.44891 9 5.63968 9.07902 5.78033 9.21967C5.92098 9.36032 6 9.55109 6 9.75Z" fill="#494F50"/>
+                </svg>
+            </div>
+            <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['dob'].touched|| submitted) && profileFormControl['dob'].errors?.['required']">Date of birth is required</span>
+          </div>
+
+          <div class="inputContainer">
+            <label for="location" class="inputLabel text-font-darkGrey">Location</label>
+            <select class="inputBox" name="location" id="location" formControlName="location" required>
+              <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
+            </select>
+
+            <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['location'].touched|| submitted) && profileFormControl['location'].errors?.['required']">Location is required</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flex gap-3 justify-end mt-10 w-10/12 mx-auto">
+        <button (click)="prevStep()" class=" bg-font-white text-header6 text-blue-80 border-[1px] border-blue-80 font-semibold flex py-3 px-7 rounded-xl"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.5293 15.4698C10.603 15.5385 10.6621 15.6213 10.7031 15.7133C10.7441 15.8053 10.7662 15.9046 10.7679 16.0053C10.7697 16.106 10.7512 16.2061 10.7135 16.2994C10.6757 16.3928 10.6196 16.4777 10.5484 16.5489C10.4772 16.6201 10.3923 16.6762 10.2989 16.714C10.2055 16.7517 10.1055 16.7702 10.0048 16.7684C9.90412 16.7667 9.8048 16.7446 9.7128 16.7036C9.6208 16.6626 9.538 16.6035 9.46934 16.5298L5.46934 12.5298C5.32889 12.3892 5.25 12.1986 5.25 11.9998C5.25 11.8011 5.32889 11.6105 5.46934 11.4698L9.46934 7.46985C9.538 7.39616 9.6208 7.33706 9.7128 7.29607C9.8048 7.25507 9.90412 7.23303 10.0048 7.23126C10.1055 7.22948 10.2055 7.248 10.2989 7.28572C10.3923 7.32344 10.4772 7.37959 10.5484 7.45081C10.6196 7.52203 10.6757 7.60686 10.7135 7.70025C10.7512 7.79364 10.7697 7.89367 10.7679 7.99437C10.7662 8.09507 10.7441 8.19439 10.7031 8.28638C10.6621 8.37838 10.603 8.46118 10.5293 8.52985L7.80934 11.2498L17.4993 11.2498C17.6983 11.2498 17.889 11.3289 18.0297 11.4695C18.1703 11.6102 18.2493 11.8009 18.2493 11.9998C18.2493 12.1988 18.1703 12.3895 18.0297 12.5302C17.889 12.6708 17.6983 12.7498 17.4993 12.7498L7.80934 12.7498L10.5293 15.4698Z" fill="#5876F9"/>
+          </svg>
+           Previous
+          </button>
+
+
+
+        <button type="submit" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Next <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.4707 8.53015C13.397 8.46149 13.3379 8.37869 13.2969 8.28669C13.2559 8.19469 13.2338 8.09538 13.2321 7.99468C13.2303 7.89397 13.2488 7.79394 13.2865 7.70056C13.3243 7.60717 13.3804 7.52233 13.4516 7.45112C13.5228 7.3799 13.6077 7.32375 13.7011 7.28603C13.7945 7.24831 13.8945 7.22979 13.9952 7.23156C14.0959 7.23334 14.1952 7.25538 14.2872 7.29637C14.3792 7.33736 14.462 7.39647 14.5307 7.47015L18.5307 11.4702C18.6711 11.6108 18.75 11.8014 18.75 12.0002C18.75 12.1989 18.6711 12.3895 18.5307 12.5302L14.5307 16.5302C14.462 16.6038 14.3792 16.6629 14.2872 16.7039C14.1952 16.7449 14.0959 16.767 13.9952 16.7687C13.8945 16.7705 13.7945 16.752 13.7011 16.7143C13.6077 16.6766 13.5228 16.6204 13.4516 16.5492C13.3804 16.478 13.3243 16.3931 13.2865 16.2998C13.2488 16.2064 13.2303 16.1063 13.2321 16.0056C13.2338 15.9049 13.2559 15.8056 13.2969 15.7136C13.3379 15.6216 13.397 15.5388 13.4707 15.4702L16.1907 12.7502L6.50066 12.7502C6.30175 12.7502 6.11098 12.6711 5.97033 12.5305C5.82968 12.3898 5.75066 12.1991 5.75066 12.0002C5.75066 11.8012 5.82968 11.6105 5.97033 11.4698C6.11098 11.3292 6.30175 11.2502 6.50066 11.2502L16.1907 11.2502L13.4707 8.53015Z" fill="white"/>
+          </svg>
+          </button>
+
+      </div>
+    </form>
+  </div>
+</div>

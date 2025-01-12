@@ -11,8 +11,9 @@ import { CommonModule } from '@angular/common';
 export class CategoryCardComponent {
 
   @Input() label!: string;
-  @Input() logo!: string;
   @Input() id!: number;
+  @Input() logo!: string;
+  @Input() activeLogo!: string;
 
   @Input() isSelected: boolean = false;
 
