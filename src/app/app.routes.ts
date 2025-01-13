@@ -15,6 +15,8 @@ import { InfluencerCardComponent } from './components/influencer-card/influencer
 import { InfluencerRateCardComponent } from './pages/signup/signup-forms/influencer-rate-card/influencer-rate-card.component';
 import { ProfileBrandComponent } from './pages/profile-brand/profile-brand.component';
 import { CompleteProfileInfluencerComponent } from './pages/signup/signup-forms/complete-profile-influencer/complete-profile-influencer.component';
+import { ProjectComponent } from './pages/project/project.component';
+import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -33,5 +35,8 @@ export const routes: Routes = [
   { path: 'signup/influencer/profile', component: CompleteProfileInfluencerComponent },
   { path: 'signup/influencer/category', component: ChooseCategoryComponent },
   { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent },
-  {path:'profile-brand', component: ProfileBrandComponent}
+  {path:'profile-brand', component: ProfileBrandComponent},
+  {path:'project', component: ProjectComponent},
+  {path:'project/:id', component: ProjectDetailComponent},
+  {path:'project/create', component: ProjectDetailComponent}
 ];

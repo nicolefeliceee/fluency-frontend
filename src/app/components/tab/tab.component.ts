@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-tab',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './tab.component.html',
   styleUrl: './tab.component.css'
 })
 export class TabComponent {
+
+  @Input() options!: any[];
+
 
 }

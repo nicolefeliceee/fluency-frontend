@@ -93,7 +93,9 @@ export class UserService {
     return this.httpClient.post(this.baseUrl + "/user/token",{token});
   }
 
-  signUpBrand(request: SignupBrand): Observable<object> {
+  signUpBrand(request: Object): Observable<object> {
+    console.log("di service");
+    console.log(request);
     return this.httpClient.post(this.baseUrl + "/user/brand/signup",request);
   }
 

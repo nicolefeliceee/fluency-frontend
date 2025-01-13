@@ -1,0 +1,73 @@
+.bantu{
+  height: 3.7rem;
+}
+
+.bawah{
+  padding-left: 4.3%;
+  padding-right: 4.3%;
+}
+
+.kiri{
+  /* height: 50rem; */
+  width: 29.6%;
+  /* background-color: blue; */
+}
+
+.kanan{
+  width: 70.4%;
+  /* background-color: pink; */
+}
+
+.judul{
+  font-size: 1.6rem;
+}
+
+.line{
+  background-color: rgb(73, 79, 80, 0.3);
+}
+
+.filterChoice{
+  background-color: rgba(148, 156, 158, 0.1);
+}
+
+.filterChoice:hover{
+  background-color: #91A9FD;
+}
+
+.active-filter{
+  background-color: #91A9FD;
+  /* background-color: pink; */
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filterInput{
+  border: 1px solid rgb(73, 79, 80, 0.5);
+}
+
+.filterInput::placeholder{
+  color: rgba(148, 156, 158, 0.5);
+}
+
+input[type=number]:focus {
+  /* color: rgba(148, 156, 158, 0.5); */
+  border: 1px solid rgb(73, 79, 80);
+  outline: none;
+}
+
+.button{
+  width: 42%;
+  height: 2.8rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+
+

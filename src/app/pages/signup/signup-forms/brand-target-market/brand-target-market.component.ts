@@ -117,7 +117,7 @@ export class BrandTargetMarketComponent implements OnInit {
 
     console.log(this.newUser);
 
-    this.userService.signUpBrand(this.newUser).subscribe(
+    this.userService.signUpBrand(this.newUser as object).subscribe(
       (data) => {
         // redirect ke login
         this.router.navigate(['/login/brand'], {state: { status: "success"}});
