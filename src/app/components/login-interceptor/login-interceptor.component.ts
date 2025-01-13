@@ -18,27 +18,16 @@ export class LoginInterceptorComponent implements OnInit {
   newInfluencer!: SignupInfluencer;
 
 
-  ngOnInit() {
+  async ngOnInit() {
     // get tokennya
-    this.userService.getToken();
+    await this.userService.getToken();
 
     // kirim ke backend
     this.userService.sendToken(localStorage.getItem('long_lived_token') || '').subscribe(data => {
       console.log(data);
 
       this.newInfluencer = new SignupInfluencer(
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        [],
-        "",
-        "",
-        "",
-        (data as any)['instagram_id']
+        "","","","","","","",[],"","","",(data as any)['instagram_id']
       )
 
       // belum pernah signup
@@ -56,11 +45,9 @@ export class LoginInterceptorComponent implements OnInit {
       }
 
 
-
-
     },error=>{
       console.log(error)
-      this.router.navigate(['/signup/influencer/profile']);
+      this.router.navigate(['/signup']);
     });
 
   }
