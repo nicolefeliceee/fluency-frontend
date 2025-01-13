@@ -502,17 +502,6 @@ export class InfluencerComponent implements OnInit{
     return `${minConverted} - ${maxConverted}`;
   }
 
-  // export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const forbidden = nameRe.test(control.value);
-  //     return forbidden ? { forbiddenName: { value: control.value } } : null;
-  //   };
-  // }
-
-  // checkRange(min: number, max: number): boolean {
-  //   return max >= min; // Mengembalikan true jika max lebih besar dari min
-  // }
-
   // Fungsi untuk menangani submit form
   onSubmit(): void {
     if (this.filterForm.valid) {
