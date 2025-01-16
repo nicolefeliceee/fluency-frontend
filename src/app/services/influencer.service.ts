@@ -16,4 +16,10 @@ export class InfluencerService {
     return this.httpClient.post(this.baseUrl + "/influencer/filter",filters);
   }
 
+  sendSortOption(filters2: any): Observable<any> {
+    // console.log( { sort: sortValue } );
+    console.log(filters2);
+    return this.httpClient.post(this.baseUrl + "/influencer/sort", filters2);
+  }
+
 }

@@ -10,6 +10,7 @@ import { GenderService } from '../../services/gender.service';
 import { MediaTypeService } from '../../services/media-type.service';
 import { LocationService } from '../../services/location.service';
 import { InfluencerService } from '../../services/influencer.service';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-influencer',
@@ -32,7 +33,25 @@ export class InfluencerComponent implements OnInit{
   filterForm!: FormGroup;
 
 
+  selectedFilters2 = {
+    followers2: [] as string[],
+    media2: [] as string[],
+    // engagement: [] as string[],
+    gender2: [] as string[],
+    age2: [] as string[],
+    price2: [] as string[],
+    rating2: [] as string[],
+    location2: [] as string[],
+    genderAudience2: [] as string[],
+    ageAudience2: [] as string[],
+    sort: [] as number[]
+    // locationAudience: [] as string[]
+  };
+
+
+
   ngOnInit(): void {
+    // this.loadInfluencers();
     this.initializeForm();
 
     this.locationService.getAllLocations().subscribe(
@@ -130,7 +149,7 @@ export class InfluencerComponent implements OnInit{
     rating: [] as string[],
     location: [] as string[],
     genderAudience: [] as string[],
-    ageAudience: [] as string[],
+    ageAudience: [] as string[]
     // locationAudience: [] as string[]
   };
 
@@ -165,7 +184,7 @@ export class InfluencerComponent implements OnInit{
       rating: [],
       location: [],
       genderAudience: [],
-      ageAudience: [],
+      ageAudience: []
       // locationAudience: []
     };
     select.setValue([]);
@@ -310,6 +329,7 @@ export class InfluencerComponent implements OnInit{
       this.cdr.detectChanges();
     }
     console.log("Updated Filters:", this.selectedFilters);
+    console.log("Ini selected filter2:", this.selectedFilters2);
 
   }
 
@@ -512,6 +532,20 @@ export class InfluencerComponent implements OnInit{
         // Mengirim data ke backend
         this.influencerService.sendFilter(this.selectedFilters).subscribe(
           response => {
+            // this.selectedFilters2 = this.selectedFilters;
+            console.log("disini selected filters2 ke ubah");
+            this.selectedFilters2 = {
+              followers2: [...this.selectedFilters.followers],
+              media2: [...this.selectedFilters.media],
+              gender2: [...this.selectedFilters.gender],
+              age2: [...this.selectedFilters.age],
+              price2: [...this.selectedFilters.price],
+              rating2: [...this.selectedFilters.rating],
+              location2: [...this.selectedFilters.location],
+              genderAudience2: [...this.selectedFilters.genderAudience],
+              ageAudience2: [...this.selectedFilters.ageAudience],
+              sort: [] // Pastikan sort selalu kosong
+            };
             console.log('Response from backend:', response);
             // Anda bisa mengarahkan user ke halaman lain atau memberi notifikasi berhasil
           },
@@ -520,8 +554,8 @@ export class InfluencerComponent implements OnInit{
             // Menangani error jika ada masalah dengan request
           }
         );
-
         console.log('Selected Filters:', this.selectedFilters);
+        console.log('Selected Filters2:', this.selectedFilters2);
       }
 
     } else {
@@ -529,7 +563,39 @@ export class InfluencerComponent implements OnInit{
     }
   }
 
+  // dari sini buat sort
+  isDropdownVisible: boolean = false;
 
+  toggleDropdown(event: MouseEvent): void {
+    // Toggle dropdownnya
+    event.stopPropagation();
+    this.isDropdownVisible = !this.isDropdownVisible;
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(): void {
+    // Close the dropdown if clicking outside
+    this.isDropdownVisible = false;
+  }
+
+  activeSortText: string = 'Popular'; // Default text
+  activeSortValue: number = 1; // Default sort value
+
+  selectSort(value: number, text: string): void {
+    this.activeSortText = text;
+    this.activeSortValue = value;
+    this.isDropdownVisible = false;
+    this.selectedFilters2.sort = [value];
+
+    // Send sort value to backend
+    this.influencerService.sendSortOption(this.selectedFilters2).subscribe(
+      (response) => {
+        console.log('Sort option sent successfully:', response);
+      },
+      (error) => {
+        console.error('Error sending sort option:', error);
+      }
+    );
+  }
 
 }
 

@@ -4,7 +4,7 @@
 <div class="bawah flex flex-row w-full mb-16">
   <div class="kiri">
     <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
-      <div class="judulKiri ms-1 font-semibold my-7 flex items-center">
+      <div class="judulKiri ms-1 font-semibold my-7 flex items-center relative">
         <div class="svgFilter">
           <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.5002 22.1356V9.26579M12.5002 4.72308V2.86475M12.5002 4.72308C13.1025 4.72308 13.6801 4.96233 14.1059 5.38819C14.5318 5.81406 14.771 6.39165 14.771 6.99391C14.771 7.59618 14.5318 8.17377 14.1059 8.59964C13.6801 9.0255 13.1025 9.26475 12.5002 9.26475C11.8979 9.26475 11.3203 9.0255 10.8945 8.59964C10.4686 8.17377 10.2294 7.59618 10.2294 6.99391C10.2294 6.39165 10.4686 5.81406 10.8945 5.38819C11.3203 4.96233 11.8979 4.72308 12.5002 4.72308ZM5.6179 22.1356V16.1481M5.6179 16.1481C5.0155 16.1481 4.43726 15.9083 4.01129 15.4823C3.58533 15.0563 3.34603 14.4786 3.34603 13.8762C3.34603 13.2739 3.58632 12.6963 4.01218 12.2705C4.43805 11.8446 5.01564 11.6054 5.6179 11.6054M5.6179 16.1481C6.2203 16.1481 6.79751 15.9083 7.22347 15.4823C7.64944 15.0563 7.88874 14.4786 7.88874 13.8762C7.88874 13.2739 7.64949 12.6963 7.22363 12.2705C6.79776 11.8446 6.22017 11.6054 5.6179 11.6054M5.6179 11.6054V2.86475M19.3825 22.1356V18.9012M19.3825 14.3585V2.86475M19.3825 14.3585C19.9847 14.3585 20.5623 14.5977 20.9882 15.0236C21.4141 15.4495 21.6533 16.0271 21.6533 16.6293C21.6533 16.9275 21.5946 17.2228 21.4805 17.4983C21.3663 17.7739 21.1991 18.0242 20.9882 18.2351C20.7773 18.4459 20.527 18.6132 20.2515 18.7273C19.976 18.8414 19.6807 18.9002 19.3825 18.9002C19.0843 18.9002 18.789 18.8414 18.5135 18.7273C18.238 18.6132 17.9876 18.4459 17.7768 18.2351C17.5659 18.0242 17.3986 17.7739 17.2845 17.4983C17.1704 17.2228 17.1117 16.9275 17.1117 16.6293C17.1117 16.0271 17.3509 15.4495 17.7768 15.0236C18.2026 14.5977 18.7802 14.3585 19.3825 14.3585Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
@@ -13,8 +13,10 @@
         <div class="filtertext ms-[6px] text-[1.05rem] font-semibold">Filters</div>
         <div class="line w-[2px] h-[25px] mx-2"></div>
         <div class="sortByText mt-[1px] text-[0.8rem] font-normal">Sort by : </div>
-        <div class="dropdownText ms-2 text-[1.1rem] font-semibold">Popular</div>
-        <div class="arrowSvg">
+        <div class="bantu2 flex items-center" (click)="toggleDropdown($event)">
+          <div class="dropdownText ms-2 text-[1.1rem] font-semibold">{{ activeSortText }}</div>
+          <div class="arrowSvg ms-1">
+        </div>
           <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_2532_731)">
             <path d="M11.6129 1.63466L12.3195 2.34199L8.46818 6.19466C8.40647 6.25676 8.33309 6.30605 8.25226 6.33968C8.17142 6.37331 8.08474 6.39063 7.99718 6.39063C7.90963 6.39063 7.82295 6.37331 7.74211 6.33968C7.66128 6.30605 7.5879 6.25676 7.52619 6.19466L3.67285 2.34199L4.37952 1.63532L7.99619 5.25132L11.6129 1.63466Z" fill="black"/>
@@ -25,6 +27,12 @@
             </clipPath>
             </defs>
             </svg>
+        </div>
+        <!-- <div class="dropdown3" *ngIf="isDropdownVisible"> -->
+        <div class="dropdown3" *ngIf="isDropdownVisible">
+          <a class="menu3" (click)="selectSort(1, 'Popular')">Popular</a>
+          <a class="menu3" (click)="selectSort(2, 'Price')">Price</a>
+          <a class="menu3" (click)="selectSort(3, 'Rating')">Rating</a>
         </div>
 
       </div>
