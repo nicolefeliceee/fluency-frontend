@@ -38,7 +38,7 @@ export class InfluencerComponent implements OnInit{
     this.locationService.getAllLocations().subscribe(
       (data) => {
         this.locations = data;
-        this.locationAudiences = data;
+        // this.locationAudiences = data;
       },
       (error) => {
         console.log(error);
@@ -79,7 +79,7 @@ export class InfluencerComponent implements OnInit{
       // multiple select influencer
       followers: [[]],
       media: [[]],
-      engagement: [[]],
+      // engagement: [[]],
       gender: [[]],
       age: [[]],
       price: [[]],
@@ -89,7 +89,7 @@ export class InfluencerComponent implements OnInit{
       // multiple select audience
       genderAudience: [[]],
       ageAudience: [[]],
-      locationAudience: [[]],
+      // locationAudience: [[]],
 
       // customize range
       minFollowers: [null],
@@ -110,7 +110,7 @@ export class InfluencerComponent implements OnInit{
 
   followerRanges = ['1k - 10k', '10k - 100k', '100k - 500k', '500k - 1000k', '> 1000k'];
   mediaTypes!: any[];
-  engagements = ['Low', 'Average', 'High'];
+  // engagements = ['Low', 'Average', 'High'];
   genders!: any[];
   ages = ['13 - 17', '18 - 35', '36 - 50', '> 50'];
   prices = ['< 200k', '200k - 500k', '500k - 1000k', '> 1000k'];
@@ -118,12 +118,12 @@ export class InfluencerComponent implements OnInit{
   locations!: any[];
   genderAudiences!: any[];
   ageAudiences!: any[];
-  locationAudiences!: any[];
+  // locationAudiences!: any[];
 
   selectedFilters = {
     followers: [] as string[],
     media: [] as string[],
-    engagement: [] as string[],
+    // engagement: [] as string[],
     gender: [] as string[],
     age: [] as string[],
     price: [] as string[],
@@ -131,7 +131,7 @@ export class InfluencerComponent implements OnInit{
     location: [] as string[],
     genderAudience: [] as string[],
     ageAudience: [] as string[],
-    locationAudience: [] as string[]
+    // locationAudience: [] as string[]
   };
 
 
@@ -140,8 +140,8 @@ export class InfluencerComponent implements OnInit{
   resetForm(){
     const selectLoc = document.querySelector('#selectLocation') as HTMLSelectElement;
     const select = window.HSSelect.getInstance(selectLoc);
-    const selectLocAud = document.querySelector('#selectLocationAudience') as HTMLSelectElement;
-    const selectLA = window.HSSelect.getInstance(selectLocAud);
+    // const selectLocAud = document.querySelector('#selectLocationAudience') as HTMLSelectElement;
+    // const selectLA = window.HSSelect.getInstance(selectLocAud);
     this.filterForm.reset({
       isUsingRangeFilter: false,
       minFollowers: null,
@@ -153,12 +153,12 @@ export class InfluencerComponent implements OnInit{
       minAgeAudience: null,
       maxAgeAudience: null,
       location: null,
-      locationAudience: null
+      // locationAudience: null
     });
     this.selectedFilters = {
       followers: [],
       media: [],
-      engagement: [],
+      // engagement: [],
       gender: [],
       age: [],
       price: [],
@@ -166,10 +166,10 @@ export class InfluencerComponent implements OnInit{
       location: [],
       genderAudience: [],
       ageAudience: [],
-      locationAudience: []
+      // locationAudience: []
     };
     select.setValue([]);
-    selectLA.setValue([]);
+    // selectLA.setValue([]);
     this.isUsingRangeFilter = false;
     this.isInvalidRangeFoll = false;
     this.isInvalidRangeAge = false;
@@ -211,15 +211,15 @@ export class InfluencerComponent implements OnInit{
       }
       this.cdr.detectChanges();
     }
-    else if (type === 'engagement') {
-      const index = this.selectedFilters.engagement.indexOf(value);
-      if (index > -1) {
-        this.selectedFilters.engagement.splice(index, 1);
-      } else {
-        this.selectedFilters.engagement.push(value);
-      }
-      this.cdr.detectChanges();
-    }
+    // else if (type === 'engagement') {
+    //   const index = this.selectedFilters.engagement.indexOf(value);
+    //   if (index > -1) {
+    //     this.selectedFilters.engagement.splice(index, 1);
+    //   } else {
+    //     this.selectedFilters.engagement.push(value);
+    //   }
+    //   this.cdr.detectChanges();
+    // }
     else if (type === 'gender') {
       const index = this.selectedFilters.gender.indexOf(value);
       if (index > -1) {
@@ -321,9 +321,9 @@ export class InfluencerComponent implements OnInit{
     if (type === 'media') {
       return this.selectedFilters.media.includes(value);
     }
-    else if (type === 'engagement') {
-      return this.selectedFilters.engagement.includes(value);
-    }
+    // else if (type === 'engagement') {
+    //   return this.selectedFilters.engagement.includes(value);
+    // }
     else if (type === 'gender') {
       return this.selectedFilters.gender.includes(value);
     }
@@ -455,23 +455,23 @@ export class InfluencerComponent implements OnInit{
         );
       }
     }
-    else if (type === 'locationAudience') {
-      const locationAudience = this.filterForm.get('locationAudience')?.value;
-      // Pastikan lokasi yang dipilih adalah array
-      if (Array.isArray(locationAudience)) {
-        // Iterasi setiap lokasi yang dipilih
-        locationAudience.forEach(locAud => {
-          // Jika lokasi belum ada dalam selectedFilters.location, tambahkan
-          if (!this.selectedFilters.locationAudience.includes(locAud)) {
-            this.selectedFilters.locationAudience.push(locAud);
-          }
-        });
-        // Hapus lokasi yang tidak ada di form (yaitu yang telah dihapus)
-        this.selectedFilters.locationAudience = this.selectedFilters.locationAudience.filter(
-          locAud => locationAudience.includes(locAud)
-        );
-      }
-    }
+    // else if (type === 'locationAudience') {
+    //   const locationAudience = this.filterForm.get('locationAudience')?.value;
+    //   // Pastikan lokasi yang dipilih adalah array
+    //   if (Array.isArray(locationAudience)) {
+    //     // Iterasi setiap lokasi yang dipilih
+    //     locationAudience.forEach(locAud => {
+    //       // Jika lokasi belum ada dalam selectedFilters.location, tambahkan
+    //       if (!this.selectedFilters.locationAudience.includes(locAud)) {
+    //         this.selectedFilters.locationAudience.push(locAud);
+    //       }
+    //     });
+    //     // Hapus lokasi yang tidak ada di form (yaitu yang telah dihapus)
+    //     this.selectedFilters.locationAudience = this.selectedFilters.locationAudience.filter(
+    //       locAud => locationAudience.includes(locAud)
+    //     );
+    //   }
+    // }
     console.log("Updated Filters:", this.selectedFilters);
 
   }
