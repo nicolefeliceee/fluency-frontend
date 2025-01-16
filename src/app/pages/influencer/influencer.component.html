@@ -63,7 +63,7 @@
           </div>
         </div>
         <!-- Ini filter by engagement -->
-        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+        <!-- <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
           <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Engagement</div>
           <div class="filterChoiceBox grid grid-cols-2 mt-2 gap-x-5 gap-y-2">
             <label *ngFor="let engagement of engagements">
@@ -72,7 +72,7 @@
               [ngClass]="{'active-filter': isFilterActive('engagement', engagement)}">{{ engagement }}</div>
             </label>
           </div>
-        </div>
+        </div> -->
         <!-- Ini filter by gender -->
         <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
           <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Gender</div>
@@ -197,10 +197,9 @@
           </div>
         </div>
         <!-- Ini filter by location (multiple select) -->
-        <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+        <!-- <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
           <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
           <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
-            <!-- <div class="filterChoice h-[2.2rem] font-normal text-[0.85rem] rounded-[14px] text-center content-center">1k - 10k</div> -->
             <select multiple="" id="selectLocationAudience" data-hs-select='{
               "placeholder": "Location",
               "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-[25px] overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
@@ -215,9 +214,8 @@
             }' class="hidden" name="" formControlName="locationAudience" (change)="onRangeInputChange('locationAudience')">
                   <option *ngFor="let locationAudience of locationAudiences" [value]="locationAudience.id">{{ locationAudience.label }}</option>
             </select>
-            <!-- End Select -->
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="end flex me-10 mt-6">
         <button type="reset" (click)="resetForm()" class="button border-blue-80 border-[1px] text-blue-80 font-semibold m-auto">Reset Filter</button>
