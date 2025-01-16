@@ -51,7 +51,7 @@ export class UserService {
 
   accessToken: string | null = null;
 
-  getToken(){
+  async getToken(){
     const fragment = window.location.hash.substring(1);
     console.log(fragment);
     const params = new window.URLSearchParams(fragment);
@@ -64,6 +64,8 @@ export class UserService {
       (data) => {
         console.log(data);
         localStorage.setItem('long_lived_token', (data as any)['access_token']);
+        console.log("latest long lived token");
+        console.log(localStorage.getItem('long_lived_token'));
       }
     );
 

@@ -6,6 +6,7 @@ import { ProjectService } from '../../services/project.service';
 import { CommonModule } from '@angular/common';
 import { ProjectCardComponent } from "./project-card/project-card.component";
 import { RouterLink } from '@angular/router';
+import { ProjectCreate } from '../../models/project-create';
 
 @Component({
   selector: 'app-project',

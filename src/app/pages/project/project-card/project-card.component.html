@@ -1,11 +1,11 @@
 <div class="bg-font-white rounded-2xl p-5">
 
-  <p class="text-body text-font-darkGrey">Brand name</p>
-  <p class="text-header5 font-semibold">Project title</p>
+  <p class="text-body text-font-darkGrey">{{ brandName }}</p>
+  <p class="text-header5 font-semibold">{{ project?.title }}</p>
   <div class="flex mt-1 h-10 gap-2">
-    <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p>
-    <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p>
-    <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p>
+    <p *ngFor="let item of mediaTypeUnique" class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">{{ item }}</p>
+    <!-- <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p>
+    <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p> -->
   </div>
   <div class="border-b border-b-font-lightGrey my-2"></div>
   <div class="flex p-2">

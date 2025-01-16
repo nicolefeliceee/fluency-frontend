@@ -98,16 +98,7 @@ export class CompleteProfileComponent implements OnInit{
 
     if (!this.newUser) {
       this.newUser = new SignupBrand(
-        "brand",
-        "",
-        "",
-        "",
-        "",
-        "",
-        [],
-        [],
-        [],
-        [],
+        "brand","","","","","",[],[],[],[],
       )
     }
 

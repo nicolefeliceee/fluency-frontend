@@ -22,7 +22,11 @@ export class LoginInterceptorComponent implements OnInit {
     // get tokennya
     await this.userService.getToken();
 
-    // kirim ke backend
+    setTimeout(() => {
+      console.log("keluar");
+      console.log(localStorage.getItem('long_lived_token'));
+
+      // kirim ke backend
     this.userService.sendToken(localStorage.getItem('long_lived_token') || '').subscribe(data => {
       console.log(data);
 
@@ -33,6 +37,7 @@ export class LoginInterceptorComponent implements OnInit {
       // belum pernah signup
       if ((data as any)['id'] == '' || (data as any)['id'] == null) {
         console.log("new signup");
+        localStorage.setItem('instagram_id', (data as any)['instagram_id']);
 
         this.router.navigate(['/signup/influencer/profile'], {state: {newUser: this.newInfluencer}});
 
@@ -49,6 +54,11 @@ export class LoginInterceptorComponent implements OnInit {
       console.log(error)
       this.router.navigate(['/signup']);
     });
+
+    }, 1000);
+
+
+
 
   }
 
