@@ -69,5 +69,47 @@ input[type=number]:focus {
   cursor: pointer;
 }
 
+.bantu2{
+  cursor: pointer;
+}
+
+
+.dropdown3{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  z-index: 1;
+  border: 0.094rem;
+  border-color: #DFE1E2;
+  border-style: solid;
+  border-radius: 10px;
+  width: 7rem;
+  top: 1.9rem;
+  right: 5rem;
+  /* display: none; */
+}
+
+.menu3{
+  /* background-color: palegreen; */
+  padding-left: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  height: 2rem;
+  align-content: center;
+}
+
+.menu3:hover{
+  background-color: #EDEEEE;
+  border-radius: 10%;
+  box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.04);
+}
+
 
 
