@@ -11,7 +11,7 @@ export class InfluencerService {
   baseUrl = environment.baseUrl;
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  sendFilter(filters: any):Observable<object>{
+  sendFilter(filters: any):Observable<any>{
     console.log(filters);
     return this.httpClient.post(this.baseUrl + "/influencer/filter",filters);
   }

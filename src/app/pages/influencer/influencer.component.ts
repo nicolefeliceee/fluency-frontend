@@ -12,6 +12,34 @@ import { LocationService } from '../../services/location.service';
 import { InfluencerService } from '../../services/influencer.service';
 import { HostListener } from '@angular/core';
 
+interface Category {
+  id: number; // ID kategori
+  label: string; // Nama kategori
+}
+
+interface Influencer {
+  id: number; // ID dari user (integer)
+  name: string; // Nama user
+  email: string; // Email user
+  location: string; // Label lokasi
+  phone: string; // Nomor telepon
+  gender: string; // Gender label
+  dob: string; // Tanggal lahir (string, dalam format ISO/Date)
+  feedsprice: string; // Harga feed
+  reelsprice: string; // Harga reels
+  storyprice: string; // Harga story
+  category: Category[];
+  usertype: string; // Tipe user
+  instagramid: string; // ID Instagram
+  isactive: boolean; // Status aktif
+  token: string; // Token
+  followers: string;
+  rating: number;
+  totalreview: string;
+  minprice: string;
+  profilepicture: string;
+}
+
 @Component({
   selector: 'app-influencer',
   standalone: true,
@@ -32,6 +60,7 @@ export class InfluencerComponent implements OnInit{
 
   filterForm!: FormGroup;
 
+  influencer: Influencer[] = []; // Tipe array Influencer
 
   selectedFilters2 = {
     followers2: [] as string[],
@@ -48,11 +77,37 @@ export class InfluencerComponent implements OnInit{
     // locationAudience: [] as string[]
   };
 
+  selectedFilters3 = {
+    followers2: [] as string[],
+    media2: [] as string[],
+    // engagement: [] as string[],
+    gender2: [] as string[],
+    age2: [] as string[],
+    price2: [] as string[],
+    rating2: [] as string[],
+    location2: [] as string[],
+    genderAudience2: [] as string[],
+    ageAudience2: [] as string[],
+    sort: [1] as number[]
+    // locationAudience: [] as string[]
+  };
+
 
 
   ngOnInit(): void {
     // this.loadInfluencers();
     this.initializeForm();
+
+    // Send sort value to backend
+    this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
+      (response) => {
+        this.influencer = response;
+        console.log('Init sent successfully:', this.influencer);
+      },
+      (error) => {
+        console.error('Error sending sort option:', error);
+      }
+    );
 
     this.locationService.getAllLocations().subscribe(
       (data) => {
@@ -533,6 +588,7 @@ export class InfluencerComponent implements OnInit{
         this.influencerService.sendFilter(this.selectedFilters).subscribe(
           response => {
             // this.selectedFilters2 = this.selectedFilters;
+
             console.log("disini selected filters2 ke ubah");
             this.selectedFilters2 = {
               followers2: [...this.selectedFilters.followers],
@@ -546,7 +602,9 @@ export class InfluencerComponent implements OnInit{
               ageAudience2: [...this.selectedFilters.ageAudience],
               sort: [] // Pastikan sort selalu kosong
             };
-            console.log('Response from backend:', response);
+
+            this.influencer = response;
+            console.log('Response from backend:', this.influencer);
             // Anda bisa mengarahkan user ke halaman lain atau memberi notifikasi berhasil
           },
           error => {
@@ -589,13 +647,21 @@ export class InfluencerComponent implements OnInit{
     // Send sort value to backend
     this.influencerService.sendSortOption(this.selectedFilters2).subscribe(
       (response) => {
-        console.log('Sort option sent successfully:', response);
+        this.influencer = response;
+        console.log('Sort option sent successfully:', this.influencer);
       },
       (error) => {
         console.error('Error sending sort option:', error);
       }
     );
   }
+
+  getProfilePictureUrl(profilePicture: string): string {
+    return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
+  }
+
+
+
 
 }
 
