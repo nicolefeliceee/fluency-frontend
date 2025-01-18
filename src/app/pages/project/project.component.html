@@ -1,6 +1,9 @@
 <app-header></app-header>
 <div class="bantu"></div>
-<app-tab [options]="statusOptions"></app-tab>
+
+<app-alert-success [display]="createSuccess" [label]="'Project saved successfully'"></app-alert-success>
+
+<app-tab [options]="statusOptions" (id)="getProjectsByStatus($event)"></app-tab>
 
 <div class="container px-20 py-10">
   <div *ngIf="projectList.length == 0" class="container text-center">

@@ -2,6 +2,7 @@ import { ProjectDetail } from "./project-detail";
 
 export class ProjectCreate {
   title!: string;
+  userId!: string;
   statusId!: string;
   caption!: string;
   description!: string;

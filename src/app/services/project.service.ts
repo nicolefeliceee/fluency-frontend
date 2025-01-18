@@ -13,15 +13,15 @@ export class ProjectService {
 
     baseUrl = environment.baseUrl;
 
-  getProjects(status: string): Observable<any> {
+  getProjects(status: string, userId: string): Observable<any> {
     let params = new HttpParams();
     params = params.append("status", status);
-          return this.httpClient.get(this.baseUrl + "/project", {
+          return this.httpClient.get(this.baseUrl + "/project/" + userId, {
             params: params
           });
   }
 
   createProject(request: ProjectCreate): Observable<any> {
-    return this.httpClient.post(this.baseUrl + "/project", {request});
+    return this.httpClient.post(this.baseUrl + "/project", request);
   }
 }

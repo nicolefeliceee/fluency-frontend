@@ -11,4 +11,8 @@ import { Component, Input } from '@angular/core';
 export class AlertSuccessComponent {
 @Input() label!: string;
   @Input() display!: boolean;
+
+  dismiss() {
+    this.display = false;
+  }
 }

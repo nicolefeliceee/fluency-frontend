@@ -1,14 +1,11 @@
 <div class="tab flex justify-between items-center">
   <div class="tabKiri">
-    <a href="" class="tabChoice font-medium mr-2 hover:text-blue-80 active:text-blue-80">All</a>
-    <a href="" class="tabChoice font-medium mx-2 text-blue-80 hover:text-blue-80 active:text-blue-80">Fashion</a>
-    <a *ngFor="let item of options" href="" class="tabChoice font-medium mx-2 hover:text-blue-80 active:text-blue-80">{{ item.label }}</a>
-
+    <button *ngFor="let item of options" [ngClass]="{'text-blue-80': item.id === selectedId}" class="tabChoice font-medium mx-2 hover:text-blue-80 active:text-blue-80" (click)="opentab(item.id)">{{ item.label }}</button>
   </div>
 
 
   <div class="flex items-center ">
-  <button class="bg-blue-80 text-font-white py-2 px-5 rounded-lg text-body me-3">+ New Project</button>
+  <a routerLink="/project/create" class="bg-blue-80 text-font-white py-2 px-5 rounded-lg text-body me-3">+ New Project</a>
 
   <div class="relative" data-hs-combo-box='{
     "groupingType": "default",

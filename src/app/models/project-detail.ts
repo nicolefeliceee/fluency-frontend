@@ -1,9 +1,13 @@
+import { Time } from "@angular/common";
+
 export class ProjectDetail {
   mediatypeId!: string;
   note!: string;
-  deadlineDateTime!: Date;
+  deadlineDate!: Date;
+  deadlineTime!: Time;
   link!: string;
   nominal!: string;
+  tempId!: number;
 
   constructor() {}
 }

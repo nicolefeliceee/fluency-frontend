@@ -37,6 +37,6 @@ export const routes: Routes = [
   { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent },
   {path:'profile-brand', component: ProfileBrandComponent},
   {path:'project', component: ProjectComponent},
-  {path:'project/:id', component: ProjectCreateComponent},
+  {path:'project/detail', component: ProjectCreateComponent},
   {path:'project/create', component: ProjectCreateComponent}
 ];

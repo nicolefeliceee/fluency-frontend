@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProjectCreate } from '../../../models/project-create';
 import { CommonModule } from '@angular/common';
 import { ProjectDetail } from '../../../models/project-detail';
+import { Router } from '@angular/router';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-project-card',
@@ -18,6 +20,8 @@ export class ProjectCardComponent implements OnInit {
   @Input() project!: any;
   @Input() projectDetails!: any[];
   @Input() mediaTypeUnique?: string[];
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.brandName = localStorage.getItem("username") || "";
@@ -46,9 +50,15 @@ export class ProjectCardComponent implements OnInit {
       });
     }
 
-    console.log(mediaTypeList);
 
     return mediaTypeList;
+  }
+
+  viewProjectDetail(project: any) {
+    console.log(project);
+    if (project['status_id'] == '1') {
+      this.router.navigate(['/project/detail'], { state: { draftProject: project } });
+    }
   }
 
 }
