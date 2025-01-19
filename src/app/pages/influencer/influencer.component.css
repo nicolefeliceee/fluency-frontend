@@ -121,11 +121,7 @@ input[type=number]:focus {
 
 .foto{
   width: 100%;
-  /* width: 13.55rem; */
-
-  /* height: calc(width); */
   height: 13.55rem;
-  border-radius: 22px;
   border-radius: 10%;
   background-repeat: no-repeat;
   background-position: center;

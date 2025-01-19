@@ -238,8 +238,6 @@
     </div>
     <div class="cardBox grid grid-cols-3 gap-7">
       <div class="card w-full bg-white" *ngFor="let item of influencer">
-        <!-- <div class="foto" style="background-image: url('https://picsum.photos/200');"></div> -->
-        <!-- <div class="foto" style="background-image: url('https://picsum.photos/200');"></div> -->
         <div class="foto" [style.background-image]="'url(' + getProfilePictureUrl(item.profilepicture) + ')'"></div>
         <div class="desc flex px-1 pt-3 pb-3 justify-center items-center content-center">
           <div class="leftCard w-3/4">
@@ -283,20 +281,16 @@
           </div>
         </div>
         <div class="bawah2 flex justify-end mt-4">
-          <div class="saveBtn mr-2">
+          <div class="saveBtn mr-2 cursor-pointer">
             <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="0.5" y="0.5" width="32" height="32" rx="4.5" stroke="#494F50" stroke-opacity="0.1"/>
               <path d="M10.25 11.425C10.25 10.445 10.25 9.955 10.4725 9.5805C10.6683 9.25123 10.9806 8.98353 11.3648 8.81575C11.8017 8.625 12.3733 8.625 13.5167 8.625H19.2333C20.3767 8.625 20.9483 8.625 21.3853 8.81575C21.7694 8.98353 22.0817 9.25123 22.2775 9.5805C22.5 9.955 22.5 10.445 22.5 11.425V23.0669C22.5 23.4921 22.5 23.7048 22.3969 23.8211C22.3523 23.8717 22.2955 23.9134 22.2303 23.9434C22.1651 23.9733 22.093 23.9907 22.0192 23.9944C21.8487 24.0031 21.6425 23.885 21.2301 23.6496L16.375 20.875L11.5199 23.6488C11.1075 23.885 10.9013 24.0031 10.7298 23.9944C10.6561 23.9906 10.5843 23.9731 10.5193 23.9432C10.4542 23.9133 10.3975 23.8716 10.3531 23.8211C10.25 23.7048 10.25 23.4921 10.25 23.0669V11.425Z" stroke="#494F50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
           </div>
-          <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center">Hire</div>
+          <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer">Hire</div>
         </div>
       </div>
-      <!-- <app-influencer-card></app-influencer-card>
-      <app-influencer-card></app-influencer-card>
-      <app-influencer-card></app-influencer-card>
-      <app-influencer-card></app-influencer-card>
-      <app-influencer-card></app-influencer-card> -->
+
     </div>
   </div>
 </div>
