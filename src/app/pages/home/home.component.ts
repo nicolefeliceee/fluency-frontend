@@ -4,6 +4,8 @@ import { ProjectCardComponent } from "../project/project-card/project-card.compo
 import { InfluencerCardComponent } from "../../components/influencer-card/influencer-card.component";
 import { HomeService } from '../../services/home.service';
 import { CommonModule } from '@angular/common';
+import { WalletHistoryPopupComponent } from "../wallet-history-popup/wallet-history-popup.component";
+import { WalletTransferPopupComponent } from "../wallet-transfer-popup/wallet-transfer-popup.component";
 
 interface Category {
   id: number; // ID kategori
@@ -36,7 +38,7 @@ interface Influencer {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule],
+  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -71,6 +73,26 @@ export class HomeComponent implements OnInit{
 
   getProfilePictureUrl(profilePicture: string): string {
     return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
+  }
+
+  isWalletHistoryPopupVisible: boolean = false;
+
+  showWalletHistoryPopup(): void {
+    this.isWalletHistoryPopupVisible = true;
+  }
+
+  closeWalletHistoryPopup(): void {
+    this.isWalletHistoryPopupVisible = false;
+  }
+
+  isWalletTransferPopupVisible: boolean = false;
+
+  showWalletTransferPopup(): void {
+    this.isWalletTransferPopupVisible = true;
+  }
+
+  closeWalletTransferPopup(): void {
+    this.isWalletTransferPopupVisible = false;
   }
 
 }

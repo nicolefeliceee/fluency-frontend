@@ -11,8 +11,6 @@ import { MediaTypeService } from '../../services/media-type.service';
 import { LocationService } from '../../services/location.service';
 import { InfluencerService } from '../../services/influencer.service';
 import { HostListener } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { TabInfluencerComponent } from "../../components/tab-influencer/tab-influencer.component";
 
 interface Category {
   id: number; // ID kategori
@@ -43,13 +41,13 @@ interface Influencer {
 }
 
 @Component({
-  selector: 'app-influencer',
+  selector: 'app-saved-influencer',
   standalone: true,
-  imports: [HeaderComponent, InfluencerCardComponent, TabComponent, RangeFilterComponent, CommonModule, FormsModule, ReactiveFormsModule, TabInfluencerComponent],
-  templateUrl: './influencer.component.html',
-  styleUrl: './influencer.component.css'
+  imports: [HeaderComponent, InfluencerCardComponent, TabComponent, RangeFilterComponent, CommonModule, FormsModule, ReactiveFormsModule],
+  templateUrl: './saved-influencer.component.html',
+  styleUrl: './saved-influencer.component.css'
 })
-export class InfluencerComponent implements OnInit{
+export class SavedInfluencerComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private ageService: AgeService,
@@ -57,16 +55,12 @@ export class InfluencerComponent implements OnInit{
     private mediaTypeService: MediaTypeService,
     private locationService: LocationService,
     private fb: FormBuilder,
-    private influencerService: InfluencerService,
-    private categoryService: CategoryService
+    private influencerService: InfluencerService
   ) {}
 
   filterForm!: FormGroup;
 
-  categoryOptions!: any[];
-  selectedCategory: any = "1";
   influencer: Influencer[] = []; // Tipe array Influencer
-  influencer2: Influencer[] = []; // Tipe array Influencer
 
   selectedFilters2 = {
     followers2: [] as string[],
@@ -104,30 +98,10 @@ export class InfluencerComponent implements OnInit{
     // this.loadInfluencers();
     this.initializeForm();
 
-    // ini untuk tab
-    this.categoryService.getAllCategories().subscribe(
-      (data) => {
-        console.log(data);
-        // this.categoryOptions = data;
-        this.categoryOptions = [{ active_logo: null, logo: null, id: '0', label: 'All' }, ...data];
-        console.log(this.categoryOptions)
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-
-    this.influencerService.getInfluencerCategory(this.selectedCategory, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
-      (data) => {
-        this.influencer = data;
-      }
-    )
-
     // Send sort value to backend
-    this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
+    this.influencerService.sendSortOptionSaved(this.selectedFilters3).subscribe(
       (response) => {
         this.influencer = response;
-        this.influencer2 = response;
         console.log('Init sent successfully:', this.influencer);
       },
       (error) => {
@@ -258,7 +232,6 @@ export class InfluencerComponent implements OnInit{
     this.selectedFilters = {
       followers: [],
       media: [],
-      // engagement: [],
       gender: [],
       age: [],
       price: [],
@@ -268,7 +241,7 @@ export class InfluencerComponent implements OnInit{
       ageAudience: []
       // locationAudience: []
     };
-
+    // console.log(select);
     if(select != null){
       select.setValue([]);
     }
@@ -284,32 +257,15 @@ export class InfluencerComponent implements OnInit{
     this.initializeForm();
 
     // Send sort value to backend
-    this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
+    this.influencerService.sendSortOptionSaved(this.selectedFilters3).subscribe(
       (response) => {
         this.influencer = response;
-        this.influencer2 = response;
         console.log('Init sent successfully:', this.influencer);
       },
       (error) => {
         console.error('Error sending sort option:', error);
       }
     );
-  }
-
-  getInfluencerCategory(id: any) {
-    if(id == 0){
-      this.influencer = this.influencer2;
-    }
-    else{
-      this.influencerService.getInfluencerCategory(id, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
-        (data) => {
-          this.influencer = data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-    }
   }
 
   // Toggle filter aktif atau tidak
@@ -645,7 +601,7 @@ export class InfluencerComponent implements OnInit{
       }
       else{
         // Mengirim data ke backend
-        this.influencerService.sendFilter(this.selectedFilters).subscribe(
+        this.influencerService.sendFilterSaved(this.selectedFilters).subscribe(
           response => {
             // this.selectedFilters2 = this.selectedFilters;
 
@@ -664,7 +620,6 @@ export class InfluencerComponent implements OnInit{
             };
 
             this.influencer = response;
-            this.influencer2 = response;
             console.log('Response from backend:', this.influencer);
             // Anda bisa mengarahkan user ke halaman lain atau memberi notifikasi berhasil
           },
@@ -706,10 +661,9 @@ export class InfluencerComponent implements OnInit{
     this.selectedFilters2.sort = [value];
 
     // Send sort value to backend
-    this.influencerService.sendSortOption(this.selectedFilters2).subscribe(
+    this.influencerService.sendSortOptionSaved(this.selectedFilters2).subscribe(
       (response) => {
         this.influencer = response;
-        this.influencer2 = response;
         console.log('Sort option sent successfully:', this.influencer);
       },
       (error) => {
@@ -721,10 +675,4 @@ export class InfluencerComponent implements OnInit{
   getProfilePictureUrl(profilePicture: string): string {
     return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
   }
-
-
-
-
 }
-
-

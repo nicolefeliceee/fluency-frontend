@@ -47,7 +47,7 @@ export class ProjectComponent implements OnInit {
       }
     )
 
-    this.projectService.getProjects(this.selectedStatus, localStorage.getItem("user_id") || '65').subscribe(
+    this.projectService.getProjects(this.selectedStatus, localStorage.getItem("user_id") || '').subscribe(
       (data) => {
         this.projectList = data;
       }
