@@ -122,15 +122,15 @@ export class InfluencerService {
       }
   }
 
-  getInfluencerCategory(status: string, userId: string, influencer: Influencer[]): Observable<any> {
-    console.log("id: " + userId);
-    console.log("status: " + status);
-    console.log("influencer: " + JSON.stringify(influencer,null,2));
-    let params = new HttpParams();
-    params = params.append("status", status);
-    return this.httpClient.post(this.baseUrl + "/influencer/category/" + userId, influencer, {
-      params: params
-    });
-  }
+  // getInfluencerCategory(status: string, userId: string, influencer: Influencer[]): Observable<any> {
+  //   console.log("id: " + userId);
+  //   console.log("status: " + status);
+  //   console.log("influencer: " + JSON.stringify(influencer,null,2));
+  //   let params = new HttpParams();
+  //   params = params.append("status", status);
+  //   return this.httpClient.post(this.baseUrl + "/influencer/category/" + userId, influencer, {
+  //     params: params
+  //   });
+  // }
 
 }
