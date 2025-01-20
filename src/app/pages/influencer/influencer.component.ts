@@ -79,7 +79,8 @@ export class InfluencerComponent implements OnInit{
     location2: [] as string[],
     genderAudience2: [] as string[],
     ageAudience2: [] as string[],
-    sort: [] as number[]
+    sort: [] as number[],
+    categoryChosen2: [] as number[]
     // locationAudience: [] as string[]
   };
 
@@ -94,7 +95,8 @@ export class InfluencerComponent implements OnInit{
     location2: [] as string[],
     genderAudience2: [] as string[],
     ageAudience2: [] as string[],
-    sort: [1] as number[]
+    sort: [1] as number[],
+    categoryChosen2: [0] as number[]
     // locationAudience: [] as string[]
   };
 
@@ -117,11 +119,11 @@ export class InfluencerComponent implements OnInit{
       }
     )
 
-    this.influencerService.getInfluencerCategory(this.selectedCategory, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
-      (data) => {
-        this.influencer = data;
-      }
-    )
+    // this.influencerService.getInfluencerCategory(this.selectedCategory, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
+    //   (data) => {
+    //     this.influencer = data;
+    //   }
+    // )
 
     // Send sort value to backend
     this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
@@ -230,14 +232,15 @@ export class InfluencerComponent implements OnInit{
     rating: [] as string[],
     location: [] as string[],
     genderAudience: [] as string[],
-    ageAudience: [] as string[]
+    ageAudience: [] as string[],
+    categoryChosen: [] as number[]
     // locationAudience: [] as string[]
   };
 
-
-
+  isAllBoolean: boolean = false;
 
   resetForm(){
+    this.isAllBoolean = true;
     const selectLoc = document.querySelector('#selectLocation') as HTMLSelectElement;
     const select = window.HSSelect.getInstance(selectLoc);
     // const selectLocAud = document.querySelector('#selectLocationAudience') as HTMLSelectElement;
@@ -265,7 +268,8 @@ export class InfluencerComponent implements OnInit{
       rating: [],
       location: [],
       genderAudience: [],
-      ageAudience: []
+      ageAudience: [],
+      categoryChosen: []
       // locationAudience: []
     };
 
@@ -294,22 +298,6 @@ export class InfluencerComponent implements OnInit{
         console.error('Error sending sort option:', error);
       }
     );
-  }
-
-  getInfluencerCategory(id: any) {
-    if(id == 0){
-      this.influencer = this.influencer2;
-    }
-    else{
-      this.influencerService.getInfluencerCategory(id, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
-        (data) => {
-          this.influencer = data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-    }
   }
 
   // Toggle filter aktif atau tidak
@@ -644,6 +632,7 @@ export class InfluencerComponent implements OnInit{
         console.log('Form is not valid');
       }
       else{
+        // this.isAllBoolean = false;
         // Mengirim data ke backend
         this.influencerService.sendFilter(this.selectedFilters).subscribe(
           response => {
@@ -660,7 +649,8 @@ export class InfluencerComponent implements OnInit{
               location2: [...this.selectedFilters.location],
               genderAudience2: [...this.selectedFilters.genderAudience],
               ageAudience2: [...this.selectedFilters.ageAudience],
-              sort: [] // Pastikan sort selalu kosong
+              sort: [], // Pastikan sort selalu kosong
+              categoryChosen2: [...this.selectedFilters.categoryChosen]
             };
 
             this.influencer = response;
@@ -704,6 +694,8 @@ export class InfluencerComponent implements OnInit{
     this.activeSortValue = value;
     this.isDropdownVisible = false;
     this.selectedFilters2.sort = [value];
+    console.log("INI LAGI DI SORT");
+    console.log("selFil2: " + this.selectedFilters2.categoryChosen2);
 
     // Send sort value to backend
     this.influencerService.sendSortOption(this.selectedFilters2).subscribe(
@@ -720,6 +712,38 @@ export class InfluencerComponent implements OnInit{
 
   getProfilePictureUrl(profilePicture: string): string {
     return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
+  }
+
+  // getInfluencerCategory(id: any) {
+  //   if(id == 0){
+  //     this.influencer = this.influencer2;
+  //   }
+  //   else{
+  //     this.influencerService.getInfluencerCategory(id, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
+  //       (data) => {
+  //         this.influencer = data;
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //     )
+  //   }
+  // }
+
+  getInfluencerCategory(id: any){
+    this.selectedFilters.categoryChosen = [id];
+    this.selectedFilters2.categoryChosen2 = [id];
+
+    this.influencerService.sendSortOption(this.selectedFilters2).subscribe(
+      (response) => {
+        this.influencer = response;
+        this.influencer2 = response;
+        console.log('Sort option sent successfully:', this.influencer);
+      },
+      (error) => {
+        console.error('Error sending sort option:', error);
+      }
+    );
   }
 
 

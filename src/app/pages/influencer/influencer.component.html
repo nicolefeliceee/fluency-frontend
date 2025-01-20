@@ -2,7 +2,7 @@
 <div class="bantu"></div>
 <!-- <app-tab></app-tab> -->
 <!-- <app-tab [options]="categoryOptions" (id)="getProjectsByStatus($event)"></app-tab> -->
-<app-tab-influencer [options]="categoryOptions" (id)="getInfluencerCategory($event)"></app-tab-influencer>
+<app-tab-influencer [options]="categoryOptions" (id)="getInfluencerCategory($event)" [isAll]="isAllBoolean"></app-tab-influencer>
 <div class="bawah flex flex-row w-full mb-16">
   <div class="kiri">
     <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
