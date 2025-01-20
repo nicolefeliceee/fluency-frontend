@@ -1,5 +1,8 @@
 <app-header></app-header>
 <div class="bantu"></div>
+<app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
+<app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (close)="closeWalletTransferPopup()"></app-wallet-transfer-popup>
+
 <div class="banner">
   <div class="foto2" style="background-image: url(../assets/images/homebanner.png);"></div>
 </div>
@@ -14,7 +17,7 @@
     Rp 15.000
   </div>
   <div class="kanan w-[28%] h-full content-center flex justify-between">
-    <div class="transfer flex flex-col items-center justify-center">
+    <div class="transfer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -32,7 +35,7 @@
       </div>
       <div class="text font-semibold text-[0.78rem] mt-[1px] text-font-darkGrey">Top Up</div>
     </div>
-    <div class="history flex flex-col items-center justify-center">
+    <div class="history flex flex-col items-center justify-center" (click)="showWalletHistoryPopup()">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -41,6 +44,10 @@
       </div>
       <div class="text font-semibold text-[0.78rem] mt-[1px] text-font-darkGrey">History</div>
     </div>
+    <!-- <div class="historyDetail" *ngIf="isHistoryDetailVisible"> -->
+    <!-- <div class="historyDetail absolute bg-white z-10 h-[10rem] w-[42%] rounded-[10px] top-[5rem] left-[30%]">
+      afda
+    </div> -->
   </div>
 </div>
 <div class="categories pt-[5rem]">

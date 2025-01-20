@@ -1,0 +1,118 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+.isi::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.isi {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.dropdown2::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.dropdown2 {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.inputContainer{
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  /* background-color: #494F50; */
+  width: fit-content;
+}
+
+.inputLabel{
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.inputBox{
+  background-color: white;
+  width: 24.5rem;
+  height: 2.69rem;
+  border-radius: 10px;
+  margin-top: 3px;
+  padding-left: 15px;
+  padding-bottom: 2px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(148, 156, 158, 0.5);
+  /* position: relative; */
+}
+
+.dropdown{
+  position: absolute;
+  right:10px;
+  top: 50%;
+  /* left: 67.8rem;
+  top: 22.5rem; */
+}
+
+.inputBox::placeholder{
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgb(148, 156, 158, 0.5);
+}
+
+.inputBox:focus{
+  outline: 1px solid #494F50;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dropdown2{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  z-index: 1;
+  border: 1px solid rgba(148, 156, 158, 0.5);
+  border-radius: 10px;
+  /* width: 10rem; */
+  width: 100%;
+  top: 4.2rem;
+  height: 8rem;
+  /* display: none; */
+}
+
+.menu2{
+  /* background-color: palegreen; */
+  padding-left: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  height: 2rem;
+  align-content: center;
+}
+
+.menu2:hover{
+  background-color: #EDEEEE;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.04);
+}
+
+.button{
+  margin-top: 2rem;
+  width: 24.5rem;
+  height: 2.69rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+

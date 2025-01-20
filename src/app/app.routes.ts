@@ -17,6 +17,7 @@ import { ProfileBrandComponent } from './pages/profile-brand/profile-brand.compo
 import { CompleteProfileInfluencerComponent } from './pages/signup/signup-forms/complete-profile-influencer/complete-profile-influencer.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { ProjectCreateComponent } from './pages/project/project-create/project-create.component';
+import { SavedInfluencerComponent } from './pages/saved-influencer/saved-influencer.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {path:'header', component: HeaderComponent},
   {path:'influencer', component: InfluencerComponent},
   {path:'influencer-card', component: InfluencerCardComponent},
+  {path:'saved-influencer', component: SavedInfluencerComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },
   { path: 'signup/brand/category', component: ChooseCategoryComponent },
   { path: 'signup/brand/target', component: BrandTargetMarketComponent },

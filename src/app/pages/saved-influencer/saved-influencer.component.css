@@ -1,0 +1,153 @@
+.bantu{
+  height: 3.7rem;
+}
+
+.bawah{
+  padding-left: 4.3%;
+  padding-right: 4.3%;
+}
+
+.kiri{
+  /* height: 50rem; */
+  width: 29.6%;
+  /* background-color: blue; */
+}
+
+.kanan{
+  width: 70.4%;
+  /* background-color: pink; */
+}
+
+.judul{
+  font-size: 1.6rem;
+}
+
+.line{
+  background-color: rgb(73, 79, 80, 0.3);
+}
+
+.filterChoice{
+  background-color: rgba(148, 156, 158, 0.1);
+}
+
+.filterChoice:hover{
+  background-color: #91A9FD;
+}
+
+.active-filter{
+  background-color: #91A9FD;
+  /* background-color: pink; */
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filterInput{
+  border: 1px solid rgb(73, 79, 80, 0.5);
+}
+
+.filterInput::placeholder{
+  color: rgba(148, 156, 158, 0.5);
+}
+
+input[type=number]:focus {
+  /* color: rgba(148, 156, 158, 0.5); */
+  border: 1px solid rgb(73, 79, 80);
+  outline: none;
+}
+
+.button{
+  width: 42%;
+  height: 2.8rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.bantu2{
+  cursor: pointer;
+}
+
+
+.dropdown3{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  z-index: 1;
+  border: 0.094rem;
+  border-color: #DFE1E2;
+  border-style: solid;
+  border-radius: 10px;
+  width: 7rem;
+  top: 1.9rem;
+  right: 5rem;
+  /* display: none; */
+}
+
+.menu3{
+  /* background-color: palegreen; */
+  padding-left: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  height: 2rem;
+  align-content: center;
+}
+
+.menu3:hover{
+  background-color: #EDEEEE;
+  border-radius: 10%;
+  box-shadow: 0px 3px 10px 5px rgba(0,0,0,0.04);
+}
+
+
+/* ini buat card influencer */
+.card{
+  /* height: 23rem; */
+  border-radius: 25px;
+  padding: 18px;
+}
+
+.foto{
+  width: 100%;
+  height: 13.55rem;
+  border-radius: 10%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.location,.adText{
+  color: #929596;
+}
+
+.foll,.rating,.adText,.category{
+  font-size: 0.65rem;
+}
+
+.desc{
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.category{
+  width: fit-content;
+}
+
+.hireBtn{
+  font-size: 0.85rem;
+  width: fit-content;
+}
+
+
+

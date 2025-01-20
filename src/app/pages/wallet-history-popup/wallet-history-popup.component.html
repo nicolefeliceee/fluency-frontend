@@ -1,0 +1,47 @@
+<!-- <div *ngIf="display" class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[100]" (click)="cancel()"> -->
+<div class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[60]" (click)="onClose()">
+</div>
+
+<div class="isi fixed mt-[2rem] ms-[29%] bg-font-white h-[25rem] w-[42%] rounded-[10px] py-5 px-7 overflow-y-scroll overflow-x-hidden z-[70]">
+  <div class="bagAtas flex justify-between items-center pb-3 px-1">
+    <div class="font-semibold text-[1.05rem]">
+      Transaction History
+    </div>
+    <div class="closeBtn" (click)="onClose()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 13L7 7L13 13M13 1L6.99886 7L1 1" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="line h-[1px] w-full bg-font-lightGrey mb-4"></div>
+  <div class="perDate px-1 mb-4">
+    <div class="date font-semibold text-[0.9rem] mb-1">
+      Wednesday, 10 Nov 2024
+    </div>
+    <div class="trx flex items-center mb-2">
+      <div class="leftTrx w-[8%]">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="26" height="26" rx="13" fill="#5876F9"/>
+          <path d="M13.0001 7.81152V18.1887M7.81152 13.0001H18.1887" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">Wallet top up</div>
+      <div class="rightTrx w-[30%] flex flex-col">
+        <div class="nominal text-end font-semibold text-[0.8rem]">Rp 30.000</div>
+        <div class="bawah flex items-center justify-end">
+          <div class="logo">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="16" height="16" rx="8" fill="#5876F9"/>
+              <path d="M11.333 5.91667V5.08333C11.333 4.62375 10.9593 4.25 10.4997 4.25H5.08301C4.39384 4.25 3.83301 4.81083 3.83301 5.5V10.5C3.83301 11.4171 4.58051 11.75 5.08301 11.75H11.333C11.7926 11.75 12.1663 11.3762 12.1663 10.9167V6.75C12.1663 6.29042 11.7926 5.91667 11.333 5.91667ZM10.4997 9.66667H9.66634V8H10.4997V9.66667ZM5.08301 5.91667C4.97572 5.91187 4.87443 5.86587 4.80021 5.78826C4.72599 5.71064 4.68456 5.60739 4.68456 5.5C4.68456 5.39261 4.72599 5.28936 4.80021 5.21174C4.87443 5.13413 4.97572 5.08813 5.08301 5.08333H10.4997V5.91667H5.08301Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="text text-font-darkGrey text-[0.7rem] font-medium ms-1">Wallet Balance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
