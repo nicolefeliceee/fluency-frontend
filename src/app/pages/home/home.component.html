@@ -1,7 +1,11 @@
 <app-header></app-header>
 <div class="bantu"></div>
-<app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
-<app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (close)="closeWalletTransferPopup()"></app-wallet-transfer-popup>
+<app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" [walletHeader]="walletheader" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
+<!-- <app-wallet-transfer-popup (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()"></app-wallet-transfer-popup> -->
+<app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()" (successAlert)="showSuccessAlert($event)" (errorAlert)="showErrorAlert($event)"></app-wallet-transfer-popup>
+
+<app-alert-success *ngIf="successMessage" [label]="successMessage" [display]="true"></app-alert-success>
+<app-alert-error *ngIf="errorMessage" [label]="errorMessage" [display]="true"></app-alert-error>
 
 <div class="banner">
   <div class="foto2" style="background-image: url(../assets/images/homebanner.png);"></div>
@@ -14,10 +18,10 @@
     </svg>
   </div>
   <div class="tengah w-[63%] h-full content-center font-semibold text-[1.35rem] text-font-black">
-    Rp 15.000
+    {{ walletheader.balance_show}}
   </div>
   <div class="kanan w-[28%] h-full content-center flex justify-between">
-    <div class="transfer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()">
+    <div class="transfer cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -26,7 +30,7 @@
       </div>
       <div class="text font-semibold text-[0.78rem] mt-[1px] text-font-darkGrey">Transfer</div>
     </div>
-    <div class="topup flex flex-col items-center justify-center">
+    <div class="topup cursor-pointer flex flex-col items-center justify-center">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -35,7 +39,7 @@
       </div>
       <div class="text font-semibold text-[0.78rem] mt-[1px] text-font-darkGrey">Top Up</div>
     </div>
-    <div class="history flex flex-col items-center justify-center" (click)="showWalletHistoryPopup()">
+    <div class="history cursor-pointer flex flex-col items-center justify-center" (click)="showWalletHistoryPopup()">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>

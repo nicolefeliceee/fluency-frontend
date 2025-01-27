@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 import { ProjectCardComponent } from "../project/project-card/project-card.component";
 import { InfluencerCardComponent } from "../../components/influencer-card/influencer-card.component";
@@ -6,6 +6,8 @@ import { HomeService } from '../../services/home.service';
 import { CommonModule } from '@angular/common';
 import { WalletHistoryPopupComponent } from "../wallet-history-popup/wallet-history-popup.component";
 import { WalletTransferPopupComponent } from "../wallet-transfer-popup/wallet-transfer-popup.component";
+import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
+import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
 
 interface Category {
   id: number; // ID kategori
@@ -35,20 +37,46 @@ interface Influencer {
   profilepicture: string;
 }
 
+interface WalletDetailDto {
+  wallet_detail_id: number;
+  partner_id: number | null;
+  partner_name: string | null;
+  wallet_header_id: number;
+  transaction_type_id: number;
+  transaction_type_label: string;
+  nominal: number;
+  date_time: string;
+  nominal_show: string;
+}
+
+interface WalletHeader {
+  id: number;
+  wallet_header_id: number;
+  balance: number;
+  balance_show: string;
+  wallet_details_grouped: Record<string, WalletDetailDto[]>;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent],
+  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
   constructor(
-      private homeService: HomeService
+      private homeService: HomeService,
+      private cdRef: ChangeDetectorRef
   ) {}
 
   influencer: Influencer[] = []; // Tipe array Influencer
   recommendedinfluencer: Influencer[] = []; // Tipe array Influencer
+  walletheader!: WalletHeader;
+  showErrorTf: boolean = false;
+  showSuccessTf: boolean = false;
+  errorMessage: string = ''; // To store error message
+  successMessage: string = '';
 
   ngOnInit(): void {
     this.homeService.getRecommendation().subscribe(
@@ -69,6 +97,48 @@ export class HomeComponent implements OnInit{
         console.error('Error sending sort option:', error);
       }
     );
+    this.loadWalletInfo();
+  }
+
+  loadWalletInfo(){
+    this.homeService.getWalletInfo().subscribe(
+      (response) => {
+        this.walletheader = response;
+        console.log('wallet info:', this.walletheader);
+        // Mengurutkan wallet_details_grouped berdasarkan tanggal
+        this.sortWalletDetailsByDate();
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.error('Error sending sort option:', error);
+      }
+    );
+  }
+
+  sortWalletDetailsByDate() {
+    // Ambil wallet_details_grouped dan ubah menjadi array untuk pengurutan
+    const walletDetailsGroupedArray = Object.entries(this.walletheader.wallet_details_grouped);
+
+    // Urutkan berdasarkan tanggal (key)
+    walletDetailsGroupedArray.sort((a, b) => {
+      const dateA = new Date(a[0]);
+      const dateB = new Date(b[0]);
+      return dateB.getTime() - dateA.getTime(); // Urutkan dari terbaru ke terlama
+    });
+
+    // Setelah mengurutkan, kembalikan ke format objek dengan Object.fromEntries
+    this.walletheader.wallet_details_grouped = Object.fromEntries(walletDetailsGroupedArray);
+  }
+
+  // Tangani event dari wallet transfer
+  onTransferCompleted(): void {
+    console.log("ini on transfer completednya jalan");
+    // Tambahkan delay sebelum memuat ulang wallet info
+    setTimeout(() => {
+      this.isWalletTransferPopupVisible = false;
+      this.loadWalletInfo();
+    }, 1000); // 1 detik delay
+    // this.loadWalletInfo();
   }
 
   getProfilePictureUrl(profilePicture: string): string {
@@ -93,6 +163,26 @@ export class HomeComponent implements OnInit{
 
   closeWalletTransferPopup(): void {
     this.isWalletTransferPopupVisible = false;
+  }
+
+  // Tangkap notifikasi sukses
+  showSuccessAlert(message: string): void {
+    this.successMessage = message;
+
+    // Hapus notifikasi setelah beberapa detik (opsional)
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 5000); // 5 detik
+  }
+
+  // Tangkap notifikasi error
+  showErrorAlert(message: string): void {
+    this.errorMessage = message;
+
+    // Hapus notifikasi setelah beberapa detik (opsional)
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 5000); // 5 detik
   }
 
 }
