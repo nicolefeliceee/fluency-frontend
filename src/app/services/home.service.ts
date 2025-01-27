@@ -32,4 +32,27 @@ export class HomeService {
         throw new Error('User ID tidak ditemukan di Local Storage');
       }
   }
+
+  transfer(amount: any):Observable<any>{
+    console.log(amount);
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      // Membuat URL dengan menyertakan user_id sebagai path variable
+      const url = `${this.baseUrl}/wallet/transfer/${userId}`;
+      return this.httpClient.post(url, amount);  // Kirim GET request
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
+
+  getWalletInfo():Observable<any>{
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      // Membuat URL dengan menyertakan user_id sebagai path variable
+      const url = `${this.baseUrl}/wallet/info/${userId}`;
+      return this.httpClient.get(url);  // Kirim GET request
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
 }

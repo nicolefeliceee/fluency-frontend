@@ -43,6 +43,7 @@
   padding-bottom: 2px;
   font-size: 0.85rem;
   border: 1px solid rgba(148, 156, 158, 0.5);
+  color: #000000;
   /* position: relative; */
 }
 
@@ -57,11 +58,24 @@
 .inputBox::placeholder{
   font-size: 0.85rem;
   font-weight: 400;
+  /* color: rgb(148, 156, 158, 0.5); */
+  color: #000000;
+}
+
+/* .placehold{
   color: rgb(148, 156, 158, 0.5);
+  color: pink;
+
+} */
+
+.inputBox select {
+  /* display: none;  */
+  background-color: pink;
 }
 
 .inputBox:focus{
   outline: 1px solid #494F50;
+  color: #000000;
 }
 
 input::-webkit-outer-spin-button,
@@ -115,4 +129,8 @@ input::-webkit-inner-spin-button {
   font-weight: 500;
 }
 
-
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}

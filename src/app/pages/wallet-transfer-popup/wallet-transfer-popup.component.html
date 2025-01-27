@@ -14,32 +14,41 @@
   </div>
   <div class="line h-[1px] w-full bg-font-lightGrey mb-4"></div>
   <div class="transfer">
-    <div class="inputContainer relative" (click)="toggleDropdown($event)">
-      <label for="bankName" class="inputLabel text-font-darkGrey">Bank Name</label>
-      <input disabled id="bankName" name="bankName" class="inputBox border-[1px] text-font-darkGrey" placeholder="Bank Name">
-      <!-- <div class="eyeIcon eyeVisible" (click)="togglePassword()"> -->
-      <div class="dropdown">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 10L12 15L17 10" stroke="#494F50" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <!-- <form #transferForm="ngForm" (ngSubmit)="onSubmit(transferForm)"> -->
+      <div class="inputContainer relative" >
+        <label for="bankName" class="inputLabel text-font-darkGrey">Bank Name</label>
+        <!-- Select -->
+        <select [(ngModel)]="selectedBank" class="inputBox border-[1px]" (change)="validateBankSelection()">
+          <option value="novalue" selected disabled>Select Bank Name</option>
+          <option value="BRI">BRI</option>
+          <option value="Mandiri">Mandiri</option>
+          <option value="BCA">BCA</option>
+          <option value="Danamon">Danamon</option>
+          <option value="BNI">BNI</option>
+          <option value="Permata">Permata</option>
+          <option value="Maybank">Maybank</option>
+          <option value="CIMB">CIMB</option>
+          <option value="UOB">UOB</option>
+          <option value="OCBC">OCBC</option>
+          <option value="Mayapada">Mayapada</option>
+          <option value="Sinarmas">Sinarmas</option>
+        </select>
+        <!-- End Select -->
+        <div *ngIf="showError && submitted" class="error-message">Bank name is required.</div>
       </div>
-      <!-- <div class="dropdown2" *ngIf="isDropdownVisible"> -->
-      <div class="dropdown2 overflow-y-scroll overflow-x-hidden" *ngIf="isDropdownVisible">
-        <div class="menu2">avdsf</div>
-        <div class="menu2">avdsf</div>
+      <div class="inputContainer">
+        <label for="accNum" class="inputLabel text-font-darkGrey">Account Number</label>
+        <input type="number" id="accNum" name="accNum" class="inputBox border-[1px] text-font-darkGrey" placeholder="Bank Account Number" [(ngModel)]="accNum" required>
+        <div *ngIf="!accNum && submitted" class="error-message">Account number is required.</div>
       </div>
-    </div>
-    <div class="inputContainer">
-      <label for="accNum" class="inputLabel text-font-darkGrey">Account Number</label>
-      <input type="number" id="accNum" name="accNum" class="inputBox border-[1px] text-font-darkGrey" placeholder="Bank Account Number" required>
-    </div>
-    <div class="inputContainer">
-      <label for="amount" class="inputLabel text-font-darkGrey">Amount</label>
-      <input type="number" id="amount" name="amount" class="inputBox border-[1px] text-font-darkGrey" placeholder="Amount" required>
-    </div>
-
+      <div class="inputContainer">
+        <label for="amount" class="inputLabel text-font-darkGrey">Amount</label>
+        <input type="number" id="amount" name="amount" class="inputBox border-[1px] text-font-darkGrey" #amountInput placeholder="Amount" [(ngModel)]="amount" required>
+        <div *ngIf="submitted && (amount < 1000 || !amount)" class="error-message">Amount must be at least 1000.</div>
+      </div>
+    <!-- </form> -->
   </div>
-  <button type="submit" class="button bg-blue-80 text-font-white m-auto">
+  <button type="submit" class="button bg-blue-80 text-font-white m-auto" (click)="onTransfer(+amountInput.value)">
     Transfer
   </button>
 </div>
