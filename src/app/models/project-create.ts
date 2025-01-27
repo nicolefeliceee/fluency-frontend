@@ -1,6 +1,7 @@
 import { ProjectDetail } from "./project-detail";
 
 export class ProjectCreate {
+  id!: string;
   title!: string;
   userId!: string;
   statusId!: string;
@@ -10,5 +11,6 @@ export class ProjectCreate {
   hashtag!: string;
   influencerId!: string;
   brandId!: string;
+  referenceNumber!: string;
   projectDetails!: ProjectDetail[];
 }

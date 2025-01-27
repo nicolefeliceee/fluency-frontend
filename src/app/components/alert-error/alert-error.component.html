@@ -1,10 +1,10 @@
-<div *ngIf="display" id="dismiss-alert" class="mx-auto w-3/4 hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-primary-red/20 border border-primary-red text-sm text-primary-red rounded-lg p-4 dark:bg-red-800/10 dark:border-teal-900 dark:text-red-500" role="alert" tabindex="-1" aria-labelledby="hs-dismiss-button-label">
+<div *ngIf="display" id="dismiss-alert" class="fixed ms-[12.5%] mx-auto w-3/4 hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-[#F8D7DA] border border-primary-red text-sm text-primary-red rounded-lg p-4 dark:bg-red-800/10 dark:border-teal-900 dark:text-red-500" role="alert" tabindex="-1" aria-labelledby="hs-dismiss-button-label">
   <div class="flex">
     <div class="shrink-0">
-      <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-        <path d="m9 12 2 2 4-4"></path>
-      </svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.11124 15.8891C8.0175 15.7953 7.96484 15.6681 7.96484 15.5356C7.96484 15.403 8.0175 15.2758 8.11124 15.1821L11.2932 12.0001L8.11124 8.81806C8.02016 8.72376 7.96976 8.59746 7.9709 8.46636C7.97204 8.33526 8.02462 8.20985 8.11733 8.11715C8.21003 8.02445 8.33544 7.97186 8.46654 7.97072C8.59763 7.96958 8.72394 8.01998 8.81824 8.11106L12.0002 11.2931L15.1822 8.11106C15.2765 8.01998 15.4028 7.96958 15.5339 7.97072C15.665 7.97186 15.7904 8.02445 15.8831 8.11715C15.9758 8.20985 16.0284 8.33526 16.0296 8.46636C16.0307 8.59746 15.9803 8.72376 15.8892 8.81806L12.7072 12.0001L15.8892 15.1821C15.9803 15.2764 16.0307 15.4027 16.0296 15.5338C16.0284 15.6649 15.9758 15.7903 15.8831 15.883C15.7904 15.9757 15.665 16.0283 15.5339 16.0294C15.4028 16.0305 15.2765 15.9801 15.1822 15.8891L12.0002 12.7071L8.81824 15.8891C8.72447 15.9828 8.59732 16.0355 8.46474 16.0355C8.33216 16.0355 8.205 15.9828 8.11124 15.8891Z" fill="#DF2935"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22ZM12 21C16.9705 21 21 16.9705 21 12C21 7.0295 16.9705 3 12 3C7.0295 3 3 7.0295 3 12C3 16.9705 7.0295 21 12 21Z" fill="#DF2935"/>
+        </svg>
     </div>
     <div class="ms-2">
       <h3 id="hs-dismiss-button-label" class="text-sm font-medium">
@@ -12,8 +12,8 @@
       </h3>
     </div>
     <div class="ps-3 ms-auto">
-      <div class="-mx-1.5 -my-1.5">
-        <button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:bg-red-100 dark:bg-transparent dark:text-red-600 dark:hover:bg-red-800/50 dark:focus:bg-red-800/50" data-hs-remove-element="#dismiss-alert">
+      <div class="-mx-1.5 -my-1.5 ">
+        <button (click)="dismiss()" type="button" class="inline-flex rounded-lg p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:bg-red-100 dark:bg-transparent dark:text-red-600 dark:hover:bg-red-800/50 dark:focus:bg-red-800/50" data-hs-remove-element="#dismiss-alert">
           <span class="sr-only">Dismiss</span>
           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 6 6 18"></path>

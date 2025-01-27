@@ -8,12 +8,21 @@
     <p class="border border-font-darkGrey rounded-full text-smalltext text-font-darkGrey px-1.5 py-0.5 h-fit">Media type</p> -->
   </div>
   <div class="border-b border-b-font-lightGrey my-2"></div>
-  <div class="flex p-2">
-    <img src="../../../../assets/images/empty profile pic.png" alt="" class="rounded-full object-cover w-10 h-10">
-    <div class="ms-2">
-      <p class="text-body font-medium">&#64;username</p>
-      <p class="text-smalltext text-font-darkGrey">follower number</p>
+  <div class="flex ">
+    <div *ngIf="project['influencer_id']" class="picture" style="background-image: url('{{ profilePic }}');"></div>
+    <!-- <img src="../../../../assets/images/empty profile pic.png" alt="" class="rounded-full object-cover w-10 h-10"> -->
+    <div *ngIf="!project['influencer_id']" class="w-12 h-10 bg-blue-80 rounded-full flex justify-center items-center">
+      <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 10C12.4596 10 12.9148 9.90947 13.3394 9.73358C13.764 9.55769 14.1499 9.29988 14.4749 8.97487C14.7999 8.64987 15.0577 8.26403 15.2336 7.83939C15.4095 7.41475 15.5 6.95963 15.5 6.5C15.5 6.04037 15.4095 5.58525 15.2336 5.16061C15.0577 4.73597 14.7999 4.35013 14.4749 4.02513C14.1499 3.70012 13.764 3.44231 13.3394 3.26642C12.9148 3.09053 12.4596 3 12 3C11.0717 3 10.1815 3.36875 9.52513 4.02513C8.86875 4.6815 8.5 5.57174 8.5 6.5C8.5 7.42826 8.86875 8.3185 9.52513 8.97487C10.1815 9.63125 11.0717 10 12 10ZM3 20.4V21H21V20.4C21 18.16 21 17.04 20.564 16.184C20.1805 15.4314 19.5686 14.8195 18.816 14.436C17.96 14 16.84 14 14.6 14H9.4C7.16 14 6.04 14 5.184 14.436C4.43139 14.8195 3.81949 15.4314 3.436 16.184C3 17.04 3 18.16 3 20.4Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
-    <button (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg ms-auto text-font-white px-5 py-2">View</button>
+    <div class="ms-2" *ngIf="project['influencer_id']">
+      <p class="text-body font-medium">&#64;{{ username}}</p>
+      <p class="text-smalltext text-font-darkGrey">{{ follower }} followers</p>
+    </div>
+    <div class="ms-2 block" *ngIf="!project['influencer_id']">
+      <p class=" text-body text-font-lightGrey">You haven’t choose influencer yet</p>
+    </div>
+    <button (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">View</button>
   </div>
 </div>

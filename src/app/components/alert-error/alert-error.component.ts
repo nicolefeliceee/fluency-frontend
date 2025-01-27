@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 @Component({
   selector: 'app-alert-error',
@@ -12,5 +12,11 @@ export class AlertErrorComponent {
 
   @Input() label!: string;
   @Input() display!: boolean;
+
+  dismissClicked = output<any>();
+
+  dismiss() {
+    this.dismissClicked.emit(null);
+  }
 
 }

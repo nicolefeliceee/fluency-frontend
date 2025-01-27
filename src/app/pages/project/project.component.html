@@ -1,16 +1,17 @@
 <app-header></app-header>
 <div class="bantu"></div>
 
-<app-alert-success [display]="createSuccess" [label]="'Project saved successfully'"></app-alert-success>
+<app-tab [options]="statusOptions" [selectedId]="selectedStatus" (id)="getProjectsByStatus($event)"></app-tab>
 
-<app-tab [options]="statusOptions" (id)="getProjectsByStatus($event)"></app-tab>
+<app-alert-success [display]="createSuccess" [label]="'Project saved successfully'"></app-alert-success>
 
 <div class="container px-20 py-10">
   <div *ngIf="projectList.length == 0" class="container text-center">
     <img src="../../../assets/images/empty project.png" alt="" class="object-cover mx-auto">
     <h1 class="text-header2 font-semibold text-font-darkGrey">Nothing is here yet</h1>
-    <h5 class="text-header6 font-medium text-font-lightGrey">Create your first project now</h5>
-    <a routerLink="/project/create"  class="bg-blue-80 text-font-white py-2 px-5 rounded-lg mt-5">+ New Project</a>
+    <h5 *ngIf="instagramId" class="text-header6 font-medium text-font-lightGrey mb-5">Please wait for your first project</h5>
+    <h5 *ngIf="!instagramId" class="text-header6 font-medium text-font-lightGrey mb-5">Create your first project now</h5>
+    <a *ngIf="!instagramId" routerLink="/project/create"  class="bg-blue-80 text-font-white py-2 px-5 rounded-lg">+ New Project</a>
   </div>
 
   <div class="grid grid-cols-3 gap-5">

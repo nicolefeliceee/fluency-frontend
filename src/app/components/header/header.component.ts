@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit{
     this.userId = localStorage.getItem('user_id');
     this.instagramId = localStorage.getItem('instagram_id');
     this.userName = localStorage.getItem('name');
-    console.log(this.userId);
+    // console.log(this.userId);
     if (this.userId) {
       this.isLogin = true;
     }
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit{
 
 
     if (this.instagramId) {
-      this.instagramService.getProfile().subscribe(
+      this.instagramService.getProfile(localStorage.getItem("long_lived_token") || '', localStorage.getItem('instagram_id')).subscribe(
         (data) => {
           this.profilePicUrl = (data as any)['profile_picture_url'];
         },
@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit{
     } else {
       this.userService.getProfile(localStorage.getItem("user_id") || '').subscribe(
         (data) => {
-          console.log(data);
+          // console.log(data);
         },
         (error) => {
           console.log(error);

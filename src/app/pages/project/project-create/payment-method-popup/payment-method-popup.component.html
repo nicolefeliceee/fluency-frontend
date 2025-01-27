@@ -1,0 +1,54 @@
+<div *ngIf="display" class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[100]">
+
+  <div class="mt-10 bg-font-white rounded-xl top-10 w-[500px] p-5 mx-auto h-[400px]">
+    <div class="text-header3 font-semibold border-b border-font-darkGrey pb-2">
+      Select Payment Method
+    </div>
+
+    <div (click)="selectWallet()" class="my-5 border flex px-3 py-2 rounded-xl items-center" [ngClass]="walletSelected ? 'border-blue-80 border-2' : 'border-font-lightGrey'">
+      <div>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="24" fill="#949C9E" fill-opacity="0.18"/>
+          <path d="M34 17.75V15.25C34 13.8712 32.8788 12.75 31.5 12.75H15.25C13.1825 12.75 11.5 14.4325 11.5 16.5V31.5C11.5 34.2512 13.7425 35.25 15.25 35.25H34C35.3788 35.25 36.5 34.1288 36.5 32.75V20.25C36.5 18.8712 35.3788 17.75 34 17.75ZM31.5 29H29V24H31.5V29ZM15.25 17.75C14.9282 17.7356 14.6243 17.5976 14.4016 17.3648C14.1789 17.1319 14.0547 16.8222 14.0547 16.5C14.0547 16.1778 14.1789 15.8681 14.4016 15.6352C14.6243 15.4024 14.9282 15.2644 15.25 15.25H31.5V17.75H15.25Z" fill="#5876F9"/>
+          </svg>
+      </div>
+      <div class="ms-3">
+        <p class="text-font-black text-header5 font-semibold">Wallet</p>
+        <p class="text-font-lightGrey text-header6">Balance: Rp350.000</p>
+      </div>
+      <div class="border border-font-lightGrey w-4 h-4 rounded-full ms-auto me-5 flex items-center">
+        <div *ngIf="walletSelected == true" class="bg-blue-80 rounded-full w-2 h-2 m-auto"></div>
+      </div>
+    </div>
+
+    <div (click)="selectOther()" class="my-5 border flex px-3 py-2 rounded-xl items-center" [ngClass]="otherSelected ? 'border-blue-80 border-2' : 'border-font-lightGrey'">
+      <div>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="24" fill="#949C9E" fill-opacity="0.18"/>
+          <path d="M15.5625 14.625C14.3193 14.625 13.127 15.1189 12.2479 15.9979C11.3689 16.877 10.875 18.0693 10.875 19.3125V20.25H37.125V19.3125C37.125 18.0693 36.6311 16.877 35.7521 15.9979C34.873 15.1189 33.6807 14.625 32.4375 14.625H15.5625ZM37.125 22.125H10.875V28.6875C10.875 29.9307 11.3689 31.123 12.2479 32.0021C13.127 32.8811 14.3193 33.375 15.5625 33.375H32.4375C33.6807 33.375 34.873 32.8811 35.7521 32.0021C36.6311 31.123 37.125 29.9307 37.125 28.6875V22.125ZM28.6875 27.75H32.4375C32.6861 27.75 32.9246 27.8488 33.1004 28.0246C33.2762 28.2004 33.375 28.4389 33.375 28.6875C33.375 28.9361 33.2762 29.1746 33.1004 29.3504C32.9246 29.5262 32.6861 29.625 32.4375 29.625H28.6875C28.4389 29.625 28.2004 29.5262 28.0246 29.3504C27.8488 29.1746 27.75 28.9361 27.75 28.6875C27.75 28.4389 27.8488 28.2004 28.0246 28.0246C28.2004 27.8488 28.4389 27.75 28.6875 27.75Z" fill="#5876F9"/>
+          </svg>
+      </div>
+      <div class="ms-3">
+        <p class="text-font-black text-header5 font-semibold">Other Payment Method</p>
+        <p class="text-font-lightGrey text-header6">Click continue to choose</p>
+      </div>
+      <div class="border border-font-lightGrey w-4 h-4 rounded-full ms-auto me-5 flex items-center">
+        <div *ngIf="otherSelected == true" class="bg-blue-80 rounded-full w-2 h-2 m-auto"></div>
+      </div>
+    </div>
+
+    <div class="flex justify-end items-center gap-x-2 py-3 border-t border-font-darkGrey mt-20">
+      <button (click)="cancel()" type="button" class="hs-dropup-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-slide-up-animation-modal">
+        Close
+      </button>
+      <button (click)="checkout()" *ngIf="walletSelected || otherSelected"  type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        Continue
+      </button>
+      <button disabled *ngIf="!walletSelected && !otherSelected" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        Continue
+      </button>
+    </div>
+
+  </div>
+</div>
+

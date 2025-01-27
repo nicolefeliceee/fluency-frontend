@@ -239,7 +239,7 @@
       Influencers
     </div>
     <div class="cardBox grid grid-cols-3 gap-7">
-      <app-influencer-card *ngFor="let item of influencer" [item]="item"></app-influencer-card>
+      <app-influencer-card *ngFor="let item of influencer" [item]="item" (hireClicked)="redirectToProject($event)"></app-influencer-card>
 
     </div>
   </div>

@@ -13,6 +13,7 @@ import { InfluencerService } from '../../services/influencer.service';
 import { HostListener } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { TabInfluencerComponent } from "../../components/tab-influencer/tab-influencer.component";
+import { Router } from '@angular/router';
 
 interface Category {
   id: number; // ID kategori
@@ -58,8 +59,26 @@ export class InfluencerComponent implements OnInit{
     private locationService: LocationService,
     private fb: FormBuilder,
     private influencerService: InfluencerService,
-    private categoryService: CategoryService
-  ) {}
+    private categoryService: CategoryService,
+    private router: Router
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    this.newProject = navigation?.extras.state?.['newProject'];
+    console.log(navigation?.extras.state?.['newProject']);
+  }
+
+  newProject: any;
+  redirectToProject(influencerId: any) {
+    // jika sebelumnya tekan button find dari menu create project
+    if (this.newProject) {
+      console.log(influencerId);
+      this.newProject.influencerId = influencerId;
+      console.log(this.newProject);
+      this.router.navigate(['project/create'], { state: { newProject: this.newProject } });
+    } else { //jika mau hire dari menu influencer langsung
+      this.router.navigate(['project'], { state: { influencerId: influencerId } });
+    }
+  }
 
   filterForm!: FormGroup;
 

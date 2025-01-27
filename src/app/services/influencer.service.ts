@@ -133,4 +133,9 @@ export class InfluencerService {
   //   });
   // }
 
+  getInfluencerById(influencerId: number): Observable<any> {
+    let url = this.baseUrl + '/influencer/' + influencerId;
+    return this.httpClient.get(url);
+  }
+
 }

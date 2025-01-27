@@ -1,1 +1,338 @@
-<p>project-detail works!</p>
+<app-header></app-header>
+<div class="bantu"></div>
+
+<app-alert-error [display]="createError" [label]="'Save project failed! Please try again later'" (dismissClicked)="this.createError = false"></app-alert-error>
+<!-- <app-alert-error [display]="detailNotSelected" [label]="'You havent selected any media'" (dismissClicked)="this.detailNotSelected = false"></app-alert-error> -->
+
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
+<app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="detailForm" [projectStatus]="newProject['status_id']" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)"></app-project-detail-popup>
+<app-payment-method-popup [display]="displayPaymentMethod" (cancelClicked)="paymentCancel()" (confirmClicked)="checkout($event)"></app-payment-method-popup>
+
+<div class="container">
+  <div class="container p-5">
+    <a routerLink="/project">Back</a>
+    <div class="grid grid-cols-2 gap-10">
+      <div class="bg-font-white rounded-xl p-5">
+        <p class="text-header3 font-bold mb-5">Project Detail</p>
+        <div class="flex flex-col my-5">
+          <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Title</label>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectTitle }}</div>
+        </div>
+
+        <div class="flex flex-col my-5">
+          <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Description</label>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectDescription }}</div>
+        </div>
+
+        <div class="flex flex-col my-5">
+          <label class="text-header6 text-font-darkGrey font-semibold" for="">Caption</label>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectCaption }}</div>
+        </div>
+
+        <div class="flex flex-col my-5">
+          <label class="text-header6 text-font-darkGrey font-semibold" for="">Mention</label>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectMention }}</div>
+        </div>
+
+        <div class="flex flex-col my-5">
+          <label class="text-header6 text-font-darkGrey font-semibold" for="">Hashtag</label>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectHashtag }}</div>
+        </div>
+
+      </div>
+
+
+      <div class="">
+        <div class="bg-font-white rounded-xl p-5 h-[24rem]">
+          <div class="flex justify-between items-center">
+            <p *ngIf="!instagramId" class="text-header4 text-bg-blue-100 font-semibold">Influencer</p>
+            <p *ngIf="instagramId" class="text-header4 text-bg-blue-100 font-semibold">Brand</p>
+            <!-- <button (click)="findInfluencer()" class="border border-blue-80 rounded-xl px-5 py-2 text-blue-80 font-semibold">Find</button> -->
+          </div>
+
+          <!-- for loggedin user: influencer -->
+          <div *ngIf="instagramId">
+            <div class=" h-5/6 rounded-xl mt-5">
+              <div class="flex rounded-xl">
+                <div *ngIf="brand['profile_picture'] != ''" class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]=""></div>
+                <div *ngIf="brand['profile_picture'] == ''" class="foto rounded-l-xl bg-[#D9D9D9] justify-center items-center"><img src="../../../../assets/images/empty profile pic.png" alt=""></div>
+                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey">
+                  <p class="text-header5 font-semibold text-font-darkGrey mb-2">{{ brand['name'] }}</p>
+                  <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
+                    <p >{{ brand['category'] }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 11C12.8284 11 13.5 10.3284 13.5 9.5C13.5 8.67157 12.8284 8 12 8C11.1716 8 10.5 8.67157 10.5 9.5C10.5 10.3284 11.1716 11 12 11Z" fill="#949C9E"/>
+                      <path d="M12 2C9.89206 1.99989 7.86926 2.83176 6.37124 4.31479C4.87323 5.79782 4.02108 7.81216 4 9.92C4 15.4 11.05 21.5 11.35 21.76C11.5311 21.9149 11.7616 22.0001 12 22.0001C12.2384 22.0001 12.4689 21.9149 12.65 21.76C13 21.5 20 15.4 20 9.92C19.9789 7.81216 19.1268 5.79782 17.6288 4.31479C16.1307 2.83176 14.1079 1.99989 12 2ZM12 13C11.3078 13 10.6311 12.7947 10.0555 12.4101C9.47993 12.0256 9.03133 11.4789 8.76642 10.8394C8.50151 10.1999 8.4322 9.49612 8.56725 8.81718C8.7023 8.13825 9.03564 7.51461 9.52513 7.02513C10.0146 6.53564 10.6382 6.2023 11.3172 6.06725C11.9961 5.9322 12.6999 6.00151 13.3394 6.26642C13.9789 6.53133 14.5256 6.97993 14.9101 7.5555C15.2947 8.13108 15.5 8.80777 15.5 9.5C15.5 10.4283 15.1313 11.3185 14.4749 11.9749C13.8185 12.6313 12.9283 13 12 13Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">{{ brand['location'] }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.7925 9.44125C7.0525 11.9175 9.0825 13.9387 11.5588 15.2075L13.4837 13.2825C13.72 13.0463 14.07 12.9675 14.3763 13.0725C15.3562 13.3962 16.415 13.5712 17.5 13.5712C17.9812 13.5712 18.375 13.965 18.375 14.4462V17.5C18.375 17.9812 17.9812 18.375 17.5 18.375C9.28375 18.375 2.625 11.7163 2.625 3.5C2.625 3.01875 3.01875 2.625 3.5 2.625H6.5625C7.04375 2.625 7.4375 3.01875 7.4375 3.5C7.4375 4.59375 7.6125 5.64375 7.93625 6.62375C8.0325 6.93 7.9625 7.27125 7.7175 7.51625L5.7925 9.44125Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">+62 {{ brand['phone'] }}</p>
+                  </div>
+                  <div class="flex">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.25 6.59277V14.8746C19.25 15.5442 18.9942 16.1885 18.5349 16.6756C18.0755 17.1628 17.4474 17.456 16.779 17.4953L16.625 17.4996H4.375C3.70544 17.4997 3.06117 17.2439 2.57402 16.7845C2.08687 16.3252 1.79366 15.6971 1.75438 15.0286L1.75 14.8746V6.59277L10.0144 12.1026L10.1159 12.1604C10.2355 12.2188 10.3669 12.2492 10.5 12.2492C10.6331 12.2492 10.7645 12.2188 10.8841 12.1604L10.9856 12.1026L19.25 6.59277Z" fill="#949C9E"/>
+                      <path d="M16.6253 3.5C17.5703 3.5 18.3989 3.99875 18.8609 4.74863L10.5003 10.3224L2.13965 4.74863C2.35909 4.39235 2.66053 4.09369 3.01882 3.87755C3.37712 3.66142 3.78189 3.53407 4.1994 3.50612L4.37527 3.5H16.6253Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">{{ brand['email'] }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- for loggedin user: brand -->
+          <div *ngIf="!instagramId">
+            <div *ngIf="!selectedInfluencer" class="bg-font-lightGrey/15 h-5/6 rounded-xl content-center mt-5">
+              <div class="mx-auto w-fit">
+                <svg width="136" height="54" viewBox="0 0 136 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M130.562 5.34375H127.284C125.765 4.44684 124.151 3.72247 122.471 3.18414C117.178 1.4336 110.188 0.53125 101.688 0.53125C93.1874 0.53125 86.1973 1.4336 80.9156 3.18414C76.6866 4.59481 74.8247 6.14984 74.2232 6.75441C72.2811 5.82581 70.1557 5.34381 68.003 5.34381C65.8503 5.34381 63.7249 5.82581 61.7829 6.75441C61.1813 6.15285 59.3195 4.59481 55.0905 3.18414C49.8027 1.4336 42.8126 0.53125 34.3125 0.53125C25.8124 0.53125 18.8223 1.4336 13.5405 3.18414C11.8609 3.72247 10.2467 4.44684 8.72805 5.34375H5.4375C4.16115 5.34375 2.93707 5.85078 2.03455 6.7533C1.13203 7.65582 0.625 8.8799 0.625 10.1562C0.625 11.4326 1.13203 12.6567 2.03455 13.5592C2.93707 14.4617 4.16115 14.9688 5.4375 14.9688H5.48863C5.78941 28.6423 7.42566 36.8596 10.9358 42.7098C13.1346 46.4869 16.5054 49.4437 20.5367 51.1317C24.2153 52.7078 28.724 53.4748 34.3125 53.4748C41.5764 53.4748 51.9022 52.3589 57.6892 42.7158C60.6008 37.8612 62.228 31.3794 62.8657 21.5047C63.0776 20.9548 63.1867 20.3706 63.1875 19.7812C63.1875 18.5049 63.6945 17.2808 64.597 16.3783C65.4996 15.4758 66.7236 14.9688 68 14.9688C69.2764 14.9688 70.5004 15.4758 71.403 16.3783C72.3055 17.2808 72.8125 18.5049 72.8125 19.7812C72.8141 20.3686 72.9232 20.9507 73.1343 21.4987C73.772 31.3734 75.3992 37.8552 78.3108 42.7098C80.5096 46.4869 83.8804 49.4437 87.9117 51.1317C91.5903 52.7078 96.099 53.4748 101.688 53.4748C108.951 53.4748 119.277 52.3589 125.064 42.7158C128.574 36.8656 130.217 28.6483 130.511 14.9748H130.562C131.839 14.9748 133.063 14.4677 133.965 13.5652C134.868 12.6627 135.375 11.4386 135.375 10.1623C135.375 8.88591 134.868 7.66184 133.965 6.75932C133.063 5.8568 131.839 5.34977 130.562 5.34977V5.34375Z" fill="#91A9FD"/>
+                </svg>
+              </div>
+              <p class="text-center text-header6 text-font-darkGrey font-semibold mt-5">No influencer selected yet</p>
+            </div>
+
+            <div *ngIf="selectedInfluencer" class=" h-5/6 rounded-xl mt-5">
+              <div class="flex rounded-xl">
+                <div class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div>
+                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey ">
+                  <p class="text-header5 font-semibold text-font-darkGrey mb-2">&#64;{{ selectedInfluencer.username }}</p>
+                  <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.name }}</p>
+                  <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.followers }} Followers</p>
+                  <div class="flex mb-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_3674_5296)">
+                      <path d="M11.37 14.4279C11.2017 14.4279 11.0342 14.3762 10.89 14.2733L7.50044 11.8424L4.11085 14.2733C3.97042 14.3743 3.80165 14.4284 3.62865 14.4278C3.45564 14.4272 3.28725 14.3719 3.14752 14.2699C3.00761 14.1686 2.90325 14.0256 2.84931 13.8615C2.79537 13.6973 2.79459 13.5204 2.8471 13.3558L4.11127 9.27577L0.752103 6.90868C0.612887 6.80594 0.509497 6.66203 0.456558 6.4973C0.403618 6.33258 0.403809 6.15538 0.457103 5.99077C0.510928 5.82662 0.614919 5.68351 0.754412 5.58162C0.893906 5.47973 1.06186 5.4242 1.2346 5.42285L5.39502 5.4166L6.7196 1.43785C6.77427 1.27394 6.87911 1.13139 7.01929 1.03037C7.15946 0.929357 7.32786 0.875 7.50064 0.875C7.67343 0.875 7.84183 0.929357 7.982 1.03037C8.12218 1.13139 8.22702 1.27394 8.28169 1.43785L9.58377 5.4166L13.7654 5.42285C13.9384 5.42383 14.1067 5.47928 14.2463 5.58135C14.386 5.68341 14.4899 5.82688 14.5434 5.99139C14.5969 6.1559 14.5971 6.33307 14.5442 6.49774C14.4912 6.66241 14.3877 6.8062 14.2484 6.90868L10.8892 9.27577L12.1534 13.3558C12.2059 13.5203 12.2052 13.6973 12.1513 13.8614C12.0975 14.0255 11.9932 14.1685 11.8534 14.2699C11.7132 14.3727 11.5438 14.428 11.37 14.4279Z" fill="#FFAC33"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_3674_5296">
+                      <rect width="15" height="15" fill="white"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+                    <p class="text-[0.75rem] text-font-darkGrey">{{ selectedInfluencer.rating }} | {{ selectedInfluencer.totalreview }} Reviews</p>
+                  </div>
+                  <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
+                    <div class="flex">
+                      <p >{{ selectedInfluencer.category[0].label }} &nbsp;</p>
+                      <p *ngFor="let item of selectedInfluencer.category.slice(1)">| &nbsp;{{ item.label }} &nbsp;</p>
+                    </div>
+                  </div>
+                  <div class="flex mb-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 11C12.8284 11 13.5 10.3284 13.5 9.5C13.5 8.67157 12.8284 8 12 8C11.1716 8 10.5 8.67157 10.5 9.5C10.5 10.3284 11.1716 11 12 11Z" fill="#949C9E"/>
+                      <path d="M12 2C9.89206 1.99989 7.86926 2.83176 6.37124 4.31479C4.87323 5.79782 4.02108 7.81216 4 9.92C4 15.4 11.05 21.5 11.35 21.76C11.5311 21.9149 11.7616 22.0001 12 22.0001C12.2384 22.0001 12.4689 21.9149 12.65 21.76C13 21.5 20 15.4 20 9.92C19.9789 7.81216 19.1268 5.79782 17.6288 4.31479C16.1307 2.83176 14.1079 1.99989 12 2ZM12 13C11.3078 13 10.6311 12.7947 10.0555 12.4101C9.47993 12.0256 9.03133 11.4789 8.76642 10.8394C8.50151 10.1999 8.4322 9.49612 8.56725 8.81718C8.7023 8.13825 9.03564 7.51461 9.52513 7.02513C10.0146 6.53564 10.6382 6.2023 11.3172 6.06725C11.9961 5.9322 12.6999 6.00151 13.3394 6.26642C13.9789 6.53133 14.5256 6.97993 14.9101 7.5555C15.2947 8.13108 15.5 8.80777 15.5 9.5C15.5 10.4283 15.1313 11.3185 14.4749 11.9749C13.8185 12.6313 12.9283 13 12 13Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">{{ selectedInfluencer.location }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.7925 9.44125C7.0525 11.9175 9.0825 13.9387 11.5588 15.2075L13.4837 13.2825C13.72 13.0463 14.07 12.9675 14.3763 13.0725C15.3562 13.3962 16.415 13.5712 17.5 13.5712C17.9812 13.5712 18.375 13.965 18.375 14.4462V17.5C18.375 17.9812 17.9812 18.375 17.5 18.375C9.28375 18.375 2.625 11.7163 2.625 3.5C2.625 3.01875 3.01875 2.625 3.5 2.625H6.5625C7.04375 2.625 7.4375 3.01875 7.4375 3.5C7.4375 4.59375 7.6125 5.64375 7.93625 6.62375C8.0325 6.93 7.9625 7.27125 7.7175 7.51625L5.7925 9.44125Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">+62 {{ selectedInfluencer.phone }}</p>
+                  </div>
+                  <div class="flex">
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.25 6.59277V14.8746C19.25 15.5442 18.9942 16.1885 18.5349 16.6756C18.0755 17.1628 17.4474 17.456 16.779 17.4953L16.625 17.4996H4.375C3.70544 17.4997 3.06117 17.2439 2.57402 16.7845C2.08687 16.3252 1.79366 15.6971 1.75438 15.0286L1.75 14.8746V6.59277L10.0144 12.1026L10.1159 12.1604C10.2355 12.2188 10.3669 12.2492 10.5 12.2492C10.6331 12.2492 10.7645 12.2188 10.8841 12.1604L10.9856 12.1026L19.25 6.59277Z" fill="#949C9E"/>
+                      <path d="M16.6253 3.5C17.5703 3.5 18.3989 3.99875 18.8609 4.74863L10.5003 10.3224L2.13965 4.74863C2.35909 4.39235 2.66053 4.09369 3.01882 3.87755C3.37712 3.66142 3.78189 3.53407 4.1994 3.50612L4.37527 3.5H16.6253Z" fill="#949C9E"/>
+                      </svg>
+                    <p class="text-[0.85rem] text-font-darkGrey ms-2">{{ selectedInfluencer.email }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bg-font-white rounded-xl p-5 mt-7 h-[24rem] overflow-y-auto">
+          <div class="border-b border-font-black justify-between flex pb-5 items-center">
+            <p class="text-header4 text-bg-blue-100 font-semibold">Order summary</p>
+            <p class="text-header6 text-font-lightGrey font-semibold">{{ newProject['reference_number'] }}</p>
+          </div>
+          <div class="justify-between flex items-center my-5">
+            <p class="text-[15px] text-font-darkGrey font-bold">Media</p>
+            <p class="text-[15px] text-font-darkGrey font-bold">Subtotal</p>
+          </div>
+          <div *ngIf="storyDetailList.length > 0" class="justify-between flex items-center my-2">
+            <p class="text-[15px] text-font-darkGrey font-normal">Story &times; {{  storyDetailList.length  }}</p>
+            <p class="text-[15px] text-font-darkGrey font-normal">{{ storyDetailList.length * storyPrice }}</p>
+          </div>
+          <div *ngIf="feedsDetailList.length > 0" class="justify-between flex items-center my-2">
+            <p class="text-[15px] text-font-darkGrey font-normal">Feeds &times; {{  feedsDetailList.length  }}</p>
+            <p class="text-[15px] text-font-darkGrey font-normal">{{ feedsDetailList.length * feedsPrice }}</p>
+          </div>
+          <div *ngIf="reelsDetailList.length > 0" class="justify-between flex items-center my-2">
+            <p class="text-[15px] text-font-darkGrey font-normal">Reels &times; {{  reelsDetailList.length  }}</p>
+            <p class="text-[15px] text-font-darkGrey font-normal">{{ reelsDetailList.length * reelsPrice }}</p>
+          </div>
+          <div class="border-t border-b border-font-black my-5">
+            <div class="justify-between flex items-center my-2">
+              <p class="text-[15px] text-font-darkGrey font-normal">Subtotal</p>
+              <p class="text-[15px] text-font-darkGrey font-normal">{{ feedsDetailList.length * feedsPrice }}</p>
+            </div>
+            <div class="justify-between flex items-center my-2">
+              <p class="text-[15px] text-font-darkGrey font-normal">Tax</p>
+              <p class="text-[15px] text-font-darkGrey font-normal">{{ reelsDetailList.length * reelsPrice }}</p>
+            </div>
+          </div>
+          <div class="justify-between flex items-center my-2">
+            <p class="text-[15px] text-font-darkGrey font-bold">Total</p>
+            <p class="text-[15px] text-font-darkGrey font-bold">{{ reelsDetailList.length * reelsPrice }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- section project progress: muncul pas status > waiting -->
+    <div class="bg-font-white rounded-xl p-5 mt-10">
+      <p class="text-header3 font-bold mb-5">Project Progress</p>
+      <img *ngIf="newProject['status_id'] == 3" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-waiting.jpg" alt="">
+      <img *ngIf="newProject['status_id'] == 4" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-working.png" alt="">
+      <img *ngIf="newProject['status_id'] == 5" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-done.png" alt="">
+
+      <!-- progress bar -->
+
+      <div class="flex justify-center items-center px-10 mt-10">
+
+        <div class="bg-[#D9D9D9] rounded-full w-fit p-2">
+          <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.8125 19.5354L13.9509 17.6738L12.9375 18.6873L15.8125 21.5623L21.5625 15.8123L20.5491 14.7988L15.8125 19.5354Z" fill="white"/>
+            <path d="M17.9688 3.59375H15.8125V2.875C15.8114 2.4941 15.6595 2.12913 15.3902 1.85979C15.1209 1.59045 14.7559 1.43864 14.375 1.4375H8.625C8.2441 1.43864 7.87913 1.59045 7.60979 1.85979C7.34045 2.12913 7.18864 2.4941 7.1875 2.875V3.59375H5.03125C4.65035 3.59489 4.28538 3.7467 4.01604 4.01604C3.7467 4.28538 3.59489 4.65035 3.59375 5.03125V20.125C3.59489 20.5059 3.7467 20.8709 4.01604 21.1402C4.28538 21.4095 4.65035 21.5614 5.03125 21.5625H11.5V20.125H5.03125V5.03125H7.1875V7.1875H15.8125V5.03125H17.9688V12.9375H19.4062V5.03125C19.4051 4.65035 19.2533 4.28538 18.984 4.01604C18.7146 3.7467 18.3496 3.59489 17.9688 3.59375ZM14.375 5.75H8.625V2.875H14.375V5.75Z" fill="white"/>
+            </svg>
+        </div>
+
+        <!-- bar -->
+        <div class="w-[50%] h-[10px] bg-[#D9D9D9] -mx-2 "></div>
+
+        <div class="bg-[#D9D9D9] rounded-full w-fit p-2">
+          <svg width="23" height="23" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 1V3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 2.33984L15 4.07189" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.6603 6L17.9282 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 11H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.6603 16L17.9282 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 19.6598L15 17.9277" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 21V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 19.6598L7 17.9277" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.33984 16L4.0719 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 11H3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.33984 6L4.0719 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 2.33984L7 4.07189" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+          <!-- bar -->
+        <div class="w-[50%] h-[10px] bg-[#D9D9D9] -mx-2"></div>
+
+        <div class="bg-[#D9D9D9] rounded-full w-fit p-2">
+          <svg width="23" height="23" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_3799_1719)">
+              <path d="M8 0C8.73438 0 9.44271 0.09375 10.125 0.28125C10.8073 0.46875 11.4427 0.739583 12.0312 1.09375C12.6198 1.44792 13.1589 1.86458 13.6484 2.34375C14.138 2.82292 14.5573 3.36198 14.9062 3.96094C15.2552 4.5599 15.5234 5.19792 15.7109 5.875C15.8984 6.55208 15.9948 7.26042 16 8C16 8.73438 15.9062 9.44271 15.7188 10.125C15.5312 10.8073 15.2604 11.4427 14.9062 12.0312C14.5521 12.6198 14.1354 13.1589 13.6562 13.6484C13.1771 14.138 12.638 14.5573 12.0391 14.9062C11.4401 15.2552 10.8021 15.5234 10.125 15.7109C9.44792 15.8984 8.73958 15.9948 8 16C7.26562 16 6.55729 15.9062 5.875 15.7188C5.19271 15.5312 4.55729 15.2604 3.96875 14.9062C3.38021 14.5521 2.84115 14.1354 2.35156 13.6562C1.86198 13.1771 1.44271 12.638 1.09375 12.0391C0.744792 11.4401 0.476562 10.8021 0.289062 10.125C0.101562 9.44792 0.00520833 8.73958 0 8C0 7.26562 0.09375 6.55729 0.28125 5.875C0.46875 5.19271 0.739583 4.55729 1.09375 3.96875C1.44792 3.38021 1.86458 2.84115 2.34375 2.35156C2.82292 1.86198 3.36198 1.44271 3.96094 1.09375C4.5599 0.744792 5.19792 0.476562 5.875 0.289062C6.55208 0.101562 7.26042 0.00520833 8 0ZM12.7109 5.35156L11.6484 4.28906L6.5 9.4375L4.35156 7.28906L3.28906 8.35156L6.5 11.5625L12.7109 5.35156Z" fill="white"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_3799_1719">
+                <rect width="16" height="16" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+
+      </div>
+
+      <div class="flex justify-between items-center px-6 mb-10">
+        <p class="text-header6 text-font-lightGrey font-semibold">Accepted</p>
+        <p class="text-header6 text-font-lightGrey font-semibold">Working on it</p>
+        <p class="text-header6 text-font-lightGrey font-semibold">Finished</p>
+      </div>
+
+      <!-- table starts -->
+      <div class="px-10 py-3 w-full bg-blue-60/20 rounded-xl mt-5">
+        <table class="w-full table-auto">
+          <thead class="text-left border-b border-font-lightGrey/50">
+            <th class="h-[50px] w-[12%]">Media type</th>
+            <th class="w-[12%]">Status</th>
+            <th class="w-[12%]">Date</th>
+            <th class="w-[12%]">Time</th>
+            <th class="w-[40%]">Note</th>
+            <th class="text-center w-[12%]">Action</th>
+          </thead>
+          <tbody class="mt-5">
+            <tr class="h-[40px]" *ngFor="let item of newProject['project_details']">
+              <td>{{ getMediaLabel(item['mediatype_id']) }}</td>
+              <td>{{ getStatusLabel(item['status_id']) }}</td>
+              <td>{{ item['deadline_date'] }}</td>
+              <td>{{ item['deadline_time'] }}</td>
+              <td>{{ item['note'] }}</td>
+              <td>
+                <!-- buttons for brand -->
+                 <div *ngIf="!instagramId">
+                    <button>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.14286 1H19V16.75C19 17.3467 18.7291 17.919 18.2468 18.341C17.7646 18.7629 17.1106 19 16.4286 19H6.14286M10 13.375L13.8571 10M13.8571 10L10 6.625M13.8571 10H1" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.66531C5 6.95791 5.28099 6.27948 5.78115 5.77927C6.28131 5.27906 6.95968 4.99805 7.66701 4.99805H16.3331C16.6833 4.99805 17.0301 5.06704 17.3537 5.20108C17.6773 5.33512 17.9713 5.53159 18.2189 5.77927C18.4666 6.02695 18.663 6.32099 18.7971 6.64459C18.9311 6.9682 19.0001 7.31504 19.0001 7.66531V16.3322C19.0001 16.6824 18.9311 17.0293 18.7971 17.3529C18.663 17.6765 18.4666 17.9705 18.2189 18.2182C17.9713 18.4659 17.6773 18.6624 17.3537 18.7964C17.0301 18.9304 16.6833 18.9994 16.3331 18.9994H7.66701C7.31678 18.9994 6.96997 18.9304 6.64639 18.7964C6.32282 18.6624 6.02881 18.4659 5.78115 18.2182C5.5335 17.9705 5.33704 17.6765 5.20301 17.3529C5.06898 17.0293 5 16.6824 5 16.3322V7.66531Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2.01201 14.7384C1.705 14.5639 1.44965 14.3113 1.2719 14.0062C1.09415 13.7011 1.00034 13.3543 1 13.0012V3.0002C1 1.90009 1.9 1 3.00001 1H13.0001C13.7501 1 14.1581 1.38504 14.5001 2.0001" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.5 14.5V8.875M10 14.5V5.5M14.5 14.5V12.25M16.75 1H3.25C2.65326 1 2.08097 1.23705 1.65901 1.65901C1.23705 2.08097 1 2.65326 1 3.25V16.75C1 17.3467 1.23705 17.919 1.65901 18.341C2.08097 18.7629 2.65326 19 3.25 19H16.75C17.3467 19 17.919 18.7629 18.341 18.341C18.7629 17.919 19 17.3467 19 16.75V3.25C19 2.65326 18.7629 2.08097 18.341 1.65901C17.919 1.23705 17.3467 1 16.75 1Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                 </div>
+
+                <!-- buttons for influencer -->
+                <div *ngIf="instagramId" class="flex justify-evenly">
+                  <button (click)="uploadLink(item)" *ngIf="item['status_id']>=3" class=""><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.875 13.5V4.33125L4.95 7.25625L3.375 5.625L9 0L14.625 5.625L13.05 7.25625L10.125 4.33125V13.5H7.875ZM2.25 18C1.63125 18 1.10175 17.7799 0.6615 17.3396C0.22125 16.8994 0.00075 16.3695 0 15.75V12.375H2.25V15.75H15.75V12.375H18V15.75C18 16.3687 17.7799 16.8986 17.3396 17.3396C16.8994 17.7806 16.3695 18.0007 15.75 18H2.25Z" fill="#494F50"/>
+                    </svg>
+                    </button>
+                    <!-- goto link & copy link cmn muncul kalo item['link'] != null -->
+                    <button *ngIf="item['status_id']==5" class="">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.14286 1H19V16.75C19 17.3467 18.7291 17.919 18.2468 18.341C17.7646 18.7629 17.1106 19 16.4286 19H6.14286M10 13.375L13.8571 10M13.8571 10L10 6.625M13.8571 10H1" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button *ngIf="item['status_id']==4" class="">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.66531C5 6.95791 5.28099 6.27948 5.78115 5.77927C6.28131 5.27906 6.95968 4.99805 7.66701 4.99805H16.3331C16.6833 4.99805 17.0301 5.06704 17.3537 5.20108C17.6773 5.33512 17.9713 5.53159 18.2189 5.77927C18.4666 6.02695 18.663 6.32099 18.7971 6.64459C18.9311 6.9682 19.0001 7.31504 19.0001 7.66531V16.3322C19.0001 16.6824 18.9311 17.0293 18.7971 17.3529C18.663 17.6765 18.4666 17.9705 18.2189 18.2182C17.9713 18.4659 17.6773 18.6624 17.3537 18.7964C17.0301 18.9304 16.6833 18.9994 16.3331 18.9994H7.66701C7.31678 18.9994 6.96997 18.9304 6.64639 18.7964C6.32282 18.6624 6.02881 18.4659 5.78115 18.2182C5.5335 17.9705 5.33704 17.6765 5.20301 17.3529C5.06898 17.0293 5 16.6824 5 16.3322V7.66531Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2.01201 14.7384C1.705 14.5639 1.44965 14.3113 1.2719 14.0062C1.09415 13.7011 1.00034 13.3543 1 13.0012V3.0002C1 1.90009 1.9 1 3.00001 1H13.0001C13.7501 1 14.1581 1.38504 14.5001 2.0001" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                 </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- table ends -->
+
+    </div>
+
+
+    <!-- button for brand -->
+    <div *ngIf="!instagramId" class="flex justify-end gap-5 mt-5">
+      <button *ngIf="newProject['status_id'] == 2 || newProject['status_id'] == 3" (click)="askConfirm(1)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold">Cancel order</button>
+      <button *ngIf="newProject['status_id'] == 2" (click)="goToPayment()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Finish payment</button>
+    </div>
+
+    <!-- button for influencer -->
+    <div *ngIf="instagramId" class="flex justify-end gap-5 mt-5">
+      <button *ngIf="newProject['status_id'] == 3" (click)="rejectProject()" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold">Reject</button>
+      <button *ngIf="newProject['status_id'] == 3" (click)="acceptProject()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Accept</button>
+      <button *ngIf="newProject['status_id'] == 4" (click)="finishProject()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Finish</button>
+    </div>
+  </div>
+</div>
+
+

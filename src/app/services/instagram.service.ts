@@ -10,13 +10,14 @@ export class InstagramService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = environment.instagramBaseUrl;
 
-  getProfile(): Observable<any> {
+  // for logged in user: influencer !!
+  getProfile(token: any, instagramId: any): Observable<any> {
 
     let params = new HttpParams();
-    params = params.append('fields', 'profile_picture_url,username');
-    params = params.append('access_token', localStorage.getItem('long_lived_token') || '');
+    params = params.append('fields', 'profile_picture_url,username,followers_count');
+    params = params.append('access_token', token);
 
-    return this.httpClient.get(this.baseUrl + "/" + localStorage.getItem('instagram_id'), {
+    return this.httpClient.get(this.baseUrl + "/" + instagramId, {
       params: params
     });
 

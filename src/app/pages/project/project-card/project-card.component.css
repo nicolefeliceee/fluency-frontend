@@ -1,0 +1,10 @@
+.picture{
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /* background-image: url("artist.jpg"); */
+  /* background-image: https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500; */
+}

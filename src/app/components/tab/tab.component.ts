@@ -15,20 +15,19 @@ export class TabComponent implements OnInit{
   @Input() options!: any[];
   @Input() paramName!: any;
 
-  selectedId: any = '1';
+  @Input() selectedId: any;
+  instagramId: any;
 
   id = output<any>();
 
   opentab(id: any) {
-    console.log(id);
     this.selectedId = id;
-    console.log(this.selectedId);
-    console.log(this.selectedId == id);
     this.id.emit(id);
   }
 
   ngOnInit(): void {
-    console.log(this.options);
+    this.instagramId = localStorage.getItem("instagram_id");
   }
+
 
 }

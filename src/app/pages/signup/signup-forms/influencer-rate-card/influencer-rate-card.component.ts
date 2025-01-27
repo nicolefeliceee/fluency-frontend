@@ -36,8 +36,6 @@ export class InfluencerRateCardComponent {
     this.newUser.feedsPrice = this.feedPrice;
     this.newUser.storyPrice = this.storyPrice;
 
-    console.log(this.newUser);
-
     this.userService.signUpInfluencer(this.newUser).subscribe(
       (data) => {
         console.log(data);

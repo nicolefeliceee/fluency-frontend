@@ -24,4 +24,8 @@ export class ProjectService {
   createProject(request: ProjectCreate): Observable<any> {
     return this.httpClient.post(this.baseUrl + "/project", request);
   }
+
+  editProject(request: ProjectCreate): Observable<any> {
+    return this.httpClient.put(this.baseUrl + "/project", request);
+  }
 }

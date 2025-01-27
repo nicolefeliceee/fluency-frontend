@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { InfluencerService } from '../../services/influencer.service';
 
@@ -11,10 +11,13 @@ import { InfluencerService } from '../../services/influencer.service';
   styleUrl: './influencer-card.component.css'
 })
 export class InfluencerCardComponent{
+
   constructor(
     private router: Router,
     private influencerService: InfluencerService
-  ) {}
+  ) {
+  }
+
 
   // INI INFLUENCER
   @Input() item!: any;
@@ -23,8 +26,10 @@ export class InfluencerCardComponent{
     return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
   }
 
+  // buat emit influencer id
+  hireClicked = output<any>();
   redirectToProject() {
-    this.router.navigate(['/project']);
+    this.hireClicked.emit(this.item['influencer_id']);
   }
 
   // Fungsi untuk toggle status saved

@@ -19,9 +19,12 @@ import { AlertSuccessComponent } from "../../components/alert-success/alert-succ
 })
 export class ProjectComponent implements OnInit {
 
-  statusOptions!: any[];
-  projectList!: any[];
-  selectedStatus: any = "1";
+  // for checking usertype
+  instagramId: any;
+
+  statusOptions: any[] = [];
+  projectList!: ProjectCreate[];
+  selectedStatus: any;
 
   createSuccess: boolean = false;
 
@@ -36,11 +39,29 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.instagramId = localStorage.getItem('instagram_id');
+
+    if (this.instagramId != null) {
+      this.selectedStatus = '3';
+    } else {
+      this.selectedStatus = '1';
+    }
+
+
     this.statusService.getAllStatus().subscribe(
       (data) => {
         console.log(data);
-        this.statusOptions = data;
-        console.log(this.statusOptions)
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          console.log(localStorage.getItem('instagram_id') != null)
+          if (localStorage.getItem('instagram_id') != null && data[i]['for_influencer']) {
+            this.statusOptions.push(data[i]);
+          }
+          if (localStorage.getItem('instagram_id') == null) {
+            this.statusOptions.push(data[i]);
+          }
+        }
+
       },
       (error) => {
         console.log(error);
@@ -57,6 +78,7 @@ export class ProjectComponent implements OnInit {
   }
 
   getProjectsByStatus(id: any) {
+    this.selectedStatus = id;
     this.projectService.getProjects(id, localStorage.getItem("user_id") || '').subscribe(
       (data) => {
         this.projectList = data;
