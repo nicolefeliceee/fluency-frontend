@@ -1,6 +1,8 @@
 <app-header></app-header>
 <div class="bantu"></div>
-<app-tab></app-tab>
+<!-- <app-tab></app-tab> -->
+<!-- <app-tab [options]="categoryOptions" (id)="getProjectsByStatus($event)"></app-tab> -->
+<app-tab-influencer [options]="categoryOptions" (searchResults)="updateInfluencers($event)" (id)="getInfluencerCategory($event)" [isSavedPage]="true" [isAll]="isAllBoolean" [selectedId]="selectedId"></app-tab-influencer>
 <div class="bawah flex flex-row w-full mb-16">
   <div class="kiri">
     <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
@@ -204,6 +206,26 @@
             Min age must be less than max age
           </div>
         </div>
+        <!-- Ini filter by location (multiple select) -->
+        <!-- <div class="filterBox py-[20px] px-[28px] bg-white rounded-2xl w-full mt-2">
+          <div class="judulFilter mb-2 font-semibold text-[1.05rem]">Location</div>
+          <div class="filterChoiceBox grid grid-cols-1 mt-2 gap-x-5 gap-y-2">
+            <select multiple="" id="selectLocationAudience" data-hs-select='{
+              "placeholder": "Location",
+              "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-[25px] overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+              "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-[25px] focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50",
+              "mode": "tags",
+              "wrapperClasses": "mt-2 relative ps-1 pe-9 py-1 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-[#A4A7A7] rounded-[25px] text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500",
+              "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-[#CFD2D3] shadow-[0_2px_3px_0px_rgba(0,0,0,0.1)] rounded-[25px] py-1 ps-3 pe-1 mx-[1px] my-[2px]\"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+              "tagsInputId": "hs-tags-input",
+              "tagsInputClasses": "py-1 px-3 rounded-[25px] order-1 text-sm outline-none",
+              "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 \" data-title></div><div class=\"text-xs text-gray-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733.0 1 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733.0 1 1-1.065.02L3.217 8.384a.757.757.0 1 1 0-1.06.733.733.0 1 1 1.047 0l3.052 3.093 5.4-6.425a.247.247.0 1 1 .02-.022Z\"/></svg></span></div></div>",
+              "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+            }' class="hidden" name="" formControlName="locationAudience" (change)="onRangeInputChange('locationAudience')">
+                  <option *ngFor="let locationAudience of locationAudiences" [value]="locationAudience.id">{{ locationAudience.label }}</option>
+            </select>
+          </div>
+        </div> -->
       </div>
       <div class="end flex me-10 mt-6">
         <button type="reset" (click)="resetForm()" class="button border-blue-80 border-[1px] text-blue-80 font-semibold m-auto">Reset Filter</button>
@@ -214,10 +236,10 @@
   </div>
   <div class="kanan">
     <div class="judul font-semibold my-5">
-      Saved Influencers
+      Influencers
     </div>
     <div class="cardBox grid grid-cols-3 gap-7">
-      <app-influencer-card *ngFor="let item of influencer" [item]="item"></app-influencer-card>
+      <app-influencer-card *ngFor="let item of influencer" [item]="item" (hireClicked)="redirectToProject($event)"></app-influencer-card>
 
     </div>
   </div>

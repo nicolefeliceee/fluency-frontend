@@ -8,6 +8,7 @@ import { WalletHistoryPopupComponent } from "../wallet-history-popup/wallet-hist
 import { WalletTransferPopupComponent } from "../wallet-transfer-popup/wallet-transfer-popup.component";
 import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
 import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
+import { Router } from '@angular/router';
 
 interface Category {
   id: number; // ID kategori
@@ -67,7 +68,8 @@ interface WalletHeader {
 export class HomeComponent implements OnInit{
   constructor(
       private homeService: HomeService,
-      private cdRef: ChangeDetectorRef
+      private cdRef: ChangeDetectorRef,
+      private router: Router
   ) {}
 
   influencer: Influencer[] = []; // Tipe array Influencer
@@ -185,4 +187,11 @@ export class HomeComponent implements OnInit{
     }, 5000); // 5 detik
   }
 
+  // selectedId: number | null = null;  // Menyimpan ID kategori yang dipilih
+
+  // Untuk redirect category
+  redirectToInfluencer(categoryId: number): void {
+    // this.selectedId = categoryId; // Menyimpan kategori yang dipilih
+    this.router.navigate(['/influencer'], { queryParams: { categoryId } });
+  }
 }

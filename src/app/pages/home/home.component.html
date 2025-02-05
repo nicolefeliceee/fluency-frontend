@@ -57,51 +57,51 @@
 <div class="categories pt-[5rem]">
   <div class="judul font-semibold text-[1.57rem] mb-[1.8rem] text-center w-full">Categories</div>
   <div class="isiCategory grid grid-cols-6 mt-2 gap-x-5 gap-y-8 px-[11.5rem]">
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(1)">
       <div class="img" style="background-image: url(../assets/images/fashion.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Fashion</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(4)">
       <div class="img" style="background-image: url(../assets/images/entertainment.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Entertainment</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(2)">
       <div class="img" style="background-image: url(../assets/images/fnb.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">F&B</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(5)">
       <div class="img" style="background-image: url(../assets/images/technology.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Technology</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(3)">
       <div class="img" style="background-image: url(../assets/images/beauty.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Beauty</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(10)">
       <div class="img" style="background-image: url(../assets/images/household.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Household</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(6)">
       <div class="img" style="background-image: url(../assets/images/health.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Health</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(9)">
       <div class="img" style="background-image: url(../assets/images/otomotive.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Otomotive</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(11)">
       <div class="img" style="background-image: url(../assets/images/hobby.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Hobby</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(12)">
       <div class="img" style="background-image: url(../assets/images/finance.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Finance</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(8)">
       <div class="img" style="background-image: url(../assets/images/travel.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Travel</div>
     </div>
-    <div class="categoryCard flex flex-col items-center">
+    <div class="categoryCard cursor-pointer flex flex-col items-center" (click)="redirectToInfluencer(7)">
       <div class="img" style="background-image: url(../assets/images/sport.jpg);"></div>
       <div class="catText font-normal text-[1.2rem] mt-[1rem]">Sport</div>
     </div>
@@ -110,9 +110,9 @@
 <div class="projects pt-[6rem] px-[7rem]">
   <div class="projectTitle font-semibold text-[1.47rem] ms-2 mb-3">Continue Your Project</div>
   <div class="projectCard grid grid-cols-3 gap-5 ">
+    <!-- <app-project-card></app-project-card>
     <app-project-card></app-project-card>
-    <app-project-card></app-project-card>
-    <app-project-card></app-project-card>
+    <app-project-card></app-project-card> -->
     <!-- <app-project-card *ngFor="let item of projectList" [title]="item.title" [project]="item"></app-project-card> -->
   </div>
 </div>

@@ -13,7 +13,7 @@ import { InfluencerService } from '../../services/influencer.service';
 import { HostListener } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { TabInfluencerComponent } from "../../components/tab-influencer/tab-influencer.component";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Category {
   id: number; // ID kategori
@@ -60,7 +60,8 @@ export class InfluencerComponent implements OnInit{
     private fb: FormBuilder,
     private influencerService: InfluencerService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private actRoute: ActivatedRoute
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.newProject = navigation?.extras.state?.['newProject'];
@@ -120,10 +121,36 @@ export class InfluencerComponent implements OnInit{
   };
 
 
+  selectedCategoryId: number | null = null;
 
   ngOnInit(): void {
     // this.loadInfluencers();
     this.initializeForm();
+
+    this.actRoute.queryParams.subscribe((params) => {
+      const categoryId = params['categoryId'];
+      if (categoryId) {
+        this.selectedId = +categoryId;
+        this.getInfluencerCategory(Number(categoryId));
+      }
+      // if (params['categoryId']) {
+      //   this.selectedCategoryId = +params['categoryId']; // Convert ke number
+      //   this.getInfluencerCategory(this.selectedCategoryId);
+      // }
+      else{
+        // Send sort value to backend
+        this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
+          (response) => {
+            this.influencer = response;
+            this.influencer2 = response;
+            console.log('Init sent successfully:', this.influencer);
+          },
+          (error) => {
+            console.error('Error sending sort option:', error);
+          }
+        );
+      }
+    });
 
     // ini untuk tab
     this.categoryService.getAllCategories().subscribe(
@@ -137,24 +164,6 @@ export class InfluencerComponent implements OnInit{
         console.log(error);
       }
     )
-
-    // this.influencerService.getInfluencerCategory(this.selectedCategory, localStorage.getItem("user_id") || '', this.influencer2).subscribe(
-    //   (data) => {
-    //     this.influencer = data;
-    //   }
-    // )
-
-    // Send sort value to backend
-    this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
-      (response) => {
-        this.influencer = response;
-        this.influencer2 = response;
-        console.log('Init sent successfully:', this.influencer);
-      },
-      (error) => {
-        console.error('Error sending sort option:', error);
-      }
-    );
 
     this.locationService.getAllLocations().subscribe(
       (data) => {
@@ -319,6 +328,30 @@ export class InfluencerComponent implements OnInit{
     );
   }
 
+  updateInfluencers(searchResults: Influencer[] | null) {
+    console.log ("search result: ", searchResults ? searchResults.length : null);
+
+    if (searchResults == null){
+      this.influencerService.sendSortOption(this.selectedFilters3).subscribe(
+        (response) => {
+          this.influencer = response;
+          this.influencer2 = response;
+          console.log('Init sent successfully:', this.influencer);
+        },
+        (error) => {
+          console.error('Error sending sort option:', error);
+        }
+      );
+    }
+    else if (searchResults.length > 0) {
+      this.influencer = searchResults; // Gunakan hasil pencarian
+    }
+    else {
+      console.log("ini kosong");
+      this.influencer = [];
+    }
+  }
+
   // Toggle filter aktif atau tidak
   toggleFilter(type: string, value: string): void {
     if (type === 'followers') {
@@ -352,15 +385,6 @@ export class InfluencerComponent implements OnInit{
       }
       this.cdr.detectChanges();
     }
-    // else if (type === 'engagement') {
-    //   const index = this.selectedFilters.engagement.indexOf(value);
-    //   if (index > -1) {
-    //     this.selectedFilters.engagement.splice(index, 1);
-    //   } else {
-    //     this.selectedFilters.engagement.push(value);
-    //   }
-    //   this.cdr.detectChanges();
-    // }
     else if (type === 'gender') {
       const index = this.selectedFilters.gender.indexOf(value);
       if (index > -1) {
@@ -749,7 +773,10 @@ export class InfluencerComponent implements OnInit{
   //   }
   // }
 
+  selectedId: number | null = null;
+
   getInfluencerCategory(id: any){
+    this.selectedId = id;
     this.selectedFilters.categoryChosen = [id];
     this.selectedFilters2.categoryChosen2 = [id];
 
