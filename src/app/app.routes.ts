@@ -19,6 +19,7 @@ import { ProjectComponent } from './pages/project/project.component';
 import { ProjectCreateComponent } from './pages/project/project-create/project-create.component';
 import { SavedInfluencerComponent } from './pages/saved-influencer/saved-influencer.component';
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { InfluencerDetailComponent } from './pages/influencer-detail/influencer-detail.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {path:'header', component: HeaderComponent},
   {path:'influencer', component: InfluencerComponent},
   {path:'influencer-card', component: InfluencerCardComponent},
+  {path:'influencer-detail', component: InfluencerDetailComponent},
   {path:'saved-influencer', component: SavedInfluencerComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },
   { path: 'signup/brand/category', component: ChooseCategoryComponent },
