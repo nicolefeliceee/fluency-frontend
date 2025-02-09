@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 import { TabComponent } from "../../components/tab/tab.component";
 import { StatusService } from '../../services/status.service';
@@ -9,6 +9,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ProjectCreate } from '../../models/project-create';
 import { error } from 'node:console';
 import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-project',
@@ -17,7 +18,7 @@ import { AlertSuccessComponent } from "../../components/alert-success/alert-succ
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnChanges {
 
   // for checking usertype
   instagramId: any;
@@ -31,13 +32,25 @@ export class ProjectComponent implements OnInit {
   constructor(
     private statusService: StatusService,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.createSuccess = navigation?.extras.state?.['status'];
   };
 
+  loadData() {
+    this.loadingService.show();
+    setTimeout(() => {
+      this.loadingService.hide();
+    }, 2000);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
   ngOnInit(): void {
+    this.loadData();
 
     this.instagramId = localStorage.getItem('instagram_id');
 
@@ -50,10 +63,7 @@ export class ProjectComponent implements OnInit {
 
     this.statusService.getAllStatus().subscribe(
       (data) => {
-        console.log(data);
         for (let i = 0; i < data.length; i++) {
-          console.log(data[i]);
-          console.log(localStorage.getItem('instagram_id') != null)
           if (localStorage.getItem('instagram_id') != null && data[i]['for_influencer']) {
             this.statusOptions.push(data[i]);
           }
@@ -78,6 +88,7 @@ export class ProjectComponent implements OnInit {
   }
 
   getProjectsByStatus(id: any) {
+    this.loadData();
     this.selectedStatus = id;
     this.projectService.getProjects(id, localStorage.getItem("user_id") || '').subscribe(
       (data) => {

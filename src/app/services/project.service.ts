@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ProjectCreate } from '../models/project-create';
+import { ProjectDetail } from '../models/project-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,33 @@ export class ProjectService {
           });
   }
 
+  getProjectbyId(id: any): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/project/header-id/" + id);
+  }
+
+  getProjectDetailById(id: any): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/project/detail/detail-id/" + id);
+  }
+
   createProject(request: ProjectCreate): Observable<any> {
     return this.httpClient.post(this.baseUrl + "/project", request);
   }
 
   editProject(request: ProjectCreate): Observable<any> {
     return this.httpClient.put(this.baseUrl + "/project", request);
+  }
+
+  editProjectDetail(request: ProjectDetail): Observable<any> {
+    return this.httpClient.put(this.baseUrl + "/project/detail", request);
+  }
+
+  verifyLink(influencerId: string, link: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("influencer-id", influencerId);
+    params = params.append("link", link);
+    return this.httpClient.get(this.baseUrl + "/project/verify-link", {
+      params: params
+    },
+    );
   }
 }

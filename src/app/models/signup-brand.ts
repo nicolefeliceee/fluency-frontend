@@ -9,6 +9,9 @@ export class SignupBrand {
   targetLocation!: any[];
   targetAgeRange!: any[];
   targetGender!: any[];
+  profilePicture!: any;
+  profilePictureName!: any;
+  profilePictureType!: any;
 
   constructor(userType: string, name: string, email: string, phone: string, location: string, password: string, category: any[], targetLocation: any[], targetAgeRange: any[], targetGender: any[]) {
     this.userType = userType;

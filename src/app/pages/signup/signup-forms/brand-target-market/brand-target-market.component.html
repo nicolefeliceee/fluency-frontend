@@ -1,5 +1,7 @@
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
+
 <div class="container bg-background p-5">
-  
+
 
   <h1 class="text-header2 font-semibold text-center mb-7 ">Complete your brand's target market</h1>
 
@@ -65,7 +67,7 @@
       </svg>
        Previous
       </button>
-    <button (click)="onSubmit()" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Finish</button>
+    <button (click)="askConfirm(1)" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Finish</button>
 
   </div>
 </div>

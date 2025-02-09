@@ -27,6 +27,7 @@ export class ChooseCategoryComponent implements OnInit {
     if (this.userType === "brand") {
       this.newBrand = navigation?.extras.state?.['newUser'];
       this.selectedCategories = this.newBrand!.category;
+      console.log(this.newBrand);
     } else {
       this.newInfluencer = navigation?.extras.state?.['newUser'];
       this.selectedCategories = this.newInfluencer!.category;

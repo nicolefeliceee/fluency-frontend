@@ -7,7 +7,7 @@ import { ProjectDetail } from '../../../models/project-detail';
 import { error, time } from 'console';
 import { AlertErrorComponent } from "../../../components/alert-error/alert-error.component";
 import { UserService } from '../../../services/user.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationPopupComponent } from "../../../components/confirmation-popup/confirmation-popup.component";
 import { ProjectDetailPopupComponent } from "./project-detail-popup/project-detail-popup.component";
@@ -21,6 +21,7 @@ import { PaymentMethodPopupComponent } from "./payment-method-popup/payment-meth
   standalone: true,
   imports: [HeaderComponent, RouterLink, AlertErrorComponent, CommonModule, FormsModule, ConfirmationPopupComponent, ReactiveFormsModule, ProjectDetailPopupComponent, PaymentMethodPopupComponent],
   templateUrl: './project-create.component.html',
+  providers: [DecimalPipe],
   styleUrl: './project-create.component.css'
 })
 export class ProjectCreateComponent implements OnInit{
@@ -46,11 +47,12 @@ export class ProjectCreateComponent implements OnInit{
   // for error alert
   createError: boolean = false;
   detailNotSelected: boolean = false;
+  influencerNotSelected: boolean = false;
 
   // for prices from influencer
-  storyPrice?: any = '100000';
-  feedsPrice?: any = '200000';
-  reelsPrice?: any = '300000';
+  storyPrice?: any;
+  feedsPrice?: any;
+  reelsPrice?: any;
 
   selectedInfluencerId?: any = '';
   selectedInfluencer?: any = null;
@@ -67,10 +69,11 @@ export class ProjectCreateComponent implements OnInit{
       this.storyDetailList = this.getStoryListFromDraft(this.draftProject['project_details']);
       this.feedsDetailList = this.getFeedsListFromDraft(this.draftProject['project_details']);
       this.reelsDetailList = this.getReelsListFromDraft(this.draftProject['project_details']);
+      console.log(this.storyDetailList);
     }
 
     if (this.influencerSelectedProject) {
-      console.log(this.influencerSelectedProject);
+      // console.log(this.influencerSelectedProject);
       this.projectTitle = this.influencerSelectedProject.title;
       this.projectDescription = this.influencerSelectedProject.description;
       this.projectMention = this.influencerSelectedProject.mention;
@@ -85,8 +88,10 @@ export class ProjectCreateComponent implements OnInit{
     if (this.selectedInfluencerId != '') {
       this.influencerService.getInfluencerById(this.selectedInfluencerId).subscribe(
         (data) => {
-          // console.log(data);
           this.selectedInfluencer = data;
+          this.reelsPrice = this.getNominalNumber(data['reelsprice']);
+          this.feedsPrice = this.getNominalNumber(data['feedsprice']);
+          this.storyPrice = this.getNominalNumber(data['storyprice']);
           this.instagramService.getProfile(this.selectedInfluencer.token, this.selectedInfluencer['instagramid']).subscribe(
             (data) => {
               this.selectedInfluencer.username = data.username
@@ -100,6 +105,14 @@ export class ProjectCreateComponent implements OnInit{
     }
   }
 
+  getNominalNumber(nominal: string) {
+    if (nominal.includes('.')) {
+      nominal = nominal.replaceAll('.', '');
+    }
+
+    return nominal;
+  }
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -107,7 +120,8 @@ export class ProjectCreateComponent implements OnInit{
     private influencerService: InfluencerService,
     private instagramService: InstagramService,
     private midtransService: MidtransService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private decimalPipe: DecimalPipe
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.draftProject = navigation?.extras.state?.['draftProject'];
@@ -130,12 +144,37 @@ export class ProjectCreateComponent implements OnInit{
   feedsDetailList: ProjectDetail[] = [];
   reelsDetailList: ProjectDetail[] = [];
 
+  askConfirm(id: number) {
+    if (id == 1) {
+      this.confirmHeader = "Save to draft";
+      this.confirmBody = "Are you sure want to save this?"
+      this.displayConfirmation = true;
+    } else if (id == 2) {
+      this.confirmHeader = "Go to payment";
+      this.confirmBody = "Are you sure want to go to payment?"
+      this.displayConfirmation = true;
+    } else if(id ==3) {
+      this.confirmHeader = "Influencer already selected";
+      this.confirmBody = "Are you sure want to find new one?"
+      this.displayConfirmation = true;
+    } else if (id == 10) {
+      this.confirmHeader = "Back";
+      this.confirmBody = "Are you sure want to go back? Your changes won't be saved"
+      this.displayConfirmation = true;
+    }
+  }
+
   confirmConfirm() {
+    this.displayConfirmation = false;
     if (this.confirmHeader == 'Go to payment') {
       this.selectPayment();
-    } else {
+    } else if (this.confirmHeader == 'Save to draft') {
       // create project with status draft
       this.saveProject('1');
+    } else if (this.confirmHeader == 'Back') {
+      this.router.navigate(['/project']);
+    } else if (this.confirmHeader == 'Influencer already selected') {
+      this.findInfluencer();
     }
   }
 
@@ -152,12 +191,29 @@ export class ProjectCreateComponent implements OnInit{
     if (this.storyDetailList.length == 0 && this.feedsDetailList.length == 0 && this.reelsDetailList.length == 0) {
       this.detailNotSelected = true;
       this.displayConfirmation = false;
+    } else if (this.selectedInfluencer == null) {
+      this.influencerNotSelected = true;
+      setTimeout(() => {
+        this.influencerNotSelected = false;
+      }, 3000);
+      this.displayConfirmation = false;
     } else {
       this.askConfirm(2);
     }
   }
 
+  // totalAmount!: number;
+  orderSummary: any;
   selectPayment() {
+    this.orderSummary = {
+      totalAmount: this.reelsDetailList.length * this.reelsPrice + this.feedsDetailList.length * this.feedsPrice + this.storyDetailList.length * this.storyPrice,
+      reelsDetailList: this.reelsDetailList,
+      storyDetailList: this.storyDetailList,
+      feedsDetailList: this.feedsDetailList,
+      storyPrice: this.storyPrice,
+      feedsPrice: this.feedsPrice,
+      reelsPrice: this.reelsPrice,
+    }
     this.displayPaymentMethod = true;
   }
 
@@ -181,6 +237,7 @@ export class ProjectCreateComponent implements OnInit{
               onSuccess: (result: any) => {
                 console.log('Payment success:', result);
                 // create project with status waiting
+                this.newProject.referenceNumber = refNum;
                 this.saveProject('3');
 
               },
@@ -223,6 +280,7 @@ export class ProjectCreateComponent implements OnInit{
   }
 
   saveProject(statusId: any) {
+    console.log(this.newProject);
     this.newProject.projectDetails = [];
 
     this.newProject.userId = localStorage.getItem("user_id") || '';
@@ -237,9 +295,10 @@ export class ProjectCreateComponent implements OnInit{
     this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
     this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
 
-    if (this.draftProject) {
+    if (this.draftProject ) {
       // update
       this.newProject.id = this.draftProject.id;
+      console.log(this.newProject);
       this.projectService.editProject(this.newProject).subscribe(
         (data) => {
           console.log(data);
@@ -253,6 +312,20 @@ export class ProjectCreateComponent implements OnInit{
           }
       )
 
+    } else if (this.influencerSelectedProject) {
+      this.newProject.id = this.influencerSelectedProject.id;
+      this.projectService.editProject(this.newProject).subscribe(
+        (data) => {
+          // console.log(data);
+          this.ngZone.run(() => {
+            this.router.navigate(['/project'], {state: {status: true}});
+          })
+          },
+          (error) => {
+            console.log(error);
+            this.createError = true;
+          }
+      )
     } else {
       // create new
       this.projectService.createProject(this.newProject).subscribe(
@@ -264,18 +337,6 @@ export class ProjectCreateComponent implements OnInit{
             this.createError = true;
           }
       )
-    }
-  }
-
-  askConfirm(id: number) {
-    if (id == 1) {
-      this.confirmHeader = "Save to draft";
-      this.confirmBody = "Are you sure want to save this?"
-      this.displayConfirmation = true;
-    } else if (id == 2) {
-      this.confirmHeader = "Go to payment";
-      this.confirmBody = "Are you sure want to go to payment?"
-      this.displayConfirmation = true;
     }
   }
 
@@ -303,6 +364,7 @@ export class ProjectCreateComponent implements OnInit{
   editDetailForm: any;
 
   openEditDetail(item: any) {
+    // console.log(item);
     this.editDetailForm = item;
     if (item['mediatypeId'] == '1') {
       this.detailHeader = 'Edit Story';
@@ -432,7 +494,7 @@ export class ProjectCreateComponent implements OnInit{
 
   getStoryListFromDraft(projectDetails: any[] | ProjectDetail[]):any[] {
     let storyList: ProjectDetail[] = [];
-    console.log(projectDetails);
+    // console.log(projectDetails);
 
     // if(projectDetails instanceof ProjectDetail[])
 
@@ -446,6 +508,8 @@ export class ProjectCreateComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id;
 
         storyList.push(newDetail);
       }
@@ -466,6 +530,8 @@ export class ProjectCreateComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id;
 
         storyList.push(newDetail);
       }
@@ -486,6 +552,8 @@ export class ProjectCreateComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id;
 
         storyList.push(newDetail);
       }
@@ -496,7 +564,7 @@ export class ProjectCreateComponent implements OnInit{
 
 
   findInfluencer() {
-    console.log(this.newProject);
+    // console.log(this.newProject);
 
     this.newProject.projectDetails = [];
     this.newProject.userId = localStorage.getItem("user_id") || '';
@@ -511,6 +579,9 @@ export class ProjectCreateComponent implements OnInit{
     this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
     this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
 
+    if (this.draftProject) {
+      this.newProject.id = this.draftProject.id;
+    }
     return this.router.navigate(['/influencer'], {state: {newProject: this.newProject} })
   }
 
@@ -520,6 +591,15 @@ export class ProjectCreateComponent implements OnInit{
 
   paymentCancel() {
     this.displayPaymentMethod = false;
+  }
+
+  back() {
+
+  }
+
+  formatPrice(price: any) {
+    let formatted = this.decimalPipe.transform(price, '1.0-0');
+    return formatted!.replace(/,/g, '.');
   }
 
 }

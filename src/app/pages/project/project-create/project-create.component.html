@@ -3,14 +3,15 @@
 
 <app-alert-error [display]="createError" [label]="'Save project failed! Please try again later'" (dismissClicked)="this.createError = false"></app-alert-error>
 <app-alert-error [display]="detailNotSelected" [label]="'You havent selected any media'" (dismissClicked)="this.detailNotSelected = false"></app-alert-error>
+<app-alert-error [display]="influencerNotSelected" [label]="'You havent selected any influencer'" (dismissClicked)="this.influencerNotSelected = false"></app-alert-error>
 
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="editDetailForm" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)"></app-project-detail-popup>
-<app-payment-method-popup [display]="displayPaymentMethod" (cancelClicked)="paymentCancel()" (confirmClicked)="checkout($event)"></app-payment-method-popup>
+<app-payment-method-popup [display]="displayPaymentMethod" [orderSummary]="orderSummary" (cancelClicked)="paymentCancel()" (confirmClicked)="checkout($event)"></app-payment-method-popup>
 
 <div class="container">
   <div class="container p-5">
-    <a routerLink="/project">Back</a>
+    <button (click)="askConfirm(10)" class="mb-5">&lt; Back</button>
     <div class="grid grid-cols-2 gap-10">
       <div class="bg-font-white rounded-xl p-5">
         <p class="text-header3 font-bold mb-5">Create Project</p>
@@ -45,7 +46,7 @@
         <div class="bg-font-white rounded-xl p-5 h-[24rem]">
           <div class="flex justify-between items-center">
             <p class="text-header4 text-bg-blue-100 font-semibold">Find influencer</p>
-            <button (click)="findInfluencer()" class="border border-blue-80 rounded-xl px-5 py-2 text-blue-80 font-semibold">Find</button>
+            <button (click)="askConfirm(3)" class="border border-blue-80 rounded-xl px-5 py-2 text-blue-80 font-semibold">Find</button>
           </div>
           <div *ngIf="!selectedInfluencer" class="bg-font-lightGrey/15 h-5/6 rounded-xl content-center mt-5">
             <div class="mx-auto w-fit">
@@ -117,7 +118,7 @@
             <div *ngIf="storyPrice" class="border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Story</p>
-                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ storyPrice }}</p>
+                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(storyPrice) }}</p>
                 <button class="ms-5" (click)="openDetail('1')">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.875 8.125H0V6.875H6.875V0H8.125V6.875H15V8.125H8.125V15H6.875V8.125Z" fill="#494F50"/>
@@ -149,7 +150,7 @@
               </div>
               <div *ngIf="storyDetailList.length > 0" class="flex justify-between text-smalltext text-font-lightGrey mt-2">
                 <p>Subtotal</p>
-                <p>{{ storyDetailList.length*storyPrice }}</p>
+                <p>Rp {{ formatPrice(storyDetailList.length*storyPrice) }}</p>
               </div>
             </div>
             <!-- story ends  -->
@@ -158,7 +159,7 @@
             <div *ngIf="feedsPrice" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Feeds</p>
-                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ feedsPrice }}</p>
+                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(feedsPrice) }}</p>
                 <button class="ms-5" (click)="openDetail('2')">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.875 8.125H0V6.875H6.875V0H8.125V6.875H15V8.125H8.125V15H6.875V8.125Z" fill="#494F50"/>
@@ -190,7 +191,7 @@
               </div>
               <div *ngIf="feedsDetailList.length > 0" class="flex justify-between text-smalltext text-font-lightGrey mt-2">
                 <p>Subtotal</p>
-                <p>{{ feedsDetailList.length*feedsPrice }}</p>
+                <p>Rp {{ (formatPrice(feedsDetailList.length*feedsPrice)) }}</p>
               </div>
             </div>
             <!-- feeds ends  -->
@@ -199,7 +200,7 @@
             <div *ngIf="reelsPrice" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Reels</p>
-                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ reelsPrice }}</p>
+                <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(reelsPrice) }}</p>
                 <button class="ms-5" (click)="openDetail('3')">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.875 8.125H0V6.875H6.875V0H8.125V6.875H15V8.125H8.125V15H6.875V8.125Z" fill="#494F50"/>
@@ -231,7 +232,7 @@
               </div>
               <div *ngIf="reelsDetailList.length > 0" class="flex justify-between text-smalltext text-font-lightGrey mt-2">
                 <p>Subtotal</p>
-                <p>{{ reelsDetailList.length*reelsPrice }}</p>
+                <p>Rp {{ formatPrice(reelsDetailList.length*reelsPrice) }}</p>
               </div>
             </div>
             <!-- reels ends  -->

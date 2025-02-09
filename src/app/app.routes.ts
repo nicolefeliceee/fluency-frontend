@@ -19,6 +19,7 @@ import { ProjectComponent } from './pages/project/project.component';
 import { ProjectCreateComponent } from './pages/project/project-create/project-create.component';
 import { SavedInfluencerComponent } from './pages/saved-influencer/saved-influencer.component';
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
+import { PerformanceAnalyticsComponent } from './pages/project/project-detail/performance-analytics/performance-analytics.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -41,6 +42,7 @@ export const routes: Routes = [
   {path:'profile-brand', component: ProfileBrandComponent},
   {path:'project', component: ProjectComponent},
   {path:'project/detail', component: ProjectDetailComponent},
+  {path:'project/detail/performance-analytics', component: PerformanceAnalyticsComponent},
   {path:'project/create', component: ProjectCreateComponent},
   {path:'project/', component: ProjectCreateComponent},
   {path:'project/create', component: ProjectCreateComponent}

@@ -8,27 +8,46 @@
     <div class="p-4 overflow-y-auto">
       <div class="flex flex-col">
         <label class="text-header6 font-semibold text-font-darkGrey" for="">Date</label>
-        <input type="date" class="w-1/2 rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="date" [min]="minDate">
+        <input type="date" class="w-1/2 rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="date" [min]="minDate" [readonly]="projectStatus >= 4">
         <span class="text-[0.75rem] text-primary-red" *ngIf="(detailFormGroup['date'].touched|| submitted) && detailFormGroup['date'].errors?.['required']">Date is required</span>
         <!-- <span class="text-[0.75rem] text-primary-red">Password is required</span> -->
       </div>
 
       <div class="flex flex-col">
         <label class="text-header6 font-semibold text-font-darkGrey" for="">Time</label>
-        <input type="time" class="w-1/2 rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="time">
+        <input type="time" class="w-1/2 rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="time" [readonly]="projectStatus >= 4">
         <span class="text-[0.75rem] text-primary-red" *ngIf="(detailFormGroup['time'].touched|| submitted) && detailFormGroup['time'].errors?.['required']">Time is required</span>
       </div>
 
       <div class="flex flex-col">
         <label class="text-header6 font-semibold text-font-darkGrey" for="">Note</label>
-        <textarea type="text" placeholder="Note here..." class="rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="note"></textarea>
+        <textarea type="text" placeholder="Note here..." class="rounded-xl bg-font-lightGrey/15 px-5 py-2" formControlName="note" [readonly]="projectStatus >= 4"></textarea>
       </div>
 
       <div *ngIf="projectStatus >= 4" class="flex flex-col">
-        <label class="text-header6 font-semibold text-font-darkGrey" for="">Note</label>
+        <label class="text-header6 font-semibold text-font-darkGrey" for="">Upload Url</label>
         <div class="flex">
-          <input type="text" placeholder="upload the posted url here...">
-          <div>Verified</div>
+          <input (keyup)="verifyLink()" type="text" placeholder="upload the posted url here..." class="w-full rounded-l-xl bg-font-lightGrey/15 px-5 py-2" formControlName="link">
+          <div *ngIf="isValidLink == null" class="w-[8rem] flex justify-center items-center rounded-r-xl bg-[#949C9E]/50 text-font-lightGrey font-semibold">Verified</div>
+          <div *ngIf="isValidLink == false" class="w-[8rem] flex justify-center items-center rounded-r-xl border-2 border-primary-red text-primary-red font-semibold">
+            Verified
+            <svg class="ms-2" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 5C10 7.7615 7.7615 10 5 10C2.2385 10 0 7.7615 0 5C0 2.2385 2.2385 0 5 0C7.7615 0 10 2.2385 10 5ZM3.0555 6.9445C3.00863 6.89762 2.9823 6.83404 2.9823 6.76775C2.9823 6.70146 3.00863 6.63788 3.0555 6.591L4.6465 5L3.0555 3.409C3.00996 3.36185 2.98476 3.2987 2.98533 3.23315C2.9859 3.1676 3.01219 3.1049 3.05855 3.05855C3.1049 3.01219 3.1676 2.9859 3.23315 2.98533C3.2987 2.98476 3.36185 3.00996 3.409 3.0555L5 4.6465L6.591 3.0555C6.63815 3.00996 6.7013 2.98476 6.76685 2.98533C6.8324 2.9859 6.8951 3.01219 6.94145 3.05855C6.98781 3.1049 7.0141 3.1676 7.01467 3.23315C7.01524 3.2987 6.99004 3.36185 6.9445 3.409L5.3535 5L6.9445 6.591C6.99004 6.63815 7.01524 6.7013 7.01467 6.76685C7.0141 6.8324 6.98781 6.8951 6.94145 6.94145C6.8951 6.98781 6.8324 7.0141 6.76685 7.01467C6.7013 7.01524 6.63815 6.99004 6.591 6.9445L5 5.3535L3.409 6.9445C3.36212 6.99137 3.29854 7.0177 3.23225 7.0177C3.16596 7.0177 3.10238 6.99137 3.0555 6.9445Z" fill="#DF2935"/>
+          </svg>
+        </div>
+        <div *ngIf="isValidLink == true" class="w-[8rem] flex justify-center items-center rounded-r-xl border-2 border-primary-green text-primary-green font-semibold">
+          Verified
+          <svg class="ms-2" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_2967_8356)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 5C0 3.67392 0.526784 2.40215 1.46447 1.46447C2.40215 0.526784 3.67392 0 5 0C6.32608 0 7.59785 0.526784 8.53553 1.46447C9.47322 2.40215 10 3.67392 10 5C10 6.32608 9.47322 7.59785 8.53553 8.53553C7.59785 9.47322 6.32608 10 5 10C3.67392 10 2.40215 9.47322 1.46447 8.53553C0.526784 7.59785 0 6.32608 0 5ZM4.71467 7.14L7.59333 3.54133L7.07333 3.12533L4.61867 6.19267L2.88 4.744L2.45333 5.256L4.71467 7.14Z" fill="#06D6A0"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_2967_8356">
+          <rect width="10" height="10" fill="white"/>
+          </clipPath>
+          </defs>
+          </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +55,14 @@
       <button (click)="cancel()" type="button" class="hs-dropup-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-slide-up-animation-modal">
         Cancel
       </button>
-      <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+      <button [disabled]="isValidLink != true || loading" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        <span *ngIf="loading" class="animate-spin mr-2">
+          <!-- This is the spinner, you can use any spinner or loading indicator you like -->
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="text-white/50"/>
+            <path fill="currentColor" d="M4 12a8 8 0 0116 0" class="text-white/100" />
+          </svg>
+        </span>
         Save
       </button>
     </div>

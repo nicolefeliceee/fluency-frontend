@@ -4,6 +4,8 @@ import { Event, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModul
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { IStaticMethods } from 'preline';
+import { LoadingComponent } from "./components/loading/loading.component";
+import { LoadingService } from './services/loading.service';
 
 declare global {
   interface Window {
@@ -14,14 +16,26 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,RouterLink,RouterLinkActive,RouterModule,FormsModule,HttpClientModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    RouterModule,
+    FormsModule,
+    HttpClientModule,
+    LoadingComponent
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'Fluency';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    public loadingService: LoadingService
+  ) {
   }
 
   ngOnInit() {

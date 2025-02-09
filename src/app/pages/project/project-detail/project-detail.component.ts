@@ -4,20 +4,23 @@ import { AlertErrorComponent } from "../../../components/alert-error/alert-error
 import { PaymentMethodPopupComponent } from "../project-create/payment-method-popup/payment-method-popup.component";
 import { ConfirmationPopupComponent } from "../../../components/confirmation-popup/confirmation-popup.component";
 import { ProjectDetailPopupComponent } from "../project-create/project-detail-popup/project-detail-popup.component";
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ProjectService } from '../../../services/project.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InfluencerService } from '../../../services/influencer.service';
 import { InstagramService } from '../../../services/instagram.service';
 import { MidtransService } from '../../../services/midtrans.service';
 import { ProjectDetail } from '../../../models/project-detail';
 import { BrandService } from '../../../services/brand.service';
 import { error } from 'console';
+import { AlertSuccessComponent } from "../../../components/alert-success/alert-success.component";
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, AlertErrorComponent, PaymentMethodPopupComponent, ConfirmationPopupComponent, ProjectDetailPopupComponent],
+  imports: [CommonModule, HeaderComponent, AlertErrorComponent, PaymentMethodPopupComponent, ConfirmationPopupComponent, ProjectDetailPopupComponent, AlertSuccessComponent, RouterLink],
+  providers: [DecimalPipe],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.css'
 })
@@ -39,25 +42,26 @@ export class ProjectDetailComponent implements OnInit{
   displayPaymentMethod: boolean = false;
 
    // for field in project
-    projectTitle: any;
-    projectDescription: any;
-    projectMention: any;
-    projectCaption: any;
-    projectHashtag: any;
-    selectedinfluencer: any;
-    storyDetailList: ProjectDetail[] = [];
-    feedsDetailList: ProjectDetail[] = [];
+  projectTitle: any;
+  projectDescription: any;
+  projectMention: any;
+  projectCaption: any;
+  projectHashtag: any;
+  selectedinfluencer: any;
+  storyDetailList: ProjectDetail[] = [];
+  feedsDetailList: ProjectDetail[] = [];
   reelsDetailList: ProjectDetail[] = [];
 
   // for prices from influencer
-  storyPrice?: any = '100000';
-  feedsPrice?: any = '200000';
-  reelsPrice?: any = '300000';
+  storyPrice?: any;
+  feedsPrice?: any;
+  reelsPrice?: any;
 
   selectedInfluencerId?: any = '';
   selectedInfluencer?: any = null;
   brand?: any = null;
   newProject: any;
+  projectId: any;
 
     constructor(
       private projectService: ProjectService,
@@ -67,69 +71,82 @@ export class ProjectDetailComponent implements OnInit{
       private brandService: BrandService,
       private instagramService: InstagramService,
       private midtransService: MidtransService,
-      private ngZone: NgZone
+      private ngZone: NgZone,
+      private decimalPipe: DecimalPipe
     ) {
       const navigation = this.router.getCurrentNavigation();
-      this.newProject = navigation?.extras.state?.['project'];
+      this.projectId = navigation?.extras.state?.['projectId'];
       // console.log(this.newProject);;
       // this.influencerSelectedProject = navigation?.extras.state?.['newProject'];
   }
 
   ngOnInit(): void {
-    this.brandId = this.newProject['brand_id'];
-    this.projectTitle = this.newProject.title;
-    this.projectDescription = this.newProject.description;
-    this.projectMention = this.newProject.mention;
-    this.projectCaption = this.newProject.caption;
-    this.projectHashtag = this.newProject.hashtag;
-    this.selectedInfluencerId = this.newProject['influencer_id'];
-    this.storyDetailList = this.getStoryListFromDraft(this.newProject['project_details']);
-    this.feedsDetailList = this.getFeedsListFromDraft(this.newProject['project_details']);
-    this.reelsDetailList = this.getReelsListFromDraft(this.newProject['project_details']);
+    this.projectService.getProjectbyId(this.projectId).subscribe(
+      data => {
+        console.log(data);
+        this.newProject = data;
+        this.brandId = this.newProject['brand_id'];
+        this.projectTitle = this.newProject.title;
+        this.projectDescription = this.newProject.description;
+        this.projectMention = this.newProject.mention;
+        this.projectCaption = this.newProject.caption;
+        this.projectHashtag = this.newProject.hashtag;
+        this.selectedInfluencerId = this.newProject['influencer_id'];
+        this.storyDetailList = this.getStoryListFromDraft(this.newProject['project_details']);
+        this.feedsDetailList = this.getFeedsListFromDraft(this.newProject['project_details']);
+        this.reelsDetailList = this.getReelsListFromDraft(this.newProject['project_details']);
 
-    console.log(this.selectedInfluencerId);
-    if (!this.instagramId) {
-      if (this.selectedInfluencerId != '') {
-        this.influencerService.getInfluencerById(this.selectedInfluencerId).subscribe(
-          (data) => {
-            // console.log(data);
-            this.selectedInfluencer = data;
-            this.instagramService.getProfile(this.selectedInfluencer.token, this.selectedInfluencer['instagramid']).subscribe(
-              (data) => {
-                this.selectedInfluencer.username = data.username
-              }
-            )
-          },
-          (error) => {
-            console.log(error);
-          }
-        )
-      }
-    } else {
-      this.brandService.getBrandById(this.brandId).subscribe(
-        (data) => {
-          console.log(data);
-          this.brand = data;
-        },
-        (error) => {
-          console.log(error);
+        console.log(this.storyDetailList);
+        console.log(this.feedsDetailList);
+        console.log(this.reelsDetailList);
+        if (this.selectedInfluencerId != '') {
+          this.influencerService.getInfluencerById(this.selectedInfluencerId).subscribe(
+            (data) => {
+              this.selectedInfluencer = data;
+              this.reelsPrice = this.getNominalNumber(data['reelsprice']);
+              this.feedsPrice = this.getNominalNumber(data['feedsprice']);
+              this.storyPrice = this.getNominalNumber(data['storyprice']);
+              this.instagramService.getProfile(this.selectedInfluencer.token, this.selectedInfluencer['instagramid']).subscribe(
+                (data) => {
+                  this.selectedInfluencer.username = data.username
+                }
+              )
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
         }
-      )
-    }
 
+          // logged in user == influencer
+        if (this.instagramId) {
+          this.brandService.getBrandById(this.brandId).subscribe(
+            (data) => {
+              // console.log(data);
+              this.brand = data;
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
 
   }
 
-
-
-  confirmConfirm() {
-    if (this.confirmHeader == 'Finish payment') {
-      this.selectPayment();
-    } else {
-      // create project with status draft
-      this.saveProject('1');
+  getNominalNumber(nominal: string) {
+    if (nominal.includes('.')) {
+      nominal = nominal.replaceAll('.', '');
     }
+
+    return nominal;
   }
+
+
 
   confirmCancel() {
     this.displayConfirmation = false;
@@ -193,32 +210,32 @@ export class ProjectDetailComponent implements OnInit{
 
 
   saveProject(statusId: any) {
-    // this.newProject.projectDetails = [];
+    this.newProject['project_details'] = [];
 
-    // this.newProject.userId = localStorage.getItem("user_id") || '';
-    // this.newProject.statusId = statusId;
-    // this.newProject.title = this.projectTitle;
-    // this.newProject.description = this.projectDescription;
-    // this.newProject.mention = this.projectMention;
-    // this.newProject.caption = this.projectCaption;
-    // this.newProject.hashtag = this.projectHashtag;
-    // this.newProject.influencerId = this.selectedInfluencerId;
-    // this.newProject.projectDetails = this.newProject.projectDetails.concat(this.storyDetailList);
-    // this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
-    // this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
+    this.newProject['user_id'] = localStorage.getItem("user_id") || '';
+    this.newProject['status_id'] = statusId;
+    this.newProject.title = this.projectTitle;
+    this.newProject.description = this.projectDescription;
+    this.newProject.mention = this.projectMention;
+    this.newProject.caption = this.projectCaption;
+    this.newProject.hashtag = this.projectHashtag;
+    this.newProject['influencer_id'] = this.selectedInfluencerId;
+    this.newProject['project_details'] = this.newProject['project_details'].concat(this.storyDetailList);
+    this.newProject['project_details'] = this.newProject['project_details'].concat(this.feedsDetailList);
+    this.newProject['project_details'] = this.newProject['project_details'].concat(this.reelsDetailList);
 
+    console.log(this.newProject);
     // update
     this.projectService.editProject(this.newProject).subscribe(
       (data) => {
-        console.log(data);
         this.ngZone.run(() => {
           this.router.navigate(['/project'], {state: {status: true}});
         })
-        },
-        (error) => {
-          console.log(error);
-          this.createError = true;
-        }
+      },
+      (error) => {
+        console.log(error);
+        this.createError = true;
+      }
     )
 
   }
@@ -231,12 +248,39 @@ export class ProjectDetailComponent implements OnInit{
   askConfirm(id: number) {
     if (id == 1) {
       this.confirmHeader = "Cancel order";
-      this.confirmBody = "Are you sure want to cancel this order?"
+      this.confirmBody = "Are you sure want to cancel this order?";
       this.displayConfirmation = true;
     } else if (id == 2) {
       this.confirmHeader = "Finish payment";
-      this.confirmBody = "Are you sure want to go to payment?"
+      this.confirmBody = "Are you sure want to go to payment?";
       this.displayConfirmation = true;
+    } else if (id == 3) {
+      this.confirmHeader = "Accept project";
+      this.confirmBody = "Are you sure want to accept this project?";
+      this.displayConfirmation = true;
+    } else if (id == 4) {
+      this.confirmHeader = "Reject project";
+      this.confirmBody = "Are you sure want to reject this project?";
+      this.displayConfirmation = true;
+    } else if (id == 5) {
+      this.confirmHeader = "Finish project";
+      this.confirmBody = "Are you sure want to mark this project as finished?";
+      this.displayConfirmation = true;
+    }
+  }
+
+  confirmConfirm() {
+    if (this.confirmHeader == 'Cancel order') {
+      this.selectPayment();
+    } else if(this.confirmHeader == 'Finish payment') {
+      // create project with status draft
+      this.saveProject('3');
+    } else if (this.confirmHeader == 'Accept project') {
+      this.acceptProject();
+    } else if (this.confirmHeader == 'Reject project') {
+      this.rejectProject();
+    } else if (this.confirmHeader == 'Finish project') {
+      this.finishProject();
     }
   }
 
@@ -264,6 +308,9 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id
+        newDetail.instagramMediaId = element['instagram_media_id'];
 
         storyList.push(newDetail);
       }
@@ -274,9 +321,11 @@ export class ProjectDetailComponent implements OnInit{
 
   getFeedsListFromDraft(projectDetails: any[] | ProjectDetail[]):any[] {
     let storyList: ProjectDetail[] = [];
+    console.log(projectDetails);
     projectDetails.forEach(element => {
       if (element['mediatype_id'] == '2'|| element.mediatypeId == '2') {
         element.tempId = storyList.length;
+        console.log(element);
 
         let newDetail = new ProjectDetail();
         newDetail.deadlineDate = element['deadline_date'] || element.deadlineDate;
@@ -284,7 +333,11 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id
+        newDetail.instagramMediaId = element['instagram_media_id'];
 
+        console.log(newDetail);
         storyList.push(newDetail);
       }
     })
@@ -304,6 +357,9 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.note = element.note;
         newDetail.mediatypeId = element['mediatype_id'] || element.mediatypeId;
         newDetail.tempId = element.tempId;
+        newDetail.link = element.link;
+        newDetail.id = element.id
+        newDetail.instagramMediaId = element['instagram_media_id'];
 
         storyList.push(newDetail);
       }
@@ -341,29 +397,62 @@ export class ProjectDetailComponent implements OnInit{
   detailId!: number;
   detailForm: any;
 
+  uploadSuccess: boolean = false;
+
   uploadLink(item: any) {
-    console.log(item);
+    // console.log(item);
     this.detailForm = {};
     this.detailForm['mediatypeId'] = item['mediatype_id'];
+    this.detailForm['tempId'] = item['id'];
     this.detailForm['link'] = item['link'];
     this.detailForm['deadlineDate'] = item['deadline_date'];
     this.detailForm['deadlineTime'] = item['deadline_time'];
     this.detailForm['note'] = item['note'];
-    console.log(this.detailForm);
+    this.detailId = item['id'];
+    // console.log(this.detailForm);
     this.detailHeader = this.getMediaLabel(item['mediatype_id']);
     this.displayDetail = true;
   }
 
-  openLink() {
-
+  openLink(item: any) {
+    const url = item['link']; // Replace with your link
+    window.open(url, '_blank');
   }
 
-  copyLink() {
+  copiedSuccess: boolean = false;
 
+  copyLink(item: any) {
+    if (item['link']) {
+      navigator.clipboard.writeText(item['link']).then(() => {
+        // alert('Copied to clipboard!');
+        this.copiedSuccess = true;
+        setTimeout(() => this.copiedSuccess = false, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    } else {
+      alert('No value to copy!');
+    }
+  }
+
+  openAnalytics(item: any) {
+    this.router.navigate(['project/detail/performance-analytics'], { state: { projectDetailId: item['id'], projectHeaderId: this.projectId } });
   }
 
   detailConfirm(form: any) {
-
+    this.detailForm = form;
+    console.log(this.detailForm);
+    this.projectService.editProjectDetail(this.detailForm['value']).subscribe(
+      (data) => {
+        this.updateProjectDetail(data);
+        this.uploadSuccess = true;
+        setTimeout(() => this.uploadSuccess = false, 2000);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+    this.displayDetail = false;
   }
 
   detailCancel() {
@@ -371,15 +460,46 @@ export class ProjectDetailComponent implements OnInit{
   }
 
   rejectProject() {
-
+    this.saveProject(6);
   }
 
   acceptProject() {
-
+    this.saveProject(4);
   }
 
   finishProject() {
+    console.log(this.newProject);
 
+    this.saveProject(5);
+    // window.location.reload();
+  }
+
+  formatPrice(price: any) {
+    if (price) {
+      let formatted = this.decimalPipe.transform(price, '1.0-0');
+      return formatted!.replace(/,/g, '.');
+    }
+    return '';
+  }
+
+  updateProjectDetail(data: any) {
+    console.log(data);
+    this.newProject['project_details'].forEach((element: any) => {
+      console.log(element);
+      if (element['id'] == data['id']) {
+        element['status_id'] = '5';
+        element['link'] = data['link'];
+        element['instagram_media_id'] = data['instagram_media_id'];
+      }
+    });
+
+    console.log(this.newProject['project_details']);
+    this.storyDetailList = this.getStoryListFromDraft(this.newProject['project_details']);
+    this.feedsDetailList = this.getFeedsListFromDraft(this.newProject['project_details']);
+    this.reelsDetailList = this.getReelsListFromDraft(this.newProject['project_details']);
+
+    console.log(this.feedsDetailList);
+    // window.location.reload();
   }
 
 }

@@ -6,6 +6,7 @@ import { HomeService } from '../../services/home.service';
 import { CommonModule } from '@angular/common';
 import { WalletHistoryPopupComponent } from "../wallet-history-popup/wallet-history-popup.component";
 import { WalletTransferPopupComponent } from "../wallet-transfer-popup/wallet-transfer-popup.component";
+import { LoadingService } from '../../services/loading.service';
 import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
 import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
 
@@ -66,7 +67,8 @@ interface WalletHeader {
 })
 export class HomeComponent implements OnInit{
   constructor(
-      private homeService: HomeService,
+    private homeService: HomeService,
+    private loadingService: LoadingService,
       private cdRef: ChangeDetectorRef
   ) {}
 
@@ -79,6 +81,7 @@ export class HomeComponent implements OnInit{
   successMessage: string = '';
 
   ngOnInit(): void {
+    this.loadingService.hide();
     this.homeService.getRecommendation().subscribe(
       (response) => {
         this.recommendedinfluencer = response;

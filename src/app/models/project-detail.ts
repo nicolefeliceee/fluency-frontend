@@ -1,6 +1,7 @@
 import { Time } from "@angular/common";
 
 export class ProjectDetail {
+  id!: number;
   mediatypeId!: string;
   note!: string;
   deadlineDate!: Date;
@@ -8,6 +9,7 @@ export class ProjectDetail {
   link!: string;
   nominal!: string;
   tempId!: number;
+  instagramMediaId!: string;
 
   constructor() {}
 }

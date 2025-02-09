@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -95,10 +95,13 @@ export class UserService {
     return this.httpClient.post(this.baseUrl + "/user/token",{token});
   }
 
-  signUpBrand(request: Object): Observable<object> {
+  signUpBrand(request: FormData): Observable<object> {
     console.log("di service");
-    console.log(request);
-    return this.httpClient.post(this.baseUrl + "/user/brand/signup",request);
+    console.log(request.get('data'));
+    // const headers = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
+    return this.httpClient.post(this.baseUrl + "/user/brand/signup", request, {
+      // headers: headers
+    });
   }
 
   signUpInfluencer(request: SignupInfluencer): Observable<object> {
@@ -111,7 +114,7 @@ export class UserService {
     });
   }
 
-  getProfile(userId: string): Observable<object> {
+  getProfile(userId: string): Observable<any> {
     return this.httpClient.get(this.baseUrl + "/user/profile/" + userId);
   }
 

@@ -6,9 +6,15 @@ import { instanceToPlain } from 'class-transformer';
 export const snakecaseInterceptor: HttpInterceptorFn = (req, next) => {
   try {
 
-    if (req.body) {
+    console.log(req.body)
+    console.log(req.headers)
+    console.log(req.serializeBody())
+
+    if (req.body && !(req.body instanceof FormData)) {
       const plainObj = instanceToPlain(req.body);
+      console.log(plainObj);
       const snakeCaseBody = snakecaseKeys(plainObj as Record<string, any>, { deep: true });
+      console.log(snakeCaseBody);
       const clonedRequest = req.clone({ body: snakeCaseBody });
       return next(clonedRequest);
     }

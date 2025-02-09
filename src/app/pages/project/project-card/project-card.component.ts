@@ -78,7 +78,7 @@ export class ProjectCardComponent implements OnInit {
     if (project['status_id'] == '1') {
       this.router.navigate(['/project/create'], { state: { draftProject: project } });
     } else {
-      this.router.navigate(['/project/detail'], { state: { project: project } });
+      this.router.navigate(['/project/detail'], { state: { projectId: project['id'] } });
     }
   }
 

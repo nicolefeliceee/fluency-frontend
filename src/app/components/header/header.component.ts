@@ -3,11 +3,14 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { InstagramService } from '../../services/instagram.service';
 import { UserService } from '../../services/user.service';
+import { ConfirmationPopupComponent } from "../confirmation-popup/confirmation-popup.component";
+import { DomSanitizer } from '@angular/platform-browser';
+import { FileHandle } from 'node:fs/promises';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule,RouterLink,RouterOutlet,RouterModule],
+  imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, ConfirmationPopupComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -28,7 +31,8 @@ export class HeaderComponent implements OnInit{
   constructor(
     private router: Router,
     private instagramService: InstagramService,
-    private userService: UserService
+    private userService: UserService,
+    private sanitizer: DomSanitizer
   ) {
 
   }
@@ -38,6 +42,8 @@ export class HeaderComponent implements OnInit{
   userName!: any;
   instagramId!: any;
   profilePicUrl: any;
+  // profilePicBrand: string | ArrayBuffer | null = null;
+  profilePicBrand: any;
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('user_id');
@@ -52,8 +58,8 @@ export class HeaderComponent implements OnInit{
 
     if (this.instagramId) {
       this.instagramService.getProfile(localStorage.getItem("long_lived_token") || '', localStorage.getItem('instagram_id')).subscribe(
-        (data) => {
-          this.profilePicUrl = (data as any)['profile_picture_url'];
+        (data: any) => {
+          this.profilePicUrl = data['profile_picture_url'];
         },
         (error) => {
           console.log(error);
@@ -61,18 +67,61 @@ export class HeaderComponent implements OnInit{
       )
     } else {
       this.userService.getProfile(localStorage.getItem("user_id") || '').subscribe(
-        (data) => {
-          // console.log(data);
+        (data: any) => {
+          console.log(data);
+          this.profilePicBrand = data['profile_picture'];
+          const imageBlob = this.dataURItoBlob(data['profile_picture_byte'], data['profile_picture_type']);
+          const imageFile = new File([imageBlob], data['profile_picture_name'], { type: data['profile_picture_type'] });
+          // const finalFileHandle: FileHandle = {
+          //   // fil: imageFile,
+          //   url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
+          // };
+          this.profilePicBrand = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile));
+
+          // const reader = new FileReader();
+          // reader.onload = (e) => this.profilePicBrand = e.target.result;
+          // reader.readAsDataURL(new Blob([data]));
         },
         (error) => {
           console.log(error);
         }
       )
    }
-
-
   }
 
+  public dataURItoBlob(picBytes: any, imageType: any) {
+    const byteString = window.atob(picBytes);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      int8array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([int8array], { type: imageType });
+    return blob;
+  }
+
+  displayConfirm: boolean = false;
+  confirmBody!: string;
+  confirmHeader!: string;
+
+  askConfirm(id: any) {
+    if (id == '1') {
+      this.confirmHeader = 'Logout Confirmation';
+      this.confirmBody = 'Are you sure want to logout?'
+      this.displayConfirm = true;
+    }
+  }
+
+  confirmConfirm() {
+    this.displayConfirm = false;
+    this.logout();
+  }
+
+  confirmCancel() {
+    this.displayConfirm = false;
+  }
 
   logout(): void {
     localStorage.removeItem('user_id');

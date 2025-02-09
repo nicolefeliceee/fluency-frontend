@@ -8,11 +8,12 @@ import { AgeService } from '../../../../services/age.service';
 import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from "../choose-category/category-card/category-card.component";
 import { UserService } from '../../../../services/user.service';
+import { ConfirmationPopupComponent } from "../../../../components/confirmation-popup/confirmation-popup.component";
 
 @Component({
   selector: 'app-brand-target-market',
   standalone: true,
-  imports: [FormsModule, CommonModule, CategoryCardComponent, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, CategoryCardComponent, ReactiveFormsModule, ConfirmationPopupComponent],
   templateUrl: './brand-target-market.component.html',
   styleUrl: './brand-target-market.component.css'
 })
@@ -117,7 +118,41 @@ export class BrandTargetMarketComponent implements OnInit {
 
     console.log(this.newUser);
 
-    this.userService.signUpBrand(this.newUser as object).subscribe(
+    let formData = new FormData();
+    // formData.append('data', new Blob([JSON.stringify({
+    //   name: this.newUser.name,
+    //   email: this.newUser.email,
+    //   password: this.newUser.password,
+    //   userType: this.newUser.userType,
+    //   location: this.newUser.location,
+    //   targetAgeRange: this.newUser.targetAgeRange,
+    //   targetGender: this.newUser.targetGender,
+    //   targetLocation: this.newUser.targetLocation,
+    //   phone: this.newUser.phone
+    // })], { type: 'application/json' } ));
+
+    console.log(formData);
+    formData.append('data', JSON.stringify({
+      userType: this.newUser.userType,
+      name: this.newUser.name,
+      email: this.newUser.email,
+      phone: this.newUser.phone,
+      location: this.newUser.location,
+      category: this.newUser.category,
+      password: this.newUser.password,
+      targetAgeRange: this.newUser.targetAgeRange,
+      targetGender: this.newUser.targetGender,
+      targetLocation: this.newUser.targetLocation,
+    }));
+    console.log(formData.get('data'));
+
+    formData.append('profile_picture', this.newUser.profilePicture, this.newUser.profilePictureName); // Add the file
+
+
+
+    console.log(formData.get('profile_picture'));
+    // console.log(formData.getAll('profile_picture'));
+    this.userService.signUpBrand(formData).subscribe(
       (data) => {
         // redirect ke login
         this.router.navigate(['/login/brand'], {state: { status: "success"}});
@@ -136,6 +171,26 @@ export class BrandTargetMarketComponent implements OnInit {
     console.log(this.newUser);
     if (this.newUser?.userType === 'brand') {
       this.router.navigate(['/signup/brand/category'],  { state: { newUser: this.newUser, userType: "brand" } });
+    }
+  }
+
+  confirmCancel() {
+    this.displayConfirmation = false;
+  }
+
+  confirmConfirm() {
+    this.onSubmit();
+  }
+
+  displayConfirmation: boolean = false;
+  confirmHeader: any;
+  confirmBody: any;
+
+  askConfirm(id: any) {
+    if (id == 1) {
+      this.confirmHeader = "Sign up now";
+      this.confirmBody = "Are you sure want to sign up now?"
+      this.displayConfirmation = true;
     }
   }
 }

@@ -1,3 +1,4 @@
+<app-confirmation-popup [display]="displayConfirm" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <div class="navbar px-4 flex z-[51]">
   <div class="logo content-center">
     <p>L O G O</p>
@@ -27,8 +28,9 @@
         </svg>
     </a>
     <div class="profile flex items-center hover:cursor-pointer" (click)="toggleDropdown($event)">
-      <div *ngIf="profilePicUrl" class="picture" style="background-image: url('{{ profilePicUrl }}');"></div>
-      <div *ngIf="!profilePicUrl" class="picture" style="background-image: url('../../../assets/images/empty\ profile\ pic.png');"></div>
+      <div *ngIf="profilePicUrl && instagramId" class="picture" style="background-image: url('{{ profilePicUrl }}');"></div>
+      <img *ngIf="profilePicBrand && !instagramId" class="picture" [src]="profilePicBrand">
+      <div *ngIf="!profilePicUrl && !profilePicBrand" class="picture" style="background-image: url('../../../assets/images/empty\ profile\ pic.png');"></div>
       <div class="name">{{ userName }}</div>
       <div class="dropdown ms-auto">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +39,7 @@
       </div>
       <div class="dropdown2" *ngIf="isDropdownVisible">
         <a routerLink="/profile" routerLinkActive="router-link-active" class="menu2">View Profile</a>
-        <a (click)="logout()" class="menu2">Log Out</a>
+        <a (click)="askConfirm('1')" class="menu2">Log Out</a>
       </div>
     </div>
   </div>

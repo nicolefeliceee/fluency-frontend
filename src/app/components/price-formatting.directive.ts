@@ -1,23 +1,41 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { Directive, ElementRef, HostListener, Input, OnInit, PipeTransform, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appPriceFormatting]',
+  selector: '[appFormatPrice]',
   standalone: true
 })
-export class PriceFormattingDirective {
+export class PriceFormattingDirective implements OnInit {
 
-  constructor(private el: ElementRef) {}
+  @Input('appFormatPrice') decimalPlaces: string = '1.0-2';
 
-  @HostListener('input', ['$event.target.value'])
-  onInput(value: string): void {
-    // Remove non-numeric characters
-    const numericValue = value.replace(/[^0-9.]/g, '');
+  constructor(private el: ElementRef, private renderer: Renderer2, private decimalPipe: DecimalPipe) {}
 
-    // Format with dots as thousands separators
-    const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  ngOnInit() {
+    this.formatElement();
+  }
 
-    // Update the input field value
-    this.el.nativeElement.value = formattedValue;
+  private formatElement() {
+    const element = this.el.nativeElement;
+    const value = this.getValue(element);
+
+    if (value && !isNaN(+value)) {
+      const formatted = this.decimalPipe.transform(+value, this.decimalPlaces, 'en-US');
+
+      if (this.isInputElement(element)) {
+        element.value = formatted?.replace(/,/g, '.') || '';
+      } else {
+        this.renderer.setProperty(element, 'innerText', formatted?.replace(/,/g, '.') || '');
+      }
+    }
+  }
+
+  private getValue(element: HTMLElement): string {
+    return this.isInputElement(element) ? (element as HTMLInputElement).value : element.textContent || '';
+  }
+
+  private isInputElement(element: HTMLElement): boolean {
+    return element.tagName === 'INPUT' || element.tagName === 'TEXTAREA';
   }
 
 }

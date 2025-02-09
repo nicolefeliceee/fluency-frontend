@@ -77,6 +77,9 @@ export class CompleteProfileComponent implements OnInit{
       };
 
       reader.readAsDataURL(file); // Convert image to base64 URL
+      this.newUser.profilePicture = file;
+      this.newUser.profilePictureName = file.name;
+      this.newUser.profilePictureType = file.name;
     }
   }
 
@@ -109,6 +112,12 @@ export class CompleteProfileComponent implements OnInit{
           // if email doesnt exist
           if (data.length == 0) {
             if (this.profileForm.valid) {
+
+              // if (this.imagePreview) {
+              //   this.newUser.profilePicture = this.imagePreview;
+              //   this.newUser.fileName = this.imagePreview.name;
+              // }
+
               this.newUser.name = this.profileForm.get('name')?.value;
               this.newUser.email = this.profileForm.get('email')?.value;
               this.newUser.phone = this.profileForm.get('phone')?.value;

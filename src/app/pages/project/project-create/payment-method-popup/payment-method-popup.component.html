@@ -1,11 +1,58 @@
 <div *ngIf="display" class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[100]">
 
-  <div class="mt-10 bg-font-white rounded-xl top-10 w-[500px] p-5 mx-auto h-[400px]">
+  <div class="mt-10 bg-font-white rounded-xl top-10 w-[500px] p-5 h-[25rem] mx-auto overflow-y-auto">
     <div class="text-header3 font-semibold border-b border-font-darkGrey pb-2">
       Select Payment Method
     </div>
 
-    <div (click)="selectWallet()" class="my-5 border flex px-3 py-2 rounded-xl items-center" [ngClass]="walletSelected ? 'border-blue-80 border-2' : 'border-font-lightGrey'">
+    <!-- order summary -->
+
+    <div class="bg-font-white rounded-xl p-5 mt-2">
+      <div class="border-b border-font-black justify-between flex pb-5 items-center">
+        <p class="text-header4 text-bg-blue-100 font-semibold">Order summary</p>
+        <!-- <p class="text-header6 text-font-lightGrey font-semibold">{{ orderSummary['reference_number'] }}</p> -->
+      </div>
+      <div class="justify-between flex items-center my-5">
+        <p class="text-[15px] text-font-darkGrey font-bold">Media</p>
+        <p class="text-[15px] text-font-darkGrey font-bold">Subtotal</p>
+      </div>
+      <div *ngIf="orderSummary.storyDetailList.length > 0" class="justify-between flex items-center my-2">
+        <p class="text-[15px] text-font-darkGrey font-normal">Story &times; {{  orderSummary.storyDetailList.length  }}</p>
+        <p appFormatPrice="1.0-0" class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(orderSummary.storyDetailList.length * orderSummary.storyPrice) }}</p>
+      </div>
+      <div *ngIf="orderSummary.feedsDetailList.length > 0" class="justify-between flex items-center my-2">
+        <p class="text-[15px] text-font-darkGrey font-normal">Feeds &times; {{  orderSummary.feedsDetailList.length  }}</p>
+        <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(orderSummary.feedsDetailList.length * orderSummary.feedsPrice) }}</p>
+      </div>
+      <div *ngIf="orderSummary.reelsDetailList.length > 0" class="justify-between flex items-center my-2">
+        <p class="text-[15px] text-font-darkGrey font-normal">Reels &times; {{  orderSummary.reelsDetailList.length  }}</p>
+        <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(orderSummary.reelsDetailList.length * orderSummary.reelsPrice) }}</p>
+      </div>
+      <div class="border-t border-b border-font-black my-5">
+        <div class="justify-between flex items-center my-2">
+          <p class="text-[15px] text-font-darkGrey font-normal">Subtotal</p>
+          <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(orderSummary.storyDetailList.length * orderSummary.storyPrice
+            + orderSummary.feedsDetailList.length * orderSummary.feedsPrice
+            + orderSummary.reelsDetailList.length * orderSummary.reelsPrice) }}</p>
+        </div>
+        <div class="justify-between flex items-center my-2">
+          <p class="text-[15px] text-font-darkGrey font-normal">Tax</p>
+          <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice((orderSummary.storyDetailList.length * orderSummary.storyPrice + orderSummary.feedsDetailList.length * orderSummary.feedsPrice + orderSummary.reelsDetailList.length * orderSummary.reelsPrice )/10) }}</p>
+        </div>
+      </div>
+      <div class="justify-between flex items-center my-2">
+        <p class="text-[15px] text-font-darkGrey font-bold">Total</p>
+        <p class="text-[15px] text-font-darkGrey font-bold">Rp {{ formatPrice(
+          orderSummary.storyDetailList.length * orderSummary.storyPrice
+          + orderSummary.feedsDetailList.length * orderSummary.feedsPrice
+          + orderSummary.reelsDetailList.length * orderSummary.reelsPrice
+          + (orderSummary.storyDetailList.length * orderSummary.storyPrice + orderSummary.feedsDetailList.length * orderSummary.feedsPrice + orderSummary.reelsDetailList.length * orderSummary.reelsPrice)/10
+          )
+         }}</p>
+      </div>
+    </div>
+
+    <div (click)="selectWallet()" class="mt-5 border flex px-3 py-2 rounded-xl items-center" [ngClass]="walletSelected ? 'border-blue-80 border-2' : 'border-font-lightGrey'">
       <div>
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="48" height="48" rx="24" fill="#949C9E" fill-opacity="0.18"/>
@@ -14,12 +61,13 @@
       </div>
       <div class="ms-3">
         <p class="text-font-black text-header5 font-semibold">Wallet</p>
-        <p class="text-font-lightGrey text-header6">Balance: Rp350.000</p>
+        <p class="text-font-lightGrey text-header6">Balance: {{walletHeader['balance_show'] }}</p>
       </div>
       <div class="border border-font-lightGrey w-4 h-4 rounded-full ms-auto me-5 flex items-center">
         <div *ngIf="walletSelected == true" class="bg-blue-80 rounded-full w-2 h-2 m-auto"></div>
       </div>
     </div>
+    <span *ngIf="balanceInsufficientError" class="-mt-10 text-primary-red text-header6">Balance is insufficient</span>
 
     <div (click)="selectOther()" class="my-5 border flex px-3 py-2 rounded-xl items-center" [ngClass]="otherSelected ? 'border-blue-80 border-2' : 'border-font-lightGrey'">
       <div>
@@ -41,10 +89,10 @@
       <button (click)="cancel()" type="button" class="hs-dropup-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-slide-up-animation-modal">
         Close
       </button>
-      <button (click)="checkout()" *ngIf="walletSelected || otherSelected"  type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+      <button (click)="checkout()" *ngIf="(walletSelected || otherSelected) && !balanceInsufficientError"  type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
         Continue
       </button>
-      <button disabled *ngIf="!walletSelected && !otherSelected" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+      <button disabled *ngIf="(!walletSelected && !otherSelected) || balanceInsufficientError" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
         Continue
       </button>
     </div>
