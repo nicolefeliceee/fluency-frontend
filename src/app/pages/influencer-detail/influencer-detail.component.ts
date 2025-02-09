@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, A
 import { HeaderComponent } from "../../components/header/header.component";
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { ActivatedRoute } from '@angular/router';
+import { InfluencerService } from '../../services/influencer.service';
 Chart.register(...registerables);
 
 @Component({
@@ -13,7 +15,33 @@ Chart.register(...registerables);
   styleUrl: './influencer-detail.component.css'
 })
 export class InfluencerDetailComponent implements OnInit {
+  influencerId: string | null = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private influencerService: InfluencerService
+  ) {}
+
   ngOnInit(): void {
+    // ambil id influencer dari path
+    this.influencerId = this.route.snapshot.paramMap.get('id'); // Ambil ID dari URL
+    console.log('Influencer ID:', this.influencerId);
+
+    // get detail influencer
+    if (this.influencerId == null){
+      console.log("inf id null, error");
+    }
+    else{
+      this.influencerService.getDetailInfluencer(this.influencerId).subscribe(
+        (response) => {
+          console.log('Detail influencer:', response);
+        },
+        (error) => {
+          console.error('Error get detail influencer:', error);
+        }
+      );
+    }
+
     this.createChart();
   }
   public chart: any;

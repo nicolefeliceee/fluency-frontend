@@ -156,4 +156,12 @@ export class InfluencerService {
     }
   }
 
-}
+  getDetailInfluencer(influencerId: string): Observable<any> {
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      return this.httpClient.get(`${this.baseUrl}/influencer/detail/${influencerId}/${userId}`);
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
+} 
