@@ -33,7 +33,7 @@ export const routes: Routes = [
   {path:'header', component: HeaderComponent},
   {path:'influencer', component: InfluencerComponent},
   {path:'influencer-card', component: InfluencerCardComponent},
-  {path:'influencer-detail', component: InfluencerDetailComponent},
+  {path:'influencer-detail/:id', component: InfluencerDetailComponent},
   {path:'saved-influencer', component: SavedInfluencerComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },
   { path: 'signup/brand/category', component: ChooseCategoryComponent },

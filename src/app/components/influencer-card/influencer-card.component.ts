@@ -18,6 +18,13 @@ export class InfluencerCardComponent{
   ) {
   }
 
+  // @Input() item: any; // Data influencer dari parent
+
+  goToDetail() {
+    console.log("item id: " + this.item['influencer_id']);
+    this.router.navigate(['/influencer-detail', this.item['influencer_id']]); // Redirect ke halaman detail
+  }
+
 
   // INI INFLUENCER
   @Input() item!: any;
