@@ -138,4 +138,22 @@ export class InfluencerService {
     return this.httpClient.get(url);
   }
 
+  searchInfluencers(query: string): Observable<any> {
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      return this.httpClient.get(`${this.baseUrl}/influencer/search/${userId}?query=${query}`);
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
+
+  searchInfluencersSaved(query: string): Observable<any> {
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      return this.httpClient.get(`${this.baseUrl}/influencer/saved/search/${userId}?query=${query}`);
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
+
 }
