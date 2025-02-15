@@ -45,8 +45,8 @@ export class CompleteProfileInfluencerComponent {
     locationOptions!: any[];
     genderOptions!: any[];
 
-  ngOnInit(): void {
-    this.loadingService.hide();
+    ngOnInit(): void {
+      this.loadingService.hide();
       this.locationService.getAllLocations().subscribe(
         (data) => {
           this.locationOptions = data;
