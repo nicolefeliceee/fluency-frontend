@@ -36,6 +36,7 @@ export class CompleteProfileInfluencerComponent {
     ) {
       const navigation = this.router.getCurrentNavigation();
       this.newUser = navigation?.extras.state?.['newUser'];
+      console.log(this.newUser);
     }
 
     passwordVisible: boolean = false;

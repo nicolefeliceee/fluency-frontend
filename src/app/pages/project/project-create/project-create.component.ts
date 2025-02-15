@@ -15,6 +15,7 @@ import { InfluencerService } from '../../../services/influencer.service';
 import { InstagramService } from '../../../services/instagram.service';
 import { MidtransService } from '../../../services/midtrans.service';
 import { PaymentMethodPopupComponent } from "./payment-method-popup/payment-method-popup.component";
+import { WalletService } from '../../../services/wallet.service';
 
 @Component({
   selector: 'app-project-create',
@@ -48,6 +49,7 @@ export class ProjectCreateComponent implements OnInit{
   createError: boolean = false;
   detailNotSelected: boolean = false;
   influencerNotSelected: boolean = false;
+  generalError: boolean = false;
 
   // for prices from influencer
   storyPrice?: any;
@@ -120,6 +122,7 @@ export class ProjectCreateComponent implements OnInit{
     private influencerService: InfluencerService,
     private instagramService: InstagramService,
     private midtransService: MidtransService,
+    private walletService: WalletService,
     private ngZone: NgZone,
     private decimalPipe: DecimalPipe
   ) {
@@ -153,10 +156,14 @@ export class ProjectCreateComponent implements OnInit{
       this.confirmHeader = "Go to payment";
       this.confirmBody = "Are you sure want to go to payment?"
       this.displayConfirmation = true;
-    } else if(id ==3) {
-      this.confirmHeader = "Influencer already selected";
-      this.confirmBody = "Are you sure want to find new one?"
-      this.displayConfirmation = true;
+    } else if (id == 3) {
+      if (this.selectedInfluencer) {
+        this.confirmHeader = "Influencer already selected";
+        this.confirmBody = "Are you sure want to find new one?"
+        this.displayConfirmation = true;
+      } else {
+        this.findInfluencer();
+      }
     } else if (id == 10) {
       this.confirmHeader = "Back";
       this.confirmBody = "Are you sure want to go back? Your changes won't be saved"
@@ -220,7 +227,19 @@ export class ProjectCreateComponent implements OnInit{
   checkout(method: any) {
 
     if (method == 'wallet') {
-      // validate wallet balance
+      let amount = this.reelsDetailList.length * this.reelsPrice + this.feedsDetailList.length * this.feedsPrice + this.storyDetailList.length * this.storyPrice;
+      this.walletService.checkout(amount).subscribe(
+        (data) => {
+          console.log(data);
+          this.saveProject('3');
+        },
+        (error) => {
+          console.log(error);
+          this.generalError = true;
+          this.saveProject('2');
+        }
+      );
+
     } else if (method == 'other') {
       // STEPS
 
@@ -303,7 +322,7 @@ export class ProjectCreateComponent implements OnInit{
         (data) => {
           console.log(data);
           this.ngZone.run(() => {
-            this.router.navigate(['/project'], {state: {status: true}});
+            this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
           })
           },
           (error) => {
@@ -312,20 +331,36 @@ export class ProjectCreateComponent implements OnInit{
           }
       )
 
+      // jika udah pilih influencer (bisa jadi sebelumnya draft, bisa jadi new)
     } else if (this.influencerSelectedProject) {
-      this.newProject.id = this.influencerSelectedProject.id;
-      this.projectService.editProject(this.newProject).subscribe(
-        (data) => {
-          // console.log(data);
-          this.ngZone.run(() => {
-            this.router.navigate(['/project'], {state: {status: true}});
-          })
-          },
-          (error) => {
-            console.log(error);
-            this.createError = true;
-          }
-      )
+
+      if (this.influencerSelectedProject.id) {
+        this.newProject.id = this.influencerSelectedProject.id;
+        this.projectService.editProject(this.newProject).subscribe(
+          (data) => {
+            // console.log(data);
+            this.ngZone.run(() => {
+              this.router.navigate(['/project'], {state: {status: true}});
+            })
+            },
+            (error) => {
+              console.log(error);
+              this.createError = true;
+            }
+        )
+      } else {
+        this.projectService.createProject(this.newProject).subscribe(
+          (data) => {
+              this.router.navigate(['/project'], {state: {status: true}});
+            },
+            (error) => {
+              console.log(error);
+              this.createError = true;
+            }
+        )
+      }
+
+
     } else {
       // create new
       this.projectService.createProject(this.newProject).subscribe(

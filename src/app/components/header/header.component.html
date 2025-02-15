@@ -3,10 +3,18 @@
   <div class="logo content-center">
     <p>L O G O</p>
   </div>
-  <div class="middle flex content-center justify-center items-center">
+  <div *ngIf="userId" class="middle flex content-center justify-center items-center">
     <a routerLink="/home" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
     <div class="bantu"></div>
     <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Project</a>
+    <div class="bantu"></div>
+    <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Influencer</a>
+  </div>
+
+  <div *ngIf="!userId" class="middle flex content-center justify-center items-center">
+    <a routerLink="/" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
+    <div class="bantu"></div>
+    <a routerLink="/about-us" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">About us</a>
     <div class="bantu"></div>
     <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Influencer</a>
   </div>
@@ -23,13 +31,17 @@
         </svg>
     </a>
     <a routerLink="/chat" routerLinkActive="router-link-active"  class="chat">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11 19.25C12.6317 19.25 14.2267 18.7662 15.5835 17.8596C16.9402 16.9531 17.9976 15.6646 18.622 14.1571C19.2464 12.6497 19.4098 10.9909 19.0915 9.39051C18.7732 7.79017 17.9874 6.32016 16.8336 5.16637C15.6798 4.01259 14.2098 3.22685 12.6095 2.90853C11.0092 2.5902 9.35035 2.75357 7.84286 3.378C6.33537 4.00242 5.0469 5.05984 4.14038 6.41655C3.23385 7.77325 2.75 9.36831 2.75 11C2.75 12.32 3.05983 13.5667 3.61167 14.6731C4.02692 15.5082 3.44942 16.6348 3.22942 17.457C3.18068 17.6389 3.18067 17.8303 3.22939 18.0122C3.27812 18.1941 3.37385 18.3599 3.50698 18.493C3.64011 18.6262 3.80594 18.7219 3.9878 18.7706C4.16966 18.8193 4.36114 18.8193 4.543 18.7706C5.36525 18.5506 6.49183 17.9731 7.32692 18.3893C8.46836 18.956 9.72559 19.2506 11 19.25Z" stroke="#262A10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.273 20.0482C13.9586 20.0013 14.6386 19.8918 15.3043 19.7211C16.1265 19.9682 16.9943 20.0242 17.8414 19.8846C17.8752 19.8805 17.9092 19.878 17.9433 19.8771C18.2455 19.8771 18.642 20.0504 19.2205 20.4155V19.8153C19.2208 19.7107 19.249 19.6082 19.3024 19.5182C19.3557 19.4283 19.4322 19.3543 19.5238 19.304C19.7759 19.1617 20.0088 19.0017 20.2226 18.8241C21.0654 18.1199 21.541 17.1796 21.541 16.1851C21.541 15.8568 21.489 15.5296 21.3861 15.2176C21.6417 14.7475 21.8454 14.2567 21.9971 13.7454C22.4846 14.4658 22.7468 15.3162 22.75 16.1851C22.75 17.5371 22.113 18.7981 21.0091 19.72C20.8242 19.8738 20.631 20.0154 20.4295 20.1446V21.5508C20.4295 22.034 19.864 22.3124 19.4653 22.0242C19.0876 21.7463 18.6972 21.486 18.2953 21.2442C18.1792 21.1773 18.0591 21.1176 17.9357 21.0655C17.6003 21.1151 17.2618 21.1401 16.9228 21.1402C15.5469 21.1402 14.2751 20.7318 13.273 20.0482ZM5.99192 17.237C4.25425 15.7821 3.25 13.7985 3.25 11.673C3.25 7.33097 7.40133 3.85889 12.4702 3.85889C17.5402 3.85889 21.6927 7.32989 21.6927 11.673C21.6927 16.015 17.5402 19.486 12.4702 19.486C11.9004 19.486 11.3389 19.4426 10.7857 19.356C10.5473 19.4112 9.59183 19.9713 8.216 20.9626C7.71767 21.3222 7.01133 20.9756 7.01133 20.37V17.9726C6.65451 17.752 6.31417 17.5058 5.993 17.2359M10.8193 17.8772C10.8611 17.8772 10.9034 17.8805 10.946 17.887C11.4443 17.9693 11.9524 18.0108 12.4702 18.0116C16.7527 18.0116 20.1793 15.1461 20.1793 11.6719C20.1793 8.19872 16.7527 5.3333 12.4713 5.3333C8.19 5.3333 4.76125 8.20089 4.76125 11.673C4.76125 13.3521 5.56292 14.9338 6.97775 16.1179C7.33453 16.4154 7.72308 16.6827 8.14342 16.9196C8.25744 16.9828 8.35262 17.0752 8.41924 17.1874C8.48585 17.2995 8.52152 17.4272 8.52258 17.5576V18.94C9.61133 18.2196 10.3274 17.8772 10.8193 17.8772Z" fill="#494F50"/>
+        <path d="M8.73438 13C9.05761 13 9.3676 12.8716 9.59616 12.643C9.82472 12.4145 9.95313 12.1045 9.95313 11.7813C9.95313 11.458 9.82472 11.148 9.59616 10.9195C9.3676 10.6909 9.05761 10.5625 8.73438 10.5625C8.41114 10.5625 8.10115 10.6909 7.87259 10.9195C7.64403 11.148 7.51562 11.458 7.51562 11.7813C7.51562 12.1045 7.64403 12.4145 7.87259 12.643C8.10115 12.8716 8.41114 13 8.73438 13ZM12.6961 13C13.0194 13 13.3294 12.8716 13.5579 12.643C13.7865 12.4145 13.9149 12.1045 13.9149 11.7813C13.9149 11.458 13.7865 11.148 13.5579 10.9195C13.3294 10.6909 13.0194 10.5625 12.6961 10.5625C12.3729 10.5625 12.0629 10.6909 11.8343 10.9195C11.6058 11.148 11.4774 11.458 11.4774 11.7813C11.4774 12.1045 11.6058 12.4145 11.8343 12.643C12.0629 12.8716 12.3729 13 12.6961 13ZM16.6568 13C16.98 13 17.29 12.8716 17.5186 12.643C17.7471 12.4145 17.8755 12.1045 17.8755 11.7813C17.8755 11.458 17.7471 11.148 17.5186 10.9195C17.29 10.6909 16.98 10.5625 16.6568 10.5625C16.3336 10.5625 16.0236 10.6909 15.795 10.9195C15.5664 11.148 15.438 11.458 15.438 11.7813C15.438 12.1045 15.5664 12.4145 15.795 12.643C16.0236 12.8716 16.3336 13 16.6568 13Z" fill="#494F50"/>
         </svg>
     </a>
     <div class="profile flex items-center hover:cursor-pointer" (click)="toggleDropdown($event)">
       <div *ngIf="profilePicUrl && instagramId" class="picture" style="background-image: url('{{ profilePicUrl }}');"></div>
-      <img *ngIf="profilePicBrand && !instagramId" class="picture" [src]="profilePicBrand">
+      <!-- <img *ngIf="profilePicBrand && !instagramId" class="picture" [src]="profilePicBrand"> -->
+      <div *ngIf="profilePicBrand && !instagramId" class="w-[2.4rem] h-[2.4rem] rounded-full overflow-hidden">
+        <img class="w-full h-full object-cover" [src]="profilePicBrand" alt="Profile Picture" />
+    </div>
       <div *ngIf="!profilePicUrl && !profilePicBrand" class="picture" style="background-image: url('../../../assets/images/empty\ profile\ pic.png');"></div>
       <div class="name">{{ userName }}</div>
       <div class="dropdown ms-auto">
@@ -38,7 +50,7 @@
           </svg>
       </div>
       <div class="dropdown2" *ngIf="isDropdownVisible">
-        <a routerLink="/profile" routerLinkActive="router-link-active" class="menu2">View Profile</a>
+        <a (click)="viewProfile()" class="menu2">View Profile</a>
         <a (click)="askConfirm('1')" class="menu2">Log Out</a>
       </div>
     </div>

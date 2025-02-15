@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { ConfirmationPopupComponent } from "../confirmation-popup/confirmation-popup.component";
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileHandle } from 'node:fs/promises';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
@@ -68,19 +69,11 @@ export class HeaderComponent implements OnInit{
     } else {
       this.userService.getProfile(localStorage.getItem("user_id") || '').subscribe(
         (data: any) => {
-          console.log(data);
-          this.profilePicBrand = data['profile_picture'];
-          const imageBlob = this.dataURItoBlob(data['profile_picture_byte'], data['profile_picture_type']);
-          const imageFile = new File([imageBlob], data['profile_picture_name'], { type: data['profile_picture_type'] });
-          // const finalFileHandle: FileHandle = {
-          //   // fil: imageFile,
-          //   url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
-          // };
-          this.profilePicBrand = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile));
-
-          // const reader = new FileReader();
-          // reader.onload = (e) => this.profilePicBrand = e.target.result;
-          // reader.readAsDataURL(new Blob([data]));
+          if (data['profile_picture_byte']) {
+            const imageBlob = this.dataURItoBlob(data['profile_picture_byte'], data['profile_picture_type']);
+            const imageFile = new File([imageBlob], data['profile_picture_name'], { type: data['profile_picture_type'] });
+            this.profilePicBrand = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile));
+          }
         },
         (error) => {
           console.log(error);
@@ -130,6 +123,14 @@ export class HeaderComponent implements OnInit{
     localStorage.removeItem('long_lived_token');
     this.isLogin = false;
     this.router.navigate(['/']);
+  }
+
+  viewProfile() {
+    if (this.instagramId) {
+      this.router.navigate(['/profile-influencer', {state: {userId: this.userId}}]);
+    } else {
+      this.router.navigate(['/profile-brand', {state: {userId: this.userId}}]);
+    }
   }
 
 

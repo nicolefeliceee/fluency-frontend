@@ -39,7 +39,7 @@ export class InfluencerRateCardComponent {
     this.userService.signUpInfluencer(this.newUser).subscribe(
       (data) => {
         console.log(data);
-        localStorage.setItem('user_id', (data as any)['user_id']);
+        localStorage.setItem('user_id', (data as any)['id']);
         localStorage.setItem('name', (data as any)['name']);
         this.router.navigate(['/home'])
       }

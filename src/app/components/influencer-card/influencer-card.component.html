@@ -1,8 +1,10 @@
+
 <!-- <div class="card w-full bg-white" (click)="goToDetail()"> -->
 <div class="card w-full bg-white">
   <div class="helper" (click)="goToDetail()">
     <!-- <div class="foto" [style.background-image]="'url(' + getProfilePictureUrl(item.profilepicture) + ')'"></div> -->
-    <div class="foto" [style.background-image]="'url(' + item.profilepicture + ')'"></div>
+    <div *ngIf="item.profilepicture" class="foto" [style.background-image]="'url(' + item.profilepicture + ')'"></div>
+    <div *ngIf="!item.profilepicture" class="overflow-hidden h-[13.55rem] bg-font-lightGrey rounded-[10%]">
     <!-- <div class="divvid w-[150px] h-[100px] bg-pink-200">
       <video id="myVideo" class="video" src="https://instagram.fcgk38-1.fna.fbcdn.net/o1/v/t16/f2/m86/AQNp7jQFsWfGySwimtc4v3BjXq4vj-vAOfFOQiwYCFewevDsZ32FCBjneyDaIeNW_zZS26GH2p12tCVFhpYTpleSQoYYYBrT9Od2Cj4.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6InZ0c192b2RfdXJsZ2VuLmNsaXBzLnVua25vd24tQzMuNTc2LmRhc2hfYmFzZWxpbmVfMV92MSJ9&_nc_ht=instagram.fcgk38-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=AdiY9Ds7WrFdVw5mKZZqn-bI8MC9tXBHh0r5foS--vqAZgCYkO1cRDI0xc7DEGlwU4o&vs=2144990229286226_1586340534&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC82RDRFRjc4MDQwQkEyM0RDQ0VFRTBFQThCMEI5QjlBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dORE9aeHpidGF6UjJnc0hBSlYzVFpXbEk4RUdicV9FQUFBRhUCAsgBACgAGAAbAYgHdXNlX29pbAExFQAAJp6Zz%2BfNrJBAFQIoAkMzLBdALbtkWhysCBgSZGFzaF9iYXNlbGluZV8xX3YxEQB1AAA%3D&ccb=9-4&oh=00_AYD4jtBSxHaScgpi09nlyk6K6FpxnfvhBCRFRcmg2K1Cqg&oe=67AE481B&_nc_sid=1d576d" muted playsinline controls></video>
     </div> -->
@@ -75,6 +77,6 @@
         <path d="M10.25 11.425C10.25 10.445 10.25 9.955 10.4725 9.5805C10.6683 9.25123 10.9806 8.98353 11.3648 8.81575C11.8017 8.625 12.3733 8.625 13.5167 8.625H19.2333C20.3767 8.625 20.9483 8.625 21.3853 8.81575C21.7694 8.98353 22.0817 9.25123 22.2775 9.5805C22.5 9.955 22.5 10.445 22.5 11.425V23.0669C22.5 23.4921 22.5 23.7048 22.3969 23.8211C22.3523 23.8717 22.2955 23.9134 22.2303 23.9434C22.1651 23.9733 22.093 23.9907 22.0192 23.9944C21.8487 24.0031 21.6425 23.885 21.2301 23.6496L16.375 20.875L11.5199 23.6488C11.1075 23.885 10.9013 24.0031 10.7298 23.9944C10.6561 23.9906 10.5843 23.9731 10.5193 23.9432C10.4542 23.9133 10.3975 23.8716 10.3531 23.8211C10.25 23.7048 10.25 23.4921 10.25 23.0669V11.425Z" fill="#494F50" stroke="#494F50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer" (click)="redirectToProject()">Hire</div>
+    <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer" (click)="askConfirm()">Hire</div>
   </div>
 </div>

@@ -14,6 +14,7 @@ import { HostListener } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { TabInfluencerComponent } from "../../components/tab-influencer/tab-influencer.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationPopupComponent } from "../../components/confirmation-popup/confirmation-popup.component";
 
 interface Category {
   id: number; // ID kategori
@@ -46,7 +47,7 @@ interface Influencer {
 @Component({
   selector: 'app-influencer',
   standalone: true,
-  imports: [HeaderComponent, InfluencerCardComponent, TabComponent, RangeFilterComponent, CommonModule, FormsModule, ReactiveFormsModule, TabInfluencerComponent],
+  imports: [HeaderComponent, InfluencerCardComponent, TabComponent, RangeFilterComponent, CommonModule, FormsModule, ReactiveFormsModule, TabInfluencerComponent, ConfirmationPopupComponent],
   templateUrl: './influencer.component.html',
   styleUrl: './influencer.component.css'
 })
@@ -65,19 +66,30 @@ export class InfluencerComponent implements OnInit{
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.newProject = navigation?.extras.state?.['newProject'];
-    console.log(navigation?.extras.state?.['newProject']);
+  }
+
+  askConfirm() {
+
+  }
+
+  // for hire
+
+  askConfirmHireInfluencer: boolean = false;
+  influencerIdToHire: any;
+
+  confirmHireInfluencer(influencerId: any) {
+    this.influencerIdToHire = influencerId;
+    this.askConfirmHireInfluencer = true;
   }
 
   newProject: any;
-  redirectToProject(influencerId: any) {
+  redirectToProject() {
     // jika sebelumnya tekan button find dari menu create project
     if (this.newProject) {
-      console.log(influencerId);
-      this.newProject.influencerId = influencerId;
-      console.log(this.newProject);
+      this.newProject.influencerId = this.influencerIdToHire;
       this.router.navigate(['project/create'], { state: { newProject: this.newProject } });
     } else { //jika mau hire dari menu influencer langsung
-      this.router.navigate(['project'], { state: { influencerId: influencerId } });
+      this.router.navigate(['project'], { state: { influencerId: this.influencerIdToHire } });
     }
   }
 

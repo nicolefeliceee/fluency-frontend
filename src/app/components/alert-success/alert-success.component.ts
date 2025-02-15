@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 @Component({
   selector: 'app-alert-success',
@@ -9,10 +9,12 @@ import { Component, Input } from '@angular/core';
   styleUrl: './alert-success.component.css'
 })
 export class AlertSuccessComponent {
-@Input() label!: string;
+  @Input() label!: string;
   @Input() display!: boolean;
 
+  dismissClicked = output<any>();
+
   dismiss() {
-    this.display = false;
+    this.dismissClicked.emit(null);
   }
 }
