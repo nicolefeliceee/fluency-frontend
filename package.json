@@ -25,6 +25,8 @@
     "@preline/remove-element": "^2.6.0",
     "@preline/select": "^2.5.2",
     "chart.js": "^4.4.7",
+    "chart.js-plugin-labels-dv": "^5.0.1-beta",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "class-transformer": "^0.5.1",
     "express": "^4.18.2",
     "fluency": "file:",

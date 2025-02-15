@@ -5,13 +5,13 @@
   <div class="back w-full font-semibold text-[0.9rem]"> < Back </div>
   <div class="profileAtas h-[22rem] flex mt-4">
     <div class="profile bg-white h-full w-[73.7%] rounded-3xl pt-[23px] pb-[28px] ps-[48px] pe-[39px]">
-      <!-- <div class="foto" [style.background-image]="'url(' + getProfilePictureUrl(item.profilepicture) + ')'"></div> -->
       <div class="profAtas h-[49.4%] flex">
         <div class="profPic w-[19.3%] h-full">
-          <div class="foto" style="background-image: url(https://picsum.photos/200);"></div>
+          <!-- <div class="foto" style="background-image: url(https://picsum.photos/200);"></div> -->
+          <div class="foto" [style.background-image]="'url(' + influencer?.profilepicture + ')'"></div>
         </div>
         <div class="profAtasKanan w-[80.7%] px-[41px] flex flex-col justify-center pb-[8px]">
-          <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;Katarinabluu</div>
+          <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;{{ influencer?.username }}</div>
           <div class="detail flex ps-[4px] items-center">
             <div class="followers">
               <div class="atasDetail flex">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="textDetail font-semibold text-[0.8rem] ms-[6px]">Followers</div>
               </div>
-              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">22.1M</div>
+              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">{{ influencer?.followers }}</div>
             </div>
             <div class="garisBantu w-[2px] h-[75px] bg-[#DFE1E2] mx-8"></div>
             <div class="post">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="textDetail font-semibold text-[0.8rem] ms-[6px]">Post</div>
               </div>
-              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">199</div>
+              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">{{ influencer?.postmedia }}</div>
             </div>
             <div class="garisBantu w-[2px] h-[75px] bg-[#DFE1E2] mx-8"></div>
             <div class="engagement">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="textDetail font-semibold text-[0.8rem] ms-[6px]">Engagement</div>
               </div>
-              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">13.74%</div>
+              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">{{ influencer?.engagement }}%</div>
             </div>
             <div class="garisBantu w-[2px] h-[75px] bg-[#DFE1E2] mx-8"></div>
             <div class="following">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="textDetail font-semibold text-[0.8rem] ms-[6px]">Following</div>
               </div>
-              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">10.2K</div>
+              <div class="angkaDetail font-semibold text-[1.6rem] text-center mt-1">{{ influencer?.following }}</div>
             </div>
           </div>
         </div>
@@ -70,8 +70,8 @@
       <div class="profBawah h-[51.6%] flex pt-4">
         <div class="profBawahKiri h-full w-[70%] flex flex-col justify-between">
           <div class="pertama">
-            <div class="name font-semibold text-[0.9rem]">Karina Yu Jimin</div>
-            <div class="bio text-font-lightGrey font-medium text-[0.9rem] mt-[2px]">"Nobody can drag me down"</div>
+            <div class="name font-semibold text-[0.9rem]">{{ influencer?.name }}</div>
+            <div class="bio text-font-lightGrey font-medium text-[0.9rem] mt-[2px]">{{ influencer?.bio }}</div>
             <div class="call flex items-center mt-1">
               <div class="callSvg">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
                   <path d="M5.65618 1.88919L5.22357 0.452929L5.22338 0.452987L5.65618 1.88919ZM6.8419 1.53205L7.2745 2.96831L7.27515 2.96812L6.8419 1.53205ZM9.62975 2.80276L8.26162 3.41775L8.26163 3.41777L9.62975 2.80276ZM10.3676 4.44419L8.99948 5.05919L8.99954 5.05932L10.3676 4.44419ZM9.83332 7.09419L8.81048 5.99701L8.81039 5.9971L9.83332 7.09419ZM8.54404 8.29633L7.5211 7.19925L7.5038 7.21538L7.48701 7.23206L8.54404 8.29633ZM8.50547 8.34848L7.17844 7.6492L7.16807 7.66887L7.15829 7.68885L8.50547 8.34848ZM9.21761 10.4735L7.91839 11.2232L7.91863 11.2236L9.21761 10.4735ZM10.7605 12.147L11.1846 13.5858L11.192 13.5837L11.1994 13.5814L10.7605 12.147ZM12.4526 11.6292L12.0145 10.1946L12.0137 10.1949L12.4526 11.6292ZM15.0133 12.4913L13.7968 13.3689L13.7972 13.3695L15.0133 12.4913ZM16.0619 13.9435L17.278 13.0654L17.278 13.0653L16.0619 13.9435ZM15.7762 16.9878L16.8071 18.0773L16.8077 18.0768L15.7762 16.9878ZM14.874 17.8413L13.8431 16.7517L13.8425 16.7523L14.874 17.8413ZM12.4869 18.5192L12.1812 19.9877L12.1816 19.9878L12.4869 18.5192ZM5.71547 12.4949L4.41638 13.2448L4.41646 13.245L5.71547 12.4949ZM3.8869 3.61205L5.31088 4.08351L5.3109 4.08345L3.8869 3.61205ZM5.9669 2.91491L5.5346 1.47855L5.53429 1.47864L5.9669 2.91491ZM4.90475 3.94848L3.48082 3.47688L3.48081 3.4769L4.90475 3.94848ZM6.64404 11.9592L7.94311 11.2093L7.94308 11.2092L6.64404 11.9592ZM12.7062 17.4699L12.4009 18.9385L12.4014 18.9386L12.7062 17.4699ZM13.4722 17.4422L13.0621 15.9994L13.4722 17.4422ZM14.1383 17.0628L13.1074 15.9732L13.1065 15.9741L14.1383 17.0628ZM15.0398 16.2099L16.0707 17.2995L16.0709 17.2992L15.0398 16.2099ZM15.194 14.5706L16.4104 13.6928L16.4103 13.6928L15.194 14.5706ZM14.1455 13.1178L12.929 13.9953L12.9292 13.9956L14.1455 13.1178ZM12.7669 12.6535L12.3291 11.2188L12.3278 11.2192L12.7669 12.6535ZM11.0705 13.1728L11.4983 14.6105L11.5095 14.6071L11.0705 13.1728ZM8.29047 11.0085L9.58973 10.2589L9.58928 10.2581L8.29047 11.0085ZM7.54404 7.87776L6.19687 7.21811L6.19675 7.21836L7.54404 7.87776ZM7.81404 7.51276L6.7911 6.41567L6.78874 6.41788L7.81404 7.51276ZM9.10332 6.31062L8.08071 5.21323L8.08039 5.21353L9.10332 6.31062ZM9.39118 4.88348L10.7592 4.26829L10.759 4.26776L9.39118 4.88348ZM8.65261 3.24276L7.28441 3.85761L7.28481 3.85848L8.65261 3.24276ZM7.15118 2.55848L7.58347 3.99483L7.5847 3.99447L7.15118 2.55848ZM6.08879 3.32545L7.2745 2.96831L6.40929 0.0957863L5.22357 0.452929L6.08879 3.32545ZM7.27515 2.96812C7.46614 2.9105 7.67157 2.92435 7.85309 3.00709L9.09735 0.277284C8.25286 -0.107635 7.29716 -0.172079 6.40864 0.0959803L7.27515 2.96812ZM7.85309 3.00709C8.03462 3.08983 8.17983 3.2358 8.26162 3.41775L10.9979 2.18777C10.6174 1.34129 9.94183 0.662203 9.09735 0.277284L7.85309 3.00709ZM8.26163 3.41777L8.99948 5.05919L11.7357 3.82919L10.9979 2.18776L8.26163 3.41777ZM8.99954 5.05932C9.06989 5.21579 9.08949 5.39035 9.05558 5.55853L11.9964 6.15145C12.1541 5.36908 12.063 4.55697 11.7357 3.82906L8.99954 5.05932ZM9.05558 5.55853C9.02168 5.7267 8.93597 5.88003 8.81048 5.99701L10.8562 8.19137C11.4399 7.64715 11.8387 6.93381 11.9964 6.15145L9.05558 5.55853ZM8.81039 5.9971L7.5211 7.19925L9.56697 9.39342L10.8563 8.19128L8.81039 5.9971ZM7.48701 7.23206C7.36358 7.35464 7.25953 7.4953 7.17844 7.6492L9.8325 9.04775C9.77168 9.16318 9.69364 9.26867 9.60107 9.36061L7.48701 7.23206ZM7.15829 7.68885C6.95491 8.10422 6.95403 8.51334 6.9745 8.76293C6.99711 9.03853 7.06278 9.30869 7.14169 9.55488C7.30023 10.0495 7.56646 10.6132 7.91839 11.2232L10.5168 9.7238C10.2266 9.22085 10.0693 8.85994 9.99853 8.63921C9.9628 8.52773 9.9624 8.49253 9.96447 8.51772C9.96569 8.53264 9.9689 8.58288 9.95949 8.65855C9.95024 8.73283 9.92533 8.85966 9.85265 9.00811L7.15829 7.68885ZM7.91863 11.2236C8.31291 11.9064 8.70466 12.4594 9.08621 12.8531C9.27351 13.0464 9.50793 13.2533 9.7869 13.4074C10.0319 13.5426 10.5567 13.7709 11.1846 13.5858L10.3364 10.7083C10.5904 10.6334 10.8111 10.6499 10.9567 10.6803C11.0985 10.71 11.1942 10.7575 11.2368 10.781C11.3154 10.8244 11.3161 10.8433 11.2406 10.7654C11.0966 10.6168 10.8466 10.2949 10.5166 9.72338L7.91863 11.2236ZM11.1994 13.5814L12.8916 13.0635L12.0137 10.1949L10.3215 10.7127L11.1994 13.5814ZM12.8907 13.0638C13.0547 13.0137 13.2302 13.0162 13.3927 13.0709L14.3499 10.2277C13.594 9.97323 12.7774 9.96164 12.0145 10.1946L12.8907 13.0638ZM13.3927 13.0709C13.5552 13.1256 13.6965 13.2298 13.7968 13.3689L16.2299 11.6138C15.7632 10.9669 15.1059 10.4822 14.3499 10.2277L13.3927 13.0709ZM13.7972 13.3695L14.8458 14.8216L17.278 13.0653L16.2294 11.6132L13.7972 13.3695ZM14.8458 14.8215C14.9622 14.9829 15.0162 15.181 14.9976 15.3791L17.9845 15.6595C18.071 14.7378 17.82 13.816 17.278 13.0654L14.8458 14.8215ZM14.9976 15.3791C14.979 15.5773 14.8891 15.7619 14.7447 15.8987L16.8077 18.0768C17.4798 17.4401 17.898 16.5812 17.9845 15.6595L14.9976 15.3791ZM14.7453 15.8982L13.8431 16.7517L15.905 18.9309L16.8071 18.0773L14.7453 15.8982ZM13.8425 16.7523C13.7045 16.8831 13.5369 16.9785 13.354 17.0304L14.1734 19.9163C14.8219 19.7322 15.4162 19.3939 15.9056 18.9303L13.8425 16.7523ZM13.354 17.0304C13.1711 17.0824 12.9783 17.0893 12.7922 17.0506L12.1816 19.9878C12.8416 20.125 13.525 20.1005 14.1734 19.9163L13.354 17.0304ZM12.7925 17.0507C10.8926 16.6552 8.93388 15.069 7.01447 11.7448L4.41646 13.245C6.51419 16.8779 9.05695 19.3375 12.1812 19.9877L12.7925 17.0507ZM7.01455 11.745C5.09438 8.41865 4.70065 5.92662 5.31088 4.08351L2.46291 3.14059C1.45886 6.1732 2.31798 9.60973 4.41638 13.2448L7.01455 11.745ZM5.3109 4.08345C5.37035 3.90387 5.47215 3.74124 5.6077 3.6093L3.5152 1.45954C3.0346 1.92734 2.67367 2.50395 2.4629 3.14064L5.3109 4.08345ZM5.6077 3.6093C5.74388 3.47674 5.9087 3.37972 6.08898 3.3254L5.22338 0.452987C4.58039 0.646752 3.99517 0.992352 3.5152 1.45954L5.6077 3.6093ZM5.53429 1.47864C5.05677 1.62247 4.62089 1.87913 4.26347 2.22693L6.35568 4.37697C6.368 4.36498 6.38303 4.35613 6.3995 4.35117L5.53429 1.47864ZM4.26347 2.22693C3.90606 2.57473 3.63761 3.00346 3.48082 3.47688L6.32869 4.42007C6.3341 4.40375 6.34335 4.38897 6.35568 4.37697L4.26347 2.22693ZM3.48081 3.4769C2.58389 6.18514 3.39529 9.33218 5.345 12.7092L7.94308 11.2092C6.14993 8.10335 5.83418 5.91324 6.3287 4.42006L3.48081 3.4769ZM5.34497 12.7091C7.29329 16.0841 9.61038 18.3585 12.4009 18.9385L13.0114 16.0013C11.472 15.6813 9.73479 14.3129 7.94311 11.2093L5.34497 12.7091ZM12.4014 18.9386C12.8922 19.0405 13.4003 19.0221 13.8824 18.885L13.0621 15.9994C13.0454 16.0041 13.0279 16.0047 13.011 16.0012L12.4014 18.9386ZM13.8824 18.885C14.3646 18.7479 14.8064 18.4963 15.1702 18.1515L13.1065 15.9741C13.0939 15.9859 13.0787 15.9946 13.0621 15.9994L13.8824 18.885ZM15.1692 18.1524L16.0707 17.2995L14.0089 15.1203L13.1074 15.9732L15.1692 18.1524ZM16.0709 17.2992C16.5548 16.8412 16.8559 16.2231 16.9183 15.5598L13.9315 15.2787C13.9372 15.2184 13.9646 15.1622 14.0086 15.1206L16.0709 17.2992ZM16.9183 15.5598C16.9808 14.8965 16.8003 14.2331 16.4104 13.6928L13.9777 15.4484C13.9423 15.3993 13.9259 15.339 13.9315 15.2787L16.9183 15.5598ZM16.4103 13.6928L15.3618 12.2399L12.9292 13.9956L13.9777 15.4485L16.4103 13.6928ZM15.362 12.2402C15.0262 11.7748 14.5533 11.4261 14.0094 11.2429L13.0519 14.086C13.0025 14.0693 12.9595 14.0376 12.929 13.9953L15.362 12.2402ZM14.0094 11.2429C13.4656 11.0597 12.878 11.0513 12.3291 11.2188L13.2047 14.0882C13.1548 14.1034 13.1014 14.1026 13.0519 14.086L14.0094 11.2429ZM12.3278 11.2192L10.6314 11.7385L11.5095 14.6071L13.2059 14.0878L12.3278 11.2192ZM10.6427 11.7351C10.6682 11.7275 10.7161 11.7248 10.754 11.7348C10.7776 11.7409 10.7361 11.7365 10.6281 11.6496C10.3878 11.4563 10.0388 11.0371 9.58973 10.2589L6.99121 11.7581C7.50074 12.6412 8.07238 13.4439 8.74779 13.9872C9.47541 14.5725 10.4314 14.9279 11.4983 14.6105L10.6427 11.7351ZM9.58928 10.2581C9.21391 9.60837 9.0182 9.14276 8.93845 8.82105C8.86087 8.50808 8.9252 8.46796 8.89133 8.53716L6.19675 7.21836C5.81574 7.99685 5.8472 8.81923 6.02659 9.54287C6.2038 10.2578 6.55488 11.0029 6.99165 11.7589L9.58928 10.2581ZM8.89121 8.53741C8.88571 8.54864 8.87806 8.56163 8.86817 8.57499C8.85829 8.58835 8.84821 8.59933 8.83933 8.60765L6.78874 6.41788C6.54374 6.64731 6.3446 6.9164 6.19687 7.21811L8.89121 8.53741ZM8.83697 8.60985L10.1263 7.40771L8.08039 5.21353L6.7911 6.41567L8.83697 8.60985ZM10.1259 7.40801C10.5462 7.01638 10.8333 6.50297 10.9469 5.93986L8.00608 5.3467C8.01641 5.29551 8.0425 5.24884 8.08071 5.21323L10.1259 7.40801ZM10.9469 5.93986C11.0604 5.37675 10.9948 4.79221 10.7592 4.26829L8.02314 5.49866C8.00172 5.45103 7.99575 5.39789 8.00608 5.3467L10.9469 5.93986ZM10.759 4.26776L10.0204 2.62704L7.28481 3.85848L8.02338 5.4992L10.759 4.26776ZM10.0208 2.62792C9.74699 2.01861 9.26076 1.5298 8.65291 1.25277L7.40877 3.98262C7.35351 3.95744 7.3093 3.913 7.28441 3.85761L10.0208 2.62792ZM8.65291 1.25277C8.04506 0.975738 7.35716 0.929428 6.71766 1.12249L7.5847 3.99447C7.52656 4.01202 7.46402 4.00781 7.40877 3.98262L8.65291 1.25277ZM6.71889 1.12212L5.5346 1.47855L6.39919 4.35126L7.58347 3.99483L6.71889 1.12212Z" fill="#494F50" mask="url(#path-1-inside-1_2578_3380)"/>
                 </svg>
               </div>
-              <div class="number font-medium text-[0.8rem] ms-1 pt-[1px] text-font-darkGrey">081277159182</div>
+              <div class="number font-medium text-[0.8rem] ms-1 pt-[1px] text-font-darkGrey">{{ influencer?.phone }}</div>
             </div>
             <div class="location flex items-center mt-[2px]">
               <div class="locationSvg">
@@ -91,15 +91,15 @@
                   <path d="M10 9.375C11.0355 9.375 11.875 8.53553 11.875 7.5C11.875 6.46447 11.0355 5.625 10 5.625C8.96447 5.625 8.125 6.46447 8.125 7.5C8.125 8.53553 8.96447 9.375 10 9.375Z" stroke="#494F50" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <div class="locationName font-medium text-[0.8rem] ms-1 pt-[2px] text-font-darkGrey">Seoul, South Korea</div>
+              <div class="locationName font-medium text-[0.8rem] ms-1 pt-[2px] text-font-darkGrey">{{ influencer?.location }}</div>
             </div>
           </div>
           <div class="kedua">
             <div class="category flex align-bottom">
-              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit">Beauty</div>
-              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-2 py-[1px] px-4 rounded-xl w-fit">Fashion</div>
+              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
+              <!-- <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-2 py-[1px] px-4 rounded-xl w-fit">Fashion</div>
               <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-3 py-[1px] px-4 rounded-xl w-fit">F&B</div>
-              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-4 py-[1px] px-4 rounded-xl w-fit">Health & Sport</div>
+              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-4 py-[1px] px-4 rounded-xl w-fit">Health & Sport</div> -->
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@
                 <path d="M16.6758 21.1607C16.4289 21.1607 16.1832 21.0849 15.9718 20.934L11.0004 17.3688L6.02899 20.934C5.82302 21.0822 5.57549 21.1615 5.32175 21.1606C5.06802 21.1597 4.82104 21.0787 4.6161 20.9291C4.41089 20.7804 4.25783 20.5708 4.17872 20.3301C4.09961 20.0893 4.09848 19.8298 4.17549 19.5883L6.0296 13.6043L1.10282 10.1326C0.89864 9.98192 0.747002 9.77085 0.669357 9.52925C0.591713 9.28765 0.591993 9.02776 0.670157 8.78633C0.7491 8.54558 0.90162 8.33569 1.10621 8.18625C1.3108 8.03681 1.55714 7.95536 1.81049 7.95338L7.91243 7.94422L9.85516 2.10872C9.93533 1.86832 10.0891 1.65924 10.2947 1.51108C10.5003 1.36293 10.7473 1.2832 11.0007 1.2832C11.2541 1.2832 11.5011 1.36293 11.7067 1.51108C11.9123 1.65924 12.066 1.86832 12.1462 2.10872L14.0559 7.94422L20.189 7.95338C20.4427 7.95482 20.6895 8.03615 20.8944 8.18585C21.0992 8.33554 21.2517 8.54597 21.3301 8.78724C21.4085 9.02852 21.4089 9.28837 21.3312 9.52989C21.2535 9.7714 21.1017 9.98229 20.8973 10.1326L15.9705 13.6043L17.8247 19.5883C17.9017 19.8297 17.9007 20.0892 17.8217 20.3299C17.7427 20.5707 17.5898 20.7804 17.3847 20.9291C17.179 21.0798 16.9307 21.1609 16.6758 21.1607Z" fill="#FFAC33"/>
               </svg>
             </div>
-            <div class="rating text-[0.8rem] font-normal ps-2 pt-1">4.5 | 1.2k Reviews</div>
+            <div class="rating text-[0.8rem] font-normal ps-2 pt-1">{{ influencer?.rating }} | {{ influencer?.totalreview }} Reviews</div>
           </div>
         </div>
       </div>
@@ -141,60 +141,15 @@
     <div class="bantu2 w-[2.1%]"></div>
     <div class="similar h-full w-[24.2%]">
       <div class="judul text-[1.15rem] font-semibold mt-1">Similar Profile</div>
-      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex">
+      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex" *ngFor="let simInf of influencer?.similarinfluencer">
         <div class="simProf w-[26%]">
-          <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div>
+          <!-- <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div> -->
+          <div class="fotoSim" [style.background-image]="'url(' + simInf.profilepicture + ')'"></div>
         </div>
         <div class="data flex items-center w-[74%] justify-between ps-[14px]">
           <div class="leftData flex flex-col">
-            <div class="nameSim font-semibold text-[0.9rem]">Angel Henry</div>
-            <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">Beauty</div>
-          </div>
-          <div class="rightDataSvg pt-[9px]">
-            <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_3888_6476)">
-              <path d="M1.23787e-07 1.22591L1.1898 -3.3122e-07L7.67036 6.68119C7.77483 6.78824 7.85773 6.91555 7.9143 7.05578C7.97088 7.196 8 7.34638 8 7.49826C8 7.65015 7.97088 7.80053 7.9143 7.94075C7.85773 8.08098 7.77483 8.20829 7.67036 8.31534L1.1898 15L0.00112144 13.7741L6.08359 7.5L1.23787e-07 1.22591Z" fill="black"/>
-              </g>
-              <defs>
-              <clipPath id="clip0_3888_6476">
-              <rect width="12" height="24" fill="white"/>
-              </clipPath>
-              </defs>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex">
-        <div class="simProf w-[26%]">
-          <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div>
-        </div>
-        <div class="data flex items-center w-[74%] justify-between ps-[14px]">
-          <div class="leftData flex flex-col">
-            <div class="nameSim font-semibold text-[0.9rem]">Angel Henry</div>
-            <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">Beauty</div>
-          </div>
-          <div class="rightDataSvg pt-[9px]">
-            <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_3888_6476)">
-              <path d="M1.23787e-07 1.22591L1.1898 -3.3122e-07L7.67036 6.68119C7.77483 6.78824 7.85773 6.91555 7.9143 7.05578C7.97088 7.196 8 7.34638 8 7.49826C8 7.65015 7.97088 7.80053 7.9143 7.94075C7.85773 8.08098 7.77483 8.20829 7.67036 8.31534L1.1898 15L0.00112144 13.7741L6.08359 7.5L1.23787e-07 1.22591Z" fill="black"/>
-              </g>
-              <defs>
-              <clipPath id="clip0_3888_6476">
-              <rect width="12" height="24" fill="white"/>
-              </clipPath>
-              </defs>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex">
-        <div class="simProf w-[26%]">
-          <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div>
-        </div>
-        <div class="data flex items-center w-[74%] justify-between ps-[14px]">
-          <div class="leftData flex flex-col">
-            <div class="nameSim font-semibold text-[0.9rem]">Angel Henry</div>
-            <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">Beauty</div>
+            <div class="nameSim font-semibold text-[0.9rem]">{{ simInf.username }}</div>
+            <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">{{ simInf.category[0] }}</div>
           </div>
           <div class="rightDataSvg pt-[9px]">
             <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -222,7 +177,7 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M26.0714 20.5374C26.6606 19.9389 26.9879 19.1308 26.9814 18.291C26.9748 17.4511 26.6349 16.6483 26.0364 16.0591C25.74 15.7673 25.3891 15.5368 25.0037 15.3806C24.6182 15.2245 24.2058 15.1458 23.79 15.1491C22.9501 15.1556 22.1473 15.4955 21.5581 16.0941C21.3981 16.2541 21.1947 16.4504 20.9481 16.6832L20.2622 17.3291L19.5764 16.6832C19.3292 16.4499 19.1256 16.2535 18.9656 16.0941C18.3717 15.5002 17.5662 15.1666 16.7264 15.1666C15.8865 15.1666 15.0811 15.5002 14.4872 16.0941C13.2639 17.3182 13.2497 19.2974 14.4422 20.5274L20.2622 26.3474L26.0714 20.5374ZM13.7797 15.3874C14.1666 15.0004 14.626 14.6933 15.1316 14.4839C15.6372 14.2744 16.1791 14.1666 16.7264 14.1666C17.2737 14.1666 17.8156 14.2744 18.3212 14.4839C18.8268 14.6933 19.2861 15.0004 19.6731 15.3874C19.8247 15.5396 20.0211 15.7291 20.2622 15.9557C20.5022 15.7291 20.6986 15.5393 20.8514 15.3866C21.6268 14.5992 22.6833 14.1521 23.7883 14.1437C24.8934 14.1352 25.9565 14.5661 26.7439 15.3416C27.5312 16.117 27.9783 17.1734 27.9868 18.2785C27.9952 19.3835 27.5643 20.4467 26.7889 21.2341L20.8514 27.1724C20.6951 27.3286 20.4832 27.4164 20.2622 27.4164C20.0413 27.4164 19.8293 27.3286 19.6731 27.1724L13.7339 21.2332C12.9723 20.4477 12.5501 19.3942 12.5587 18.3001C12.5673 17.206 13.0059 16.1592 13.7797 15.3857V15.3874Z" fill="#1391FF"/>
           </svg>
         </div>
-        <div class="avgLike text-[2rem] font-medium mt-1">190K</div>
+        <div class="avgLike text-[2rem] font-medium mt-1">{{ influencer?.avglike }}</div>
         <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Likes Per Post</div>
       </div>
       <div class="avgCardComment rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
@@ -232,18 +187,18 @@
             <path d="M25.8333 13.3335H14.1667C13.7246 13.3335 13.3007 13.5091 12.9882 13.8217C12.6756 14.1342 12.5 14.5581 12.5 15.0002V27.5002L15.3892 25.3335C15.6777 25.1171 16.0285 25.0002 16.3892 25.0002H25.8333C26.2754 25.0002 26.6993 24.8246 27.0118 24.512C27.3244 24.1994 27.5 23.7755 27.5 23.3335V15.0002C27.5 14.5581 27.3244 14.1342 27.0118 13.8217C26.6993 13.5091 26.2754 13.3335 25.8333 13.3335Z" stroke="#09895E" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="avgComment text-[2rem] font-medium mt-1">12K</div>
+        <div class="avgComment text-[2rem] font-medium mt-1">{{ influencer?.avgcomment }}</div>
         <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Comments Per Post</div>
       </div>
-      <div class="avgCardEng rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
+      <div class="avgCardSaved rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
         <div class="logo">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="40" height="40" rx="20" fill="#C780E8" fill-opacity="0.3"/>
-            <path d="M13.75 20.625L20.625 11.875V19.375H25L18.125 28.125V20.625H13.75Z" stroke="#9646FF" stroke-linecap="square" stroke-linejoin="round"/>
+            <path d="M14 15.1667C14 14.2333 14 13.7667 14.2119 13.41C14.3984 13.0964 14.6958 12.8415 15.0617 12.6817C15.4778 12.5 16.0222 12.5 17.1111 12.5H22.5556C23.6444 12.5 24.1889 12.5 24.605 12.6817C24.9709 12.8415 25.2683 13.0964 25.4547 13.41C25.6667 13.7667 25.6667 14.2333 25.6667 15.1667V26.2542C25.6667 26.6592 25.6667 26.8617 25.5685 26.9725C25.526 27.0207 25.4719 27.0604 25.4098 27.0889C25.3477 27.1174 25.2791 27.134 25.2087 27.1375C25.0464 27.1458 24.85 27.0333 24.4572 26.8092L19.8333 24.1667L15.2094 26.8083C14.8167 27.0333 14.6203 27.1458 14.4569 27.1375C14.3868 27.1339 14.3184 27.1172 14.2564 27.0887C14.1945 27.0603 14.1405 27.0206 14.0982 26.9725C14 26.8617 14 26.6592 14 26.2542V15.1667Z" stroke="#9646FF" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="avgEng text-[2rem] font-medium mt-1">204K</div>
-        <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Engagements Per Post</div>
+        <div class="avgSaved text-[2rem] font-medium mt-1">{{ influencer?.avgsaved }}</div>
+        <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Saved Per Post</div>
       </div>
       <div class="avgCardShared rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
         <div class="logo">
@@ -252,27 +207,21 @@
             <path d="M26.6673 19.9998L21.334 14.1665V17.0832C18.6673 17.0832 13.334 18.8332 13.334 25.8332C13.334 24.8607 14.934 22.9165 21.334 22.9165V25.8332L26.6673 19.9998Z" stroke="#FF3328" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="avgShared text-[2rem] font-medium mt-1">57K</div>
+        <div class="avgShared text-[2rem] font-medium mt-1">{{ influencer?.avgshare }}</div>
         <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Shared Per Post</div>
       </div>
     </div>
-    <div class="accGraph grid grid-cols-3 gap-5 mt-[20px]">
+    <div class="accGraph grid grid-cols-2 gap-5 mt-[20px]">
       <div class="follGrowth rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Followers Growth</div>
         <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
-        </div>
-      </div>
-      <div class="accEngaged rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
-        <div class="text font-semibold text-[0.9rem]">Accounts Engaged</div>
-        <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+          <canvas id="FollGrowth">{{ follGrowth }}</canvas>
         </div>
       </div>
       <div class="reach rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Reach</div>
         <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+          <canvas id="Reach">{{ reach }}</canvas>
         </div>
       </div>
     </div>
@@ -283,25 +232,32 @@
       <div class="gender col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Gender</div>
         <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+          <canvas id="GenderAudience">{{ genderAudience }}</canvas>
         </div>
       </div>
       <div class="onlFoll col-span-2 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Online Followers</div>
-        <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+        <div class="chartContainer mt-2 flex" style="position: relative; height:90%; width:100%">
+          <canvas id="OnlineFollowers">{{ onlineFollAudience }}</canvas>
+          <div class="dataOnlFoll flex ms-5 flex-col">
+            <p class="text-[0.7rem] font-medium text-font-darkGrey mt-3">Highest online time</p>
+            <p class="text-[1.2rem] font-medium">{{ influencer?.highestonlinetime }}</p>
+            <p class="text-[0.7rem] font-medium text-font-darkGrey mt-3">Lowest online time</p>
+            <p class="text-[1.2rem] font-medium">{{ influencer?.lowestonlinetime }}</p>
+          </div>
         </div>
       </div>
       <div class="topCities col-span-2 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Top Cities</div>
-        <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+        <div class="chartContainer mt-2 flex gap-[20px]" style="position: relative; height:90%; width:100%">
+          <canvas id="TopCitiesLeft">{{ topCitiesLeft }}</canvas>
+          <canvas id="TopCitiesRight">{{ topCitiesRight }}</canvas>
         </div>
       </div>
       <div class="ageRange col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Age Range</div>
         <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="MyChart">{{ chart }}</canvas>
+          <canvas id="AgeRange">{{ ageRangeAudience }}</canvas>
         </div>
       </div>
     </div>
@@ -348,32 +304,92 @@
             </svg>
           </div>
         </div>
+
+        <div class="isiStory flex items-center mt-3">
+          <div class="leftArrSvg me-2" (click)="prevStory()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="20" width="20" height="20" rx="10" transform="rotate(-180 20 20)" fill="#949C9E" fill-opacity="0.25"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.22936 9.52623L11.0007 5.7549L11.9434 6.69757L8.64336 9.99757L11.9434 13.2976L11.0007 14.2402L7.22936 10.4689C7.10438 10.3439 7.03417 10.1743 7.03417 9.99757C7.03417 9.82079 7.10438 9.65125 7.22936 9.52623Z" fill="#494F50"/>
+            </svg>
+          </div>
+
+          <!-- Jika ada story, tampilkan story -->
+          <div class="storyPict" *ngIf="stories.length; else emptyPlaceholder">
+            <div class="foto3 rounded-3xl relative" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'">
+            <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
+              <div class="absolute top-2 right-2 flex">
+                <div class="likes px-[5px] rounded-full py-[3px] flex items-center me-1">
+                  <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ currentStory?.sharecount }} Shares</div>
+                </div>
+                <div class="views px-[5px] rounded-full py-[3px] flex items-center">
+                  <div class="viewAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ currentStory?.viewcount }} Views</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder jika tidak ada story -->
+          <ng-template #emptyPlaceholder>
+            <div class="emptyStory flex items-center justify-center w-[225px] h-[405px] bg-gray-200 rounded-3xl relative">
+            <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
+              <p class="text-gray-500 text-sm">No stories available</p>
+            </div>
+          </ng-template>
+
+          <div class="rightArrSvg ms-2" (click)="nextStory()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="20" height="20" rx="10" fill="#949C9E" fill-opacity="0.25"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7706 10.4738L8.99931 14.2451L8.05664 13.3024L11.3566 10.0024L8.05664 6.70243L8.99931 5.75977L12.7706 9.5311C12.8956 9.65612 12.9658 9.82566 12.9658 10.0024C12.9658 10.1792 12.8956 10.3487 12.7706 10.4738Z" fill="#494F50"/>
+            </svg>
+          </div>
+        </div>
+
       </div>
       <div class="rightContent w-[72.8%] ps-4">
         <div class="flex items-center">
           <div class="topContentText font-semibold text-[0.9rem]">Top Content</div>
-          <div class="toggle font-medium text-[0.8rem] ms-12">Feeds</div>
-          <div class="toggle font-medium text-[0.8rem] ms-4">Reels</div>
+          <div id="feedsTab" class="toggle font-medium text-[0.8rem] ms-12 cursor-pointer" [ngClass]="{'text-blue-500': activeTab === 'feeds', 'text-gray-500': activeTab !== 'feeds'}" (click)="toggleContent('feeds')">Feeds</div>
+          <div id="reelsTab" class="toggle font-medium text-[0.8rem] ms-4 cursor-pointer" [ngClass]="{'text-blue-500': activeTab === 'reels', 'text-gray-500': activeTab !== 'reels'}" (click)="toggleContent('reels')">Reels</div>
         </div>
-        <div class="isiFeeds mt-3">
-          <div class="feedsPict grid grid-cols-4 gap-y-2">
-            <!-- <div class="foto3" style="background-image: url(https://picsum.photos/200);"></div> -->
-            <div class="foto4 relative rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);">
+        <div *ngIf="activeTab === 'feeds'" id="isiFeeds" class="isiFeeds mt-3">
+          <div *ngIf="hasFeeds; else noFeeds" class="feedsPict grid grid-cols-4 gap-y-2">
+            <div *ngFor="let feed of influencer?.feeds" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + feed?.mediaurl + ')'">
               <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
                 <div class="likeSvg">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 8.5L8.5 1.5V7.5H12L6.5 14.5V8.5H3Z" fill="white" stroke="white" stroke-linecap="square" stroke-linejoin="round"/>
                   </svg>
                 </div>
-                <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">12.3K</div>
+                <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ feed.engagement }}</div>
               </div>
             </div>
-            <div class="foto4 rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);"></div>
-            <div class="foto4 rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);"></div>
-            <div class="foto4 rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);"></div>
-            <div class="foto4 rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);"></div>
-            <div class="foto4 rounded-[20px]" style="background-image: url(../assets/images/kar2.jpg);"></div>
           </div>
+          <ng-template #noFeeds>
+            <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
+              <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
+              <div class="text-center text-gray-500 mt-[-30px] z-10">No feeds posted</div>
+            </div>
+          </ng-template>
+        </div>
+        <div id="isiReels" *ngIf="activeTab === 'reels'" class="isiReels mt-3">
+          <div *ngIf="hasReels; else noReels" class="feedsPict grid grid-cols-4 gap-y-2">
+            <div *ngFor="let reel of influencer?.reels" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + reel?.thumbnailurl + ')'">
+              <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
+                <div class="likeSvg">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 8.5L8.5 1.5V7.5H12L6.5 14.5V8.5H3Z" fill="white" stroke="white" stroke-linecap="square" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ reel.engagement }}</div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noReels>
+            <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
+              <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
+              <div class="text-center text-gray-500 mt-[-30px] z-10">No reels posted</div>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -533,7 +549,7 @@
             <div class="bar flex items-center mt-[5px]">
               <div class="rateBar font-semibold text-[0.8rem] me-4">4</div>
               <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
+                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 75.7%"></div>
               </div>
               <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
             </div>
