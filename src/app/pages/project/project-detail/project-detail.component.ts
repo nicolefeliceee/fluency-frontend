@@ -12,14 +12,16 @@ import { InstagramService } from '../../../services/instagram.service';
 import { MidtransService } from '../../../services/midtrans.service';
 import { ProjectDetail } from '../../../models/project-detail';
 import { BrandService } from '../../../services/brand.service';
-import { error } from 'console';
 import { AlertSuccessComponent } from "../../../components/alert-success/alert-success.component";
-import { state } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
+import { ReviewService } from '../../../services/review.service';
+import { Review } from '../../../models/review';
+import { error } from 'console';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, AlertErrorComponent, PaymentMethodPopupComponent, ConfirmationPopupComponent, ProjectDetailPopupComponent, AlertSuccessComponent, RouterLink],
+  imports: [CommonModule, HeaderComponent, AlertErrorComponent, PaymentMethodPopupComponent, ConfirmationPopupComponent, ProjectDetailPopupComponent, AlertSuccessComponent, RouterLink, FormsModule],
   providers: [DecimalPipe],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.css'
@@ -32,6 +34,7 @@ export class ProjectDetailComponent implements OnInit{
 
   // for error alert
   createError: boolean = false;
+  generalError: boolean = false;
 
   // for confirmation popup
   displayConfirmation: boolean = false;
@@ -57,6 +60,9 @@ export class ProjectDetailComponent implements OnInit{
   feedsPrice?: any;
   reelsPrice?: any;
 
+  projectAlreadyReviewed!: boolean;
+  fadeOut: boolean = false;
+
   selectedInfluencerId?: any = '';
   selectedInfluencer?: any = null;
   brand?: any = null;
@@ -64,13 +70,13 @@ export class ProjectDetailComponent implements OnInit{
   projectId: any;
 
     constructor(
-      private projectService: ProjectService,
       private router: Router,
-      // private fb: FormBuilder,
+      private projectService: ProjectService,
       private influencerService: InfluencerService,
       private brandService: BrandService,
       private instagramService: InstagramService,
       private midtransService: MidtransService,
+      private reviewService: ReviewService,
       private ngZone: NgZone,
       private decimalPipe: DecimalPipe
     ) {
@@ -111,6 +117,7 @@ export class ProjectDetailComponent implements OnInit{
                   this.selectedInfluencer.username = data.username
                 }
               )
+              // this.profilePicInfluencer = this.sanitize.bypassSecurityTrustResourceUrl(this.selectedInfluencer.profilepicture);
             },
             (error) => {
               console.log(error);
@@ -133,6 +140,15 @@ export class ProjectDetailComponent implements OnInit{
       },
       error => {
         console.log(error);
+      }
+    )
+
+    this.reviewService.getReviewByProjectHeaderId(this.projectId).subscribe(
+      (data) => {
+        this.projectAlreadyReviewed = true;
+      },
+      error => {
+        this.projectAlreadyReviewed = false;
       }
     )
 
@@ -229,7 +245,7 @@ export class ProjectDetailComponent implements OnInit{
     this.projectService.editProject(this.newProject).subscribe(
       (data) => {
         this.ngZone.run(() => {
-          this.router.navigate(['/project'], {state: {status: true}});
+          this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
         })
       },
       (error) => {
@@ -240,9 +256,11 @@ export class ProjectDetailComponent implements OnInit{
 
   }
 
+  profilePicInfluencer?: any;
 
-  getProfilePictureUrl(profilePicture: string): string {
-    return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
+  getProfilePictureUrl(profilePicture: string): any {
+   // Menghapus karakter escape
+    return profilePicture.replace(/\\"/g, '');
   }
 
   askConfirm(id: number) {
@@ -266,6 +284,14 @@ export class ProjectDetailComponent implements OnInit{
       this.confirmHeader = "Finish project";
       this.confirmBody = "Are you sure want to mark this project as finished?";
       this.displayConfirmation = true;
+    } else if (id == 6) {
+      this.confirmHeader = "Mark project as done";
+      this.confirmBody = "Are you sure want to mark this project as done? Payment will be transferred to influencer";
+      this.displayConfirmation = true;
+    } else if (id == 7) {
+      this.confirmHeader = "Submit rating & review";
+      this.confirmBody = "Are you sure want to submit this rating & review?";
+      this.displayConfirmation = true;
     }
   }
 
@@ -273,7 +299,7 @@ export class ProjectDetailComponent implements OnInit{
     if (this.confirmHeader == 'Cancel order') {
       this.selectPayment();
     } else if(this.confirmHeader == 'Finish payment') {
-      // create project with status draft
+      // create project with status waiting
       this.saveProject('3');
     } else if (this.confirmHeader == 'Accept project') {
       this.acceptProject();
@@ -281,7 +307,13 @@ export class ProjectDetailComponent implements OnInit{
       this.rejectProject();
     } else if (this.confirmHeader == 'Finish project') {
       this.finishProject();
+    } else if (this.confirmHeader == 'Mark project as done') {
+      this.markAsDone();
+    } else if (this.confirmHeader == 'Submit rating & review') {
+      // this.finishProject();
+      this.submitReview();
     }
+    this.displayConfirmation = false;
   }
 
   goToPayment() {
@@ -467,11 +499,22 @@ export class ProjectDetailComponent implements OnInit{
     this.saveProject(4);
   }
 
-  finishProject() {
-    console.log(this.newProject);
 
-    this.saveProject(5);
-    // window.location.reload();
+  notFinishedError: boolean = false;
+
+  finishProject() {
+    let existNull = false;
+    this.newProject['project_details'].forEach((element: any) => {
+      if (!element['link']) {
+        existNull = true;
+      }
+    });
+
+    if (existNull) {
+      this.notFinishedError = true;
+    } else {
+      this.saveProject(5);
+    }
   }
 
   formatPrice(price: any) {
@@ -500,6 +543,39 @@ export class ProjectDetailComponent implements OnInit{
 
     console.log(this.feedsDetailList);
     // window.location.reload();
+  }
+
+  markAsDone() {
+    this.saveProject('6');
+  }
+
+  review: any;
+  rating: any = 0;
+
+  reviewSuccess: boolean = false;
+
+  submitReview() {
+    console.log(6 - this.rating);
+    console.log(this.review);
+
+    const request = new Review();
+    request.project_header_id = this.projectId;
+    request.rating = this.rating;
+    request.review = this.review;
+
+    this.reviewService.createReview(request).subscribe(
+      (data) => {
+        this.reviewSuccess = true;
+        this.projectAlreadyReviewed = true;
+
+        setTimeout(() => {
+          this.reviewSuccess = false;
+        },2000);
+      },
+      (error) => {
+        this.generalError = true;
+      }
+    )
   }
 
 }

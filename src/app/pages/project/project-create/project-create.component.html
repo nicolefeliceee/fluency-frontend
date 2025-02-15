@@ -4,6 +4,7 @@
 <app-alert-error [display]="createError" [label]="'Save project failed! Please try again later'" (dismissClicked)="this.createError = false"></app-alert-error>
 <app-alert-error [display]="detailNotSelected" [label]="'You havent selected any media'" (dismissClicked)="this.detailNotSelected = false"></app-alert-error>
 <app-alert-error [display]="influencerNotSelected" [label]="'You havent selected any influencer'" (dismissClicked)="this.influencerNotSelected = false"></app-alert-error>
+<app-alert-error [display]="generalError" [label]="'Unexpected error occured! Please try again later'" (dismissClicked)="this.generalError = false"></app-alert-error>
 
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="editDetailForm" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)"></app-project-detail-popup>

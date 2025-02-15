@@ -2,41 +2,42 @@
 <div class="bantu"></div>
 
 
-<div class="container p-5">
+<div class="container py-5 px-[6rem]">
   <button (click)="back()" class="mb-5">&lt; Back</button>
   <p class="text-header3 font-bold">Performance Analytics</p>
-  <div class="flex gap-10 mt-10">
-    <div class="w-1/2 rounded-xl overflow-hidden">
+  <div class="flex gap-5 mt-10">
+    <div class="w-1/2 h-[35rem] rounded-xl overflow-hidden">
       <!-- image -->
-       <img src="https://scontent.cdninstagram.com/v/t51.29350-15/213800186_168993701957727_1847339401042727055_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=1-7&_nc_sid=18de74&_nc_ohc=W0HjjI2pYd0Q7kNvgG5ndnb&_nc_oc=AdjjV7dOxHi3TrFVClialocotyrotvcVZyObz5lHRHEy-8nehUjk-hwj8a52gigpMyoiE2YieV-l4SywEKtsOx9D&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AEQ6tj4EAAAA&_nc_gid=A_PVSUYzWbKQ-ZZUmdKPrBi&oh=00_AYDK0NwWLoB4PYDIpT2qCSpHNn8-3aOU1-eQJu8MXf2gaQ&oe=67A38CC6" alt="">
+       <img *ngIf="mediaLink.length > 0" [src]="mediaLink" class="object-cover h-full w-full" alt="">
     </div>
     <div class="w-1/2">
-      <div class="bg-font-white rounded-xl text-header6 font-normal p-5 h-[25rem]">
-        <b class="me-5">Username</b>
-      <!-- caption -->
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eveniet minima officiis, obcaecati repellendus repudiandae beatae vel nostrum aspernatur rem illo perspiciatis quam consequatur vero nobis nesciunt culpa molestias eaque porro! Ipsum quisquam, voluptates iste eveniet incidunt quo ex temporibus consectetur voluptate, deserunt ullam ratione voluptatem impedit illum repellendus nostrum nam. Est animi adipisci amet in dolores, ipsa voluptas nemo commodi dolor neque quam esse placeat itaque minus eveniet, eaque culpa doloribus accusamus repudiandae ratione voluptatum ea. Illum iusto assumenda aliquid ab commodi non quisquam pariatur, dolorem perspiciatis. Corrupti maxime obcaecati illum reiciendis modi natus autem dignissimos, sed nulla ipsam!
+      <div class="bg-font-white rounded-xl text-header6 font-normal py-6 px-7 h-[25rem] overflow-y-auto">
+        <p class="whitespace-pre-line">
+          <b class="me-5">{{ projectDetail['influencer_username'] }}</b>
+          {{ projectDetail['analytics_caption'] }}
+        </p>
       </div>
-      <div class="flex gap-10 mt-10">
-        <div class="bg-font-white rounded-xl w-1/2 p-5 flex flex-col items-center">
+      <div class="flex gap-5 mt-5">
+        <div class="bg-font-white rounded-xl w-1/2 py-2 flex flex-col items-center">
           <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.733398" width="41.4848" height="40" rx="20" fill="#59ADF6" fill-opacity="0.3"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M27.7722 20.5384C28.3833 19.9399 28.7228 19.1318 28.716 18.2919C28.7092 17.4521 28.3566 16.6493 27.7359 16.06C27.4286 15.7683 27.0646 15.5378 26.6649 15.3816C26.2651 15.2255 25.8374 15.1468 25.4061 15.15C24.5351 15.1566 23.7024 15.4965 23.0913 16.095C22.9254 16.255 22.7145 16.4514 22.4587 16.6842L21.7474 17.33L21.0361 16.6842C20.7797 16.4509 20.5685 16.2545 20.4026 16.095C19.7867 15.5012 18.9513 15.1675 18.0803 15.1675C17.2093 15.1675 16.3739 15.5012 15.758 16.095C14.4893 17.3192 14.4746 19.2984 15.7114 20.5284L21.7474 26.3484L27.7722 20.5384ZM15.0243 15.3884C15.4256 15.0013 15.902 14.6943 16.4264 14.4849C16.9507 14.2754 17.5127 14.1676 18.0803 14.1676C18.6479 14.1676 19.2099 14.2754 19.7343 14.4849C20.2587 14.6943 20.7351 15.0013 21.1364 15.3884C21.2937 15.5406 21.4973 15.73 21.7474 15.9567C21.9963 15.73 22.2 15.5403 22.3584 15.3875C23.1627 14.6002 24.2583 14.1531 25.4044 14.1447C26.5505 14.1362 27.6531 14.5671 28.4697 15.3425C29.2863 16.118 29.7499 17.1744 29.7587 18.2795C29.7674 19.3845 29.3206 20.4477 28.5164 21.235L22.3584 27.1734C22.1964 27.3296 21.9766 27.4174 21.7474 27.4174C21.5182 27.4174 21.2984 27.3296 21.1364 27.1734L14.9767 21.2342C14.1868 20.4487 13.7491 19.3951 13.7579 18.3011C13.7668 17.207 14.2217 16.1602 15.0243 15.3867V15.3884Z" fill="#1391FF"/>
             </svg>
-            <p class="text-header2 font-medium">190K</p>
-            <p class="text-header6 font-medium text-font-darkGrey">Likes</p>
+            <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_likes'] }}</p>
+            <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Likes</p>
         </div>
-        <div class="bg-font-white rounded-xl w-1/2 p-5 flex flex-col items-center">
+        <div class="bg-font-white rounded-xl w-1/2 py-2 flex flex-col items-center">
           <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.724609" width="41.4848" height="40" rx="20" fill="#42D6A4" fill-opacity="0.3"/>
             <path d="M27.5168 13.334H15.417C14.9586 13.334 14.5189 13.5096 14.1948 13.8221C13.8706 14.1347 13.6885 14.5586 13.6885 15.0007V27.5007L16.6849 25.334C16.9841 25.1176 17.348 25.0007 17.722 25.0007H27.5168C27.9752 25.0007 28.4149 24.8251 28.739 24.5125C29.0632 24.1999 29.2453 23.776 29.2453 23.334V15.0007C29.2453 14.5586 29.0632 14.1347 28.739 13.8221C28.4149 13.5096 27.9752 13.334 27.5168 13.334Z" stroke="#09895E" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <p class="text-header2 font-medium">190K</p>
-            <p class="text-header6 font-medium text-font-darkGrey">Comments</p>
+            <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_comments'] }}</p>
+            <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Comments</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="flex gap-10 mt-10">
+  <div class="flex gap-5 mt-5">
     <div class="bg-font-white rounded-xl w-1/4 p-5 flex flex-col items-center">
       <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.71582" width="41.4848" height="40" rx="20" fill="#D4D642" fill-opacity="0.3"/>
@@ -44,8 +45,8 @@
         </svg>
 
 
-      <p class="text-header2 font-medium">190K</p>
-      <p class="text-header6 font-medium text-font-darkGrey">Saved</p>
+      <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_saved'] }}</p>
+      <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Saved</p>
     </div>
     <div class="bg-font-white rounded-xl w-1/4 p-5 flex flex-col items-center">
       <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +54,8 @@
         <path d="M28.4377 19.9993L22.9063 14.166V17.0827C20.1407 17.0827 14.6094 18.8327 14.6094 25.8327C14.6094 24.8602 16.2688 22.916 22.9063 22.916V25.8327L28.4377 19.9993Z" stroke="#FF3328" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
-      <p class="text-header2 font-medium">190K</p>
-            <p class="text-header6 font-medium text-font-darkGrey">Shared</p>
+      <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_shared'] }}</p>
+            <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Shared</p>
     </div>
     <div class="bg-font-white rounded-xl w-1/4 p-5 flex flex-col items-center">
 
@@ -65,8 +66,8 @@
 
 
 
-      <p class="text-header2 font-medium">190K</p>
-            <p class="text-header6 font-medium text-font-darkGrey">Accounts Engaged</p>
+      <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_accounts_engaged'] }}</p>
+            <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Views</p>
     </div>
     <div class="bg-font-white rounded-xl w-1/4 p-5 flex flex-col items-center">
       <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,22 +75,24 @@
         <path d="M21.5 20.6C27.296 20.6 32 22.798 32 25.5V29H11V25.5C11 22.798 15.704 20.6 21.5 20.6ZM30.6 25.5C30.6 23.568 26.526 22 21.5 22C16.474 22 12.4 23.568 12.4 25.5V27.6H30.6V25.5ZM21.5 8C22.7996 8 24.0459 8.51625 24.9648 9.43518C25.8838 10.3541 26.4 11.6004 26.4 12.9C26.4 14.1996 25.8838 15.4459 24.9648 16.3648C24.0459 17.2838 22.7996 17.8 21.5 17.8C20.2004 17.8 18.9541 17.2838 18.0352 16.3648C17.1162 15.4459 16.6 14.1996 16.6 12.9C16.6 11.6004 17.1162 10.3541 18.0352 9.43518C18.9541 8.51625 20.2004 8 21.5 8ZM21.5 9.4C20.5717 9.4 19.6815 9.76875 19.0251 10.4251C18.3687 11.0815 18 11.9717 18 12.9C18 13.8283 18.3687 14.7185 19.0251 15.3749C19.6815 16.0313 20.5717 16.4 21.5 16.4C22.4283 16.4 23.3185 16.0313 23.9749 15.3749C24.6313 14.7185 25 13.8283 25 12.9C25 11.9717 24.6313 11.0815 23.9749 10.4251C23.3185 9.76875 22.4283 9.4 21.5 9.4Z" fill="#E29742"/>
         </svg>
 
-      <p class="text-header2 font-medium">190K</p>
-            <p class="text-header6 font-medium text-font-darkGrey">Accounts Reached</p>
+      <p class="text-header2 font-medium mt-2">{{ projectDetail['analytics_accounts_reached'] }}</p>
+            <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Accounts Reached</p>
     </div>
   </div>
-  <div class="flex gap-10 mt-10">
+  <div class="flex gap-5 mt-5">
     <!-- graph sentiment analysis -->
     <div class="bg-font-white rounded-xl w-1/2 p-5">
       <p class="text-header4 font-semibold mb-5">Sentiment Analytics</p>
-      <p>Comments analytics from this post</p>
+      <p class="text-body">Comments analytics from this post</p>
       <canvas class="mt-5" id="SentimentAnalyticsPieChart" #pieChart>{{ chart }}</canvas>
     </div>
 
     <!-- top comments -->
     <div class="bg-font-white rounded-xl overflow-hidden w-1/2 p-5">
       <p class="text-header4 font-semibold mb-5">Top Comments</p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, minima. Consequuntur, maiores? Repellat minima placeat nobis animi praesentium corrupti error, suscipit, voluptatibus reiciendis nisi autem! Maxime ratione optio aperiam quod possimus accusamus dolor. Aperiam deserunt quasi vero suscipit, distinctio dolorum. Dicta molestias ea at sint aspernatur accusantium ut, error ipsum sunt minima vel. Quasi excepturi dolor temporibus harum alias, nihil animi cupiditate consectetur, officia praesentium quod. Dolorum aliquam placeat numquam, minima at quo sapiente aliquid ullam. Aliquam, in autem! Eligendi exercitationem aliquam voluptates quasi iste. Quidem blanditiis quod nobis, officia explicabo magni culpa atque velit minus reiciendis. Aliquid, magni explicabo!
+      <p class="text-body">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, minima. Consequuntur, maiores? Repellat minima placeat nobis animi praesentium corrupti error, suscipit, voluptatibus reiciendis nisi autem! Maxime ratione optio aperiam quod possimus accusamus dolor. Aperiam deserunt quasi vero suscipit, distinctio dolorum. Dicta molestias ea at sint aspernatur accusantium ut, error ipsum sunt minima vel. Quasi excepturi dolor temporibus harum alias, nihil animi cupiditate consectetur, officia praesentium quod. Dolorum aliquam placeat numquam, minima at quo sapiente aliquid ullam. Aliquam, in autem! Eligendi exercitationem aliquam voluptates quasi iste. Quidem blanditiis quod nobis, officia explicabo magni culpa atque velit minus reiciendis. Aliquid, magni explicabo!
+      </p>
     </div>
   </div>
 </div>

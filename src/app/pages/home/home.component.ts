@@ -10,6 +10,7 @@ import { LoadingService } from '../../services/loading.service';
 import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
 import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
 import { Router } from '@angular/router';
+import { ProjectService } from '../../services/project.service';
 
 interface Category {
   id: number; // ID kategori
@@ -71,7 +72,8 @@ export class HomeComponent implements OnInit{
     private homeService: HomeService,
     private loadingService: LoadingService,
     private cdRef: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private projectService: ProjectService
   ) {}
 
   influencer: Influencer[] = []; // Tipe array Influencer
@@ -81,6 +83,10 @@ export class HomeComponent implements OnInit{
   showSuccessTf: boolean = false;
   errorMessage: string = ''; // To store error message
   successMessage: string = '';
+
+  // for projects
+  projectList: any[] = [];
+  userId: any = localStorage.getItem('user_id');
 
   ngOnInit(): void {
     this.loadingService.hide();
@@ -102,6 +108,27 @@ export class HomeComponent implements OnInit{
         console.error('Error sending sort option:', error);
       }
     );
+
+    this.projectService.getProjects('2', this.userId, null).subscribe(
+      (data) => {
+        console.log(data);
+        this.projectList = this.projectList.concat(data);
+        if (this.projectList.length < 3) {
+          this.projectService.getProjects('1', this.userId, null).subscribe(
+            (data2) => {
+              this.projectList =  this.projectList.concat(data2);
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+
     this.loadWalletInfo();
   }
 

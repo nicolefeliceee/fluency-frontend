@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { InfluencerService } from '../../services/influencer.service';
+import { ConfirmationPopupComponent } from "../confirmation-popup/confirmation-popup.component";
 
 @Component({
   selector: 'app-influencer-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ConfirmationPopupComponent],
   templateUrl: './influencer-card.component.html',
   styleUrl: './influencer-card.component.css'
 })
@@ -35,8 +36,13 @@ export class InfluencerCardComponent{
 
   // buat emit influencer id
   hireClicked = output<any>();
+  askConfirmHireInfluencer = output<any>();
   redirectToProject() {
     this.hireClicked.emit(this.item['influencer_id']);
+  }
+
+  askConfirm() {
+    this.askConfirmHireInfluencer.emit(this.item['influencer_id']);
   }
 
   // Fungsi untuk toggle status saved

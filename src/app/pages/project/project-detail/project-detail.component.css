@@ -3,15 +3,7 @@
 }
 
 .foto{
-  margin: 0;
-  /* width: 100%; */
-  /* height: 17.8rem; */
-  /* height: 13.55rem; */
-  /* border-top-left-radius: 10px; */
-  /* border-bottom-left-radius: 10px; */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
-  /* overflow: hidden; */
-  /* box-sizing: content-box; */
+  background-size: cover;
 }

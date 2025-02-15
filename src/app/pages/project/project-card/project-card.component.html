@@ -1,4 +1,12 @@
-<div class="bg-font-white rounded-2xl p-5">
+<div class="bg-font-white rounded-2xl p-5 relative">
+
+  <div class="absolute right-3 top-3 toggleButton" (click)="toggleButton()">
+    <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.0625 5.39063C9.0625 5.10632 9.14681 4.82839 9.30476 4.59199C9.46272 4.3556 9.68722 4.17135 9.94989 4.06255C10.2126 3.95375 10.5016 3.92528 10.7804 3.98075C11.0593 4.03621 11.3154 4.17312 11.5165 4.37416C11.7175 4.5752 11.8544 4.83134 11.9099 5.11018C11.9653 5.38903 11.9369 5.67806 11.8281 5.94073C11.7193 6.2034 11.535 6.42791 11.2986 6.58586C11.0622 6.74382 10.7843 6.82813 10.5 6.82813C10.1188 6.82813 9.75312 6.67668 9.48354 6.40709C9.21395 6.13751 9.0625 5.77187 9.0625 5.39063ZM10.5 10.0625C10.2157 10.0625 9.93776 10.1468 9.70137 10.3048C9.46497 10.4627 9.28072 10.6872 9.17192 10.9499C9.06312 11.2126 9.03466 11.5016 9.09012 11.7804C9.14559 12.0593 9.2825 12.3154 9.48354 12.5165C9.68457 12.7175 9.94071 12.8544 10.2196 12.9099C10.4984 12.9653 10.7874 12.9369 11.0501 12.8281C11.3128 12.7193 11.5373 12.535 11.6952 12.2986C11.8532 12.0622 11.9375 11.7843 11.9375 11.5C11.9375 11.1188 11.7861 10.7531 11.5165 10.4835C11.2469 10.214 10.8812 10.0625 10.5 10.0625ZM10.5 16.1719C10.2157 16.1719 9.93776 16.2562 9.70137 16.4141C9.46497 16.5721 9.28072 16.7966 9.17192 17.0593C9.06312 17.3219 9.03466 17.611 9.09012 17.8898C9.14559 18.1687 9.2825 18.4248 9.48354 18.6258C9.68457 18.8269 9.94071 18.9638 10.2196 19.0193C10.4984 19.0747 10.7874 19.0463 11.0501 18.9375C11.3128 18.8287 11.5373 18.6444 11.6952 18.408C11.8532 18.1716 11.9375 17.8937 11.9375 17.6094C11.9375 17.2281 11.7861 16.8625 11.5165 16.5929C11.2469 16.3233 10.8812 16.1719 10.5 16.1719Z" fill="#494F50"/>
+      </svg>
+  </div>
+
+  <ng-content></ng-content>
 
   <p class="text-body text-font-darkGrey">{{ brandName }}</p>
   <p class="text-header5 font-semibold">{{ project?.title == null? 'No title yet' : project.title }}</p>
@@ -23,6 +31,7 @@
     <div class="ms-2 block" *ngIf="!project['influencer_id']">
       <p class=" text-body text-font-lightGrey">You haven’t choose influencer yet</p>
     </div>
-    <button (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">View</button>
+    <button *ngIf="!influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">View</button>
+    <button *ngIf="influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">Add</button>
   </div>
 </div>

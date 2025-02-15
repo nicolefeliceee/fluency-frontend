@@ -24,4 +24,15 @@ export class WalletService {
         throw new Error('User ID tidak ditemukan di Local Storage');
       }
     }
+
+    checkout(amount: any):Observable<any>{
+      const userId = localStorage.getItem('user_id');
+      if (userId) {
+        // Membuat URL dengan menyertakan user_id sebagai path variable
+        const url = `${this.baseUrl}/wallet/checkout/${userId}`;
+        return this.httpClient.post(url, amount);  // Kirim GET request
+      } else {
+        throw new Error('User ID tidak ditemukan di Local Storage');
+      }
+    }
 }

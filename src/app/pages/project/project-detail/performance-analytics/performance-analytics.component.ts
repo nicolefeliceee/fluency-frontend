@@ -3,13 +3,15 @@ import { HeaderComponent } from "../../../../components/header/header.component"
 import { Router, RouterLink } from '@angular/router';
 import { ProjectService } from '../../../../services/project.service';
 import { Chart, ArcElement, Tooltip, Legend, DoughnutController   } from 'chart.js';
+import { InstagramService } from '../../../../services/instagram.service';
+import { CommonModule } from '@angular/common';
 
 Chart.register(ArcElement, Tooltip, Legend, DoughnutController );
 
 @Component({
   selector: 'app-performance-analytics',
   standalone: true,
-  imports: [HeaderComponent, RouterLink],
+  imports: [HeaderComponent, RouterLink, CommonModule],
   templateUrl: './performance-analytics.component.html',
   styleUrl: './performance-analytics.component.css'
 })
@@ -18,11 +20,13 @@ export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
   @ViewChild('pieChart') pieChart!: ElementRef;
 
   projectDetailId: any;
-  projectDetail: any;
+  projectDetail!: any;
   projectHeaderId: any;
+  mediaLink: string = '';
 
   constructor(
     private projectService: ProjectService,
+    private instagramService: InstagramService,
     private router: Router
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -35,15 +39,20 @@ export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
     console.log(this.projectHeaderId);
     console.log(this.projectDetailId);
 
-    this.projectService.getProjectDetailById(this.projectDetailId).subscribe(
+    this.projectService.getPerformanceAnalyticsById(this.projectDetailId).subscribe(
       (data) => {
         console.log(data);
         this.projectDetail = data;
+        this.mediaLink = this.projectDetail['analytics_media_url'];
+
+        console.log(this.projectDetail['analytics_caption'])
       },
       (error) => {
         console.log(error);
       }
     )
+
+
 
   }
 

@@ -22,4 +22,14 @@ export class InstagramService {
     });
 
   }
+
+  getMediaDetail(token: any, mediaId: any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('fields', 'media_product_type,media_type,permalink,media_url');
+    params = params.append('access_token', token);
+
+    return this.httpClient.get(this.baseUrl + "/" + mediaId, {
+      params: params
+    });
+  }
 }

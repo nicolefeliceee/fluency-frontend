@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectService } from '../../../../services/project.service';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-project-detail-popup',
@@ -55,26 +56,30 @@ export class ProjectDetailPopupComponent implements OnInit, OnChanges{
 
     if (this.inputForm) {
 // buat edit
-      // console.log(this.inputForm);
+      console.log(this.inputForm);
       this.detailForm.setValue({
         date: this.inputForm['deadlineDate'],
         time: this.inputForm['deadlineTime'],
         note: this.inputForm['note'],
-        media: this.inputForm['mediatypeId'],
+        media: this.inputForm['mediatypeId'] ?? "",
         id: this.inputForm['tempId'],
-        link: this.inputForm['link'],
+        link: this.inputForm['link'] ?? "",
         instagramMediaId: "",
       });
       // console.log(this.detailForm);
     } else {
 // reset value ke null tiap mau add new
       if (this.detailForm) {
+        this.submitted = false;
+        console.log(this.detailForm);
         this.detailForm.setValue({
           date: null,
           time: null,
           note: null,
           media: null,
           id: null,
+          link: null,
+          instagramMediaId: null
         });
 
         this.detailFormGroup['date'].markAsUntouched();

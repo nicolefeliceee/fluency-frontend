@@ -1,9 +1,15 @@
 <app-header></app-header>
 <div class="bantu"></div>
 
-<app-tab [options]="statusOptions" [selectedId]="selectedStatus" (id)="getProjectsByStatus($event)"></app-tab>
+<app-tab [options]="statusOptions" [selectedId]="selectedStatus" (id)="getProjectsByStatus($event)" (outputQuery)="search($event)"></app-tab>
 
-<app-alert-success [display]="createSuccess" [label]="'Project saved successfully'"></app-alert-success>
+<app-alert-success [display]="createSuccess" [label]="'Project saved successfully'" (dismissClicked)="createSuccess = false"></app-alert-success>
+<app-alert-success [display]="deleteSuccess" [label]="'Project deleted successfully'" (dismissClicked)="deleteSuccess = false"></app-alert-success>
+
+<app-alert-error [display]="generalError" [label]="'Unexpected error occured! Please try again later'" (dismissClicked)="generalError = false"></app-alert-error>
+<app-alert-error [display]="influencerAlreadySelected" [label]="'Influencer already selected in this project'" (dismissClicked)="influencerAlreadySelected = false"></app-alert-error>
+
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 
 <div class="container px-20 py-10">
   <div *ngIf="projectList.length == 0" class="container text-center">
@@ -16,7 +22,16 @@
 
   <div class="grid grid-cols-3 gap-5">
 
-    <app-project-card *ngFor="let item of projectList" [title]="item.title" [project]="item"></app-project-card>
+    <app-project-card *ngFor="let item of projectList; let i = index" [title]="item.title" [project]="item" [influencerId]="influencerId" [index]="i" (indexClick)="toggleButton($event)" (influencerAlreadySelected)="influencerAlreadySelected = true">
+      <div *ngIf="openIndex === i" class="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg">
+        <ul>
+          <!-- bisa delete kalau draft / unpaid -->
+          <li *ngIf="selectedStatus < 3" (click)="deleteItem(item)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
+          <!-- bisa report kalau ongoing, review, done -->
+          <li *ngIf="selectedStatus > 3 && selectedStatus <= 6" (click)="reportProject(item)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Report</li>
+        </ul>
+      </div>
+    </app-project-card>
     <!-- <app-project-card></app-project-card>
     <app-project-card></app-project-card> -->
   </div>

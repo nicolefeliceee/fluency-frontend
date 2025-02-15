@@ -43,7 +43,7 @@ export class LoginInterceptorComponent implements OnInit {
       console.log(data);
 
       this.newInfluencer = new SignupInfluencer(
-        "","","","","","","",[],"","","",(data as any)['instagram_id']
+        "","","","","","","",[],"","","",(data as any)['instagram_id'], localStorage.getItem('long_lived_token') || ''
       )
 
       // belum pernah signup

@@ -57,13 +57,13 @@ module.exports = {
       }
     },
     fontSize: {
-      'title': '4rem',
-      'header1': '2.5rem',
-      'header2': '2rem',
-      'header3': '1.5rem',
-      'header4': '1.25rem',
-      'header5': '1.125rem',
-      'header6': '1rem',
+      'title': '3.6rem',
+      'header1': '2.3rem',
+      'header2': '1.8rem',
+      'header3': '1.4rem',
+      'header4': '1.15rem',
+      'header5': '1rem',
+      'header6': '0.9rem',
       'body': '0.9rem',
       'smalltext': '0.7rem'
     }

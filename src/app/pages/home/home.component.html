@@ -107,13 +107,10 @@
     </div>
   </div>
 </div>
-<div class="projects pt-[6rem] px-[7rem]">
+<div class="projects pt-[6rem] px-[7rem]" *ngIf="projectList.length > 0">
   <div class="projectTitle font-semibold text-[1.47rem] ms-2 mb-3">Continue Your Project</div>
   <div class="projectCard grid grid-cols-3 gap-5 ">
-    <!-- <app-project-card></app-project-card>
-    <app-project-card></app-project-card>
-    <app-project-card></app-project-card> -->
-    <!-- <app-project-card *ngFor="let item of projectList" [title]="item.title" [project]="item"></app-project-card> -->
+    <app-project-card *ngFor="let item of projectList | slice:0:3" [title]="item.title" [project]="item"></app-project-card>
   </div>
 </div>
 <div class="recommendInf pt-[3rem] px-[7rem]">

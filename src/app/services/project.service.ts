@@ -14,9 +14,10 @@ export class ProjectService {
 
     baseUrl = environment.baseUrl;
 
-  getProjects(status: string, userId: string): Observable<any> {
+  getProjects(status: string | null, userId: string, title: string | null): Observable<any> {
     let params = new HttpParams();
-    params = params.append("status", status);
+    params = params.append("status", status || '');
+    params = params.append("title", title || '');
           return this.httpClient.get(this.baseUrl + "/project/" + userId, {
             params: params
           });
@@ -29,6 +30,11 @@ export class ProjectService {
   getProjectDetailById(id: any): Observable<any> {
     return this.httpClient.get(this.baseUrl + "/project/detail/detail-id/" + id);
   }
+
+  getPerformanceAnalyticsById(projectDetailId: any): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/project/performance-analytics/" + projectDetailId);
+  }
+
 
   createProject(request: ProjectCreate): Observable<any> {
     return this.httpClient.post(this.baseUrl + "/project", request);
@@ -51,4 +57,9 @@ export class ProjectService {
     },
     );
   }
+
+  deleteProjectbyId(id: any): Observable<any> {
+    return this.httpClient.delete(this.baseUrl + "/project/" + id);
+  }
+
 }

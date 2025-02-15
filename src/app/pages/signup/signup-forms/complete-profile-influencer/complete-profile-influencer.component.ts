@@ -7,6 +7,7 @@ import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { GenderService } from '../../../../services/gender.service';
 import { InstagramService } from '../../../../services/instagram.service';
+import { LoadingService } from '../../../../services/loading.service';
 
 @Component({
   selector: 'app-complete-profile-influencer',
@@ -30,10 +31,12 @@ export class CompleteProfileInfluencerComponent {
       private locationService: LocationService,
       private genderService: GenderService,
       private userService: UserService,
-      private instagramService: InstagramService
+      private instagramService: InstagramService,
+      private loadingService: LoadingService
     ) {
       const navigation = this.router.getCurrentNavigation();
       this.newUser = navigation?.extras.state?.['newUser'];
+      console.log(this.newUser);
     }
 
     passwordVisible: boolean = false;
@@ -42,7 +45,8 @@ export class CompleteProfileInfluencerComponent {
     locationOptions!: any[];
     genderOptions!: any[];
 
-    ngOnInit(): void {
+  ngOnInit(): void {
+    this.loadingService.hide();
       this.locationService.getAllLocations().subscribe(
         (data) => {
           this.locationOptions = data;
