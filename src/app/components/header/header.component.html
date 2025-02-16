@@ -41,7 +41,7 @@
       <!-- <img *ngIf="profilePicBrand && !instagramId" class="picture" [src]="profilePicBrand"> -->
       <div *ngIf="profilePicBrand && !instagramId" class="w-[2.4rem] h-[2.4rem] rounded-full overflow-hidden">
         <img class="w-full h-full object-cover" [src]="profilePicBrand" alt="Profile Picture" />
-    </div>
+      </div>
       <div *ngIf="!profilePicUrl && !profilePicBrand" class="picture" style="background-image: url('../../../assets/images/empty\ profile\ pic.png');"></div>
       <div class="name">{{ userName }}</div>
       <div class="dropdown ms-auto">

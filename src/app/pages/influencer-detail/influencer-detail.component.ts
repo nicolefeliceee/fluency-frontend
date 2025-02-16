@@ -9,6 +9,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 // import ChartLabels from 'chart.js-plugin-labels-dv';
 import { getChartLabelPlugin, PLUGIN_ID } from 'chart.js-plugin-labels-dv';
 import { text } from 'node:stream/consumers';
+import { DomSanitizer } from '@angular/platform-browser';
 // Chart.register(...registerables, ChartLabels);
 Chart.register(getChartLabelPlugin());
 Chart.register(...registerables);
@@ -142,7 +143,8 @@ export class InfluencerDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private influencerService: InfluencerService
+    private influencerService: InfluencerService,
+    private sanitizer: DomSanitizer
   ) {}
 
   stories: StoryDetail[] = [];
@@ -492,5 +494,53 @@ export class InfluencerDetailComponent implements OnInit {
     }
   }
 
+  getStars(rating: number): string[] {
+    let stars: string[] = [];
+
+    let fullStars = Math.floor(rating); // Jumlah bintang penuh
+    let halfStar = rating % 1 !== 0 ? 1 : 0; // Jika rating memiliki desimal, tambahkan 1 bintang setengah
+    let emptyStars = 5 - fullStars - halfStar; // Sisa bintang kosong
+
+    // Tambahkan bintang penuh
+    for (let i = 0; i < fullStars; i++) {
+      stars.push('fa-star checked');
+    }
+
+    // Tambahkan bintang setengah (jika ada)
+    if (halfStar) {
+      stars.push('fa-star-half-full');
+    }
+
+    // Tambahkan bintang kosong
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push('fa-star nul');
+    }
+
+    return stars;
+  }
+
+  getProfileBrand(byte: any, name:any, type:any){
+    if (byte) {
+      const imageBlob = this.dataURItoBlob(byte, type);
+      const imageFile = new File([imageBlob], name, { type: type });
+      return this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile));
+    }
+    else{
+      return "";
+    }
+  }
+
+  public dataURItoBlob(picBytes: any, imageType: any) {
+    const byteString = window.atob(picBytes);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      int8array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([int8array], { type: imageType });
+    return blob;
+  }
 
 }
