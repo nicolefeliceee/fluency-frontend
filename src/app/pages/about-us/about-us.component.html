@@ -1,8 +1,8 @@
+<app-header></app-header>
+
 <div class="w-[100%]">
   <div class="relative w-full h-auto">
-      <!-- Get Image Auto Height -->
       <img src="assets/about-us/about-us-1.png" class="w-full h-auto">
-      <!-- Follow Image Height -->
       <div class="absolute top-[3vh] ml-[10%] h-full flex flex-col justify-center items-left">
           <span class="text-header1 text-white font-bold text-left">
               Empowering Connections,<br>Driving Impact
@@ -13,7 +13,6 @@
       </div>
   </div>
 
-   <!-- Add some distance -->
   <div class="w-full h-[5vh] flex bg-blue-100 items-center"></div>
   <div class="w-full h-auto flex bg-blue-100 items-center">
     <div class="w-[45%] h-full flex justify-end items-center">
@@ -37,7 +36,6 @@
         </span>
     </div>
   </div>
-  <!-- Add some distance -->
   <div class="w-full h-[5vh] flex bg-blue-100 items-center"></div>
 
   <div class="w-full h-[105vh] flex items-center">
@@ -173,15 +171,14 @@
       </div>
       <div class="w-1/6 h-[40vh] flex flex-col items-start justify-start">
         <span class="w-full text-header3 font-bold text-white mb-4">Get Started</span>
-        <span class="w-full text-header5 text-white my-2">For Brand</span>
-        <span class="w-full text-header5 text-white my-2">For Influencer</span>
-        <span class="w-full text-header5 text-white my-2">Sign Up</span>
-        <span class="w-full text-header5 text-white my-2">Login</span>
+        <a routerLink="signup/brand/profile" class="w-full text-header5 text-white my-2">For Brand</a>
+        <a routerLink="signup/influencer/profile" class="w-full text-header5 text-white my-2">For Influencer</a>
+        <a routerLink="about-us" class="w-full text-header5 text-white my-2">Sign Up</a>
+        <a routerLink="login" class="w-full text-header5 text-white my-2">Login</a>
       </div>
       <div class="w-1/6 h-[40vh] flex flex-col items-start justify-start">
-        <a href=""></a>
         <span class="w-full text-header3 font-bold text-white mb-4">Company</span>
-        <a href="about-us" class="w-full text-header5 text-white my-2">About Us</a>
+        <a routerLink="about-us" class="w-full text-header5 text-white my-2">About Us</a>
         <span class="w-full text-header5 text-white my-2">Contact</span>
         <span class="w-full text-header5 text-white my-2">Features</span>
       </div>
