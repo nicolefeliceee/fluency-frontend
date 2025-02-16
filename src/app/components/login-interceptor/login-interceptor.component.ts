@@ -56,7 +56,7 @@ export class LoginInterceptorComponent implements OnInit {
         localStorage.setItem('name', (data as any)['name']);
         localStorage.setItem('instagram_id', (data as any)['instagram_id']);
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/influencer-home']);
       }
 
 

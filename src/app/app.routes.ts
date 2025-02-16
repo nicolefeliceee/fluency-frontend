@@ -22,10 +22,12 @@ import { ProjectDetailComponent } from './pages/project/project-detail/project-d
 import { InfluencerDetailComponent } from './pages/influencer-detail/influencer-detail.component';
 import { PerformanceAnalyticsComponent } from './pages/project/project-detail/performance-analytics/performance-analytics.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { HomeInfluencerComponent } from './pages/home-influencer/home-influencer.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
   {path:'home', component: HomeComponent},
+  {path:'influencer-home', component: HomeInfluencerComponent},
   {path:'signup', component: SignupComponent},
   {path:'login', component: LoginRoleComponent},
   {path:'login/brand', component: LoginComponent},

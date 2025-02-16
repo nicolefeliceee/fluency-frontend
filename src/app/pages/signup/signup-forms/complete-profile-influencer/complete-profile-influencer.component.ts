@@ -74,6 +74,15 @@ export class CompleteProfileInfluencerComponent {
         phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
       });
 
+      this.profileForm.setValue({
+        name: this.newUser.name,
+        email: this.newUser.email,
+        location: this.newUser.location,
+        gender: this.newUser.gender,
+        dob: this.newUser.dob,
+        phone: this.newUser.phone
+      });
+
       this.instagramService.getProfile(localStorage.getItem('long_lived_token'), localStorage.getItem('instagram_id')).subscribe(
         (data) => {
           this.imagePreview = (data as any)['profile_picture_url']
