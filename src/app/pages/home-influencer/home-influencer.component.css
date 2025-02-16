@@ -1,3 +1,29 @@
 .bantu{
   height: 3.7rem;
 }
+
+.projType{
+  border: 1px #494F50 solid;
+}
+
+.btnDate{
+  border: rgba(148, 156, 158, 0.3) 1px solid;
+}
+
+.borderBlue{
+  border: #5876F9 solid 1px;
+  /* color: #5876F9; */
+  /* background-color: white;
+  color: black; */
+}
+
+.foto{
+  width: 148px;
+  height: 148px;
+  /* width: 100%;
+  height: 100%; */
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
