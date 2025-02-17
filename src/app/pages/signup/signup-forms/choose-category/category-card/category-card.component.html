@@ -1,6 +1,6 @@
 <div class=" bg-font-white rounded-xl text-center h-32 content-center shadow-md" (click)="selectCategory()" [ngClass]="{'border-blue-80 border-[2px]': isSelected}">
 
-  <div *ngIf="!isSelected" class="border-[1px] border-font-lightGrey/50 rounded-full h-4 w-4 ms-auto me-2"></div>
+  <div *ngIf="activeLogo != null && !isSelected" class="border-[1px] border-font-lightGrey/50 rounded-full h-4 w-4 ms-auto me-2"></div>
 
   <div *ngIf="isSelected" class="bg-blue-80 w-4 h-4 rounded-full ms-auto me-2">
     <span><svg width="12" height="12" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -35,6 +35,10 @@ export class ProjectService {
     return this.httpClient.get(this.baseUrl + "/project/performance-analytics/" + projectDetailId);
   }
 
+  getSentimentById(projectDetailId: any): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/project/sentiment-analysis/" + projectDetailId);
+  }
+
 
   createProject(request: ProjectCreate): Observable<any> {
     return this.httpClient.post(this.baseUrl + "/project", request);

@@ -5,13 +5,16 @@
 <div class="container py-5 px-[6rem]">
   <button (click)="back()" class="mb-5">&lt; Back</button>
   <p class="text-header3 font-bold">Performance Analytics</p>
-  <div class="flex gap-5 mt-10">
+  <div class="flex gap-5 mt-10" *ngIf="projectDetail">
     <div class="w-1/2 h-[35rem] rounded-xl overflow-hidden">
       <!-- image -->
        <img *ngIf="mediaLink.length > 0" [src]="mediaLink" class="object-cover h-full w-full" alt="">
+       <div *ngIf="mediaLink.length == 0" class="h-full w-full bg-font-lightGrey/50 text-center content-center" alt="">
+        <p>Media is currently unavailable</p>
+       </div>
     </div>
     <div class="w-1/2">
-      <div class="bg-font-white rounded-xl text-header6 font-normal py-6 px-7 h-[25rem] overflow-y-auto">
+      <div *ngIf="projectDetail['influencer_username']" class="bg-font-white rounded-xl text-header6 font-normal py-6 px-7 h-[25rem] overflow-y-auto">
         <p class="whitespace-pre-line">
           <b class="me-5">{{ projectDetail['influencer_username'] }}</b>
           {{ projectDetail['analytics_caption'] }}
@@ -37,7 +40,7 @@
       </div>
     </div>
   </div>
-  <div class="flex gap-5 mt-5">
+  <div class="flex gap-5 mt-5" *ngIf="projectDetail">
     <div class="bg-font-white rounded-xl w-1/4 p-5 flex flex-col items-center">
       <svg width="43" height="40" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.71582" width="41.4848" height="40" rx="20" fill="#D4D642" fill-opacity="0.3"/>
@@ -79,20 +82,38 @@
             <p class="text-header6 font-medium text-font-darkGrey mt-[-5px]">Accounts Reached</p>
     </div>
   </div>
+
+<!-- kalo projectDetail unavail -->
+
+  <div *ngIf="!projectDetail" class="mt-10 bg-font-lightGrey/50 text-center content-center rounded-xl h-[25rem] ">
+    <p class="text-header4">Media insight is currently unavailable</p>
+    <p class="text-header5 text-font-darkGrey">Please try again later</p>
+  </div>
+
   <div class="flex gap-5 mt-5">
     <!-- graph sentiment analysis -->
     <div class="bg-font-white rounded-xl w-1/2 p-5">
-      <p class="text-header4 font-semibold mb-5">Sentiment Analytics</p>
+      <p class="text-header4 font-semibold">Sentiment Analytics</p>
       <p class="text-body">Comments analytics from this post</p>
-      <canvas class="mt-5" id="SentimentAnalyticsPieChart" #pieChart>{{ chart }}</canvas>
+      <canvas class="mt-5 bg-black w-3/4" id="SentimentAnalyticsPieChart">{{ chart }}</canvas>
     </div>
 
     <!-- top comments -->
     <div class="bg-font-white rounded-xl overflow-hidden w-1/2 p-5">
       <p class="text-header4 font-semibold mb-5">Top Comments</p>
-      <p class="text-body">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit, minima. Consequuntur, maiores? Repellat minima placeat nobis animi praesentium corrupti error, suscipit, voluptatibus reiciendis nisi autem! Maxime ratione optio aperiam quod possimus accusamus dolor. Aperiam deserunt quasi vero suscipit, distinctio dolorum. Dicta molestias ea at sint aspernatur accusantium ut, error ipsum sunt minima vel. Quasi excepturi dolor temporibus harum alias, nihil animi cupiditate consectetur, officia praesentium quod. Dolorum aliquam placeat numquam, minima at quo sapiente aliquid ullam. Aliquam, in autem! Eligendi exercitationem aliquam voluptates quasi iste. Quidem blanditiis quod nobis, officia explicabo magni culpa atque velit minus reiciendis. Aliquid, magni explicabo!
-      </p>
+      <div>
+        <div *ngFor="let item of topComments" class="px-2 py-3">
+          <p class="text-header6"><b class="me-2">{{ item['username'] }}</b>{{ item['text'] }}</p>
+          <div class="flex text-font-lightGrey text-[12px] content-center align-middle">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.22875 13.195C7.30796 13.2511 7.40263 13.2812 7.49969 13.2812C7.59675 13.2812 7.69142 13.2511 7.77062 13.195L7.5 12.8125L7.77125 13.195L7.77625 13.1913L7.78938 13.1819L7.83938 13.1456C7.88271 13.1144 7.94417 13.0687 8.02375 13.0087C8.9525 12.3078 9.82917 11.5403 10.6469 10.7125C11.3644 9.9825 12.0937 9.12938 12.6462 8.22438C13.1962 7.32438 13.5938 6.33437 13.5938 5.34187C13.5938 4.16375 13.2281 3.24313 12.5812 2.61813C11.9375 1.99688 11.0688 1.71875 10.1562 1.71875C9.07812 1.71875 8.12625 2.23938 7.5 3.04188C6.87375 2.23938 5.92125 1.71875 4.84375 1.71875C2.91875 1.71875 1.40625 3.36812 1.40625 5.34187C1.40625 6.33437 1.80438 7.32375 2.35375 8.22438C2.90625 9.12938 3.63563 9.9825 4.35313 10.7131C5.22488 11.5951 6.16351 12.4083 7.16062 13.1456L7.21062 13.1819L7.22375 13.1913L7.22875 13.195Z" fill="#FF4646"/>
+              </svg>
+
+            <p class="ms-1">{{ item['like_count'] }}</p>
+            <p class="ms-2">{{ item['comment_time'] }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
