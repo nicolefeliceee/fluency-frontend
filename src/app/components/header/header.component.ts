@@ -127,9 +127,9 @@ export class HeaderComponent implements OnInit{
 
   viewProfile() {
     if (this.instagramId) {
-      this.router.navigate(['/profile-influencer', {state: {userId: this.userId}}]);
+      this.router.navigate(['/profile-influencer']);
     } else {
-      this.router.navigate(['/profile-brand', {state: {userId: this.userId}}]);
+      this.router.navigate(['/profile-brand']);
     }
   }
 

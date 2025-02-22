@@ -119,19 +119,7 @@ export class BrandTargetMarketComponent implements OnInit {
     console.log(this.newUser);
 
     let formData = new FormData();
-    // formData.append('data', new Blob([JSON.stringify({
-    //   name: this.newUser.name,
-    //   email: this.newUser.email,
-    //   password: this.newUser.password,
-    //   userType: this.newUser.userType,
-    //   location: this.newUser.location,
-    //   targetAgeRange: this.newUser.targetAgeRange,
-    //   targetGender: this.newUser.targetGender,
-    //   targetLocation: this.newUser.targetLocation,
-    //   phone: this.newUser.phone
-    // })], { type: 'application/json' } ));
 
-    console.log(formData);
     formData.append('data', JSON.stringify({
       userType: this.newUser.userType,
       name: this.newUser.name,
@@ -144,7 +132,6 @@ export class BrandTargetMarketComponent implements OnInit {
       targetGender: this.newUser.targetGender,
       targetLocation: this.newUser.targetLocation,
     }));
-    console.log(formData.get('data'));
 
     formData.append('profile_picture', this.newUser.profilePicture, this.newUser.profilePictureName); // Add the file
 

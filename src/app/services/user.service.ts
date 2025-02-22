@@ -96,12 +96,14 @@ export class UserService {
   }
 
   signUpBrand(request: FormData): Observable<object> {
-    console.log("di service");
-    console.log(request.get('data'));
     // const headers = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
     return this.httpClient.post(this.baseUrl + "/user/brand/signup", request, {
       // headers: headers
     });
+  }
+
+  editProfileBrand(request: FormData): Observable<object> {
+    return this.httpClient.put(this.baseUrl + "/user/brand/profile/" + localStorage.getItem("user_id"), request);
   }
 
   signUpInfluencer(request: SignupInfluencer): Observable<object> {

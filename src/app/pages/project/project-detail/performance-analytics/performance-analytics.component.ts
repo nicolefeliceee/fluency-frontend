@@ -17,12 +17,19 @@ Chart.register(ArcElement, Tooltip, Legend, DoughnutController );
 })
 export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
 
-  @ViewChild('pieChart') pieChart!: ElementRef;
+  // @ViewChild('pieChart') pieChart!: ElementRef;
 
   projectDetailId: any;
   projectDetail!: any;
   projectHeaderId: any;
   mediaLink: string = '';
+
+  sentimentPositive!: number;
+  sentimentNeutral!: number;
+  sentimentNegative!: number;
+  total!: number;
+
+  topComments!: any[];
 
   constructor(
     private projectService: ProjectService,
@@ -36,73 +43,98 @@ export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void {
 
-    console.log(this.projectHeaderId);
-    console.log(this.projectDetailId);
-
     this.projectService.getPerformanceAnalyticsById(this.projectDetailId).subscribe(
       (data) => {
-        console.log(data);
         this.projectDetail = data;
         this.mediaLink = this.projectDetail['analytics_media_url'];
-
-        console.log(this.projectDetail['analytics_caption'])
       },
       (error) => {
         console.log(error);
       }
     )
 
+    this.projectService.getSentimentById(this.projectDetailId).subscribe(
+      (data) => {
+        this.topComments = data['top_comments'];
+        console.log(this.topComments);
 
+        this.sentimentPositive = Number.parseInt(data['sentiment_positive']);
+        this.sentimentNeutral = Number.parseInt(data['sentiment_neutral']);
+        this.sentimentNegative = Number.parseInt(data['sentiment_negative']);
+        this.total = this.sentimentNegative + this.sentimentPositive + this.sentimentNeutral;
+        this.createChart();
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
 
   }
 
   ngAfterViewInit(): void {
-    this.createChart();
   }
 
-  chart: any;
+  chart!: any;
 
-  data = {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
-  };
+  getData() {
+    let labels = [];
+    let data = [];
+    if (this.sentimentPositive > 0) {
+      labels.push('Positive');
+      data.push(this.sentimentPositive);
+    }
+    if (this.sentimentNeutral > 0) {
+      labels.push('Neutral');
+      data.push(this.sentimentNeutral);
+    }
+    if (this.sentimentNegative > 0) {
+      labels.push('Negative');
+      data.push(this.sentimentNegative);
+    }
+
+    let chartData = {
+      labels: labels,
+      datasets: [{
+        label: "Sentiment",
+        data: data,
+        backgroundColor: [
+          '#C5EA8B',
+          '#87E1E1',
+          '#EE9293'
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    return chartData;
+  }
 
   createChart() {
-    console.log(this.pieChart)
-    if (this.pieChart && this.pieChart.nativeElement) {
-      this.chart = new Chart(this.pieChart.nativeElement, {
+    // if (this.pieChart && this.pieChart.nativeElement) {
+      this.chart = new Chart("SentimentAnalyticsPieChart", {
         type: 'doughnut',
-        data: this.data,
+        data: this.getData(),
         options: {
           responsive: true,
           aspectRatio: 2.5,
           plugins: {
+            datalabels: {
+              formatter: (value) => {
+                return ((value/this.total)*100).toFixed(1) + '%';
+              },
+              color: "#000",
+            },
             legend: {
               position: 'right'
             }
           }
         }
       });
-    }
+    // }
 
-    console.log(this.chart);
   }
 
   back() {
-    console.log(this.projectHeaderId);
     this.router.navigate(['/project/detail'], {state: {projectId: this.projectHeaderId}})
   }
 }

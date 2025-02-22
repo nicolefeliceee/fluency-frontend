@@ -1,0 +1,156 @@
+<app-header></app-header>
+<div class="bantu"></div>
+
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (cancelClicked)="displayConfirmation = false" (confirmClicked)="confirmConfirm()"></app-confirmation-popup>
+
+<div class="container bg-background p-5">
+  <div class="container px-2 py-5">
+    <form class="p-2" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex w-10/12 mx-auto">
+        <div class="basis-1/4">
+          <div class="m-0 p-0 justify-items-center">
+            <!-- <img *ngIf="imagePreview" [src]="imagePreview" alt="Profile Picture" class="w-5/6 h-5/6 rounded-full object-  mb-4 border-[4px]   border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] "> -->
+            <div class="relative">
+              <div *ngIf="imagePreview" class="w-52 h-52 rounded-full overflow-hidden border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+                <img class="w-full h-full object-cover" [src]="imagePreview" alt="Profile Picture" />
+              </div>
+              <img *ngIf="!imagePreview" src="../../../../../assets/images/empty profile pic.png" alt="Profile Picture" class="w-52 h-52 rounded-full object-cover border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+              <div class="bg-blue-80 rounded-full w-fit p-2 absolute right-8 bottom-0" (click)="triggerFileInput()">
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.906 2.09493C16.6171 1.80571 16.2739 1.57627 15.8963 1.41973C15.5186 1.26319 15.1138 1.18262 14.705 1.18262C14.2961 1.18262 13.8913 1.26319 13.5137 1.41973C13.136 1.57627 12.7929 1.80571 12.5039 2.09493L3.15594 11.4429C2.7122 11.8874 2.39564 12.4426 2.23919 13.0508L1.20606 17.0717C1.18044 17.1717 1.18136 17.2767 1.20872 17.3763C1.23609 17.4759 1.28895 17.5666 1.3621 17.6395C1.43524 17.7124 1.52614 17.765 1.62581 17.792C1.72548 17.8191 1.83048 17.8196 1.93044 17.7937L5.95012 16.7617C6.55858 16.6058 7.11392 16.2892 7.558 15.845L16.906 6.49699C17.1952 6.20805 17.4247 5.86493 17.5812 5.48727C17.7377 5.1096 17.8183 4.70478 17.8183 4.29596C17.8183 3.88713 17.7377 3.48232 17.5812 3.10465C17.4247 2.72698 17.1952 2.38387 16.906 2.09493ZM13.3435 2.93449C13.7046 2.57341 14.1943 2.37055 14.705 2.37055C15.2156 2.37055 15.7054 2.57341 16.0664 2.93449C16.4275 3.29557 16.6304 3.78531 16.6304 4.29596C16.6304 4.80661 16.4275 5.29634 16.0664 5.65743L15.1414 6.58249L12.4184 3.85955L13.3435 2.93449ZM11.5789 4.69911L14.3018 7.42205L6.71844 15.0054C6.42452 15.2991 6.05701 15.5083 5.65444 15.6111L2.60612 16.3948L3.38987 13.3465C3.49209 12.9437 3.70135 12.576 3.9955 12.2825L11.5789 4.69911Z" fill="white" stroke="white" stroke-width="0.3"/>
+                </svg>
+              </div>
+            </div>
+
+            <p class="my-2 font-semibold text-header3">{{ brand['name'] }}</p>
+            <div class="flex gap-2">
+              <button (click)="askConfirm(1)" class="border border-blue-80 text-blue-80 font-semibold w-[5rem] py-2 rounded-lg">Cancel</button>
+              <button [disabled]="!profileForm.valid" (click)="onSave()" class="bg-blue-80 text-font-white font-semibold w-[5rem] py-2 rounded-lg disabled:opacity-70">Save</button>
+            </div>
+          </div>
+
+          <!-- Hidden File Input -->
+          <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          hidden />
+
+        </div>
+        <div class="basis-3/4">
+          <p class="mb-2 font-semibold text-header3">My Profile</p>
+          <div class="grid grid-cols-2 gap-x-7">
+            <div class="inputContainer">
+              <label for="name" class=" inputLabel text-font-darkGrey">Name</label>
+              <!-- <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['name'] }}</div> -->
+              <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['name'].touched|| submitted) && profileFormControl['name'].errors?.['required']">Name is required</span>
+            </div>
+
+
+            <div class="inputContainer">
+              <label for="location" class="inputLabel text-font-darkGrey">Location</label>
+              <!-- <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['location'] }}</div> -->
+              <select class="inputBox text-font-darkGrey font-normal" name="location" id="location" formControlName="location" required>
+                <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+              <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['location'].touched|| submitted) && profileFormControl['location'].errors?.['required']">Location is required</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="email" class="inputLabel text-font-darkGrey">Email</label>
+              <!-- <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['email'] }}</div> -->
+              <input type="email" id="email" name="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com" required formControlName="email">
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exists</span>
+            </div>
+
+
+
+            <div class="inputContainer">
+              <label for="phone" class="inputLabel text-font-darkGrey">Phone number</label>
+              <div class="flex" id="inputBoxPhone">
+                <div class="phonePrefix text-center content-center">+62</div>
+                <!-- <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['phone'] }}</div> -->
+                <input type="phone" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Phone number" required formControlName="phone">
+              </div>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['required']">Phone number is required</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['pattern']">Invalid phone number</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="email" class="inputLabel text-font-darkGrey">Category</label>
+              <!-- <div type="text" id="name" name="category" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['category'] }}</div> -->
+              <!-- <input type="email" id="email" name="email" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey" placeholder="email@domain.com" required formControlName="email"> -->
+              <!-- <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exists</span> -->
+              <select class="inputBox text-font-darkGrey font-normal" name="category" id="category" formControlName="category" required>
+                <option *ngFor="let item of categoryOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+            </div>
+
+
+          </div>
+
+          <!-- target audience -->
+          <p class="mt-5 mb-2 font-semibold text-header5">Target Audience</p>
+          <div class="">
+            <div class="inputContainer">
+              <label for="targetLocation" class="inputLabel text-font-darkGrey">Brand’s Target Location</label>
+              <select multiple="" data-hs-select='{
+                "placeholder": "Select your brands target location",
+                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                "mode": "tags",
+                "wrapperClasses": "mt-2 relative ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-gray-200 rounded-lg text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
+                "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-lg py-1 ps-3 pe-1 m-1 dark:bg-neutral-900 dark:border-neutral-700 \"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+                "tagsInputId": "hs-tags-input",
+                "tagsInputClasses": "py-3 px-2 rounded-lg order-1 text-sm outline-none dark:bg-neutral-900 dark:placeholder-neutral-500 dark:text-neutral-400",
+                "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
+                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+              }' class="hidden" name="" formControlName="targetLocation">
+                    <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['targetLocation'].touched|| submitted) && profileFormControl['targetLocation'].errors?.['required']">Select at least 1 target location</span>
+
+                  <!-- <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['email']">Invalid email</span>
+                  <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exists</span> -->
+            </div>
+
+            <div class="inputContainer">
+              <label for="targetAgeRange" class="inputLabel text-font-darkGrey">Brand’s Target Age Range</label>
+              <select multiple="" data-hs-select='{
+                "placeholder": "Select your brands target location",
+                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                "mode": "tags",
+                "wrapperClasses": "mt-2 relative ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-gray-200 rounded-lg text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
+                "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-lg py-1 ps-3 pe-1 m-1 dark:bg-neutral-900 dark:border-neutral-700 \"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+                "tagsInputId": "hs-tags-input",
+                "tagsInputClasses": "py-3 px-2 rounded-lg order-1 text-sm outline-none dark:bg-neutral-900 dark:placeholder-neutral-500 dark:text-neutral-400",
+                "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
+                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+              }' class="hidden" name="" formControlName="targetAgeRange">
+                <option *ngFor="let item of ageOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['targetAgeRange'].touched|| submitted) && profileFormControl['targetAgeRange'].errors?.['required']">Select at least 1 target age range </span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['targetAgeRange'].touched|| submitted) && profileFormControl['targetAgeRange'].errors?.['required']">Select at least 1 target age range </span>
+            </div>
+          </div>
+
+           <div class="inputContainer">
+            <label for="targetLocation" class="inputLabel text-font-darkGrey">Brand’s Target Gender</label>
+            <div class="mt-2 flex grid grid-cols-2 gap-3 w-1/2">
+              <div *ngFor="let item of genderOptions">
+                <app-category-card [id]="item.id" [label]="item.label" [logo]="item.logo" [activeLogo]="item.active_logo" [isSelected]="isSelected(item.id)" (categorySelected)="selectGender(item.id)"></app-category-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

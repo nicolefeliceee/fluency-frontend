@@ -13,7 +13,6 @@ import { LoginInterceptorComponent } from './components/login-interceptor/login-
 import { InfluencerComponent } from './pages/influencer/influencer.component';
 import { InfluencerCardComponent } from './components/influencer-card/influencer-card.component';
 import { InfluencerRateCardComponent } from './pages/signup/signup-forms/influencer-rate-card/influencer-rate-card.component';
-import { ProfileBrandComponent } from './pages/profile-brand/profile-brand.component';
 import { CompleteProfileInfluencerComponent } from './pages/signup/signup-forms/complete-profile-influencer/complete-profile-influencer.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { ProjectCreateComponent } from './pages/project/project-create/project-create.component';
@@ -21,8 +20,9 @@ import { SavedInfluencerComponent } from './pages/saved-influencer/saved-influen
 import { ProjectDetailComponent } from './pages/project/project-detail/project-detail.component';
 import { InfluencerDetailComponent } from './pages/influencer-detail/influencer-detail.component';
 import { PerformanceAnalyticsComponent } from './pages/project/project-detail/performance-analytics/performance-analytics.component';
-import { ProfileComponent } from './pages/profile/profile.component';
 import { HomeInfluencerComponent } from './pages/home-influencer/home-influencer.component';
+import { ProfileViewComponent } from './pages/profile-brand/profile-view/profile-view.component';
+import { ProfileEditComponent } from './pages/profile-brand/profile-edit/profile-edit.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -44,8 +44,9 @@ export const routes: Routes = [
   { path: 'signup/influencer/profile', component: CompleteProfileInfluencerComponent },
   { path: 'signup/influencer/category', component: ChooseCategoryComponent },
   { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent },
-  {path:'profile-brand', component: ProfileBrandComponent},
-  {path:'profile', component: ProfileComponent},
+  {path:'profile-brand', component: ProfileViewComponent},
+  {path:'profile-brand/edit', component: ProfileEditComponent},
+  // {path:'profile-influencer', component: ProfileInfluencerComponent},
   {path:'project', component: ProjectComponent},
   {path:'project/detail', component: ProjectDetailComponent},
   {path:'project/detail/performance-analytics', component: PerformanceAnalyticsComponent},
