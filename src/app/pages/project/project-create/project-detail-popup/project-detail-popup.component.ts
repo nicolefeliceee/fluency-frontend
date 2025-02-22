@@ -171,4 +171,17 @@ export class ProjectDetailPopupComponent implements OnInit, OnChanges{
     return !!urlPattern.test(url);
   }
 
+  isDateInput: boolean = false; // Controls the input type
+
+  changeToDate(event: any) {
+    this.isDateInput = true;
+    setTimeout(() => {
+      event.target.showPicker(); // Opens the date picker in modern browsers
+    });
+  }
+
+  changeToText(event: any) {
+    this.isDateInput = event.target.value ? true : false;
+  }
+
 }

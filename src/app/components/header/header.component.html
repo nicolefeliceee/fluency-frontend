@@ -4,8 +4,7 @@
     <p>L O G O</p>
   </div>
   <div *ngIf="userId" class="middle flex content-center justify-center items-center">
-    <a *ngIf="!instagramId" routerLink="/home" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
-    <a *ngIf="instagramId" routerLink="/influencer-home" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
+    <a [routerLink]="pathToHome" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
     <div class="bantu"></div>
     <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Project</a>
     <div class="bantu"></div>

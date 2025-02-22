@@ -65,27 +65,27 @@
         <p class="text-header3 font-bold mb-5">Project Detail</p>
         <div class="flex flex-col my-5">
           <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Title</label>
-          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectTitle }}</div>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectTitle?projectTitle: '-' }}</div>
         </div>
 
         <div class="flex flex-col my-5">
           <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Description</label>
-          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectDescription }}</div>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectDescription?projectDescription: '-' }}</div>
         </div>
 
         <div class="flex flex-col my-5">
           <label class="text-header6 text-font-darkGrey font-semibold" for="">Caption</label>
-          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectCaption }}</div>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" >{{ projectCaption?projectCaption: '-' }}</div>
         </div>
 
         <div class="flex flex-col my-5">
           <label class="text-header6 text-font-darkGrey font-semibold" for="">Mention</label>
-          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectMention }}</div>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectMention?projectMention: '-' }}</div>
         </div>
 
         <div class="flex flex-col my-5">
           <label class="text-header6 text-font-darkGrey font-semibold" for="">Hashtag</label>
-          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectHashtag }}</div>
+          <div type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" >{{ projectHashtag?projectHashtag: '-' }}</div>
         </div>
 
       </div>
@@ -102,10 +102,15 @@
           <!-- for loggedin user: influencer -->
           <div *ngIf="instagramId">
             <div class=" h-5/6 rounded-xl mt-5">
-              <div class="flex rounded-xl">
-                <div *ngIf="brand['profile_picture']" class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]=""></div>
-                <div *ngIf="!brand['profile_picture']" class="foto rounded-l-xl bg-[#D9D9D9] justify-center items-center"><img src="../../../../assets/images/empty profile pic.png" alt=""></div>
-                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey">
+              <div class="flex rounded-xl bg-font-lightGrey/50">
+                <!-- <div *ngIf="brand['profile_picture_byte']" class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]=""></div> -->
+                <div class="w-1/2 flex justify-center items-center">
+                  <div *ngIf="profilePicBrand" class="w-[13rem] h-[13rem] rounded-full overflow-hidden">
+                    <img class="w-full h-full object-cover" [src]="profilePicBrand" alt="Profile Picture" />
+                  </div>
+                  <div *ngIf="!brand['profile_picture_byte']" class="foto rounded-l-xl bg-[#D9D9D9] justify-center items-center"><img src="../../../../assets/images/empty profile pic.png" alt=""></div>
+                </div>
+                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey bg-font-white place-content-center">
                   <p class="text-header5 font-semibold text-font-darkGrey mb-2">{{ brand['name'] }}</p>
                   <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
                     <p >{{ brand['category'] }}</p>
@@ -173,7 +178,7 @@
                     <p class="text-[0.75rem] text-font-darkGrey">{{ selectedInfluencer.rating }} | {{ selectedInfluencer.totalreview }} Reviews</p>
                   </div>
                   <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
-                    <div class="flex">
+                    <div class="flex flex-wrap">
                       <p >{{ selectedInfluencer.category[0].label }} &nbsp;</p>
                       <p *ngFor="let item of selectedInfluencer.category.slice(1)">| &nbsp;{{ item.label }} &nbsp;</p>
                     </div>

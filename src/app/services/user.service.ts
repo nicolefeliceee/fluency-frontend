@@ -110,6 +110,10 @@ export class UserService {
     return this.httpClient.post(this.baseUrl + "/user/influencer/signup",request);
   }
 
+  editProfileInfluencer(request: SignupInfluencer): Observable<object> {
+    return this.httpClient.put(this.baseUrl + "/user/influencer/profile/" + localStorage.getItem("user_id"), request);
+  }
+
   validateEmail(request: String): Observable<string> {
     return this.httpClient.get(this.baseUrl + "/user/validation/email/" + request, {
       responseType: 'text'

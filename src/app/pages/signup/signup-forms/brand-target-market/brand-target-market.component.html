@@ -1,11 +1,13 @@
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 
+<app-alert-error [display]="signUpError" [label]="'Sign up failed! Please try again later'"></app-alert-error>
+
 <div class="container bg-background p-5">
 
 
   <h1 class="text-header2 font-semibold text-center mb-7 ">Complete your brand's target market</h1>
 
-  <form action="" class="w-3/5 mx-auto" [formGroup]="targetForm" (ngSubmit)="onSubmit()">
+  <form action="" class="w-3/5 mx-auto" [formGroup]="targetForm" (ngSubmit)="askConfirm(1)">
 
     <div class=" ">
        <!-- Select target location-->
@@ -25,6 +27,7 @@
           <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
         </select>
         <!-- End Select -->
+        <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['targetLocation'].touched || submitted) && profileFormControl['targetLocation'].errors?.['required']">Please select at least 1 location</span>
     </div>
 
 
@@ -46,6 +49,7 @@
     <option *ngFor="let item of ageOptions" [value]="item.id">{{ item.label }}</option>
   </select>
   <!-- End Select -->
+  <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['targetAge'].touched|| submitted) && profileFormControl['targetAge'].errors?.['required']">Please select at least 1 age range</span>
 </div>
 
     <div class="mt-5 w-full">
@@ -55,11 +59,9 @@
           <app-category-card [id]="item.id" [label]="item.label" [logo]="item.logo" [activeLogo]="item.active_logo" [isSelected]="isSelected(item.id)" (categorySelected)="selectGender(item.id)"></app-category-card>
         </div>
       </div>
+      <span class="text-[0.75rem] text-primary-red" *ngIf="( submitted) && selectedGender.length  == 0">Please select at least 1 gender</span>
     </div>
 
-
-
-  </form>
   <div class="flex gap-3 mx-auto justify-end mt-10 w-10/12">
 
     <button (click)="prevStep()" class=" bg-font-white text-header6 text-blue-80 border-[1px] border-blue-80 font-semibold flex py-3 px-7 rounded-xl"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +69,9 @@
       </svg>
        Previous
       </button>
-    <button (click)="askConfirm(1)" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Finish</button>
+    <button type="submit" class=" bg-blue-80 text-header6 text-font-white font-semibold flex py-3 px-7 rounded-xl">Finish</button>
 
   </div>
+
+</form>
 </div>

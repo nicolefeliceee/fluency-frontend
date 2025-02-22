@@ -6,11 +6,12 @@ import { error } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HeaderComponent } from "../../../components/header/header.component";
 import { CategoryCardComponent } from "../../signup/signup-forms/choose-category/category-card/category-card.component";
+import { AlertSuccessComponent } from "../../../components/alert-success/alert-success.component";
 
 @Component({
   selector: 'app-profile-view',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, CategoryCardComponent],
+  imports: [CommonModule, HeaderComponent, CategoryCardComponent, AlertSuccessComponent],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
 })
@@ -19,11 +20,18 @@ export class ProfileViewComponent implements OnInit{
   imagePreview: any;
   brand: any;
 
+  editSuccess: boolean = false;
+
   constructor(
     private userService: UserService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) {
+    const navigation = this.router.getCurrentNavigation();
+     this.editSuccess = navigation?.extras.state?.['editSuccess'];
+     setTimeout(() => {
+       this.editSuccess = false;
+     }, 2000);
   }
 
   ngOnInit(): void {

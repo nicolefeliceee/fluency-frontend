@@ -47,8 +47,10 @@ export class ProjectCreateComponent implements OnInit{
 
   // for error alert
   createError: boolean = false;
+  requiredNotFilled: boolean = false;
   detailNotSelected: boolean = false;
   influencerNotSelected: boolean = false;
+  influencerInActive: boolean = false;
   generalError: boolean = false;
 
   // for prices from influencer
@@ -71,7 +73,6 @@ export class ProjectCreateComponent implements OnInit{
       this.storyDetailList = this.getStoryListFromDraft(this.draftProject['project_details']);
       this.feedsDetailList = this.getFeedsListFromDraft(this.draftProject['project_details']);
       this.reelsDetailList = this.getReelsListFromDraft(this.draftProject['project_details']);
-      console.log(this.storyDetailList);
     }
 
     if (this.influencerSelectedProject) {
@@ -195,6 +196,12 @@ export class ProjectCreateComponent implements OnInit{
   }
 
   goToPayment() {
+// validasi required field: title, desc, capt, mention
+    if (this.projectTitle == null || this.projectDescription == null || this.projectCaption == null || this.projectMention == null) {
+      this.requiredNotFilled = true;
+      this.displayConfirmation = false;
+    }
+
     if (this.storyDetailList.length == 0 && this.feedsDetailList.length == 0 && this.reelsDetailList.length == 0) {
       this.detailNotSelected = true;
       this.displayConfirmation = false;
@@ -204,7 +211,13 @@ export class ProjectCreateComponent implements OnInit{
         this.influencerNotSelected = false;
       }, 3000);
       this.displayConfirmation = false;
-    } else {
+    } else if (!this.selectedInfluencer['isactive']) {
+      this.influencerInActive = true;
+      setTimeout(() => {
+        this.influencerInActive = false;
+      }, 3000);
+      this.displayConfirmation = false;
+    } else{
       this.askConfirm(2);
     }
   }
@@ -299,7 +312,6 @@ export class ProjectCreateComponent implements OnInit{
   }
 
   saveProject(statusId: any) {
-    console.log(this.newProject);
     this.newProject.projectDetails = [];
 
     this.newProject.userId = localStorage.getItem("user_id") || '';
@@ -340,7 +352,7 @@ export class ProjectCreateComponent implements OnInit{
           (data) => {
             // console.log(data);
             this.ngZone.run(() => {
-              this.router.navigate(['/project'], {state: {status: true}});
+              this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
             })
             },
             (error) => {
@@ -351,7 +363,9 @@ export class ProjectCreateComponent implements OnInit{
       } else {
         this.projectService.createProject(this.newProject).subscribe(
           (data) => {
-              this.router.navigate(['/project'], {state: {status: true}});
+            this.ngZone.run(() => {
+              this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
+            })
             },
             (error) => {
               console.log(error);
@@ -365,7 +379,9 @@ export class ProjectCreateComponent implements OnInit{
       // create new
       this.projectService.createProject(this.newProject).subscribe(
         (data) => {
-            this.router.navigate(['/project'], {state: {status: true}});
+          this.ngZone.run(() => {
+            this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
+          })
           },
           (error) => {
             console.log(error);

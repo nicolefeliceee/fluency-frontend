@@ -3,8 +3,10 @@
 
 <app-alert-error [display]="createError" [label]="'Save project failed! Please try again later'" (dismissClicked)="this.createError = false"></app-alert-error>
 <app-alert-error [display]="detailNotSelected" [label]="'You havent selected any media'" (dismissClicked)="this.detailNotSelected = false"></app-alert-error>
-<app-alert-error [display]="influencerNotSelected" [label]="'You havent selected any influencer'" (dismissClicked)="this.influencerNotSelected = false"></app-alert-error>
+<app-alert-error [display]="influencerNotSelected" [label]="'You have not selected any influencer'" (dismissClicked)="this.influencerNotSelected = false"></app-alert-error>
+<app-alert-error [display]="influencerInActive" [label]="'This influencer is no longer active! Please choose another one'" (dismissClicked)="this.influencerInActive = false"></app-alert-error>
 <app-alert-error [display]="generalError" [label]="'Unexpected error occured! Please try again later'" (dismissClicked)="this.generalError = false"></app-alert-error>
+<app-alert-error [display]="requiredNotFilled" [label]="'Please fill out all required field'" (dismissClicked)="this.generalError = false"></app-alert-error>
 
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="editDetailForm" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)"></app-project-detail-popup>
@@ -17,22 +19,22 @@
       <div class="bg-font-white rounded-xl p-5">
         <p class="text-header3 font-bold mb-5">Create Project</p>
         <div class="flex flex-col my-5">
-          <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Title</label>
+          <label class="text-header6 text-font-darkGrey font-semibold flex" for="">Project Title <p class="text-primary-red ">*</p></label>
           <input type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" placeholder="Your project title here..." [(ngModel)]="projectTitle">
         </div>
 
         <div class="flex flex-col my-5">
-          <label class="text-header6 text-font-darkGrey font-semibold" for="">Project Description</label>
+          <label class="text-header6 text-font-darkGrey font-semibold flex" for="">Project Description <p class="text-primary-red ">*</p></label>
           <textarea type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" placeholder="Your project description here..." [(ngModel)]="projectDescription"></textarea>
         </div>
 
         <div class="flex flex-col my-5">
-          <label class="text-header6 text-font-darkGrey font-semibold" for="">Caption</label>
+          <label class="text-header6 text-font-darkGrey font-semibold flex" for="">Caption <p class="text-primary-red ">*</p></label>
           <textarea type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl h-[11rem]" placeholder="Caption for your post here..." [(ngModel)]="projectCaption"></textarea>
         </div>
 
         <div class="flex flex-col my-5">
-          <label class="text-header6 text-font-darkGrey font-semibold" for="">Mention</label>
+          <label class="text-header6 text-font-darkGrey font-semibold flex" for="">Mention <p class="text-primary-red ">*</p></label>
           <input type="text" class="bg-font-lightGrey/15 py-2 px-5 rounded-xl" placeholder="Account(s) you want to mention here..." [(ngModel)]="projectMention">
         </div>
 
@@ -82,7 +84,7 @@
                   <p class="text-[0.75rem] text-font-darkGrey">{{ selectedInfluencer.rating }} | {{ selectedInfluencer.totalreview }} Reviews</p>
                 </div>
                 <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
-                  <div class="flex">
+                  <div class="flex flex-wrap">
                     <p >{{ selectedInfluencer.category[0].label }} &nbsp;</p>
                     <p *ngFor="let item of selectedInfluencer.category.slice(1)">| &nbsp;{{ item.label }} &nbsp;</p>
                   </div>
@@ -116,7 +118,7 @@
         <div class="bg-font-white rounded-xl p-5 mt-7 h-[24rem] overflow-y-auto">
           <p class="text-header4 text-bg-blue-100 font-semibold mb-5">Media type</p>
             <!-- story starts  -->
-            <div *ngIf="storyPrice" class="border border-font-darkGrey/70 rounded-xl px-4 py-2">
+            <div *ngIf="storyPrice > 0" class="border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Story</p>
                 <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(storyPrice) }}</p>
@@ -157,7 +159,7 @@
             <!-- story ends  -->
 
             <!-- feeds starts  -->
-            <div *ngIf="feedsPrice" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
+            <div *ngIf="feedsPrice > 0" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Feeds</p>
                 <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(feedsPrice) }}</p>
@@ -198,7 +200,7 @@
             <!-- feeds ends  -->
 
             <!-- reels starts  -->
-            <div *ngIf="reelsPrice" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
+            <div *ngIf="reelsPrice > 0" class="mt-5 border border-font-darkGrey/70 rounded-xl px-4 py-2">
               <div class="flex">
                 <p class="me-auto text-header6 text-font-darkGrey font-semibold">Reels</p>
                 <p class="ms-auto text-header6 text-font-darkGrey">Rp {{ formatPrice(reelsPrice) }}</p>

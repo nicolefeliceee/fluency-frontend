@@ -8,16 +8,25 @@ import { SignupBrand } from '../../models/signup-brand';
 import { state } from '@angular/animations';
 import { SignupInfluencer } from '../../models/signup-influencer';
 import { UserService } from '../../services/user.service';
+import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, RoleCardComponent],
+  imports: [CommonModule, HeaderComponent, RoleCardComponent, AlertErrorComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
-  constructor(private router: Router, private userService: UserService) {}
+
+  error: any;
+
+  constructor(
+    private router: Router, private userService: UserService
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    this.error = navigation?.extras.state?.['error'];
+  }
 
   selectedOption: string | null = null;
 

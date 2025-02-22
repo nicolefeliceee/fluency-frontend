@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ReviewService } from '../../../services/review.service';
 import { Review } from '../../../models/review';
 import { error } from 'console';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project-detail',
@@ -65,7 +66,10 @@ export class ProjectDetailComponent implements OnInit{
 
   selectedInfluencerId?: any = '';
   selectedInfluencer?: any = null;
+
   brand?: any = null;
+  profilePicBrand: any;
+
   newProject: any;
   projectId: any;
 
@@ -78,7 +82,8 @@ export class ProjectDetailComponent implements OnInit{
       private midtransService: MidtransService,
       private reviewService: ReviewService,
       private ngZone: NgZone,
-      private decimalPipe: DecimalPipe
+      private decimalPipe: DecimalPipe,
+      private sanitizer: DomSanitizer
     ) {
       const navigation = this.router.getCurrentNavigation();
       this.projectId = navigation?.extras.state?.['projectId'];
@@ -102,9 +107,6 @@ export class ProjectDetailComponent implements OnInit{
         this.feedsDetailList = this.getFeedsListFromDraft(this.newProject['project_details']);
         this.reelsDetailList = this.getReelsListFromDraft(this.newProject['project_details']);
 
-        console.log(this.storyDetailList);
-        console.log(this.feedsDetailList);
-        console.log(this.reelsDetailList);
         if (this.selectedInfluencerId != '') {
           this.influencerService.getInfluencerById(this.selectedInfluencerId).subscribe(
             (data) => {
@@ -129,8 +131,12 @@ export class ProjectDetailComponent implements OnInit{
         if (this.instagramId) {
           this.brandService.getBrandById(this.brandId).subscribe(
             (data) => {
-              // console.log(data);
               this.brand = data;
+              if (data['profile_picture_byte']) {
+                const imageBlob = this.dataURItoBlob(data['profile_picture_byte'], data['profile_picture_type']);
+                const imageFile = new File([imageBlob], data['profile_picture_name'], { type: data['profile_picture_type'] });
+                this.profilePicBrand = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile));
+              }
             },
             (error) => {
               console.log(error);
@@ -152,6 +158,19 @@ export class ProjectDetailComponent implements OnInit{
       }
     )
 
+  }
+
+  public dataURItoBlob(picBytes: any, imageType: any) {
+    const byteString = window.atob(picBytes);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      int8array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([int8array], { type: imageType });
+    return blob;
   }
 
   getNominalNumber(nominal: string) {
@@ -492,11 +511,11 @@ export class ProjectDetailComponent implements OnInit{
   }
 
   rejectProject() {
-    this.saveProject(6);
+    this.saveProject('6');
   }
 
   acceptProject() {
-    this.saveProject(4);
+    this.saveProject('4');
   }
 
 
@@ -513,7 +532,7 @@ export class ProjectDetailComponent implements OnInit{
     if (existNull) {
       this.notFinishedError = true;
     } else {
-      this.saveProject(5);
+      this.saveProject('5');
     }
   }
 

@@ -39,7 +39,8 @@ export class LoginInterceptorComponent implements OnInit {
 
     setTimeout(() => {
       // kirim ke backend
-    this.userService.sendToken(localStorage.getItem('long_lived_token') || '').subscribe(data => {
+      this.userService.sendToken(localStorage.getItem('long_lived_token') || '').subscribe(
+        data => {
       console.log(data);
 
       this.newInfluencer = new SignupInfluencer(
@@ -61,8 +62,8 @@ export class LoginInterceptorComponent implements OnInit {
 
 
     },error=>{
-      console.log(error)
-      this.router.navigate(['/signup']);
+          this.loadingService.hide();
+      this.router.navigate(['/signup'], {state: {error: true}});
     });
 
     }, 1000);

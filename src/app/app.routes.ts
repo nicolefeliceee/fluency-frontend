@@ -23,6 +23,8 @@ import { PerformanceAnalyticsComponent } from './pages/project/project-detail/pe
 import { HomeInfluencerComponent } from './pages/home-influencer/home-influencer.component';
 import { ProfileViewComponent } from './pages/profile-brand/profile-view/profile-view.component';
 import { ProfileEditComponent } from './pages/profile-brand/profile-edit/profile-edit.component';
+import { ProfileInfViewComponent } from './pages/profile-influencer/profile-inf-view/profile-inf-view.component';
+import { ProfileInfEditComponent } from './pages/profile-influencer/profile-inf-edit/profile-inf-edit.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -46,7 +48,8 @@ export const routes: Routes = [
   { path: 'signup/influencer/rate-card', component: InfluencerRateCardComponent },
   {path:'profile-brand', component: ProfileViewComponent},
   {path:'profile-brand/edit', component: ProfileEditComponent},
-  // {path:'profile-influencer', component: ProfileInfluencerComponent},
+  {path:'profile-influencer', component: ProfileInfViewComponent},
+  {path:'profile-influencer/edit', component: ProfileInfEditComponent},
   {path:'project', component: ProjectComponent},
   {path:'project/detail', component: ProjectDetailComponent},
   {path:'project/detail/performance-analytics', component: PerformanceAnalyticsComponent},

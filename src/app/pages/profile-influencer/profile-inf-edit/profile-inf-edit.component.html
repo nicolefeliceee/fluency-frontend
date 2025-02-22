@@ -1,0 +1,572 @@
+<app-header></app-header>
+<div class="bantu"></div>
+
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (cancelClicked)="displayConfirmation = false" (confirmClicked)="confirmConfirm()"></app-confirmation-popup>
+
+
+<div class="container bg-background p-5">
+  <div class="container px-2 py-5">
+    <form class="p-2" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex w-10/12 mx-auto">
+        <div class="basis-1/4">
+          <div class="m-0 p-0 relative justify-items-center">
+            <div *ngIf="imagePreview" class="w-52 h-52 rounded-full overflow-hidden border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+              <img class="w-full h-full object-cover" [src]="imagePreview" alt="Profile Picture" />
+            </div>
+            <img *ngIf="!imagePreview" src="../../../../../assets/images/empty profile pic.png" alt="Profile Picture" class="w-52 h-52 rounded-full object-cover border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
+
+
+            <p class="my-2 font-semibold text-header3">{{ '@' + username }}</p>
+            <div class="flex gap-2">
+              <button (click)="askConfirm(1)" class="border border-blue-80 text-blue-80 font-semibold w-[5rem] py-2 rounded-lg">Cancel</button>
+              <button [disabled]="!profileForm.valid" (click)="onSave()" class="bg-blue-80 text-font-white font-semibold w-[5rem] py-2 rounded-lg disabled:opacity-70">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="basis-3/4">
+          <p class="mb-2 font-semibold text-header3">My Profile</p>
+          <div class="grid grid-cols-2 gap-x-7">
+            <div class="inputContainer">
+              <label for="name" class=" inputLabel mb-2 text-font-darkGrey">Name</label>
+              <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['name'].touched|| submitted) && profileFormControl['name'].errors?.['required']">Name is required</span>
+           </div>
+
+            <div class="inputContainer">
+              <label for="gender" class="inputLabel mb-2 text-font-darkGrey">Gender</label>
+              <!-- <div type="text" id="gender" name="gender" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ influencer['gender'] }}</div> -->
+              <select class="inputBox text-font-darkGrey font-normal" name="gender" id="gender" formControlName="gender" required>
+                <option *ngFor="let item of genderOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+              <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['gender'].touched|| submitted) && profileFormControl['gender'].errors?.['required']">Gender is required</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="email" class="inputLabel mb-2 text-font-darkGrey">Email</label>
+              <input type="text" id="email" email="email" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="email" formControlName="email" required>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && profileFormControl['email'].errors?.['required']">Email is required</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['email'].touched|| submitted) && emailExist">Email already exist</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="phone" class="inputLabel mb-2 text-font-darkGrey">Phone number</label>
+              <div class="flex" id="inputBoxPhone">
+                <div class="phonePrefix text-center content-center">+62</div>
+                <input type="phone" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] " placeholder="Phone number" required formControlName="phone">
+
+              </div>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['required']">Phone number is required</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['phone'].touched|| submitted) && profileFormControl['phone'].errors?.['pattern']">Invalid phone number</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="dob" class="inputLabel mb-2 text-font-darkGrey">Date of Birth</label>
+              <input type="date" id="dob" name="dob" class="inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey pe-2" placeholder="Date of Birth" required formControlName="dob" [max]="maxDate">
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['dob'].touched|| submitted) && profileFormControl['dob'].errors?.['required']">Date of birth is required</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="location" class="inputLabel mb-2 text-font-darkGrey">Location</label>
+              <select class="inputBox" name="location" id="location" formControlName="location" required>
+                <option *ngFor="let item of locationOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+
+              <span class="text-[0.75rem]  text-primary-red" *ngIf="(profileFormControl['location'].touched|| submitted) && profileFormControl['location'].errors?.['required']">Location is required</span>
+            </div>
+
+            <div class="inputContainer">
+              <label for="email" class="inputLabel mb-2 text-font-darkGrey">Category</label>
+              <select multiple="" data-hs-select='{
+                "placeholder": "Select your brands target location",
+                "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+                "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
+                "mode": "tags",
+                "wrapperClasses": "mt-2 relative ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap bg-white w-full border border-gray-200 rounded-lg text-start text-[0.875rem] focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400",
+                "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-lg py-1 ps-3 pe-1 m-1 dark:bg-neutral-900 dark:border-neutral-700 \"><div class=\"size-6 me-1\" data-icon></div><div class=\"whitespace-nowrap text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+                "tagsInputId": "hs-tags-input",
+                "tagsInputClasses": "py-3 px-2 rounded-lg order-1 text-sm outline-none dark:bg-neutral-900 dark:placeholder-neutral-500 dark:text-neutral-400",
+                "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 me-2\" data-icon></div><div><div class=\"text-sm text-gray-800 dark:text-neutral-200 \" data-title></div><div class=\"text-xs text-gray-500 dark:text-neutral-500 \" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-blue-600\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
+                "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+              }' class="hidden" name="" formControlName="category" (change)="checkCategoryCount()">
+                    <option *ngFor="let item of categoryOptions" [value]="item.id">{{ item.label }}</option>
+              </select>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="(profileFormControl['category'].touched|| submitted) && profileFormControl['category'].errors?.['required']">Select at least 1 category</span>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="maxCategoryLimitExceed">Max 5 categories</span>
+            </div>
+
+
+          </div>
+
+          <!-- target audience -->
+          <p class="mt-5 mb-2 font-semibold text-header5">Campaign Type</p>
+          <div class="flex">
+            <div class="inputContainer w-[12rem] me-5">
+              <div class="flex items-center mb-2">
+                <input type="checkbox" [(ngModel)]="storyActive" (change)="storyCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
+              <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Story</label>
+              </div>
+              <div class="flex" id="inputBoxPhone">
+                <div class="phonePrefix text-center content-center">Rp</div>
+                <input type="number" id="storyPrice" name="storyPrice" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] disabled:opacity-50" placeholder="Story price" formControlName="storyPrice">
+              </div>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="storyActive && (profileFormControl['storyPrice'].errors?.['min'] || profileFormControl['storyPrice'].errors?.['required'])">Price must be greater than 0</span>
+            </div>
+
+            <div class="inputContainer w-[12rem] me-5 ">
+              <div class="flex items-center mb-2">
+                <input type="checkbox" [(ngModel)]="feedsActive" (change)="feedsCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
+              <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Feeds</label>
+              </div>
+              <div class="flex" id="inputBoxPhone">
+                <div class="phonePrefix text-center content-center">Rp</div>
+                <input type="number" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] disabled:opacity-50" placeholder="Feeds price" formControlName="feedsPrice">
+              </div>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="feedsActive && (profileFormControl['feedsPrice'].errors?.['min'] || profileFormControl['feedsPrice'].errors?.['required'])">Price must be greater than 0</span>
+            </div>
+
+            <div class="inputContainer w-[12rem] me-5">
+              <div class="flex items-center mb-2">
+                <input type="checkbox" [(ngModel)]="reelsActive" (change)="reelsCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
+              <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Reels</label>
+              </div>
+              <div class="flex" id="inputBoxPhone">
+                <div class="phonePrefix text-center content-center">Rp</div>
+                <input type="number" id="phone" name="phone" class=" border-font-lightGrey-30 border-[1px] text-font-darkGrey w-full rounded-r-[10px] ps-[15px] disabled:opacity-50" placeholder="Reels price" formControlName="reelsPrice">
+              </div>
+              <span class="text-[0.75rem] text-primary-red" *ngIf="reelsActive && (profileFormControl['reelsPrice'].errors?.['min'] || profileFormControl['reelsPrice'].errors?.['required'])">Price must be greater than 0</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+      <!-- accounts analytics -->
+      <div class="accAnalytics mt-6">
+        <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Account Analytics</p>
+        <div class="averageSection grid grid-cols-4 gap-5">
+          <div class="avgCardLike rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
+            <div class="logo">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="20" fill="#59ADF6" fill-opacity="0.3"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M26.0714 20.5374C26.6606 19.9389 26.9879 19.1308 26.9814 18.291C26.9748 17.4511 26.6349 16.6483 26.0364 16.0591C25.74 15.7673 25.3891 15.5368 25.0037 15.3806C24.6182 15.2245 24.2058 15.1458 23.79 15.1491C22.9501 15.1556 22.1473 15.4955 21.5581 16.0941C21.3981 16.2541 21.1947 16.4504 20.9481 16.6832L20.2622 17.3291L19.5764 16.6832C19.3292 16.4499 19.1256 16.2535 18.9656 16.0941C18.3717 15.5002 17.5662 15.1666 16.7264 15.1666C15.8865 15.1666 15.0811 15.5002 14.4872 16.0941C13.2639 17.3182 13.2497 19.2974 14.4422 20.5274L20.2622 26.3474L26.0714 20.5374ZM13.7797 15.3874C14.1666 15.0004 14.626 14.6933 15.1316 14.4839C15.6372 14.2744 16.1791 14.1666 16.7264 14.1666C17.2737 14.1666 17.8156 14.2744 18.3212 14.4839C18.8268 14.6933 19.2861 15.0004 19.6731 15.3874C19.8247 15.5396 20.0211 15.7291 20.2622 15.9557C20.5022 15.7291 20.6986 15.5393 20.8514 15.3866C21.6268 14.5992 22.6833 14.1521 23.7883 14.1437C24.8934 14.1352 25.9565 14.5661 26.7439 15.3416C27.5312 16.117 27.9783 17.1734 27.9868 18.2785C27.9952 19.3835 27.5643 20.4467 26.7889 21.2341L20.8514 27.1724C20.6951 27.3286 20.4832 27.4164 20.2622 27.4164C20.0413 27.4164 19.8293 27.3286 19.6731 27.1724L13.7339 21.2332C12.9723 20.4477 12.5501 19.3942 12.5587 18.3001C12.5673 17.206 13.0059 16.1592 13.7797 15.3857V15.3874Z" fill="#1391FF"/>
+              </svg>
+            </div>
+            <div class="avgLike text-[2rem] font-medium mt-1">{{ influencer?.avglike }}</div>
+            <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Likes Per Post</div>
+          </div>
+          <div class="avgCardComment rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
+            <div class="logo">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="20" fill="#42D6A4" fill-opacity="0.3"/>
+                <path d="M25.8333 13.3335H14.1667C13.7246 13.3335 13.3007 13.5091 12.9882 13.8217C12.6756 14.1342 12.5 14.5581 12.5 15.0002V27.5002L15.3892 25.3335C15.6777 25.1171 16.0285 25.0002 16.3892 25.0002H25.8333C26.2754 25.0002 26.6993 24.8246 27.0118 24.512C27.3244 24.1994 27.5 23.7755 27.5 23.3335V15.0002C27.5 14.5581 27.3244 14.1342 27.0118 13.8217C26.6993 13.5091 26.2754 13.3335 25.8333 13.3335Z" stroke="#09895E" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="avgComment text-[2rem] font-medium mt-1">{{ influencer?.avgcomment }}</div>
+            <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Comments Per Post</div>
+          </div>
+          <div class="avgCardSaved rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
+            <div class="logo">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="20" fill="#C780E8" fill-opacity="0.3"/>
+                <path d="M14 15.1667C14 14.2333 14 13.7667 14.2119 13.41C14.3984 13.0964 14.6958 12.8415 15.0617 12.6817C15.4778 12.5 16.0222 12.5 17.1111 12.5H22.5556C23.6444 12.5 24.1889 12.5 24.605 12.6817C24.9709 12.8415 25.2683 13.0964 25.4547 13.41C25.6667 13.7667 25.6667 14.2333 25.6667 15.1667V26.2542C25.6667 26.6592 25.6667 26.8617 25.5685 26.9725C25.526 27.0207 25.4719 27.0604 25.4098 27.0889C25.3477 27.1174 25.2791 27.134 25.2087 27.1375C25.0464 27.1458 24.85 27.0333 24.4572 26.8092L19.8333 24.1667L15.2094 26.8083C14.8167 27.0333 14.6203 27.1458 14.4569 27.1375C14.3868 27.1339 14.3184 27.1172 14.2564 27.0887C14.1945 27.0603 14.1405 27.0206 14.0982 26.9725C14 26.8617 14 26.6592 14 26.2542V15.1667Z" stroke="#9646FF" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="avgSaved text-[2rem] font-medium mt-1">{{ influencer?.avgsaved }}</div>
+            <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Saved Per Post</div>
+          </div>
+          <div class="avgCardShared rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
+            <div class="logo">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="20" fill="#FF6961" fill-opacity="0.3"/>
+                <path d="M26.6673 19.9998L21.334 14.1665V17.0832C18.6673 17.0832 13.334 18.8332 13.334 25.8332C13.334 24.8607 14.934 22.9165 21.334 22.9165V25.8332L26.6673 19.9998Z" stroke="#FF3328" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="avgShared text-[2rem] font-medium mt-1">{{ influencer?.avgshare }}</div>
+            <div class="text text-font-darkGrey font-medium text-[0.8rem]">Average Shared Per Post</div>
+          </div>
+        </div>
+        <div class="accGraph grid grid-cols-2 gap-5 mt-[20px]">
+          <div class="follGrowth rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Followers Growth</div>
+            <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+              <canvas id="FollGrowth">{{ follGrowth }}</canvas>
+            </div>
+          </div>
+          <div class="reach rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Reach</div>
+            <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+              <canvas id="Reach">{{ reach }}</canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="audAnalytics mt-6">
+        <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Audience Analytics</p>
+        <div class="audGraph grid grid-cols-3 gap-5 mt-[20px]">
+          <div class="gender col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Gender</div>
+            <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+              <canvas id="GenderAudience">{{ genderAudience }}</canvas>
+            </div>
+          </div>
+          <div class="onlFoll col-span-2 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Online Followers</div>
+            <div class="chartContainer mt-2 flex" style="position: relative; height:90%; width:100%">
+              <canvas id="OnlineFollowers">{{ onlineFollAudience }}</canvas>
+              <div class="dataOnlFoll flex ms-5 flex-col">
+                <p class="text-[0.7rem] font-medium text-font-darkGrey mt-3">Highest online time</p>
+                <p class="text-[1.2rem] font-medium">{{ influencer?.highestonlinetime }}</p>
+                <p class="text-[0.7rem] font-medium text-font-darkGrey mt-3">Lowest online time</p>
+                <p class="text-[1.2rem] font-medium">{{ influencer?.lowestonlinetime }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="topCities col-span-2 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Top Cities</div>
+            <div class="chartContainer mt-2 flex gap-[20px]" style="position: relative; height:90%; width:100%">
+              <canvas id="TopCitiesLeft">{{ topCitiesLeft }}</canvas>
+              <canvas id="TopCitiesRight">{{ topCitiesRight }}</canvas>
+            </div>
+          </div>
+          <div class="ageRange col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
+            <div class="text font-semibold text-[0.9rem]">Age Range</div>
+            <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+              <canvas id="AgeRange">{{ ageRangeAudience }}</canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content mt-6">
+        <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Content</p>
+        <div class="isiContent flex">
+          <div class="leftContent w-[27.2%] px-[23px]">
+            <div class="storyText font-semibold text-[0.9rem]">Story</div>
+            <div class="isiStory flex items-center mt-3">
+              <div class="leftArrSvg me-2" (click)="prevStory()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="20" y="20" width="20" height="20" rx="10" transform="rotate(-180 20 20)" fill="#949C9E" fill-opacity="0.25"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.22936 9.52623L11.0007 5.7549L11.9434 6.69757L8.64336 9.99757L11.9434 13.2976L11.0007 14.2402L7.22936 10.4689C7.10438 10.3439 7.03417 10.1743 7.03417 9.99757C7.03417 9.82079 7.10438 9.65125 7.22936 9.52623Z" fill="#494F50"/>
+                </svg>
+              </div>
+
+              <!-- Jika ada story, tampilkan story -->
+              <div class="storyPict" *ngIf="stories.length > 0">
+                <div class="foto3 rounded-3xl relative" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'">
+                <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
+                  <div class="absolute top-2 right-2 flex">
+                    <div class="likes px-[6px] rounded-full py-[3px] flex items-center me-1">
+                      <div class="likeSvg">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M15 9L10.2 3.75V6.375C7.8 6.375 3 7.95 3 14.25C3 13.3747 4.44 11.625 10.2 11.625V14.25L15 9Z" fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <div class="likeAmt font-semibold text-[0.62rem] ms-[1px] text-white">{{ currentStory?.sharecount }}</div>
+                    </div>
+                    <div class="views px-[6px] rounded-full py-[3px] flex items-center">
+                      <div class="viewSvg">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4999 7.99969L14.9149 7.79169V7.78969L14.9119 7.78669L14.9059 7.77469L14.8849 7.73469L14.8049 7.59069C14.7073 7.42229 14.6035 7.25752 14.4939 7.09669C14.128 6.55964 13.7074 6.06198 13.2389 5.61169C12.1129 4.53169 10.3799 3.42969 7.99989 3.42969C5.62189 3.42969 3.88789 4.53069 2.76189 5.61169C2.29335 6.06198 1.87277 6.55964 1.50689 7.09669C1.35843 7.31573 1.22092 7.54201 1.09489 7.77469L1.08889 7.78669L1.08689 7.78969V7.79069C1.08689 7.79069 1.08589 7.79169 1.50089 7.99969L1.08589 7.79069C1.0538 7.85551 1.03711 7.92686 1.03711 7.99919C1.03711 8.07152 1.0538 8.14287 1.08589 8.20769L1.08489 8.20969L1.08789 8.21269L1.09389 8.22469C1.12507 8.28717 1.15842 8.34854 1.19389 8.40869C1.62449 9.1361 2.15124 9.8021 2.75989 10.3887C3.88689 11.4687 5.61989 12.5687 7.99989 12.5687C10.3789 12.5687 12.1129 11.4687 13.2399 10.3877C13.7076 9.93686 14.1278 9.43926 14.4939 8.90269C14.6341 8.69624 14.7646 8.48334 14.8849 8.26469L14.9059 8.22469L14.9119 8.21269L14.9139 8.20969V8.20869C14.9139 8.20869 14.9149 8.20769 14.4999 7.99969ZM14.4999 7.99969L14.9149 8.20869C14.947 8.14387 14.9637 8.07251 14.9637 8.00019C14.9637 7.92786 14.947 7.85651 14.9149 7.79169L14.4999 7.99969ZM7.93989 6.46369C7.53252 6.46369 7.14183 6.62552 6.85377 6.91357C6.56572 7.20163 6.40389 7.59231 6.40389 7.99969C6.40389 8.40706 6.56572 8.79775 6.85377 9.0858C7.14183 9.37386 7.53252 9.53569 7.93989 9.53569C8.34726 9.53569 8.73795 9.37386 9.026 9.0858C9.31406 8.79775 9.47589 8.40706 9.47589 7.99969C9.47589 7.59231 9.31406 7.20163 9.026 6.91357C8.73795 6.62552 8.34726 6.46369 7.93989 6.46369ZM5.47789 7.99969C5.47789 7.34619 5.73749 6.71947 6.19958 6.25738C6.66167 5.79529 7.28839 5.53569 7.94189 5.53569C8.59538 5.53569 9.22211 5.79529 9.6842 6.25738C10.1463 6.71947 10.4059 7.34619 10.4059 7.99969C10.4059 8.65318 10.1463 9.27991 9.6842 9.742C9.22211 10.2041 8.59538 10.4637 7.94189 10.4637C7.28839 10.4637 6.66167 10.2041 6.19958 9.742C5.73749 9.27991 5.47789 8.65318 5.47789 7.99969Z" fill="white"/>
+                        </svg>
+                      </div>
+                      <div class="viewAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ currentStory?.viewcount }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="storyPict" *ngIf="stories.length === 0">
+                <div class="bg-gray-200 flex items-center justify-center m-0 p-0 rounded-3xl w-[225px] h-[405px]">
+                  <p class="text-gray-500 text-[0.9rem]">No stories available</p>
+                </div>
+              </div>
+
+
+              <!-- Placeholder jika tidak ada story -->
+              <!-- <ng-template #emptyPlaceholder>
+                <div class="emptyStory foto3 flex items-center justify-center w-[225px] h-[405px] bg-gray-200 rounded-3xl relative">
+                  <p class="text-gray-500 text-sm">No stories available</p>
+                </div>
+              </ng-template> -->
+
+              <div class="rightArrSvg ms-2" (click)="nextStory()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="20" height="20" rx="10" fill="#949C9E" fill-opacity="0.25"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7706 10.4738L8.99931 14.2451L8.05664 13.3024L11.3566 10.0024L8.05664 6.70243L8.99931 5.75977L12.7706 9.5311C12.8956 9.65612 12.9658 9.82566 12.9658 10.0024C12.9658 10.1792 12.8956 10.3487 12.7706 10.4738Z" fill="#494F50"/>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+          <div class="rightContent w-[72.8%] ps-4">
+            <div class="flex items-center">
+              <div class="topContentText font-semibold text-[0.9rem]">Top Content</div>
+              <div id="feedsTab" class="toggle font-medium text-[0.8rem] ms-12 cursor-pointer" [ngClass]="{'text-blue-80': activeTab === 'feeds', 'text-gray-500': activeTab !== 'feeds'}" (click)="toggleContent('feeds')">Feeds</div>
+              <div id="reelsTab" class="toggle font-medium text-[0.8rem] ms-4 cursor-pointer" [ngClass]="{'text-blue-80': activeTab === 'reels', 'text-gray-500': activeTab !== 'reels'}" (click)="toggleContent('reels')">Reels</div>
+            </div>
+            <div *ngIf="activeTab === 'feeds'" id="isiFeeds" class="isiFeeds mt-3">
+              <div *ngIf="hasFeeds; else noFeeds" class="feedsPict grid grid-cols-4 gap-y-2">
+                <div *ngFor="let feed of influencer?.feeds" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + feed?.mediaurl + ')'">
+                  <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
+                    <div class="likeSvg">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 8.5L8.5 1.5V7.5H12L6.5 14.5V8.5H3Z" fill="white" stroke="white" stroke-linecap="square" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ feed.engagement }}</div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noFeeds>
+                <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
+                  <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
+                  <div class="text-center text-gray-500 mt-[-30px] z-10">No feeds posted</div>
+                </div>
+              </ng-template>
+            </div>
+            <div id="isiReels" *ngIf="activeTab === 'reels'" class="isiReels mt-3">
+              <div *ngIf="hasReels; else noReels" class="feedsPict grid grid-cols-4 gap-y-2">
+                <div *ngFor="let reel of influencer?.reels" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + reel?.thumbnailurl + ')'">
+                  <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
+                    <div class="likeSvg">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 8.5L8.5 1.5V7.5H12L6.5 14.5V8.5H3Z" fill="white" stroke="white" stroke-linecap="square" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div class="likeAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ reel.engagement }}</div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noReels>
+                <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
+                  <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
+                  <div class="text-center text-gray-500 mt-[-30px] z-10">No reels posted</div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pricing mt-6">
+        <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Pricing</p>
+        <div class="allBox grid grid-cols-3 gap-[25px]">
+          <div *ngIf="influencer?.storyprice && influencer?.storyprice?.trim() !== ''" class="priceBox bg-pastel-6 h-[17.2rem] rounded-3xl py-[35px] px-[41px]">
+            <div class="priceType font-semibold text-[1.25rem]">Story</div>
+            <div class="priceNominal font-semibold text-[1.7rem] mt-[8px]">Rp {{ influencer?.storyprice }}</div>
+            <div class="priceDesc flex ms-1 mt-4">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">24-hour posting duration</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Performance analytics unavailable</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Rapid reach to a wide audience</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Perfect for promotions or events</p>
+            </div>
+          </div>
+          <div *ngIf="influencer?.feedsprice && influencer?.feedsprice?.trim() !== ''" class="priceBox bg-pastel-4 h-[17.2rem] rounded-3xl py-[35px] px-[41px]">
+            <div class="priceType font-semibold text-[1.25rem]">Feeds</div>
+            <div class="priceNominal font-semibold text-[1.7rem] mt-[8px]">Rp {{ influencer?.feedsprice }}</div>
+            <div class="priceDesc flex ms-1 mt-4">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Permanent content</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Performance analytics available</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">More personal and interactive promotions</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Ideal for building long-term brand identity</p>
+            </div>
+          </div>
+          <div *ngIf="influencer?.reelsprice && influencer?.reelsprice?.trim() !== ''" class="priceBox bg-pastel-2 h-[17.2rem] rounded-3xl py-[35px] px-[41px]">
+            <div class="priceType font-semibold text-[1.25rem]">Reels</div>
+            <div class="priceNominal font-semibold text-[1.7rem] mt-[8px]">Rp {{ influencer?.reelsprice }}</div>
+            <div class="priceDesc flex ms-1 mt-4">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Permanent content</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Performance analytics available</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Creative video content up to 90 seconds</p>
+            </div>
+            <div class="priceDesc flex ms-1 mt-[10px]">
+              <div class="priceDescSvg">
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="16.3654" height="16.3654" rx="8.18269" fill="black"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6929 5.45095C12.804 5.56215 12.8665 5.71294 12.8665 5.87017C12.8665 6.02739 12.804 6.17819 12.6929 6.28938L7.05987 11.9224C6.94867 12.0336 6.79788 12.096 6.64065 12.096C6.48342 12.096 6.33263 12.0336 6.22144 11.9224L3.55317 9.25412C3.44516 9.14229 3.38539 8.99251 3.38674 8.83704C3.38809 8.68157 3.45045 8.53286 3.56039 8.42292C3.67033 8.31298 3.81905 8.25062 3.97452 8.24927C4.12998 8.24792 4.27976 8.30768 4.3916 8.41569L6.64065 10.6647L11.8544 5.45095C11.9656 5.33979 12.1164 5.27734 12.2737 5.27734C12.4309 5.27734 12.5817 5.33979 12.6929 5.45095Z" fill="white"/>
+                </svg>
+              </div>
+              <p class="font-normal text-[0.75rem] ms-5">Ideal for product or service storytelling</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prevWork mt-6">
+        <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Previous Work</p>
+        <div class="flex">
+          <div class="workKiri w-[42%]">
+            <div class="avgRating bg-white rounded-3xl w-full h-[16.3rem] py-[23px] px-[34px]">
+              <div class="text font-semibold text-[0.9rem]">Average Rating ({{ influencer?.totalreview }} Projects)</div>
+              <div class="rateSection flex mt-3">
+                <div class="rateAngka font-semibold text-[1.8rem] content-center me-4">{{ influencer?.rating }}</div>
+                <div class="kanannya">
+                  <div class="rating">
+                    <i *ngFor="let star of getStars(influencer?.rating || 0)" class="fa" [ngClass]="star"></i>
+                  </div>
+                  <div class="review font-normal text-[0.8rem] text-font-darkGrey"> {{ influencer?.totalreview }} Reviews</div>
+                </div>
+              </div>
+              <div class="allBar mt-[14px]">
+                <div *ngFor="let rate of influencer?.totalrating" class="bar flex items-center mt-[5px]">
+                  <div class="rateBar font-semibold text-[0.8rem] me-4 w-[3%]">{{ rate.rating }}</div>
+                  <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" [style]=" 'width: ' + rate.percentage + '%' "></div>
+                  </div>
+                  <div class="reviewBar font-medium text-[0.8rem]">{{ rate.totalreview }} Reviews</div>
+                </div>
+                <!-- <div class="bar flex items-center mt-[5px]">
+                  <div class="rateBar font-semibold text-[0.8rem] me-4">4</div>
+                  <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 75.7%"></div>
+                  </div>
+                  <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
+                </div>
+                <div class="bar flex items-center mt-[5px]">
+                  <div class="rateBar font-semibold text-[0.8rem] me-4">3</div>
+                  <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
+                  </div>
+                  <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
+                </div>
+                <div class="bar flex items-center mt-[5px]">
+                  <div class="rateBar font-semibold text-[0.8rem] me-4">2</div>
+                  <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
+                  </div>
+                  <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
+                </div>
+                <div class="bar flex items-center mt-[5px]">
+                  <div class="rateBar font-semibold text-[0.8rem] me-4">1</div>
+                  <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
+                  </div>
+                  <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
+                </div> -->
+              </div>
+            </div>
+            <div class="avgSentiment bg-white rounded-3xl w-full h-[18.5rem] py-[23px] px-[34px] mt-4">
+              <div class="text font-semibold text-[0.9rem]">Sentiment Analytics (27 Projects)</div>
+              <div class="text font-normal text-[0.8rem] text-font-darkGrey mt-2">Comments analytics from previous projects</div>
+              <div class="sentimentChart bg-yellow-200 w-full h-[11rem] mt-3">
+
+              </div>
+            </div>
+          </div>
+          <div class="workKanan w-[58%] ms-[23px]">
+            <div class="text font-semibold text-[0.9rem] pt-[1px] ps-3 mb-3">Customer Feedback</div>
+            <div class="feedbackBox overflow-y-auto h-[33.5rem]">
+              <div *ngFor="let item of influencer?.feedback" class="feedback bg-white rounded-3xl w-full h-fit py-[25px] px-[34px] mb-3">
+                <div class="feedProfile flex justify-between mb-4">
+                  <div class="feedKiri flex items-center">
+                    <!-- <div class="foto5 rounded-full" style="background-image: url(https://picsum.photos/200);"></div> -->
+
+                    <div *ngIf="item.profilepicturebyte && item.profilepicturebyte.length > 0" class="w-[50px] h-[50px] rounded-full overflow-hidden">
+                      <img class="w-full h-full object-cover" [src]="getProfileBrand(item.profilepicturebyte, item.profilepicturename, item.profilepicturetype)" alt="Profile Picture"/>
+                    </div>
+                    <div *ngIf="!item.profilepicturebyte || item.profilepicturebyte.length == 0" class="foto5 rounded-full" style="background-image: url('../../../assets/images/empty\ profile\ pic.png');"></div>
+
+                    <div class="flex flex-col ms-4">
+                      <div class="nameFeed text-[0.9rem] font-semibold">{{ item.name }}</div>
+                      <div class="dateFeed text-font-darkGrey font-normal text-[0.8rem]">{{ item.date }}</div>
+                    </div>
+                  </div>
+                  <div class="feedKanan">
+                    <div class="rating pt-1">
+                      <i *ngFor="let star of getStars(item?.rating || 0)" class="fa" [ngClass]="star"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="isiFeed font-normal text-[0.8rem]">
+                  {{ item.review }}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="seeMore font-normal text-[0.8rem] mt-6 text-center cursor-pointer">See More</div> -->
+          </div>
+        </div>
+      </div>
+      <!-- accounts analytics end -->
+  </div>
+</div>

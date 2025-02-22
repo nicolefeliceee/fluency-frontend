@@ -89,7 +89,6 @@ export class ProfileEditComponent implements OnInit{
 
     this.userService.getProfile(localStorage.getItem('user_id') || '').subscribe(
       (data) => {
-        console.log(data);
         this.brand = data;
         if (data['profile_picture_byte']) {
           this.imageBlob = this.dataURItoBlob(data['profile_picture_byte'], data['profile_picture_type']);
@@ -121,8 +120,6 @@ export class ProfileEditComponent implements OnInit{
 
         this.profilePictureByte = this.brand['profile_picture_byte'];
         this.profilePictureName = this.brand['profile_picture_name'];
-
-        console.log(this.profileForm.value)
       },
       (error) => {
         console.log(error);
@@ -181,17 +178,21 @@ export class ProfileEditComponent implements OnInit{
   onSave() {
     // validasi
     this.submitted = true;
-    this.userService.validateEmail(this.profileForm.get('email')?.value).subscribe(
-      data => {
-        if (data.length == 0) {
-          if (this.profileForm.valid) {
-            this.askConfirm(2);
+    if (this.profileForm.get('email')?.value == this.brand['email']) {
+      this.askConfirm(2);
+    } else {
+      this.userService.validateEmail(this.profileForm.get('email')?.value).subscribe(
+        data => {
+          if (data.length == 0) {
+            if (this.profileForm.valid) {
+              this.askConfirm(2);
+            }
+          } else { // if email exist, show error
+            this.emailExist = true;
           }
-        } else { // if email exist, show error
-          this.emailExist = true;
         }
-      }
-    )
+      )
+    }
 
 
 
@@ -216,9 +217,6 @@ export class ProfileEditComponent implements OnInit{
       targetLocation: this.profileForm.get('targetLocation')?.value,
     }));
 
-
-    console.log(this.imagePreview);
-
     if (this.imagePreview) {
       formData.append('profile_picture', this.imageFile, this.imageFile.name); // Add the file
     } else {
@@ -228,7 +226,8 @@ export class ProfileEditComponent implements OnInit{
 
     this.userService.editProfileBrand(formData).subscribe(
       (data) => {
-        this.router.navigate(['/profile-brand'], {state: {editSuccess: true}})
+        localStorage.setItem("name", this.profileForm.get("name")?.value);
+        this.router.navigate(['/profile-brand'], { state: { editSuccess: true } })
       },
       (error) => {
         console.log(error);

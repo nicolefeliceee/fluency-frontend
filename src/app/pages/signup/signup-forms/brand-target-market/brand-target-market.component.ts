@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { CategoryCardComponent } from "../choose-category/category-card/category-card.component";
 import { UserService } from '../../../../services/user.service';
 import { ConfirmationPopupComponent } from "../../../../components/confirmation-popup/confirmation-popup.component";
+import { AlertErrorComponent } from "../../../../components/alert-error/alert-error.component";
 
 @Component({
   selector: 'app-brand-target-market',
   standalone: true,
-  imports: [FormsModule, CommonModule, CategoryCardComponent, ReactiveFormsModule, ConfirmationPopupComponent],
+  imports: [FormsModule, CommonModule, CategoryCardComponent, ReactiveFormsModule, ConfirmationPopupComponent, AlertErrorComponent],
   templateUrl: './brand-target-market.component.html',
   styleUrl: './brand-target-market.component.css'
 })
@@ -21,7 +22,7 @@ export class BrandTargetMarketComponent implements OnInit {
 
   newUser: SignupBrand;
   targetForm!: FormGroup;
-    submitted = false;
+  submitted = false;
 
   targetLocation: [] = [];
   targetAge: [] = [];
@@ -112,11 +113,11 @@ export class BrandTargetMarketComponent implements OnInit {
   signUpError: boolean = false;
 
   onSubmit() {
+    this.displayConfirmation = false;
+
     this.newUser.targetLocation = (this.targetForm.get('targetLocation')?.value);
     this.newUser.targetAgeRange = (this.targetForm.get('targetAge')?.value);
     this.newUser.targetGender = this.selectedGender;
-
-    console.log(this.newUser);
 
     let formData = new FormData();
 
@@ -133,12 +134,13 @@ export class BrandTargetMarketComponent implements OnInit {
       targetLocation: this.newUser.targetLocation,
     }));
 
-    formData.append('profile_picture', this.newUser.profilePicture, this.newUser.profilePictureName); // Add the file
 
+    if (this.newUser.profilePicture) {
+      formData.append('profile_picture', this.newUser.profilePicture, this.newUser.profilePictureName); // Add the file
+    } else {
+      formData.append('profile_picture', new Blob, ''); // Add the file
+    }
 
-
-    console.log(formData.get('profile_picture'));
-    // console.log(formData.getAll('profile_picture'));
     this.userService.signUpBrand(formData).subscribe(
       (data) => {
         // redirect ke login
@@ -174,10 +176,17 @@ export class BrandTargetMarketComponent implements OnInit {
   confirmBody: any;
 
   askConfirm(id: any) {
-    if (id == 1) {
-      this.confirmHeader = "Sign up now";
-      this.confirmBody = "Are you sure want to sign up now?"
-      this.displayConfirmation = true;
+    console.log(id);
+    this.submitted = true;
+    if (this.targetForm.valid && this.selectedGender.length > 0) {
+      if (id == 1) {
+        this.confirmHeader = "Sign up now";
+        this.confirmBody = "Are you sure want to sign up now?"
+        this.displayConfirmation = true;
+      }
     }
+  }
+  get profileFormControl() {
+    return this.targetForm.controls;
   }
 }

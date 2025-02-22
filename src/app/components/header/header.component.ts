@@ -38,6 +38,8 @@ export class HeaderComponent implements OnInit{
 
   }
 
+  pathToHome: any;
+
   isLogin: boolean = false;
   userId!: any;
   userName!: any;
@@ -50,6 +52,7 @@ export class HeaderComponent implements OnInit{
     this.userId = localStorage.getItem('user_id');
     this.instagramId = localStorage.getItem('instagram_id');
     this.userName = localStorage.getItem('name');
+    this.userName = this.userName.split(' ')[0];
     // console.log(this.userId);
     if (this.userId) {
       this.isLogin = true;
@@ -58,6 +61,7 @@ export class HeaderComponent implements OnInit{
 
 
     if (this.instagramId) {
+      this.pathToHome = "/influencer-home";
       this.instagramService.getProfile(localStorage.getItem("long_lived_token") || '', localStorage.getItem('instagram_id')).subscribe(
         (data: any) => {
           this.profilePicUrl = data['profile_picture_url'];
@@ -67,6 +71,7 @@ export class HeaderComponent implements OnInit{
         }
       )
     } else {
+      this.pathToHome = "/home";
       this.userService.getProfile(localStorage.getItem("user_id") || '').subscribe(
         (data: any) => {
           if (data['profile_picture_byte']) {

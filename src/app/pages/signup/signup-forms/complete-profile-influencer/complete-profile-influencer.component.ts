@@ -36,16 +36,20 @@ export class CompleteProfileInfluencerComponent {
     ) {
       const navigation = this.router.getCurrentNavigation();
       this.newUser = navigation?.extras.state?.['newUser'];
-      console.log(this.newUser);
     }
 
     passwordVisible: boolean = false;
 
     // location dropdown
     locationOptions!: any[];
-    genderOptions!: any[];
+  genderOptions!: any[];
 
-    ngOnInit(): void {
+  maxDate!: string;
+
+  ngOnInit(): void {
+    let today = new Date();
+    this.maxDate = today.toISOString().split('T')[0];
+
       this.loadingService.hide();
       this.locationService.getAllLocations().subscribe(
         (data) => {
@@ -162,5 +166,18 @@ export class CompleteProfileInfluencerComponent {
 
   prevStep(): void {
     this.router.navigate(['/signup']);
+  }
+
+  isDateInput: boolean = false; // Controls the input type
+
+  changeToDate(event: any) {
+    this.isDateInput = true;
+    setTimeout(() => {
+      event.target.showPicker(); // Opens the date picker in modern browsers
+    });
+  }
+
+  changeToText(event: any) {
+    this.isDateInput = event.target.value ? true : false;
   }
 }
