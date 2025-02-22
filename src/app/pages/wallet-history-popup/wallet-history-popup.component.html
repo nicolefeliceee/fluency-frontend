@@ -14,42 +14,52 @@
     </div>
   </div>
   <div class="line h-[1px] w-full bg-font-lightGrey mb-4"></div>
-  <div class="perDate px-1 mb-4" *ngFor="let date of objectKeys(walletHeader.wallet_details_grouped)">
-    <div class="date font-semibold text-[0.9rem] mb-1">
-      {{ date }}
-    </div>
-    <div class="trx flex items-center mb-2" *ngFor="let trx of walletHeader.wallet_details_grouped[date]">
-      <div class="leftTrx w-[8%]">
-        <svg *ngIf="trx.transaction_type_id === 3" class="topUpSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="26" height="26" rx="13" fill="#5876F9"/>
-          <path d="M13.0001 7.81152V18.1887M7.81152 13.0001H18.1887" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <svg *ngIf="trx.transaction_type_id === 2" class="payInfluencerSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="26" width="26" height="26" rx="13" transform="rotate(90 26 0)" fill="#5876F9"/>
-          <path d="M13.7237 8.2505C13.8947 8.07948 14.1267 7.9834 14.3686 7.9834C14.6105 7.9834 14.8425 8.07948 15.0136 8.2505L19.1189 12.3558C19.2899 12.5268 19.386 12.7588 19.386 13.0007C19.386 13.2427 19.2899 13.4747 19.1189 13.6457L15.0136 17.751C14.8416 17.9172 14.6111 18.0091 14.3719 18.007C14.1327 18.005 13.9039 17.909 13.7348 17.7399C13.5656 17.5707 13.4697 17.3419 13.4676 17.1027C13.4655 16.8635 13.5575 16.6331 13.7237 16.461L16.1932 13.913L7.52654 13.913C7.28459 13.913 7.05254 13.8169 6.88146 13.6458C6.71037 13.4747 6.61426 13.2427 6.61426 13.0007C6.61426 12.7588 6.71037 12.5268 6.88146 12.3557C7.05254 12.1846 7.28459 12.0885 7.52654 12.0885L16.1932 12.0885L13.7237 9.54047C13.5526 9.36939 13.4566 9.13739 13.4566 8.89548C13.4566 8.65358 13.5526 8.42158 13.7237 8.2505Z" fill="white"/>
-        </svg>
-        <svg *ngIf="trx.transaction_type_id === 1" class="transferSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="26" height="26" rx="13" fill="#5876F9"/>
-          <path d="M8.2505 12.2763C8.07948 12.1053 7.9834 11.8733 7.9834 11.6314C7.9834 11.3895 8.07948 11.1575 8.2505 10.9864L12.3558 6.88111C12.5268 6.71008 12.7588 6.61401 13.0007 6.61401C13.2427 6.61401 13.4747 6.71008 13.6457 6.88111L17.751 10.9864C17.9172 11.1584 18.0091 11.3889 18.007 11.6281C18.005 11.8673 17.909 12.0961 17.7399 12.2652C17.5707 12.4344 17.3419 12.5303 17.1027 12.5324C16.8635 12.5345 16.6331 12.4425 16.461 12.2763L13.913 9.80679V18.4735C13.913 18.7154 13.8169 18.9475 13.6458 19.1185C13.4747 19.2896 13.2427 19.3857 13.0007 19.3857C12.7588 19.3857 12.5268 19.2896 12.3557 19.1185C12.1846 18.9475 12.0885 18.7154 12.0885 18.4735V9.80679L9.54047 12.2763C9.36939 12.4474 9.13739 12.5434 8.89548 12.5434C8.65358 12.5434 8.42158 12.4474 8.2505 12.2763Z" fill="white"/>
-        </svg>
+  <div *ngIf="walletHeader.wallet_details_grouped && objectKeys2(walletHeader?.wallet_details_grouped).length > 0">
+    <div class="perDate px-1 mb-4" *ngFor="let date of objectKeys(walletHeader.wallet_details_grouped)">
+      <div class="date font-semibold text-[0.9rem] mb-1">
+        {{ date }}
       </div>
-      <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
-      <div class="rightTrx w-[30%] flex flex-col">
-        <div class="nominal text-end font-semibold text-[0.8rem]" [ngClass]="{
-          'text-[#149574]': trx.transaction_type_id === 3 || trx.transaction_type_id === 4,
-          'text-black': trx.transaction_type_id !== 3 && trx.transaction_type_id !== 4
-        }">{{ trx.nominal_show }}</div>
-        <div class="bawah flex items-center justify-end">
-          <div class="logo">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="16" height="16" rx="8" fill="#5876F9"/>
-              <path d="M11.333 5.91667V5.08333C11.333 4.62375 10.9593 4.25 10.4997 4.25H5.08301C4.39384 4.25 3.83301 4.81083 3.83301 5.5V10.5C3.83301 11.4171 4.58051 11.75 5.08301 11.75H11.333C11.7926 11.75 12.1663 11.3762 12.1663 10.9167V6.75C12.1663 6.29042 11.7926 5.91667 11.333 5.91667ZM10.4997 9.66667H9.66634V8H10.4997V9.66667ZM5.08301 5.91667C4.97572 5.91187 4.87443 5.86587 4.80021 5.78826C4.72599 5.71064 4.68456 5.60739 4.68456 5.5C4.68456 5.39261 4.72599 5.28936 4.80021 5.21174C4.87443 5.13413 4.97572 5.08813 5.08301 5.08333H10.4997V5.91667H5.08301Z" fill="white"/>
-            </svg>
+      <div class="trx flex items-center mb-2" *ngFor="let trx of walletHeader.wallet_details_grouped[date]">
+        <div class="leftTrx w-[8%]">
+          <svg *ngIf="trx.transaction_type_id === 3" class="topUpSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="26" height="26" rx="13" fill="#5876F9"/>
+            <path d="M13.0001 7.81152V18.1887M7.81152 13.0001H18.1887" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg *ngIf="trx.transaction_type_id === 2" class="payInfluencerSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="26" width="26" height="26" rx="13" transform="rotate(90 26 0)" fill="#5876F9"/>
+            <path d="M13.7237 8.2505C13.8947 8.07948 14.1267 7.9834 14.3686 7.9834C14.6105 7.9834 14.8425 8.07948 15.0136 8.2505L19.1189 12.3558C19.2899 12.5268 19.386 12.7588 19.386 13.0007C19.386 13.2427 19.2899 13.4747 19.1189 13.6457L15.0136 17.751C14.8416 17.9172 14.6111 18.0091 14.3719 18.007C14.1327 18.005 13.9039 17.909 13.7348 17.7399C13.5656 17.5707 13.4697 17.3419 13.4676 17.1027C13.4655 16.8635 13.5575 16.6331 13.7237 16.461L16.1932 13.913L7.52654 13.913C7.28459 13.913 7.05254 13.8169 6.88146 13.6458C6.71037 13.4747 6.61426 13.2427 6.61426 13.0007C6.61426 12.7588 6.71037 12.5268 6.88146 12.3557C7.05254 12.1846 7.28459 12.0885 7.52654 12.0885L16.1932 12.0885L13.7237 9.54047C13.5526 9.36939 13.4566 9.13739 13.4566 8.89548C13.4566 8.65358 13.5526 8.42158 13.7237 8.2505Z" fill="white"/>
+          </svg>
+          <svg *ngIf="trx.transaction_type_id === 1" class="transferSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="26" height="26" rx="13" fill="#5876F9"/>
+            <path d="M8.2505 12.2763C8.07948 12.1053 7.9834 11.8733 7.9834 11.6314C7.9834 11.3895 8.07948 11.1575 8.2505 10.9864L12.3558 6.88111C12.5268 6.71008 12.7588 6.61401 13.0007 6.61401C13.2427 6.61401 13.4747 6.71008 13.6457 6.88111L17.751 10.9864C17.9172 11.1584 18.0091 11.3889 18.007 11.6281C18.005 11.8673 17.909 12.0961 17.7399 12.2652C17.5707 12.4344 17.3419 12.5303 17.1027 12.5324C16.8635 12.5345 16.6331 12.4425 16.461 12.2763L13.913 9.80679V18.4735C13.913 18.7154 13.8169 18.9475 13.6458 19.1185C13.4747 19.2896 13.2427 19.3857 13.0007 19.3857C12.7588 19.3857 12.5268 19.2896 12.3557 19.1185C12.1846 18.9475 12.0885 18.7154 12.0885 18.4735V9.80679L9.54047 12.2763C9.36939 12.4474 9.13739 12.5434 8.89548 12.5434C8.65358 12.5434 8.42158 12.4474 8.2505 12.2763Z" fill="white"/>
+          </svg>
+          <svg *ngIf="trx.transaction_type_id === 4" class="paymentSvg" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="26" y="26" width="26" height="26" rx="13" transform="rotate(180 26 26)" fill="#5876F9"/>
+            <path d="M17.7495 13.7237C17.9205 13.8947 18.0166 14.1267 18.0166 14.3686C18.0166 14.6105 17.9205 14.8425 17.7495 15.0136L13.6442 19.1189C13.4732 19.2899 13.2412 19.386 12.9993 19.386C12.7573 19.386 12.5253 19.2899 12.3543 19.1189L8.24901 15.0136C8.08283 14.8416 7.99088 14.6111 7.99295 14.3719C7.99503 14.1327 8.09098 13.9039 8.26012 13.7348C8.42926 13.5656 8.65808 13.4697 8.89727 13.4676C9.13647 13.4655 9.36691 13.5575 9.53897 13.7237L12.087 16.1932V7.52654C12.087 7.28459 12.1831 7.05254 12.3542 6.88146C12.5253 6.71037 12.7573 6.61426 12.9993 6.61426C13.2412 6.61426 13.4732 6.71037 13.6443 6.88146C13.8154 7.05254 13.9115 7.28459 13.9115 7.52654V16.1932L16.4595 13.7237C16.6306 13.5526 16.8626 13.4566 17.1045 13.4566C17.3464 13.4566 17.5784 13.5526 17.7495 13.7237Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
+        <div class="rightTrx w-[30%] flex flex-col">
+          <div class="nominal text-end font-semibold text-[0.8rem]" [ngClass]="{
+            'text-[#149574]': trx.transaction_type_id === 3 || trx.transaction_type_id === 4,
+            'text-black': trx.transaction_type_id !== 3 && trx.transaction_type_id !== 4
+          }">{{ trx.nominal_show }}</div>
+          <div class="bawah flex items-center justify-end">
+            <div class="logo">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="16" height="16" rx="8" fill="#5876F9"/>
+                <path d="M11.333 5.91667V5.08333C11.333 4.62375 10.9593 4.25 10.4997 4.25H5.08301C4.39384 4.25 3.83301 4.81083 3.83301 5.5V10.5C3.83301 11.4171 4.58051 11.75 5.08301 11.75H11.333C11.7926 11.75 12.1663 11.3762 12.1663 10.9167V6.75C12.1663 6.29042 11.7926 5.91667 11.333 5.91667ZM10.4997 9.66667H9.66634V8H10.4997V9.66667ZM5.08301 5.91667C4.97572 5.91187 4.87443 5.86587 4.80021 5.78826C4.72599 5.71064 4.68456 5.60739 4.68456 5.5C4.68456 5.39261 4.72599 5.28936 4.80021 5.21174C4.87443 5.13413 4.97572 5.08813 5.08301 5.08333H10.4997V5.91667H5.08301Z" fill="white"/>
+              </svg>
+            </div>
+            <div class="text text-font-darkGrey text-[0.7rem] font-medium ms-1">Wallet Balance</div>
           </div>
-          <div class="text text-font-darkGrey text-[0.7rem] font-medium ms-1">Wallet Balance</div>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="!walletHeader.wallet_details_grouped || objectKeys2(walletHeader?.wallet_details_grouped).length === 0" class="w-full mt-16 flex flex-col justify-center items-center content-center">
+    <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
+    <p class="text-[0.8rem] text-font-darkGrey/60">No transaction made yet</p>
   </div>
 </div>
 

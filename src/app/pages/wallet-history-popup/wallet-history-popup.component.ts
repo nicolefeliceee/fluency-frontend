@@ -30,6 +30,7 @@ interface WalletHeader {
   styleUrl: './wallet-history-popup.component.css'
 })
 export class WalletHistoryPopupComponent {
+  Object: any;
   constructor(
     private fb: FormBuilder
   ) {}
@@ -43,4 +44,7 @@ export class WalletHistoryPopupComponent {
   @Input() walletHeader!: WalletHeader;
   objectKeys = Object.keys;
 
+  objectKeys2(obj: any): string[] {
+    return obj ? Object.keys(obj) : [];
+  }
 }

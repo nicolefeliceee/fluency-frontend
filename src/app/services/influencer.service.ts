@@ -164,4 +164,33 @@ export class InfluencerService {
       throw new Error('User ID tidak ditemukan di Local Storage');
     }
   }
-} 
+
+  getHomeInfluencer(): Observable<any> {
+    const userId = localStorage.getItem('user_id');
+    // const userId = "48";
+    console.log ("userId: " + userId);
+    if (userId) {
+      return this.httpClient.get(`${this.baseUrl}/influencer/home/${userId}`);
+    } else {
+      throw new Error('User ID tidak ditemukan di Local Storage');
+    }
+  }
+
+  checkProfileCompletion(influencerId: number): Observable<{ profileCompleted: boolean }> {
+    return this.httpClient.get<{ profileCompleted: boolean }>(`${this.baseUrl}/influencer/check-profile/${influencerId}`);
+  }
+
+  checkProject(influencerId: number): Observable<{ projectCompleted: boolean }> {
+    return this.httpClient.get<{ projectCompleted: boolean }>(`${this.baseUrl}/influencer/check-project/${influencerId}`);
+  }
+
+  updateInfluencerStatus(influencerId: number, isActive: boolean): Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}/influencer/update-status/${influencerId}`, { isactive: isActive });
+  }
+
+  getProject(influencerId: number, date: Date): Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}/influencer/get-project/${influencerId}`, {date});
+  }
+
+
+}

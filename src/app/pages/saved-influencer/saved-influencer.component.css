@@ -149,5 +149,13 @@ input[type=number]:focus {
   width: fit-content;
 }
 
+.foto10{
+  /* 10 : 7 */
+  width: 300px;
+  height: 210px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 
 

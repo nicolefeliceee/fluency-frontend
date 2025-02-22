@@ -138,6 +138,7 @@ export class InfluencerComponent implements OnInit{
   ngOnInit(): void {
     // this.loadInfluencers();
     this.initializeForm();
+    this.checkUserType();
 
     this.actRoute.queryParams.subscribe((params) => {
       const categoryId = params['categoryId'];
@@ -278,6 +279,13 @@ export class InfluencerComponent implements OnInit{
   };
 
   isAllBoolean: boolean = false;
+  isInfluencer!: boolean;
+
+  checkUserType() {
+    const instagramId = localStorage.getItem('instagram_id');
+    this.isInfluencer = instagramId ? true : false;
+    console.log("isinfluencer? " + this.isInfluencer);
+  }
 
   resetForm(){
     this.isAllBoolean = true;

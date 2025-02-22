@@ -8,3 +8,12 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.foto10{
+  width: 200px;
+  height: 140px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+

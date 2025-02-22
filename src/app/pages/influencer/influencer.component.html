@@ -235,12 +235,16 @@
     </form>
 
   </div>
-  <div class="kanan">
+  <div class="kanan" *ngIf="influencer && influencer.length > 0">
     <div class="judul font-semibold my-5">
       Influencers
     </div>
     <div class="cardBox grid grid-cols-3 gap-7">
-      <app-influencer-card *ngFor="let item of influencer" [item]="item" (askConfirmHireInfluencer)="confirmHireInfluencer($event)" (hireClicked)="redirectToProject()"></app-influencer-card>
+      <app-influencer-card *ngFor="let item of influencer" [isInfluencer]="isInfluencer" [item]="item" (askConfirmHireInfluencer)="confirmHireInfluencer($event)" (hireClicked)="redirectToProject()"></app-influencer-card>
     </div>
+  </div>
+  <div class="kanan" *ngIf="!influencer || influencer.length === 0" class="flex w-full mt-28 flex-col items-center content-center">
+    <div class="foto10" style="background-image: url(../assets/images/emptygraph2.png);"></div>
+    <p class="text-[1rem] text-font-darkGrey/60">No influencer found</p>
   </div>
 </div>
