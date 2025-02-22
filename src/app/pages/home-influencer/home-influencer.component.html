@@ -1,28 +1,48 @@
 <app-header></app-header>
 <div class="bantu"></div>
-<!-- <app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" [walletHeader]="walletheader" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
+<app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" [walletHeader]="walletheader" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
 <app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()" (successAlert)="showSuccessAlert($event)" (errorAlert)="showErrorAlert($event)"></app-wallet-transfer-popup>
 
 <app-alert-success *ngIf="successMessage" [label]="successMessage" [display]="true"></app-alert-success>
-<app-alert-error *ngIf="errorMessage" [label]="errorMessage" [display]="true"></app-alert-error> -->
-
+<app-alert-error *ngIf="errorMessage" [label]="errorMessage" [display]="true"></app-alert-error>
+<app-alert-error *ngIf="booleanErrorActive" (dismissClicked)="booleanErrorActive = false" [label]="errorActive" [display]="true"></app-alert-error>
 
 <app-alert-success [display]="signupSuccess" [label]="'Sign up Success! Welcome to Fluency'"></app-alert-success>
+
+<div *ngIf="!influencer?.isactive" class="bg-yellow-50 mx-12 mt-2 mb-[-24px] border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4" role="alert" tabindex="-1" aria-labelledby="hs-with-description-label">
+  <div class="flex">
+    <div class="shrink-0">
+      <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+        <path d="M12 9v4"></path>
+        <path d="M12 17h.01"></path>
+      </svg>
+    </div>
+    <div class="ms-4">
+      <div id="hs-with-description-label" class="text-[1rem] font-semibold">
+        Your account is currently inactive
+      </div>
+      <div class="mt-1 text-[0.8rem] text-yellow-700">
+        Activate your account now to be visible for brands.
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="isi px-12 pt-5 pb-20">
   <div class="profileAtas flex mt-4">
     <div class="kiri w-[72.5%]">
       <div class="kotakPertama bg-white h-[22rem] w-full rounded-3xl pt-[23px] pb-[28px] ps-[48px]">
         <div class="profAtas h-[49.4%] flex">
           <div class="profPic w-[19.3%] h-full">
-            <!-- <div class="foto" style="background-image: url(https://picsum.photos/200);"></div> -->
             <div class="foto" [style.background-image]="'url(' + influencer?.profilepicture + ')'"></div>
           </div>
           <div class="profAtasKanan w-[80.7%] px-[41px] flex flex-col justify-center pb-[8px]">
             <div class="namaToggle flex justify-between">
-              <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;katarinabluu{{ influencer?.username }}</div>
+              <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;{{ influencer?.username }}</div>
               <div class="toggle flex justify-center items-center content-center h-fit">
                 <p class="font-medium text-[0.8rem] me-2">Active</p>
-                <input type="checkbox" checked id="hs-small-solid-switch" class="peer relative shrink-0 w-11 h-6 p-px bg-[#949C9E]/30 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-pink-200/0 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-80 checked:border-blue-80 focus:checked:border-blue-80
+                <input type="checkbox" [checked]="influencer?.isactive" (change)="toggleActive($event)" id="hs-small-solid-switch" class="form-input peer relative shrink-0 w-11 h-6 p-px bg-[#949C9E]/30 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none checked:bg-blue-80 checked:text-blue-80 checked:border-blue-80 focus:checked:border-transparent
                 before:inline-block before:size-5 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="hs-small-solid-switch" class="sr-only">Active</label>
               </div>
@@ -111,7 +131,7 @@
             </div>
             <div class="kedua">
               <div class="category flex align-bottom">
-                <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
+                <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit" [ngClass]="getCategoryColor(cat.label)" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
                 <!-- <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-2 py-[1px] px-4 rounded-xl w-fit">Fashion</div>
                 <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-3 py-[1px] px-4 rounded-xl w-fit">F&B</div>
                 <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-4 py-[1px] px-4 rounded-xl w-fit">Health & Sport</div> -->
@@ -139,12 +159,12 @@
           </svg>
         </div>
         <div class="tengah w-[70%] h-full content-center font-semibold text-[1.25rem] text-font-black">
-          <!-- {{ walletheader.balance_show}} -->
-          Rp 100.000
+          {{ walletheader.balance_show}}
+          <!-- Rp 100.000 -->
         </div>
         <div class="kanan w-[23%] h-full content-center flex justify-between">
-          <!-- <div class="transfer cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()"> -->
-          <div class="transfer cursor-pointer flex flex-col items-center justify-center">
+          <div class="transfer cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()">
+          <!-- <div class="transfer cursor-pointer flex flex-col items-center justify-center"> -->
             <div class="svg">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -162,8 +182,8 @@
             </div>
             <div class="text font-semibold text-[0.7rem] mt-[1px] text-font-darkGrey">Top Up</div>
           </div>
-          <!-- <div class="history cursor-pointer flex flex-col items-center justify-center" (click)="showWalletHistoryPopup()"> -->
-          <div class="history cursor-pointer flex flex-col items-center justify-center">
+          <div class="history cursor-pointer flex flex-col items-center justify-center" (click)="showWalletHistoryPopup()">
+          <!-- <div class="history cursor-pointer flex flex-col items-center justify-center"> -->
             <div class="svg">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -204,7 +224,7 @@
                 <path d="M18.5654 19.9804V19.9805C18.5655 20.3557 18.7146 20.7156 18.9799 20.9809C18.9799 20.9809 18.98 20.9809 18.98 20.9809L21.725 23.726L21.725 23.726L21.7312 23.7321C21.9981 23.9898 22.3555 24.1325 22.7266 24.1292C23.0976 24.126 23.4525 23.9772 23.7148 23.7148C23.9772 23.4525 24.126 23.0976 24.1292 22.7266C24.1325 22.3555 23.9898 21.9981 23.7321 21.7312L23.7321 21.7312L23.726 21.725L21.3954 19.3945V15.4052C21.3954 15.03 21.2464 14.67 20.981 14.4047C20.7156 14.1393 20.3557 13.9902 19.9804 13.9902C19.6051 13.9902 19.2452 14.1393 18.9798 14.4047C18.7145 14.67 18.5654 15.03 18.5654 15.4052V19.9804ZM19.9804 11.3301C24.758 11.3301 28.6307 15.2028 28.6307 19.9804C28.6307 24.758 24.758 28.6307 19.9804 28.6307C15.2028 28.6307 11.3301 24.758 11.3301 19.9804C11.3301 15.2028 15.2028 11.3301 19.9804 11.3301Z" fill="#FF669E" stroke="#FF669E"/>
               </svg>
             </div>
-            <div class="waiting text-[2rem] font-medium mt-1">46</div>
+            <div class="waiting text-[2rem] font-medium mt-1">{{ influencer?.waitingproj }}</div>
             <div class="text text-font-darkGrey font-medium text-[0.8rem]">Waiting Project</div>
           </div>
           <div class="cardOngoing rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
@@ -215,7 +235,7 @@
                 <path d="M13 12.6357H15.3333V15.9086H24.6667V12.6357H27V28.9999H13V12.6357Z" fill="#2E9AFF"/>
               </svg>
             </div>
-            <div class="ongoing text-[2rem] font-medium mt-1">71</div>
+            <div class="ongoing text-[2rem] font-medium mt-1">{{ influencer?.ongoingproj }}</div>
             <div class="text text-font-darkGrey font-medium text-[0.8rem]">Ongoing Project</div>
           </div>
           <div class="cardCompleted rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
@@ -225,7 +245,7 @@
                 <path d="M20 11C20.8262 11 21.623 11.1055 22.3906 11.3164C23.1582 11.5273 23.873 11.832 24.5352 12.2305C25.1973 12.6289 25.8037 13.0977 26.3545 13.6367C26.9053 14.1758 27.377 14.7822 27.7695 15.4561C28.1621 16.1299 28.4639 16.8477 28.6748 17.6094C28.8857 18.3711 28.9941 19.168 29 20C29 20.8262 28.8945 21.623 28.6836 22.3906C28.4727 23.1582 28.168 23.873 27.7695 24.5352C27.3711 25.1973 26.9023 25.8037 26.3633 26.3545C25.8242 26.9053 25.2178 27.377 24.5439 27.7695C23.8701 28.1621 23.1523 28.4639 22.3906 28.6748C21.6289 28.8857 20.832 28.9941 20 29C19.1738 29 18.377 28.8945 17.6094 28.6836C16.8418 28.4727 16.127 28.168 15.4648 27.7695C14.8027 27.3711 14.1963 26.9023 13.6455 26.3633C13.0947 25.8242 12.623 25.2178 12.2305 24.5439C11.8379 23.8701 11.5361 23.1523 11.3252 22.3906C11.1143 21.6289 11.0059 20.832 11 20C11 19.1738 11.1055 18.377 11.3164 17.6094C11.5273 16.8418 11.832 16.127 12.2305 15.4648C12.6289 14.8027 13.0977 14.1963 13.6367 13.6455C14.1758 13.0947 14.7822 12.623 15.4561 12.2305C16.1299 11.8379 16.8477 11.5361 17.6094 11.3252C18.3711 11.1143 19.168 11.0059 20 11ZM25.2998 17.0205L24.1045 15.8252L18.3125 21.6172L15.8955 19.2002L14.7002 20.3955L18.3125 24.0078L25.2998 17.0205Z" fill="#4DDC57"/>
               </svg>
             </div>
-            <div class="completed text-[2rem] font-medium mt-1">204</div>
+            <div class="completed text-[2rem] font-medium mt-1">{{ influencer?.completedproj }}</div>
             <div class="text text-font-darkGrey font-medium text-[0.8rem]">Completed Project</div>
           </div>
         </div>
@@ -233,13 +253,21 @@
           <div class="projectPct rounded-3xl h-[16rem] px-[32px] py-[22px] bg-white">
             <div class="text font-semibold text-[0.9rem]">Project Percentage</div>
             <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-              <canvas id="ProjectPct">abc</canvas>
+              <canvas *ngIf="!showPlaceholderProjectPct" id="ProjectPct">{{ projectPct }}</canvas>
+              <div *ngIf="showPlaceholderProjectPct" class="h-full flex flex-col justify-center items-center content-center">
+                <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
+                <p class="text-[0.8rem] text-font-darkGrey/60">No data available</p>
+              </div>
             </div>
           </div>
           <div class="approvalPct rounded-3xl h-[16rem] px-[32px] py-[22px] bg-white">
             <div class="text font-semibold text-[0.9rem]">Approval Percentage</div>
             <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-              <canvas id="ApprovalPct">abc</canvas>
+              <canvas *ngIf="!showPlaceholderApprovalPct" id="ApprovalPct">{{ approvalPct }}</canvas>
+              <div *ngIf="showPlaceholderApprovalPct" class="h-full flex flex-col justify-center items-center content-center">
+                <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
+                <p class="text-[0.8rem] text-font-darkGrey/60">No data available</p>
+              </div>
             </div>
           </div>
         </div>
@@ -256,14 +284,14 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6727 14.0289C18.1042 13.3283 20.4527 12.5 23.0229 12.5C25.5394 12.5 27.8261 13.2939 29.25 13.9852L29.3305 14.0242C29.7598 14.2366 30.1063 14.4373 30.3502 14.6L28.1953 17.75C33.163 22.8285 37.0002 33.4983 23.0229 33.4983C9.04565 33.4983 12.7796 23.0222 17.7904 17.75L15.6496 14.6C15.8147 14.4921 16.0241 14.3667 16.2737 14.2337C16.3974 14.1672 16.5304 14.0985 16.6727 14.0289ZM26.8105 17.7086L28.5354 15.1868C26.9312 15.3023 25.0226 15.6792 23.1851 16.2112C21.8726 16.5903 20.4142 16.5326 19.0638 16.2835C18.7235 16.2205 18.3855 16.1454 18.0506 16.0583L19.1706 17.7074C21.571 18.562 24.4095 18.562 26.8105 17.7086ZM18.4968 18.7008C21.3056 19.7858 24.6813 19.7858 27.4901 18.6997C28.6622 19.9358 29.6429 21.3403 30.3997 22.8664C31.1884 24.4752 31.6177 26.0835 31.5477 27.4695C31.4801 28.8071 30.9539 29.9498 29.7522 30.7992C28.4998 31.6841 26.3934 32.3316 23.0223 32.3316C19.6477 32.3316 17.5314 31.6952 16.2673 30.8202C15.0569 29.9819 14.5255 28.8543 14.4502 27.5348C14.3715 26.164 14.7915 24.5639 15.5772 22.944C16.3268 21.3993 17.3727 19.9124 18.4968 18.7008ZM17.826 14.7843C18.2927 14.9232 18.7803 15.0439 19.275 15.1355C20.5292 15.3665 21.7868 15.4003 22.8602 15.0894C24.1109 14.7249 25.3831 14.4383 26.6693 14.2313C25.596 13.9082 24.3407 13.6667 23.0223 13.6667C21.0127 13.6667 19.1385 14.2273 17.826 14.7843Z" fill="#09895E" stroke="#09895E" stroke-width="0.5"/>
           </svg>
         </div>
-        <div class="revenueValue text-[2rem] font-semibold mt-1">Rp 1.350.000</div>
+        <div class="revenueValue text-[2rem] font-semibold mt-1">Rp {{ influencer?.totalrevenue }}</div>
         <div class="text text-font-darkGrey font-medium text-[0.8rem]">Total Revenue</div>
       </div>
 
       <div class="revenuePct rounded-3xl w-full h-[16rem] px-[27px] py-[22px] mt-[14px] bg-white">
-        <div class="text font-semibold text-[0.9rem]">Revenue Accumulative</div>
+        <div class="text font-semibold text-[0.9rem]">Revenue</div>
         <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
-          <canvas id="RevenuePct">abc</canvas>
+          <canvas id="RevenueAcc">{{ revenueAcc }}</canvas>
         </div>
       </div>
 
@@ -313,26 +341,40 @@
 
         <div class="garisBantu w-full h-[1px] bg-[#949C9E]/50 mt-[12px] mb-[10px]"></div>
 
-        <div class="dateCard w-full h-[3.3rem] rounded-xl px-[7px] py-[4px] flex mb-[5px]">
-          <div class="dateKiri w-[19%] h-full bg-pastel-1 flex flex-col items-center content-center justify-center rounded-[10px]">
-            <p class="font-medium text-[0.65rem]">Thu</p>
-            <p class="font-semibold text-[1.05rem]">18</p>
-          </div>
-          <div class="dateTengah w-[77%] ms-2">
-            <div class="flex flex-col justify-center h-full">
-              <div class="nameType flex mb-[1px]">
-                <div class="brandName font-medium text-[0.63rem] text-font-darkGrey">Sour Sally</div>
-                <div class="projType font-medium text-[0.58rem] text-font-darkGrey rounded-full px-[6px] ms-[6px]">Story</div>
+        <!-- <div *ngIf="projectDetails.length > 0; else emptyPlaceholder" > -->
+        <div *ngIf="projectDetails && projectDetails.length > 0">
+          <div *ngFor="let project of projectDetails" class="dateCard w-full h-[3.3rem] rounded-xl px-[7px] py-[4px] flex mb-[5px] cursor-pointer" (click)="goToProjectDetail(project.projectheaderid)">
+            <div class="dateKiri w-[19%] h-full flex flex-col items-center content-center justify-center rounded-[10px]" [ngClass]="getRandomPastelColor()">
+              <p class="font-medium text-[0.65rem]">{{ project.day }}</p>
+              <p class="font-semibold text-[1.05rem]">{{ project.date }}</p>
+            </div>
+            <div class="dateTengah w-[77%] ms-2">
+              <div class="flex flex-col justify-center h-full">
+                <div class="nameType flex mb-[1px]">
+                  <div class="brandName font-medium text-[0.63rem] text-font-darkGrey">{{ project.brandname }}</div>
+                  <div class="projType font-medium text-[0.58rem] text-font-darkGrey rounded-full px-[6px] ms-[6px]">{{ project.mediatype }}</div>
+                </div>
+                <div class="projectName font-semibold text-[0.73rem]">{{ project.projecttitle }}</div>
               </div>
-              <div class="projectName font-semibold text-[0.73rem]">Promo Natal & Tahun Ba...</div>
+            </div>
+            <div class="dateKanan w-[3%] me-1 pt-[1px]">
+              <svg width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.78682 9.74532L3.44979 14.0824L2.36572 12.9983L6.16072 9.20328L2.36572 5.40829L3.44979 4.32422L7.78682 8.66125C7.93055 8.80502 8.01129 8.99999 8.01129 9.20328C8.01129 9.40658 7.93055 9.60155 7.78682 9.74532Z" fill="#262A10"/>
+              </svg>
             </div>
           </div>
-          <div class="dateKanan w-[3%] me-1 pt-[1px]">
-            <svg width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.78682 9.74532L3.44979 14.0824L2.36572 12.9983L6.16072 9.20328L2.36572 5.40829L3.44979 4.32422L7.78682 8.66125C7.93055 8.80502 8.01129 8.99999 8.01129 9.20328C8.01129 9.40658 7.93055 9.60155 7.78682 9.74532Z" fill="#262A10"/>
-            </svg>
+        </div>
+
+        <div *ngIf="!projectDetails || projectDetails.length == 0">
+          <div class="empty-placeholder w-full h-[3.3rem] rounded-xl px-[7px] py-[4px] flex mb-[5px] items-center justify-center">
+            <p class="text-font-darkGrey text-[0.8rem]">No due projects in 7 days</p>
           </div>
         </div>
+        <!-- <ng-template #emptyPlaceholder>
+          <div class="empty-placeholder w-full h-[3.3rem] rounded-xl px-[7px] py-[4px] flex mb-[5px] items-center justify-center">
+            <p class="text-gray-500 text-sm">No projects available</p>
+          </div>
+        </ng-template> -->
       </div>
 
     </div>

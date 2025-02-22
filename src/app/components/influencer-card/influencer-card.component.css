@@ -13,7 +13,7 @@
   border-radius: 10%;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
 }
 
 .location,.adText{

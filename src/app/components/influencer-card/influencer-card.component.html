@@ -1,29 +1,10 @@
 
 <!-- <div class="card w-full bg-white" (click)="goToDetail()"> -->
 <div class="card w-full bg-white">
-  <div class="helper" (click)="goToDetail()">
-    <!-- <div class="foto" [style.background-image]="'url(' + getProfilePictureUrl(item.profilepicture) + ')'"></div> -->
+  <div class="helper cursor-pointer" (click)="goToDetail()">
     <div *ngIf="item.profilepicture" class="foto" [style.background-image]="'url(' + item.profilepicture + ')'"></div>
-    <div *ngIf="!item.profilepicture" class="overflow-hidden h-[13.55rem] bg-font-lightGrey rounded-[10%]"></div>
-    <!-- <div class="divvid w-[150px] h-[100px] bg-pink-200">
-      <video id="myVideo" class="video" src="https://instagram.fcgk38-1.fna.fbcdn.net/o1/v/t16/f2/m86/AQNp7jQFsWfGySwimtc4v3BjXq4vj-vAOfFOQiwYCFewevDsZ32FCBjneyDaIeNW_zZS26GH2p12tCVFhpYTpleSQoYYYBrT9Od2Cj4.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6InZ0c192b2RfdXJsZ2VuLmNsaXBzLnVua25vd24tQzMuNTc2LmRhc2hfYmFzZWxpbmVfMV92MSJ9&_nc_ht=instagram.fcgk38-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=AdiY9Ds7WrFdVw5mKZZqn-bI8MC9tXBHh0r5foS--vqAZgCYkO1cRDI0xc7DEGlwU4o&vs=2144990229286226_1586340534&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC82RDRFRjc4MDQwQkEyM0RDQ0VFRTBFQThCMEI5QjlBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dORE9aeHpidGF6UjJnc0hBSlYzVFpXbEk4RUdicV9FQUFBRhUCAsgBACgAGAAbAYgHdXNlX29pbAExFQAAJp6Zz%2BfNrJBAFQIoAkMzLBdALbtkWhysCBgSZGFzaF9iYXNlbGluZV8xX3YxEQB1AAA%3D&ccb=9-4&oh=00_AYD4jtBSxHaScgpi09nlyk6K6FpxnfvhBCRFRcmg2K1Cqg&oe=67AE481B&_nc_sid=1d576d" muted playsinline controls></video>
-    </div> -->
-    <!-- <script>
-      document.getElementById("myVideo").muted = true;
-    </script> -->
-    <!-- <script>
-      document.getElementById("myVideo").addEventListener("click", function () {
-        if (this.paused) {
-          this.play();
-        } else {
-          this.pause();
-        }
-      });
-    </script> -->
-    <!-- <button onclick="document.getElementById('myVideo').pause()">Pause</button>
-    <button onclick="document.getElementById('myVideo').play()">Play</button> -->
-    <!-- <div class="foto" [style.background-image]="'url(https://instagram.fcgk38-1.fna.fbcdn.net/o1/v/t16/f2/m86/AQNp7jQFsWfGySwimtc4v3BjXq4vj-vAOfFOQiwYCFewevDsZ32FCBjneyDaIeNW_zZS26GH2p12tCVFhpYTpleSQoYYYBrT9Od2Cj4.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6InZ0c192b2RfdXJsZ2VuLmNsaXBzLnVua25vd24tQzNlLjU3Ni5kYXNoX2Jhc2VsaW5lXzFfdjEifQ&_nc_ht=instagram.fcgk38-1.fna.fbcdn.net&_nc_cat=106&_nc_oc=AdjV6O7163XlKv7-fud-RmZt9i1aAZO59XK7xyOSzqpHPT0vScS27vSjYo6BFobLl-Y&vs=2144990229286226_1586340534&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC82RDRFRjc4MDQwQkEyM0RDQ0VFRTBFQThCMEI5QjlBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dORE9aeHpidGF6UjJnc0hBSlYzVFpXbEk4RUdicV9FQUFBRhUCAsgBACgAGAAbAYgHdXNlX29pbAExFQAAJp6Zz%2BfNrJBAFQIoAkMzLBdALbtkWhysCBgSZGFzaF9iYXNlbGluZV8xX3YxEQB1AAA%3D&ccb=9-4&oh=00_AYBkl47o8gJ6_y1QXkQyhC76EvW175ffWQUcRb9Hr5-zzA&oe=67AB6CDB&_nc_sid=1d576d)'"></div> -->
-    <!-- <div class="foto" [style.background-image]="'url(https://scontent.cdninstagram.com/v/t51.75761-15/476661104_18036659135394738_2675438311975615802_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ccb=1-7&_nc_sid=18de74&_nc_eui2=AeHMkIeZIVHhlNJoQG_LH6BCPv0Swq7-qp8-_RLCrv6qn5TOMf3MNzE3YF7wt-BiaFHOb7zQdVAiu4_-MKhnm0c-&_nc_ohc=NogHB0rOyE8Q7kNvgFzl_gk&_nc_oc=Adi5VkMYGRrwGdqTozrmih3GjFr9GYQL_-85fcTq-JwXVsW9J6EzWKWwDkMELnKLsMI&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AEQ6tj4EAAAA&_nc_gid=Av2kJ5Uy0UcI3oTcgIU8g8b&oh=00_AYBCEWodt_DOPWv96QiT5PGuO29tQc1jaXu3waW7hNUi4A&oe=67AF5F38)'"></div> -->
+    <div *ngIf="!item.profilepicture" class="foto" style="background-image: url(../assets/images/emptyprofile2.jpg);"></div>
+    <!-- <div *ngIf="!item.profilepicture" class="overflow-hidden h-[13.55rem] bg-font-lightGrey rounded-[10%]"></div> -->
     <div class="desc flex px-1 pt-3 pb-3 justify-center items-center content-center">
       <div class="leftCard w-3/4">
         <div class="nameBox flex">
@@ -61,12 +42,19 @@
         <div class="adText font-normal pt-[10px]">Ad Price</div>
       </div>
       <div class="rightCard w-1/2 flex flex-col items-end">
-        <div class="category font-normal bg-pastel-1 py-[1px] px-3 rounded-xl">{{ item.category[0]?.label }}</div>
+        <div class="category font-normal py-[1px] px-3 rounded-xl" [ngClass]="getCategoryColor(item.category[0]?.label)">{{ item.category[0]?.label }}</div>
         <div class="price font-semibold text-header6 pt-[6px]">Rp {{ item.minprice }}</div>
       </div>
     </div>
   </div>
-  <div class="bawah2 flex justify-end mt-4">
+  <div class="bawah2 flex justify-end mt-4" *ngIf="!isInfluencer">
+    <div class="chatBtn cursor-pointer me-1">
+      <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" y="0.5" width="32" height="32" rx="4.5" stroke="#494F50" stroke-opacity="0.1"/>
+        <path d="M16.7512 22.9608C17.3797 22.9179 18.003 22.8175 18.6132 22.6609C19.3669 22.8875 20.1624 22.9388 20.9389 22.8109C20.9699 22.8071 21.0011 22.8048 21.0323 22.8039C21.3094 22.8039 21.6728 22.9628 22.2031 23.2975V22.7473C22.2033 22.6515 22.2292 22.5574 22.2781 22.475C22.327 22.3926 22.3972 22.3247 22.4812 22.2786C22.7122 22.1482 22.9257 22.0015 23.1217 21.8387C23.8943 21.1932 24.3302 20.3312 24.3302 19.4196C24.3302 19.1187 24.2826 18.8188 24.1882 18.5328C24.4226 18.1018 24.6093 17.652 24.7483 17.1832C25.1952 17.8436 25.4355 18.6232 25.4385 19.4196C25.4385 20.6589 24.8546 21.8148 23.8426 22.6599C23.6732 22.8009 23.4961 22.9307 23.3114 23.0492V24.3382C23.3114 24.7811 22.793 25.0363 22.4275 24.7722C22.0813 24.5174 21.7234 24.2788 21.355 24.0572C21.2486 23.9958 21.1385 23.9411 21.0253 23.8933C20.7179 23.9388 20.4076 23.9617 20.0968 23.9618C18.8357 23.9618 17.6698 23.5874 16.7512 22.9608ZM10.0769 20.3838C8.48404 19.0502 7.56348 17.2319 7.56348 15.2835C7.56348 11.3033 11.3689 8.12061 16.0154 8.12061C20.6629 8.12061 24.4693 11.3024 24.4693 15.2835C24.4693 19.2637 20.6629 22.4454 16.0154 22.4454C15.493 22.4454 14.9783 22.4057 14.4712 22.3263C14.2527 22.3769 13.3768 22.8903 12.1156 23.799C11.6588 24.1287 11.0114 23.8109 11.0114 23.2558V21.0581C10.6843 20.8559 10.3723 20.6302 10.0779 20.3829M14.502 20.9707C14.5404 20.9707 14.5791 20.9737 14.6181 20.9797C15.0749 21.0552 15.5407 21.0932 16.0154 21.0939C19.9409 21.0939 23.082 18.4673 23.082 15.2825C23.082 12.0988 19.9409 9.47215 16.0164 9.47215C12.0918 9.47215 8.94879 12.1008 8.94879 15.2835C8.94879 16.8228 9.68365 18.2726 10.9806 19.358C11.3076 19.6308 11.6638 19.8757 12.0491 20.0929C12.1536 20.1509 12.2409 20.2356 12.3019 20.3384C12.363 20.4411 12.3957 20.5583 12.3967 20.6778V21.9449C13.3947 21.2846 14.0511 20.9707 14.502 20.9707Z" fill="#494F50"/>
+        <path d="M12.5898 16.5C12.8861 16.5 13.1703 16.3823 13.3798 16.1728C13.5893 15.9633 13.707 15.6791 13.707 15.3828C13.707 15.0865 13.5893 14.8024 13.3798 14.5928C13.1703 14.3833 12.8861 14.2656 12.5898 14.2656C12.2935 14.2656 12.0094 14.3833 11.7999 14.5928C11.5904 14.8024 11.4727 15.0865 11.4727 15.3828C11.4727 15.6791 11.5904 15.9633 11.7999 16.1728C12.0094 16.3823 12.2935 16.5 12.5898 16.5ZM16.2214 16.5C16.5177 16.5 16.8019 16.3823 17.0114 16.1728C17.2209 15.9633 17.3386 15.6791 17.3386 15.3828C17.3386 15.0865 17.2209 14.8024 17.0114 14.5928C16.8019 14.3833 16.5177 14.2656 16.2214 14.2656C15.9252 14.2656 15.641 14.3833 15.4315 14.5928C15.222 14.8024 15.1043 15.0865 15.1043 15.3828C15.1043 15.6791 15.222 15.9633 15.4315 16.1728C15.641 16.3823 15.9252 16.5 16.2214 16.5ZM19.8521 16.5C20.1484 16.5 20.4325 16.3823 20.642 16.1728C20.8515 15.9633 20.9692 15.6791 20.9692 15.3828C20.9692 15.0865 20.8515 14.8024 20.642 14.5928C20.4325 14.3833 20.1484 14.2656 19.8521 14.2656C19.5558 14.2656 19.2716 14.3833 19.0621 14.5928C18.8526 14.8024 18.7349 15.0865 18.7349 15.3828C18.7349 15.6791 18.8526 15.9633 19.0621 16.1728C19.2716 16.3823 19.5558 16.5 19.8521 16.5Z" fill="#494F50"/>
+      </svg>
+    </div>
     <div class="saveBtn mr-2 cursor-pointer" (click)="toggleSave(item.id)">
       <svg *ngIf="!item.issaved" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.5" y="0.5" width="32" height="32" rx="4.5" stroke="#494F50" stroke-opacity="0.1"/>

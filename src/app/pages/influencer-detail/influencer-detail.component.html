@@ -8,7 +8,8 @@
       <div class="profAtas h-[49.4%] flex">
         <div class="profPic w-[19.3%] h-full">
           <!-- <div class="foto" style="background-image: url(https://picsum.photos/200);"></div> -->
-          <div class="foto" [style.background-image]="'url(' + influencer?.profilepicture + ')'"></div>
+          <div *ngIf="influencer?.profilepicture" class="foto" [style.background-image]="'url(' + influencer?.profilepicture + ')'"></div>
+          <div *ngIf="!influencer?.profilepicture" class="foto" style="background-image: url(../assets/images/emptyprofile2.jpg);"></div>
         </div>
         <div class="profAtasKanan w-[80.7%] px-[41px] flex flex-col justify-center pb-[8px]">
           <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;{{ influencer?.username }}</div>
@@ -96,7 +97,7 @@
           </div>
           <div class="kedua">
             <div class="category flex align-bottom">
-              <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
+              <div class="cat1 text-[0.7rem] font-normal me-2 py-[1px] px-4 rounded-xl w-fit" [ngClass]="getCategoryColor(cat.label)" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
               <!-- <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-2 py-[1px] px-4 rounded-xl w-fit">Fashion</div>
               <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-3 py-[1px] px-4 rounded-xl w-fit">F&B</div>
               <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-4 py-[1px] px-4 rounded-xl w-fit">Health & Sport</div> -->
@@ -104,7 +105,7 @@
           </div>
         </div>
         <div class="profBawahKanan h-full w-[30%] content-end">
-          <div class="btn flex justify-end">
+          <div class="btn flex justify-end" *ngIf="!isInfluencer">
             <div class="chatBtn mr-2 cursor-pointer">
               <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="35" height="35" rx="4.5" stroke="#494F50" stroke-opacity="0.1"/>
@@ -141,7 +142,7 @@
     <div class="bantu2 w-[2.1%]"></div>
     <div class="similar h-full w-[24.2%]">
       <div class="judul text-[1.15rem] font-semibold mt-1">Similar Profile</div>
-      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex" *ngFor="let simInf of influencer?.similarinfluencer">
+      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex cursor-pointer" *ngFor="let simInf of influencer?.similarinfluencer" (click)="goToInfluencerDetail(simInf?.influencer_id)">
         <div class="simProf w-[26%]">
           <!-- <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div> -->
           <div class="fotoSim" [style.background-image]="'url(' + simInf.profilepicture + ')'"></div>
@@ -277,7 +278,7 @@
 
           <!-- Jika ada story, tampilkan story -->
           <div class="storyPict" *ngIf="stories.length > 0">
-            <div class="foto3 rounded-3xl relative" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'">
+            <div class="foto3 rounded-3xl relative cursor-pointer" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'" (click)="openInstagram(currentStory?.permalink)">
             <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
               <div class="absolute top-2 right-2 flex">
                 <div class="likes px-[6px] rounded-full py-[3px] flex items-center me-1">
@@ -331,7 +332,7 @@
         </div>
         <div *ngIf="activeTab === 'feeds'" id="isiFeeds" class="isiFeeds mt-3">
           <div *ngIf="hasFeeds; else noFeeds" class="feedsPict grid grid-cols-4 gap-y-2">
-            <div *ngFor="let feed of influencer?.feeds" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + feed?.mediaurl + ')'">
+            <div *ngFor="let feed of influencer?.feeds" class="foto4 relative rounded-[20px] cursor-pointer" [style.background-image]="'url(' + feed?.mediaurl + ')'" (click)="openInstagram(feed?.permalink)">
               <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
                 <div class="likeSvg">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -351,7 +352,7 @@
         </div>
         <div id="isiReels" *ngIf="activeTab === 'reels'" class="isiReels mt-3">
           <div *ngIf="hasReels; else noReels" class="feedsPict grid grid-cols-4 gap-y-2">
-            <div *ngFor="let reel of influencer?.reels" class="foto4 relative rounded-[20px]" [style.background-image]="'url(' + reel?.thumbnailurl + ')'">
+            <div *ngFor="let reel of influencer?.reels" class="foto4 relative rounded-[20px] cursor-pointer" [style.background-image]="'url(' + reel?.thumbnailurl + ')'" (click)="openInstagram(reel?.permalink)">
               <div class="likes px-[5px] rounded-full py-[3px] absolute top-2 right-2 flex items-center">
                 <div class="likeSvg">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

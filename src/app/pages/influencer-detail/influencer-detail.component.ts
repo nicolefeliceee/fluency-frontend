@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, A
 import { HeaderComponent } from "../../components/header/header.component";
 import { CommonModule } from '@angular/common';
 import { Chart, ChartConfiguration, Colors, registerables } from 'chart.js';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, RouterLink } from '@angular/router';
 import { InfluencerService } from '../../services/influencer.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 // import ChartLabels from 'chart.js-plugin-labels-dv';
 import { getChartLabelPlugin, PLUGIN_ID } from 'chart.js-plugin-labels-dv';
 import { text } from 'node:stream/consumers';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 // Chart.register(...registerables, ChartLabels);
 Chart.register(getChartLabelPlugin());
 Chart.register(...registerables);
@@ -28,7 +29,7 @@ interface TotalRating {
 
 interface SimilarInfluencer {
   id: number;
-  influencerId: number;
+  influencer_id: number;
   username: string;
   category: Category[];
   profilepicture: string;
@@ -79,6 +80,7 @@ interface StoryDetail {
 
 interface InfluencerDetail {
   id: number;
+  influencerid: number;
   name: string;
   email: string;
   location: string;
@@ -133,7 +135,7 @@ interface InfluencerDetail {
 @Component({
   selector: 'app-influencer-detail',
   standalone: true,
-  imports: [HeaderComponent, CommonModule, InfluencerDetailComponent],
+  imports: [HeaderComponent, CommonModule, InfluencerDetailComponent, RouterLink],
   templateUrl: './influencer-detail.component.html',
   styleUrl: './influencer-detail.component.css'
 })
@@ -144,37 +146,84 @@ export class InfluencerDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private influencerService: InfluencerService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router,
   ) {}
 
   stories: StoryDetail[] = [];
 
   ngOnInit(): void {
-    // ambil id influencer dari path
-    this.influencerId = this.route.snapshot.paramMap.get('id'); // Ambil ID dari URL
-    console.log('Influencer ID:', this.influencerId);
 
-    // get detail influencer
-    if (this.influencerId == null){
-      console.log("inf id null, error");
-    }
-    else{
+    this.route.paramMap.subscribe(params => {
+      this.influencerId = params.get('id');
+      console.log('Influencer ID:', this.influencerId);
+
+      this.checkUserType();
+
+      if (!this.influencerId) {
+        console.log("Influencer ID null, error");
+        return;
+      }
+
+      // Get detail influencer
       this.influencerService.getDetailInfluencer(this.influencerId).subscribe(
         (response) => {
           this.influencer = response;
           this.stories = this.influencer?.story || [];
           console.log('Detail influencer:', this.influencer);
-
           this.createChart();
         },
         (error) => {
           console.error('Error get detail influencer:', error);
         }
       );
-    }
-
-    // this.createChart();
+    });
   }
+
+  isInfluencer!: boolean;
+
+  checkUserType() {
+    const instagramId = localStorage.getItem('instagram_id');
+    this.isInfluencer = instagramId ? true : false;
+    console.log("isinfluencer? " + this.isInfluencer);
+  }
+
+  goToInfluencerDetail(id: number | undefined): void {
+    console.log("id influencernya :" + id);
+    if (id) {
+      this.router.navigate([`/influencer-detail/${id}`]);
+    } else {
+      console.warn("ID influencer tidak tersedia.");
+    }
+  }
+
+  categoryColors: { [key: string]: string } = {
+    "Fashion": "bg-pastel-1",
+    "F&B": "bg-pastel-11",
+    "Beauty": "bg-pastel-3",
+    "Entertainment": "bg-pastel-4",
+    "Technology": "bg-pastel-5",
+    "Health": "bg-pastel-6",
+    "Sport": "bg-pastel-7",
+    "Travel": "bg-pastel-8",
+    "Otomotive": "bg-pastel-9",
+    "Household": "bg-pastel-10",
+    "Hobby": "bg-pastel-2",
+    "Finance": "bg-pastel-12"
+  };
+
+  getCategoryColor(category: string): string {
+    return this.categoryColors[category] || "bg-pastel-1"; // Default jika tidak ditemukan
+  }
+
+  openInstagram(url: string | undefined): void {
+    if (url) {
+      window.open(url, '_blank');
+    } else {
+      console.warn("Link currently is not available.");
+    }
+  }
+
   public follGrowth: any;
   public reach: any;
   public genderAudience: any;

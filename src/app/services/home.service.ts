@@ -36,6 +36,7 @@ export class HomeService {
   transfer(amount: any):Observable<any>{
     console.log(amount);
     const userId = localStorage.getItem('user_id');
+    // const userId = "48";
     if (userId) {
       // Membuat URL dengan menyertakan user_id sebagai path variable
       const url = `${this.baseUrl}/wallet/transfer/${userId}`;
@@ -47,6 +48,7 @@ export class HomeService {
 
   getWalletInfo():Observable<any>{
     const userId = localStorage.getItem('user_id');
+    // const userId = "48";
     if (userId) {
       // Membuat URL dengan menyertakan user_id sebagai path variable
       const url = `${this.baseUrl}/wallet/info/${userId}`;
