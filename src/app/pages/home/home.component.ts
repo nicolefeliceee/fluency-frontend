@@ -11,6 +11,8 @@ import { AlertSuccessComponent } from "../../components/alert-success/alert-succ
 import { AlertErrorComponent } from "../../components/alert-error/alert-error.component";
 import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
+import { MidtransService } from '../../services/midtrans.service';
+import { WalletTopupPopupComponent } from "../wallet-topup-popup/wallet-topup-popup.component";
 
 interface Category {
   id: number; // ID kategori
@@ -63,7 +65,7 @@ interface WalletHeader {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent],
+  imports: [HeaderComponent, ProjectCardComponent, InfluencerCardComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent, WalletTopupPopupComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -73,7 +75,8 @@ export class HomeComponent implements OnInit{
     private loadingService: LoadingService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private midtransService: MidtransService
   ) {}
 
   influencer: Influencer[] = []; // Tipe array Influencer
@@ -173,6 +176,18 @@ export class HomeComponent implements OnInit{
     // this.loadWalletInfo();
   }
 
+  // Tangani event dari wallet transfer
+  onTopupCompleted(): void {
+    console.log("ini topup completednya jalan");
+    // Tambahkan delay sebelum memuat ulang wallet info
+    setTimeout(() => {
+      this.isWalletTopupPopupVisible = false;
+      this.loadWalletInfo();
+    }, 100);
+    // this.loadWalletInfo();
+  }
+
+
   getProfilePictureUrl(profilePicture: string): string {
     return profilePicture.replace(/\\"/g, ''); // Menghapus karakter escape
   }
@@ -185,6 +200,16 @@ export class HomeComponent implements OnInit{
 
   closeWalletHistoryPopup(): void {
     this.isWalletHistoryPopupVisible = false;
+  }
+
+  isWalletTopupPopupVisible: boolean = false;
+
+  showWalletTopupPopup(): void {
+    this.isWalletTopupPopupVisible = true;
+  }
+
+  closeWalletTopupPopup(): void {
+    this.isWalletTopupPopupVisible = false;
   }
 
   isWalletTransferPopupVisible: boolean = false;
@@ -224,4 +249,5 @@ export class HomeComponent implements OnInit{
     // this.selectedId = categoryId; // Menyimpan kategori yang dipilih
     this.router.navigate(['/influencer'], { queryParams: { categoryId } });
   }
+
 }

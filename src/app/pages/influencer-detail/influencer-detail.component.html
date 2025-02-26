@@ -141,35 +141,37 @@
     </div>
     <div class="bantu2 w-[2.1%]"></div>
     <div class="similar h-full w-[24.2%]">
-      <div class="judul text-[1.15rem] font-semibold mt-1">Similar Profile</div>
-      <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex cursor-pointer" *ngFor="let simInf of influencer?.similarinfluencer" (click)="goToInfluencerDetail(simInf?.influencer_id)">
-        <div class="simProf w-[26%]">
-          <!-- <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div> -->
-          <div class="fotoSim" [style.background-image]="'url(' + simInf.profilepicture + ')'"></div>
-        </div>
-        <div class="data flex items-center w-[74%] justify-between ps-[14px]">
-          <div class="leftData flex flex-col">
-            <div class="nameSim font-semibold text-[0.9rem]">{{ simInf.username }}</div>
-            <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">{{ simInf.category[0] }}</div>
+      <div class="judul judulSim text-[1.15rem] font-semibold mt-1">Similar Profile</div>
+      <div class="responsiveHelper">
+        <div class="card bg-white w-full h-[94px] mt-[12px] rounded-[20px] px-[21px] py-[15px] flex cursor-pointer" *ngFor="let simInf of influencer?.similarinfluencer" (click)="goToInfluencerDetail(simInf?.influencer_id)">
+          <div class="simProf w-[26%]">
+            <!-- <div class="fotoSim" style="background-image: url(https://picsum.photos/200);"></div> -->
+            <div class="fotoSim" [style.background-image]="'url(' + simInf.profilepicture + ')'"></div>
           </div>
-          <div class="rightDataSvg pt-[9px]">
-            <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_3888_6476)">
-              <path d="M1.23787e-07 1.22591L1.1898 -3.3122e-07L7.67036 6.68119C7.77483 6.78824 7.85773 6.91555 7.9143 7.05578C7.97088 7.196 8 7.34638 8 7.49826C8 7.65015 7.97088 7.80053 7.9143 7.94075C7.85773 8.08098 7.77483 8.20829 7.67036 8.31534L1.1898 15L0.00112144 13.7741L6.08359 7.5L1.23787e-07 1.22591Z" fill="black"/>
-              </g>
-              <defs>
-              <clipPath id="clip0_3888_6476">
-              <rect width="12" height="24" fill="white"/>
-              </clipPath>
-              </defs>
-            </svg>
+          <div class="data flex items-center w-[74%] justify-between ps-[14px]">
+            <div class="leftData flex flex-col">
+              <div class="nameSim font-semibold text-[0.9rem]">{{ simInf.username }}</div>
+              <div class="categorySim font-medium text-font-lightGrey text-[0.7rem]">{{ simInf.category[0] }}</div>
+            </div>
+            <div class="rightDataSvg pt-[9px]">
+              <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_3888_6476)">
+                <path d="M1.23787e-07 1.22591L1.1898 -3.3122e-07L7.67036 6.68119C7.77483 6.78824 7.85773 6.91555 7.9143 7.05578C7.97088 7.196 8 7.34638 8 7.49826C8 7.65015 7.97088 7.80053 7.9143 7.94075C7.85773 8.08098 7.77483 8.20829 7.67036 8.31534L1.1898 15L0.00112144 13.7741L6.08359 7.5L1.23787e-07 1.22591Z" fill="black"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_3888_6476">
+                <rect width="12" height="24" fill="white"/>
+                </clipPath>
+                </defs>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="accAnalytics mt-6">
-    <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Account Analytics</p>
+    <p class="judul font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Account Analytics</p>
     <div class="averageSection grid grid-cols-4 gap-5">
       <div class="avgCardLike rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
         <div class="logo">
@@ -228,7 +230,7 @@
     </div>
   </div>
   <div class="audAnalytics mt-6">
-    <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Audience Analytics</p>
+    <p class="judul font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Audience Analytics</p>
     <div class="audGraph grid grid-cols-3 gap-5 mt-[20px]">
       <div class="gender col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Gender</div>
@@ -264,10 +266,10 @@
     </div>
   </div>
   <div class="content mt-6">
-    <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Content</p>
+    <p class="judul font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Content</p>
     <div class="isiContent flex">
       <div class="leftContent w-[27.2%] px-[23px]">
-        <div class="storyText font-semibold text-[0.9rem]">Story</div>
+        <div class="judulContent storyText font-semibold text-[0.9rem]">Story</div>
         <div class="isiStory flex items-center mt-3">
           <div class="leftArrSvg me-2" (click)="prevStory()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,14 +309,6 @@
             </div>
           </div>
 
-
-          <!-- Placeholder jika tidak ada story -->
-          <!-- <ng-template #emptyPlaceholder>
-            <div class="emptyStory foto3 flex items-center justify-center w-[225px] h-[405px] bg-gray-200 rounded-3xl relative">
-              <p class="text-gray-500 text-sm">No stories available</p>
-            </div>
-          </ng-template> -->
-
           <div class="rightArrSvg ms-2" (click)="nextStory()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="20" height="20" rx="10" fill="#949C9E" fill-opacity="0.25"/>
@@ -326,7 +320,7 @@
       </div>
       <div class="rightContent w-[72.8%] ps-4">
         <div class="flex items-center">
-          <div class="topContentText font-semibold text-[0.9rem]">Top Content</div>
+          <div class="judulContent topContentText font-semibold text-[0.9rem]">Top Content</div>
           <div id="feedsTab" class="toggle font-medium text-[0.8rem] ms-12 cursor-pointer" [ngClass]="{'text-blue-80': activeTab === 'feeds', 'text-gray-500': activeTab !== 'feeds'}" (click)="toggleContent('feeds')">Feeds</div>
           <div id="reelsTab" class="toggle font-medium text-[0.8rem] ms-4 cursor-pointer" [ngClass]="{'text-blue-80': activeTab === 'reels', 'text-gray-500': activeTab !== 'reels'}" (click)="toggleContent('reels')">Reels</div>
         </div>
@@ -521,42 +515,28 @@
               </div>
               <div class="reviewBar font-medium text-[0.8rem]">{{ rate.totalreview }} Reviews</div>
             </div>
-            <!-- <div class="bar flex items-center mt-[5px]">
-              <div class="rateBar font-semibold text-[0.8rem] me-4">4</div>
-              <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 75.7%"></div>
-              </div>
-              <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
-            </div>
-            <div class="bar flex items-center mt-[5px]">
-              <div class="rateBar font-semibold text-[0.8rem] me-4">3</div>
-              <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
-              </div>
-              <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
-            </div>
-            <div class="bar flex items-center mt-[5px]">
-              <div class="rateBar font-semibold text-[0.8rem] me-4">2</div>
-              <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
-              </div>
-              <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
-            </div>
-            <div class="bar flex items-center mt-[5px]">
-              <div class="rateBar font-semibold text-[0.8rem] me-4">1</div>
-              <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" style="width: 25%"></div>
-              </div>
-              <div class="reviewBar font-medium text-[0.8rem]">72 Reviews</div>
-            </div> -->
           </div>
         </div>
-        <div class="avgSentiment bg-white rounded-3xl w-full h-[18.5rem] py-[23px] px-[34px] mt-4">
-          <div class="text font-semibold text-[0.9rem]">Sentiment Analytics (27 Projects)</div>
+        <div class="avgSentiment bg-white rounded-3xl w-full py-[23px] px-[34px] mt-4">
+          <div class="text font-semibold text-[0.9rem]">Sentiment Analytics ({{ influencer?.totalanalyticspost }} Projects)</div>
           <div class="text font-normal text-[0.8rem] text-font-darkGrey mt-2">Comments analytics from previous projects</div>
-          <div class="sentimentChart bg-yellow-200 w-full h-[11rem] mt-3">
-
+          <div class="sentimentChart w-full mt-5 px-5" style="position: relative; height:90%; width:100%">
+            <canvas *ngIf="!showPlaceholderAnalytics" id="Analytics">{{ analytics }}</canvas>
+            <div *ngIf="showPlaceholderAnalytics" class="h-full flex flex-col justify-center items-center content-center py-3">
+              <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
+              <p class="text-[0.8rem] text-font-darkGrey/60">No data available</p>
+            </div>
           </div>
+          <!-- <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+            <canvas id="Analytics">{{ analytics }}</canvas>
+          </div> -->
+          <!-- <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
+            <canvas *ngIf="!showPlaceholderAnalytics" id="Analytics">{{ analytics }}</canvas>
+            <div *ngIf="showPlaceholderAnalytics" class="h-full flex flex-col justify-center items-center content-center">
+              <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
+              <p class="text-[0.8rem] text-font-darkGrey/60">No data available</p>
+            </div>
+          </div> -->
         </div>
       </div>
       <div class="workKanan w-[58%] ms-[23px]">

@@ -124,4 +124,12 @@ export class UserService {
     return this.httpClient.get(this.baseUrl + "/user/profile/" + userId);
   }
 
+  getAllUser():Observable<any>{
+    return this.httpClient.get(this.baseUrl + "/user/all");
+  }
+
+  toggleBlock(id: number, newStatus: string): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}/user/block/${id}`, { status: newStatus });
+  }
+
 }

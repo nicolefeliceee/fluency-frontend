@@ -3,6 +3,7 @@
 <app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" [walletHeader]="walletheader" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
 <!-- <app-wallet-transfer-popup (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()"></app-wallet-transfer-popup> -->
 <app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()" (successAlert)="showSuccessAlert($event)" (errorAlert)="showErrorAlert($event)"></app-wallet-transfer-popup>
+<app-wallet-topup-popup *ngIf="isWalletTopupPopupVisible" (close)="closeWalletTopupPopup()" (topupCompleted)="onTopupCompleted()"></app-wallet-topup-popup>
 
 <app-alert-success *ngIf="successMessage" [label]="successMessage" [display]="true"></app-alert-success>
 <app-alert-error *ngIf="errorMessage" [label]="errorMessage" [display]="true"></app-alert-error>
@@ -11,7 +12,7 @@
   <div class="foto2" style="background-image: url(../assets/images/homebanner.png);"></div>
 </div>
 <div class="wallet px-7 flex m-auto w-7/12 h-[4.7rem] z-5 mt-[-1rem] rounded-[20px] shadow-[3px_3px_7px_1px_rgba(0,0,0,0.2)] bg-white">
-  <div class="kiri w-[9%] h-full content-center">
+  <div class="kiri w-[9%] h-full content-center flex flex-col justify-center">
     <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="43" height="43" rx="21.5" fill="#949C9E" fill-opacity="0.18"/>
       <path d="M30.458 15.901V13.6615C30.458 12.4263 29.4536 11.4219 28.2184 11.4219H13.6611C11.809 11.4219 10.3018 12.9291 10.3018 14.7812V28.2187C10.3018 30.6834 12.3107 31.5781 13.6611 31.5781H30.458C31.6931 31.5781 32.6976 30.5737 32.6976 29.3385V18.1406C32.6976 16.9055 31.6931 15.901 30.458 15.901ZM28.2184 25.9792H25.9788V21.5H28.2184V25.9792ZM13.6611 15.901C13.3728 15.8881 13.1006 15.7645 12.9011 15.5559C12.7016 15.3474 12.5903 15.0699 12.5903 14.7812C12.5903 14.4926 12.7016 14.2151 12.9011 14.0066C13.1006 13.798 13.3728 13.6744 13.6611 13.6615H28.2184V15.901H13.6611Z" fill="#5876F9"/>
@@ -30,7 +31,7 @@
       </div>
       <div class="text font-semibold text-[0.78rem] mt-[1px] text-font-darkGrey">Transfer</div>
     </div>
-    <div class="topup cursor-pointer flex flex-col items-center justify-center">
+    <div class="topup cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTopupPopup()">
       <div class="svg">
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="34" height="34" rx="17" fill="#5876F9"/>

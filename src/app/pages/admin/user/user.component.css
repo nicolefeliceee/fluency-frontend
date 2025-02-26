@@ -1,0 +1,100 @@
+.bantu{
+  height: 3.7rem;
+}
+
+input[type=text]:focus {
+  /* background-color: rgb(148,156,158,0.05); */
+  background-color: white;
+  border: 1px solid rgb(148,156,158);
+  outline: none;
+}
+
+.tabKanan{
+  /* background-color: rgb(148,156,158,0.05); */
+  background-color: white;
+  border: 1px solid rgb(148,156,158,0.3);
+  width: 15rem;
+  height: 2rem;
+  font-size: 0.8rem;
+}
+
+.isi{
+  padding-left: 96px;
+  padding-right: 96px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+.alluser{
+  font-size: 1.3rem;
+}
+
+.tengah{
+  padding-top: 26px;
+  padding-bottom: 26px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.bawah{
+  padding-top: 30px;
+  padding-bottom: 2px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.bawah2{
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.no{
+  width: 6.78%;
+}
+
+.name{
+  width: 16.44%;
+}
+
+.email{
+  width: 22.72%;
+}
+
+.type{
+  width: 11.83%;
+}
+
+.phone{
+  width: 14.20%;
+}
+
+.status{
+  width: 11.13%;
+}
+
+.action{
+  width: 17.90%;
+}
+
+.peruser{
+  margin-bottom: 30px;
+}
+
+.btn{
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: 12px;
+}
+
+.foto10{
+  /* 10 : 7 */
+  width: 300px;
+  height: 210px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
