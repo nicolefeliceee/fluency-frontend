@@ -89,8 +89,8 @@ export class CompleteProfileInfluencerComponent {
 
       this.instagramService.getProfile(localStorage.getItem('long_lived_token'), localStorage.getItem('instagram_id')).subscribe(
         (data) => {
-          this.imagePreview = (data as any)['profile_picture_url']
-          this.username = (data as any)['username']
+          this.imagePreview = data['profile_picture_url']
+          this.username = data['username']
         }
       )
 

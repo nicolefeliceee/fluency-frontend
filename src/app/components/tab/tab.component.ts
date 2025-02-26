@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, output, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { emit } from 'process';
 
 @Component({
@@ -17,10 +17,17 @@ export class TabComponent implements OnInit{
   @Input() paramName!: any;
 
   @Input() selectedId: any;
+  @Input() influencerId: any;
   instagramId: any;
 
   id = output<any>();
   outputQuery = output<any>();
+
+  constructor(
+    private router: Router
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+  }
 
   opentab(id: any) {
     this.selectedId = id;
@@ -38,5 +45,12 @@ export class TabComponent implements OnInit{
     this.outputQuery.emit(this.searchQuery);
   }
 
+  addNewProject() {
+    if (this.influencerId) {
+      this.router.navigate(['project/create'], {state: {influencerId: this.influencerId}});
+    } else {
+      this.router.navigate(['project/create']);
+    }
+  }
 
 }

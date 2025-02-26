@@ -35,11 +35,16 @@ export class LoginComponent {
   userLogin(){
 
     this.userService.loginUser(this.email, this.password).subscribe(
-      (data) => {
-        console.log(data);
-        localStorage.setItem('user_id', (data as any)['id']);
-        localStorage.setItem('name', (data as any)['name']);
-        this.router.navigate(['/home']);
+      (data: any) => {
+        if (data['user_type'] == 'admin') {
+          localStorage.setItem('user_type', data['user_type']);
+          localStorage.setItem('name', data['name']);
+          this.router.navigate(['/ticket']);
+        } else {
+          localStorage.setItem('user_id', data['id']);
+          localStorage.setItem('name', data['name']);
+          this.router.navigate(['/home']);
+        }
       },error=>{
         this.loginError = true;
       });

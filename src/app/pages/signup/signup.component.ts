@@ -20,12 +20,14 @@ import { AlertErrorComponent } from "../../components/alert-error/alert-error.co
 export class SignupComponent {
 
   error: any;
+  followerCountError: any;
 
   constructor(
     private router: Router, private userService: UserService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.error = navigation?.extras.state?.['error'];
+    this.followerCountError = navigation?.extras.state?.['followerCountError'];
   }
 
   selectedOption: string | null = null;

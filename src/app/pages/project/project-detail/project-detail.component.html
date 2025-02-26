@@ -13,12 +13,12 @@
 <app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="detailForm" [projectStatus]="newProject['status_id']" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)" [influencerId]="selectedInfluencerId"></app-project-detail-popup>
 <app-payment-method-popup *ngIf="instagramId" [display]="displayPaymentMethod" (cancelClicked)="paymentCancel()" (confirmClicked)="checkout($event)"></app-payment-method-popup>
 
-<div class="container p-5">
-  <div class="container p-5">
-    <button routerLink="/project" class="mb-5">&lt; Back</button>
+<div class="container md:p-5">
+  <div class="container md:p-5">
+    <button (click)="backButton()" class="mb-5 hover:opacity-50">&lt; Back</button>
 
-    <!-- kotak review muncul pd status review/done && brand belum pernah rate pd -->
-    <div *ngIf="newProject['status_id'] >= 5 && !projectAlreadyReviewed" class="bg-font-white rounded-xl p-5 mb-5 flex flex-col transition-a  duration-300 ease-in-out opacity-100 transform scale-100">
+    <!-- logged in as brand && kotak review muncul pd status review/done && brand belum pernah rate pd -->
+    <div *ngIf="newProject['status_id'] >= 5 && !projectAlreadyReviewed && !instagramId" class="bg-font-white rounded-xl p-5 mb-5 flex flex-col transition-a  duration-300 ease-in-out opacity-100 transform scale-100">
         <p class="text-header3 font-bold">How would you rate your experience with this influencer?</p>
         <!-- Rating -->
         <div class="flex flex-row-reverse justify-end items-center gap-3 mt-2">
@@ -56,11 +56,11 @@
         <!-- End Rating -->
         <textarea type="text" class="bg-font-lightGrey/15 rounded-lg w-full h-[5rem] py-2 px-5 mt-3" placeholder="Your comment here..." [(ngModel)]="review"></textarea>
 
-        <button class=" bg-yellow-80 text-header6 text-font-white font-semibold px-5 py-2 rounded-lg ms-auto mt-2 disabled:opacity-50" (click)="askConfirm(7)" [disabled]="rating == 0">Submit</button>
+        <button class=" bg-yellow-80 text-header6 text-font-white font-semibold px-5 py-2 rounded-lg ms-auto mt-2 disabled:opacity-50 hover:bg-[#CD853B] active:bg-[#B06A24]" (click)="askConfirm(7)" [disabled]="rating == 0">Submit</button>
 
     </div>
 
-    <div class="grid grid-cols-2 gap-10">
+    <div class="grid md:grid-cols-2 gap-10">
       <div class="bg-font-white rounded-xl p-5">
         <p class="text-header3 font-bold mb-5">Project Detail</p>
         <div class="flex flex-col my-5">
@@ -92,7 +92,7 @@
 
 
       <div class="">
-        <div class="bg-font-white rounded-xl p-5 h-[24rem]">
+        <div class="bg-font-white rounded-xl p-5 md:h-[24rem]">
           <div class="flex justify-between items-center">
             <p *ngIf="!instagramId" class="text-header4 text-bg-blue-100 font-semibold">Influencer</p>
             <p *ngIf="instagramId" class="text-header4 text-bg-blue-100 font-semibold">Brand</p>
@@ -102,15 +102,14 @@
           <!-- for loggedin user: influencer -->
           <div *ngIf="instagramId">
             <div class=" h-5/6 rounded-xl mt-5">
-              <div class="flex rounded-xl bg-font-lightGrey/50">
-                <!-- <div *ngIf="brand['profile_picture_byte']" class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]=""></div> -->
-                <div class="w-1/2 flex justify-center items-center">
+              <div class="md:flex">
+                <div class="md:w-1/2 p-5 flex justify-center items-center bg-font-lightGrey/50 md:rounded-l-xl">
                   <div *ngIf="profilePicBrand" class="w-[13rem] h-[13rem] rounded-full overflow-hidden">
                     <img class="w-full h-full object-cover" [src]="profilePicBrand" alt="Profile Picture" />
                   </div>
                   <div *ngIf="!brand['profile_picture_byte']" class="foto rounded-l-xl bg-[#D9D9D9] justify-center items-center"><img src="../../../../assets/images/empty profile pic.png" alt=""></div>
                 </div>
-                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey bg-font-white place-content-center">
+                <div class="p-5 md:rounded-r-xl md:w-1/2 md:h-[17.5rem] border border-font-darkGrey bg-font-white place-content-center">
                   <p class="text-header5 font-semibold text-font-darkGrey mb-2">{{ brand['name'] }}</p>
                   <div class="flex text-[0.85rem] text-font-darkGrey mb-2">
                     <p >{{ brand['category'] }}</p>
@@ -151,16 +150,12 @@
               <p class="text-center text-header6 text-font-darkGrey font-semibold mt-5">No influencer selected yet</p>
             </div>
 
-            <div *ngIf="selectedInfluencer" class=" h-5/6 rounded-xl mt-5">
-              <div class="flex rounded-xl">
-                <div class="overflow-hidden h-[17.5rem] w-[17.5rem] rounded-l-xl p-0">
+            <div *ngIf="selectedInfluencer" class="h-5/6 rounded-xl mt-5">
+              <div class="md:flex rounded-xl">
+                <div class="overflow-hidden md:h-[17.5rem] md:w-[17.5rem] md:rounded-l-xl p-0">
                   <div *ngIf="selectedInfluencer.profilepicture" class="foto h-[17.5rem]" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div>
                 </div>
-                 <!-- <div class="overflow-hidden rounded-l-xl h-[17.5rem] w-[17.8rem]">
-                    <img [src]="getProfilePictureUrl(selectedInfluencer.profilepicture)" alt="">
-                    <img class="h-[17.5rem]" src="https://scontent.fbdo6-3.fna.fbcdn.net/v/t51.2885-15/57987882_173970303542303_1978634288727326720_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=7d201b&_nc_eui2=AeHwCiXMDaUhFBEDsmUJm3apEW5_Nfa6xq8Rbn819rrGr0_nVEeULQco9EIE0biPvnilup92RVAKwbMW46XPhFQr&_nc_ohc=sa7uQSRd3QsQ7kNvgFl59L3&_nc_zt=23&_nc_ht=scontent.fbdo6-3.fna&edm=AL-3X8kEAAAA&oh=00_AYD1AhlIF5puNdwjjWoKRxbSP71wqsZqLIFGY1IeduYBHA&oe=67AF78B9" alt="">
-                 </div> -->
-                <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey ">
+                <div class="p-5 md:rounded-r-xl md:w-1/2 md:h-[17.5rem] border border-font-darkGrey ">
                   <p class="text-header5 font-semibold text-font-darkGrey mb-2">&#64;{{ selectedInfluencer.username }}</p>
                   <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.name }}</p>
                   <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.followers }} Followers</p>
@@ -230,23 +225,13 @@
             <p class="text-[15px] text-font-darkGrey font-normal">Reels &times; {{  reelsDetailList.length  }}</p>
             <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(reelsDetailList.length * reelsPrice) }}</p>
           </div>
-          <div class="border-t border-b border-font-black my-5">
-            <div class="justify-between flex items-center my-2">
-              <p class="text-[15px] text-font-darkGrey font-normal">Subtotal</p>
-              <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice(storyDetailList.length * storyPrice + feedsDetailList.length * feedsPrice + reelsDetailList.length * reelsPrice) }}</p>
-            </div>
-            <div class="justify-between flex items-center my-2">
-              <p class="text-[15px] text-font-darkGrey font-normal">Tax</p>
-              <p class="text-[15px] text-font-darkGrey font-normal">Rp {{ formatPrice((storyDetailList.length * storyPrice + feedsDetailList.length * feedsPrice + reelsDetailList.length * reelsPrice )/10) }}</p>
-            </div>
-          </div>
-          <div class="justify-between flex items-center my-2">
+
+          <div class="justify-between flex items-center my-5 border-t border-font-black pt-5">
             <p class="text-[15px] text-font-darkGrey font-bold">Total</p>
             <p class="text-[15px] text-font-darkGrey font-bold">Rp {{
            formatPrice(storyDetailList.length * storyPrice
               + feedsDetailList.length * feedsPrice
-              + reelsDetailList.length * reelsPrice
-              + (storyDetailList.length * storyPrice + feedsDetailList.length * feedsPrice + reelsDetailList.length * reelsPrice)/10)
+              + reelsDetailList.length * reelsPrice)
              }}</p>
           </div>
         </div>
@@ -255,15 +240,15 @@
 
 
     <!-- section project progress: muncul pas status >= waiting -->
-    <div *ngIf="newProject['status_id'] >= 3" class="bg-font-white rounded-xl p-5 mt-10">
-      <p class="text-header3 font-bold mb-5">Project Progress</p>
-      <img *ngIf="newProject['status_id'] == 3" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-waiting.jpg" alt="">
-      <img *ngIf="newProject['status_id'] == 4" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-working.png" alt="">
-      <img *ngIf="newProject['status_id'] == 5" class="w-[20rem] mx-auto" src="../../../../assets/images/project-detail-done.png" alt="">
+    <div *ngIf="newProject['status_id'] >= 3" class="bg-font-white rounded-xl md:p-5 mt-10">
+      <p class="text-header3 font-bold mb-5 p-5 md:p-0">Project Progress</p>
+      <img *ngIf="newProject['status_id'] == 3" class="w-[10rem] md:w-[20rem] mx-auto" src="../../../../assets/images/project-detail-waiting.jpg" alt="">
+      <img *ngIf="newProject['status_id'] == 4" class="w-[10rem] md:w-[20rem] mx-auto" src="../../../../assets/images/project-detail-working.png" alt="">
+      <img *ngIf="newProject['status_id'] == 5" class="w-[10rem] md:w-[20rem] mx-auto" src="../../../../assets/images/project-detail-done.png" alt="">
 
       <!-- progress bar -->
 
-      <div class="flex justify-center items-center px-10 mt-10">
+      <div class="flex justify-center items-center px-5 md:px-10 mt-5 md:mt-10">
 
         <div class="rounded-full w-fit p-2" [ngClass]="newProject['status_id'] <= 3? 'bg-[#D9D9D9]' : 'bg-blue-80'">
           <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -310,14 +295,14 @@
 
       </div>
 
-      <div class="flex justify-between items-center px-6 mb-10">
+      <div class="flex justify-between items-center px-5 md:px-6 mb-10">
         <p class="text-header6 text-font-lightGrey font-semibold">Accepted</p>
         <p class="text-header6 text-font-lightGrey font-semibold">Working on it</p>
         <p class="text-header6 text-font-lightGrey font-semibold">Finished</p>
       </div>
 
       <!-- table starts -->
-      <div class="px-10 py-3 w-full bg-blue-60/20 rounded-xl mt-5">
+      <div class="px-2 md:px-10 py-3 w-full bg-blue-60/20 rounded-xl mt-5 text-smalltext">
         <table class="w-full table-auto">
           <thead class="text-left border-b border-font-lightGrey/50">
             <th class="h-[50px] w-[12%]">Media type</th>
@@ -337,18 +322,18 @@
               <td>
                 <!-- buttons for brand -->
                  <div *ngIf="!instagramId && newProject['status_id'] >= 5" class="flex justify-evenly">
-                    <button (click)="openLink(item)">
+                    <button (click)="openLink(item)" class="hover:opacity-50">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.14286 1H19V16.75C19 17.3467 18.7291 17.919 18.2468 18.341C17.7646 18.7629 17.1106 19 16.4286 19H6.14286M10 13.375L13.8571 10M13.8571 10L10 6.625M13.8571 10H1" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <button (click)="copyLink(item)">
+                    <button (click)="copyLink(item)" class="hover:opacity-50">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 7.66531C5 6.95791 5.28099 6.27948 5.78115 5.77927C6.28131 5.27906 6.95968 4.99805 7.66701 4.99805H16.3331C16.6833 4.99805 17.0301 5.06704 17.3537 5.20108C17.6773 5.33512 17.9713 5.53159 18.2189 5.77927C18.4666 6.02695 18.663 6.32099 18.7971 6.64459C18.9311 6.9682 19.0001 7.31504 19.0001 7.66531V16.3322C19.0001 16.6824 18.9311 17.0293 18.7971 17.3529C18.663 17.6765 18.4666 17.9705 18.2189 18.2182C17.9713 18.4659 17.6773 18.6624 17.3537 18.7964C17.0301 18.9304 16.6833 18.9994 16.3331 18.9994H7.66701C7.31678 18.9994 6.96997 18.9304 6.64639 18.7964C6.32282 18.6624 6.02881 18.4659 5.78115 18.2182C5.5335 17.9705 5.33704 17.6765 5.20301 17.3529C5.06898 17.0293 5 16.6824 5 16.3322V7.66531Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2.01201 14.7384C1.705 14.5639 1.44965 14.3113 1.2719 14.0062C1.09415 13.7011 1.00034 13.3543 1 13.0012V3.0002C1 1.90009 1.9 1 3.00001 1H13.0001C13.7501 1 14.1581 1.38504 14.5001 2.0001" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <button (click)="openAnalytics(item)">
+                    <button (click)="openAnalytics(item)" class="hover:opacity-50">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.5 14.5V8.875M10 14.5V5.5M14.5 14.5V12.25M16.75 1H3.25C2.65326 1 2.08097 1.23705 1.65901 1.65901C1.23705 2.08097 1 2.65326 1 3.25V16.75C1 17.3467 1.23705 17.919 1.65901 18.341C2.08097 18.7629 2.65326 19 3.25 19H16.75C17.3467 19 17.919 18.7629 18.341 18.341C18.7629 17.919 19 17.3467 19 16.75V3.25C19 2.65326 18.7629 2.08097 18.341 1.65901C17.919 1.23705 17.3467 1 16.75 1Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -357,17 +342,17 @@
 
                 <!-- buttons for influencer -->
                 <div *ngIf="instagramId" class="flex justify-evenly">
-                  <button (click)="uploadLink(item)" *ngIf="newProject['status_id']==4" class=""><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <button (click)="uploadLink(item)" *ngIf="newProject['status_id']==4" class="hover:opacity-50"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.875 13.5V4.33125L4.95 7.25625L3.375 5.625L9 0L14.625 5.625L13.05 7.25625L10.125 4.33125V13.5H7.875ZM2.25 18C1.63125 18 1.10175 17.7799 0.6615 17.3396C0.22125 16.8994 0.00075 16.3695 0 15.75V12.375H2.25V15.75H15.75V12.375H18V15.75C18 16.3687 17.7799 16.8986 17.3396 17.3396C16.8994 17.7806 16.3695 18.0007 15.75 18H2.25Z" fill="#494F50"/>
                     </svg>
                     </button>
                     <!-- goto link & copy link cmn muncul kalo item['link'] != null -->
-                    <button (click)="openLink(item)" *ngIf="item['link']" class="">
+                    <button (click)="openLink(item)" *ngIf="item['link']" class="hover:opacity-50">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.14286 1H19V16.75C19 17.3467 18.7291 17.919 18.2468 18.341C17.7646 18.7629 17.1106 19 16.4286 19H6.14286M10 13.375L13.8571 10M13.8571 10L10 6.625M13.8571 10H1" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <button (click)="copyLink(item)" *ngIf="item['link']" class="">
+                    <button (click)="copyLink(item)" *ngIf="item['link']" class="hover:opacity-50">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 7.66531C5 6.95791 5.28099 6.27948 5.78115 5.77927C6.28131 5.27906 6.95968 4.99805 7.66701 4.99805H16.3331C16.6833 4.99805 17.0301 5.06704 17.3537 5.20108C17.6773 5.33512 17.9713 5.53159 18.2189 5.77927C18.4666 6.02695 18.663 6.32099 18.7971 6.64459C18.9311 6.9682 19.0001 7.31504 19.0001 7.66531V16.3322C19.0001 16.6824 18.9311 17.0293 18.7971 17.3529C18.663 17.6765 18.4666 17.9705 18.2189 18.2182C17.9713 18.4659 17.6773 18.6624 17.3537 18.7964C17.0301 18.9304 16.6833 18.9994 16.3331 18.9994H7.66701C7.31678 18.9994 6.96997 18.9304 6.64639 18.7964C6.32282 18.6624 6.02881 18.4659 5.78115 18.2182C5.5335 17.9705 5.33704 17.6765 5.20301 17.3529C5.06898 17.0293 5 16.6824 5 16.3322V7.66531Z" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2.01201 14.7384C1.705 14.5639 1.44965 14.3113 1.2719 14.0062C1.09415 13.7011 1.00034 13.3543 1 13.0012V3.0002C1 1.90009 1.9 1 3.00001 1H13.0001C13.7501 1 14.1581 1.38504 14.5001 2.0001" stroke="#494F50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -387,17 +372,17 @@
     <!-- button for brand -->
     <div *ngIf="!instagramId" class="flex justify-end gap-5 mt-5">
       <!-- cancel project for unpaid or waiting -->
-      <button *ngIf="newProject['status_id'] == 2 || newProject['status_id'] == 3" (click)="askConfirm(1)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold">Cancel order</button>
-      <button *ngIf="newProject['status_id'] == 2" (click)="goToPayment()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Finish payment</button>
+      <button *ngIf="newProject['status_id'] == 2 || newProject['status_id'] == 3" (click)="askConfirm(1)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Cancel order</button>
+      <button *ngIf="newProject['status_id'] == 2" (click)="goToPayment()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Finish payment</button>
       <!-- mark project as done for status 'review' -->
-      <button *ngIf="newProject['status_id'] == 5" (click)="askConfirm(6)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Mark as Done</button>
+      <button *ngIf="newProject['status_id'] == 5" (click)="askConfirm(6)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Mark as Done</button>
     </div>
 
     <!-- button for influencer -->
     <div *ngIf="instagramId" class="flex justify-end gap-5 mt-5">
-      <button *ngIf="newProject['status_id'] == 3" (click)="askConfirm(4)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold">Reject</button>
-      <button *ngIf="newProject['status_id'] == 3" (click)="askConfirm(3)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Accept</button>
-      <button *ngIf="newProject['status_id'] == 4" (click)="askConfirm(5)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Finish</button>
+      <button *ngIf="newProject['status_id'] == 3" (click)="askConfirm(4)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Reject</button>
+      <button *ngIf="newProject['status_id'] == 3" (click)="askConfirm(3)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Accept</button>
+      <button *ngIf="newProject['status_id'] == 4" (click)="askConfirm(5)" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Finish</button>
     </div>
   </div>
 </div>

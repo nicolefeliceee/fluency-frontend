@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <app-header></app-header>
 <div class="bantu"></div>
+
+<app-confirmation-popup [display]="askConfirmHireInfluencer" [header]="'Hire influencer'" [body]="'Are you sure want to hire this influencer?'" (cancelClicked)="askConfirmHireInfluencer = false" (confirmClicked)="redirectToProject()"></app-confirmation-popup>
+
 <div class="isi px-14 pt-5 pb-20">
   <div class="back w-full font-semibold text-[0.9rem]"> < Back </div>
   <div class="profileAtas h-[22rem] flex mt-4">
@@ -125,7 +128,7 @@
                 <path d="M11.1816 12.4637C11.1816 11.3946 11.1816 10.8601 11.4244 10.4515C11.6379 10.0923 11.9787 9.8003 12.3977 9.61727C12.8744 9.40918 13.498 9.40918 14.7453 9.40918H20.9816C22.2289 9.40918 22.8526 9.40918 23.3292 9.61727C23.7483 9.8003 24.089 10.0923 24.3025 10.4515C24.5453 10.8601 24.5453 11.3946 24.5453 12.4637V25.164C24.5453 25.6279 24.5453 25.8598 24.4328 25.9868C24.3842 26.042 24.3222 26.0875 24.251 26.1201C24.1799 26.1528 24.1013 26.1717 24.0208 26.1758C23.8348 26.1853 23.6098 26.0565 23.1599 25.7997L17.8635 22.7728L12.567 25.7987C12.1171 26.0565 11.8921 26.1853 11.705 26.1758C11.6247 26.1716 11.5463 26.1526 11.4754 26.1199C11.4044 26.0873 11.3426 26.0419 11.2941 25.9868C11.1816 25.8598 11.1816 25.6279 11.1816 25.164V12.4637Z" fill="#494F50" stroke="#494F50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg> -->
             </div>
-            <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer">Hire</div>
+            <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer" (click)="askConfirm()">Hire</div>
             <!-- <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer" (click)="redirectToProject()">Hire</div> -->
           </div>
           <div class="rateBox flex pt-[2px] items-center justify-end mt-2">

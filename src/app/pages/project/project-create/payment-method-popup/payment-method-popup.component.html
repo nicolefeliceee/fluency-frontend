@@ -86,15 +86,13 @@
     </div>
 
     <div class="flex justify-end items-center gap-x-2 py-3 border-t border-font-darkGrey mt-20">
-      <button (click)="cancel()" type="button" class="hs-dropup-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-slide-up-animation-modal">
+      <button (click)="cancel()" type="button" class="bg-font-white border border-blue-80 text-blue-80 rounded-lg px-5 py-2 hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">
         Close
       </button>
-      <button (click)="checkout()" *ngIf="(walletSelected || otherSelected) && !balanceInsufficientError"  type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+      <button [disabled]="(!walletSelected && !otherSelected) || balanceInsufficientError" (click)="checkout()"  type="submit" class="bg-blue-80 text-font-white rounded-lg px-5 py-2 hover:bg-[#3C53B7] active:bg-[#2E3D7D]">
         Continue
       </button>
-      <button disabled *ngIf="(!walletSelected && !otherSelected) || balanceInsufficientError" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-        Continue
-      </button>
+
     </div>
 
   </div>

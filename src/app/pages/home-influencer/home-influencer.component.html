@@ -26,7 +26,7 @@
       <div class="mt-1 text-[0.8rem] text-yellow-700">
         Activate your account now to be visible for brands.
       </div>
-    </div>
+  </div>
   </div>
 </div>
 
@@ -197,16 +197,13 @@
       </div>
 
       <!-- <div class="projects pt-[6rem] px-[7rem]" *ngIf="projectList.length > 0"> -->
-      <div class="kotakKetiga projects mt-[35px]">
+      <div class="kotakKetiga projects mt-[35px]" *ngIf="projectList.length > 0">
         <div class="flex items-center justify-between mb-2">
           <div class="projectTitle font-semibold text-[1.2rem] ms-2">Waiting for Approval</div>
-          <p class="text-font-darkGrey font-normal text-[0.9rem] me-2">See All</p>
+          <a routerLink="/project"  class="text-font-darkGrey font-normal text-[0.9rem] me-2" *ngIf="projectList.length > 3">See All</a>
         </div>
         <div class="projectCard grid grid-cols-3 gap-3">
-          <!-- <app-project-card *ngFor="let item of projectList | slice:0:3" [title]="item.title" [project]="item"></app-project-card> -->
-           <div class="coba bg-white h-[10rem] rounded-2xl"></div>
-           <div class="coba bg-white h-[10rem] rounded-2xl"></div>
-           <div class="coba bg-white h-[10rem] rounded-2xl"></div>
+          <app-project-card *ngFor="let item of projectList | slice:0:3" [title]="item.title" [project]="item"></app-project-card>
         </div>
       </div>
 

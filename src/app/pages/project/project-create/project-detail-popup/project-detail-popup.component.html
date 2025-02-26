@@ -53,10 +53,10 @@
       </div>
     </div>
     <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t border-font-darkGrey">
-      <button (click)="cancel()" type="button" class="hs-dropup-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-slide-up-animation-modal">
+      <button (click)="cancel()" type="button" class="bg-font-white border border-blue-80 text-blue-80 rounded-lg px-5 py-2 hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">
         Cancel
       </button>
-      <button [disabled]="projectStatus >= 4 && (isValidLink != true || loading)" type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+      <button [disabled]="projectStatus >= 4 && (isValidLink != true || loading)" type="submit" class="bg-blue-80 text-font-white rounded-lg px-5 py-2 hover:bg-[#3C53B7] active:bg-[#2E3D7D]">
         <span *ngIf="loading" class="animate-spin mr-2">
           <!-- This is the spinner, you can use any spinner or loading indicator you like -->
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { ConfirmationPopupComponent } from "../../../../components/confirmation-
   selector: 'app-influencer-rate-card',
   standalone: true,
   imports: [CommonModule, PriceFormattingDirective, FormsModule, ConfirmationPopupComponent],
+  providers: [DecimalPipe],
   templateUrl: './influencer-rate-card.component.html',
   styleUrl: './influencer-rate-card.component.css'
 })
@@ -20,7 +21,8 @@ export class InfluencerRateCardComponent {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private decimalPipe: DecimalPipe
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.newUser = navigation?.extras.state?.['newUser'];
@@ -47,7 +49,6 @@ export class InfluencerRateCardComponent {
 
 
   nextStep() {
-    console.log(this.newUser)
 
     this.newUser.reelsPrice = this.reelPrice??"";
     this.newUser.feedsPrice = this.feedPrice??"";
@@ -67,4 +68,15 @@ export class InfluencerRateCardComponent {
     this.router.navigate(['/signup/influencer/category'],  { state: { newUser: this.newUser, userType: "influencer" } });
    }
   skip() { }
+
+  formatStoryPrice() {
+    console.log(this.storyPrice);
+    this.storyPrice = this.formatPrice(this.storyPrice);
+    console.log(this.storyPrice);
+  }
+
+  formatPrice(price: any) {
+    let formatted = this.decimalPipe.transform(price, '1.0-0');
+    return formatted!.replace(/,/g, '.');
+  }
 }

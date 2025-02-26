@@ -1,6 +1,6 @@
 <div *ngIf="display" class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[100]">
 
-  <div class="mt-10 bg-font-white rounded-xl top-10 w-[500px] p-5 text-center mx-auto">
+  <div class="mt-10 bg-font-white rounded-xl top-10 w-[90%] md:w-[500px] p-5 text-center mx-auto">
     <div class="text-header3 font-bold ">
       {{ header }}
     </div>
@@ -8,8 +8,8 @@
       {{ body }}
     </div>
     <div class="flex mx-auto w-fit gap-5 mt-10">
-      <button (click)="cancel()" class="bg-font-white border border-blue-80 text-blue-80 rounded-lg px-5 py-2">Cancel</button>
-      <button (click)="confirm()" class="bg-blue-80 text-font-white rounded-lg px-5 py-2">Confirm</button>
+      <button (click)="cancel()" class="bg-font-white border border-blue-80 text-blue-80 rounded-lg px-5 py-2 hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Cancel</button>
+      <button (click)="confirm()" class="bg-blue-80 text-font-white rounded-lg px-5 py-2 hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Confirm</button>
     </div>
   </div>
 </div>

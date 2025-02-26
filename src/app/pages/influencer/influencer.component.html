@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="bantu"></div>
-<!-- <app-tab></app-tab> -->
-<!-- <app-tab [options]="categoryOptions" (id)="getProjectsByStatus($event)"></app-tab> -->
-<app-confirmation-popup [display]="askConfirmHireInfluencer" [header]="'Hire influecer'" [body]="'Are you sure want to hire this influencer?'" (cancelClicked)="askConfirmHireInfluencer = false" (confirmClicked)="redirectToProject()"></app-confirmation-popup>
+
+<app-confirmation-popup [display]="askConfirmHireInfluencer" [header]="'Hire influencer'" [body]="'Are you sure want to hire this influencer?'" (cancelClicked)="askConfirmHireInfluencer = false" (confirmClicked)="redirectToProject()"></app-confirmation-popup>
+
 <app-tab-influencer [options]="categoryOptions" (searchResults)="updateInfluencers($event)" (id)="getInfluencerCategory($event)" [isAll]="isAllBoolean" [selectedId]="selectedId"></app-tab-influencer>
 <div class="bawah flex flex-row w-full mb-16">
   <div class="kiri">

@@ -1,11 +1,10 @@
-<div class="md:h-[3.3rem] bg-font-white w-full border-b border-b-[#DFE1E2] px-[4.3%] flex flex-col justify-between items-center md:flex-row pb-2 md:pb-0">
-  <div class="tabKiri flex w-full md:w-fit overflow-scroll md:overflow-auto p-2 md:p-0">
-    <button *ngFor="let item of options" [ngClass]="{'text-blue-80': item.id === selectedId}" class="tabChoice font-medium mx-2 hover:text-blue-80 active:text-blue-80" (click)="opentab(item.id)">{{ item.label }}</button>
+<div class="tab flex justify-between items-center">
+  <div class="tabKiri">
+    <button *ngFor="let item of options" [ngClass]="{'text-blue-80': item === selectedStatus}" class="tabChoice font-medium mx-2 hover:text-blue-80 active:text-blue-80" (click)="opentab(item)">{{ item }}</button>
   </div>
 
-  <div class="flex items-center">
-    <button *ngIf="!instagramId" (click)="addNewProject()" class="bg-blue-80 text-font-white py-1 md:py-2 px-2 md:px-5 rounded-lg text-body me-3 hover:bg-[#3C53B7] active:bg-[#2E3D7D] flex">+ New <p class="hidden md:block ms-1">Project</p></button>
 
+  <div class="flex items-center ">
     <div class="relative" data-hs-combo-box='{
       "groupingType": "default",
       "isOpenOnFocus": true,

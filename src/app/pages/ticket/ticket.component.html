@@ -1,0 +1,22 @@
+<!-- <app-header></app-header> -->
+<div class="bantu"></div>
+
+<app-tab-admin [options]="statusOptions" [selectedStatus]="selectedStatus" (status)="getTicketsByStatus($event)" (outputQuery)="search($event)"></app-tab-admin>
+
+<app-alert-error [display]="generalError" [label]="'Unexpected error occured! Please try again later'" (dismissClicked)="generalError = false"></app-alert-error>
+<app-alert-success [display]="resolveSuccess" [label]="'Ticket has been resolved successfully'" (dismissClicked)="resolveSuccess = false"></app-alert-success>
+<app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
+
+<div class="container px-20 py-10">
+  <div *ngIf="ticketList.length == 0" class="container text-center">
+    <img src="../../../assets/images/empty project.png" alt="" class="object-cover mx-auto">
+    <h1 class="text-header2 font-semibold text-font-darkGrey">Nothing is here yet</h1>
+    <h5 class="text-header6 font-medium text-font-lightGrey mb-5">Please wait for your ticket</h5>
+  </div>
+
+  <div class="grid grid-cols-3 gap-5">
+
+    <app-ticket-card *ngFor="let item of ticketList; let i = index" [title]="item.title" [ticket]="item" [index]="i" (indexClick)="toggleButton($event)" [status]="selectedStatus">
+    </app-ticket-card>
+  </div>
+</div>

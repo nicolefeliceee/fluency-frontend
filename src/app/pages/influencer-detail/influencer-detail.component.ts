@@ -11,6 +11,7 @@ import { getChartLabelPlugin, PLUGIN_ID } from 'chart.js-plugin-labels-dv';
 import { text } from 'node:stream/consumers';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ConfirmationPopupComponent } from "../../components/confirmation-popup/confirmation-popup.component";
 // Chart.register(...registerables, ChartLabels);
 Chart.register(getChartLabelPlugin());
 Chart.register(...registerables);
@@ -133,7 +134,7 @@ interface InfluencerDetail {
 @Component({
   selector: 'app-influencer-detail',
   standalone: true,
-  imports: [HeaderComponent, CommonModule, InfluencerDetailComponent, RouterLink],
+  imports: [HeaderComponent, CommonModule, InfluencerDetailComponent, RouterLink, ConfirmationPopupComponent],
   templateUrl: './influencer-detail.component.html',
   styleUrl: './influencer-detail.component.css'
 })
@@ -146,9 +147,33 @@ export class InfluencerDetailComponent implements OnInit {
     private influencerService: InfluencerService,
     private sanitizer: DomSanitizer,
     private router: Router,
-  ) {}
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    this.newProject = navigation?.extras.state?.['newProject'];
+  }
 
   stories: StoryDetail[] = [];
+
+    // for hire
+
+  askConfirmHireInfluencer: boolean = false;
+  influencerIdToHire: any;
+
+  askConfirm() {
+    this.influencerIdToHire = this.influencerId;
+    this.askConfirmHireInfluencer = true;
+  }
+
+  newProject: any;
+  redirectToProject() {
+    // jika sebelumnya tekan button find dari menu create project
+    if (this.newProject) {
+      this.newProject.influencerId = this.influencerIdToHire;
+      this.router.navigate(['project/create'], { state: { newProject: this.newProject } });
+    } else { //jika mau hire dari menu influencer langsung
+      this.router.navigate(['project'], { state: { influencerId: this.influencerIdToHire } });
+    }
+  }
 
   ngOnInit(): void {
 

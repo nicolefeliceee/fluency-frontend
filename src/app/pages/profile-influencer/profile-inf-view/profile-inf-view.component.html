@@ -3,9 +3,9 @@
 
 <app-alert-success [display]="editSuccess" [label]="'Your profile is updated successfully'" (dismissClicked)="editSuccess = false"></app-alert-success>
 
-<div class="container bg-background p-5">
-  <div class="container px-2 py-5">
-      <div class="flex w-10/12 mx-auto">
+<div class="container bg-background md:p-5">
+  <div class="container md:px-2 py-5">
+      <div class="flex flex-col md:flex-row w-10/12 mx-auto">
         <div class="basis-1/4">
           <div class="m-0 p-0 relative justify-items-center">
             <div *ngIf="imagePreview" class="w-52 h-52 rounded-full overflow-hidden border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
@@ -25,8 +25,8 @@
         </div>
 
         <div class="basis-3/4">
-          <p class="mb-2 font-semibold text-header3">My Profile</p>
-          <div class="grid grid-cols-2 gap-x-7">
+          <p class="md:mb-2 mt-2 md:mt-0 font-semibold text-header3">My Profile</p>
+          <div class="grid md:grid-cols-2 gap-x-7">
             <div class="inputContainer">
               <label for="name" class=" inputLabel text-font-darkGrey">Name</label>
               <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ influencer['name'] }}</div>
@@ -63,7 +63,7 @@
 
             <div class="inputContainer">
               <label for="email" class="inputLabel text-font-darkGrey">Category</label>
-              <div class="flex gap-2">
+              <div class="flex flex-wrap gap-2">
                 <div *ngFor="let item of influencer['category']" class="w-fit inputBox px-4 border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ item['label'] }}</div>
               </div>
             </div>
@@ -71,10 +71,10 @@
 
           </div>
 
-          <!-- target audience -->
+          <!-- campaign type -->
           <p class="mt-5 mb-2 font-semibold text-header5">Campaign Type</p>
-          <div class="flex">
-            <div *ngIf="influencer['story_price'] > 0" class="inputContainer w-[12rem] me-5">
+          <div class="flex flex-col md:flex-row">
+            <div *ngIf="influencer['story_price'] > 0" class="inputContainer md:w-[12rem] me-5">
               <label for="phone" class="inputLabel text-font-darkGrey">Story</label>
               <div class="flex" id="inputBoxPhone">
                 <div class="phonePrefix text-center content-center">Rp</div>
@@ -82,7 +82,7 @@
               </div>
             </div>
 
-            <div *ngIf="influencer['feeds_price'] >0" class="inputContainer w-[12rem] me-5 ">
+            <div *ngIf="influencer['feeds_price'] >0" class="inputContainer md:w-[12rem] me-5 ">
               <label for="phone" class="inputLabel text-font-darkGrey">Feeds</label>
               <div class="flex" id="inputBoxPhone">
                 <div class="phonePrefix text-center content-center">Rp</div>
@@ -90,7 +90,7 @@
               </div>
             </div>
 
-            <div *ngIf="influencer['reels_price'] >0" class="inputContainer w-[12rem] me-5">
+            <div *ngIf="influencer['reels_price'] >0" class="inputContainer md:w-[12rem] me-5">
               <label for="phone" class="inputLabel text-font-darkGrey">Reels</label>
               <div class="flex" id="inputBoxPhone">
                 <div class="phonePrefix text-center content-center">Rp</div>

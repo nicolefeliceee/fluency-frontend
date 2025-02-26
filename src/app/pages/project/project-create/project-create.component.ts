@@ -30,6 +30,7 @@ export class ProjectCreateComponent implements OnInit{
   newProject: ProjectCreate = new ProjectCreate();
   draftProject!: any;
   influencerSelectedProject: any;
+  influencerId: any;
 
   // for confirmation popup
   displayConfirmation: boolean = false;
@@ -62,6 +63,11 @@ export class ProjectCreateComponent implements OnInit{
   selectedInfluencer?: any = null;
 
   ngOnInit(): void {
+
+    if (this.influencerId) {
+      this.selectedInfluencerId = this.influencerId;
+    }
+
     if (this.draftProject) {
       console.log(this.draftProject);
       this.projectTitle = this.draftProject.title;
@@ -130,6 +136,7 @@ export class ProjectCreateComponent implements OnInit{
     const navigation = this.router.getCurrentNavigation();
     this.draftProject = navigation?.extras.state?.['draftProject'];
     this.influencerSelectedProject = navigation?.extras.state?.['newProject'];
+    this.influencerId = navigation?.extras.state?.['influencerId'];
   }
 
   // for field in detail popup
@@ -199,6 +206,9 @@ export class ProjectCreateComponent implements OnInit{
 // validasi required field: title, desc, capt, mention
     if (this.projectTitle == null || this.projectDescription == null || this.projectCaption == null || this.projectMention == null) {
       this.requiredNotFilled = true;
+      setTimeout(() => {
+        this.requiredNotFilled = false;
+      }, 2000);
       this.displayConfirmation = false;
     }
 
@@ -241,7 +251,7 @@ export class ProjectCreateComponent implements OnInit{
 
     if (method == 'wallet') {
       let amount = this.reelsDetailList.length * this.reelsPrice + this.feedsDetailList.length * this.feedsPrice + this.storyDetailList.length * this.storyPrice;
-      this.walletService.checkout(amount).subscribe(
+      this.walletService.checkout(amount, this.selectedInfluencerId).subscribe(
         (data) => {
           console.log(data);
           this.saveProject('3');
@@ -311,6 +321,38 @@ export class ProjectCreateComponent implements OnInit{
 
   }
 
+  addStoryNominalToProjectDetail() {
+    if (this.storyDetailList.length > 0) {
+       this.storyDetailList.forEach(element => {
+        element.nominal = this.storyPrice
+       });
+    }
+
+    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.storyDetailList);
+  }
+
+  addFeedsNominalToProjectDetail() {
+    if (this.feedsDetailList.length > 0) {
+      this.feedsDetailList.forEach(element => {
+        element.nominal = this.feedsPrice
+      });
+    }
+
+    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
+    // this.newProject.projectDetails.concat(this.feedsDetailList);
+  }
+
+  addReelsNominalToProjectDetail() {
+    if (this.reelsDetailList.length > 0) {
+       this.reelsDetailList.forEach(element => {
+        element.nominal = this.reelsPrice
+       });
+    }
+
+    // this.newProject.projectDetails.concat(this.reelsDetailList);
+    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
+  }
+
   saveProject(statusId: any) {
     this.newProject.projectDetails = [];
 
@@ -322,9 +364,11 @@ export class ProjectCreateComponent implements OnInit{
     this.newProject.caption = this.projectCaption;
     this.newProject.hashtag = this.projectHashtag;
     this.newProject.influencerId = this.selectedInfluencerId;
-    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.storyDetailList);
-    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
-    this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
+    this.addStoryNominalToProjectDetail();
+    this.addFeedsNominalToProjectDetail();
+    this.addReelsNominalToProjectDetail();
+    // this.newProject.projectDetails = this.newProject.projectDetails.concat(this.feedsDetailList);
+    // this.newProject.projectDetails = this.newProject.projectDetails.concat(this.reelsDetailList);
 
     if (this.draftProject ) {
       // update
@@ -361,6 +405,7 @@ export class ProjectCreateComponent implements OnInit{
             }
         )
       } else {
+        console.log(this.newProject);
         this.projectService.createProject(this.newProject).subscribe(
           (data) => {
             this.ngZone.run(() => {
@@ -379,6 +424,7 @@ export class ProjectCreateComponent implements OnInit{
       // create new
       this.projectService.createProject(this.newProject).subscribe(
         (data) => {
+
           this.ngZone.run(() => {
             this.router.navigate(['/project'], {state: {status: true, expectedStatus: statusId}});
           })

@@ -1,0 +1,31 @@
+
+.tab{
+  height: 3.3rem;
+  background-color: white;
+  width: 100%;
+  border-bottom: 1px #DFE1E2 solid;
+  padding-left: 4.3%;
+  padding-right: 4.3%;
+}
+
+.tabChoice{
+  font-size: 0.85rem;
+}
+
+.tabKanan{
+  background-color: rgb(148,156,158,0.05);
+  border: 1px solid rgb(148,156,158,0.3);
+  width: 15rem;
+  height: 2rem;
+  font-size: 0.8rem;
+}
+
+.tabKanan::placeholder{
+  color: rgb(73,79,80,0.7);
+}
+
+input[type=text]:focus {
+  background-color: rgb(148,156,158,0.05);
+  border: 1px solid rgb(148,156,158);
+  outline: none;
+}

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AlertSuccessComponent } from "../../components/alert-success/alert-success.component";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,9 @@ import { AlertErrorComponent } from '../../components/alert-error/alert-error.co
 import { HomeService } from '../../services/home.service';
 import { LoadingService } from '../../services/loading.service';
 import { WalletTopupPopupComponent } from "../wallet-topup-popup/wallet-topup-popup.component";
+import { ProjectService } from '../../services/project.service';
+import { error } from 'console';
+import { ProjectCardComponent } from "../project/project-card/project-card.component";
 
 interface Category {
   id: number; // ID kategori
@@ -88,19 +91,21 @@ interface ProjectDetail {
 @Component({
   selector: 'app-home-influencer',
   standalone: true,
-  imports: [HeaderComponent, AlertSuccessComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent, WalletTopupPopupComponent],
+  imports: [HeaderComponent, AlertSuccessComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent, WalletTopupPopupComponent, RouterLink, ProjectCardComponent],
   templateUrl: './home-influencer.component.html',
   styleUrl: './home-influencer.component.css'
 })
 export class HomeInfluencerComponent implements OnInit{
   influencer: InfluencerDetail | null = null; // Tipe array Influencer
   projectDetails: ProjectDetail[] = []; // Tipe array Influencer
+  projectList!: any[];
   // pastelColor: string;
 
   constructor(
     private router: Router,
     private influencerService: InfluencerService,
     private homeService: HomeService,
+    private projectService: ProjectService,
     private cdRef: ChangeDetectorRef,
     private loadingService: LoadingService
   ) {
@@ -138,8 +143,17 @@ export class HomeInfluencerComponent implements OnInit{
 
     this.loadWalletInfo();
 
-  }
+    this.projectService.getProjects('3', localStorage.getItem('user_id') || '', null).subscribe(
+      (data) => {
+        console.log(data);
+        this.projectList = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
 
+  }
 
   loadWalletInfo(){
     this.homeService.getWalletInfo().subscribe(
@@ -155,7 +169,7 @@ export class HomeInfluencerComponent implements OnInit{
       }
     );
   }
-  
+
 
   sortWalletDetailsByDate() {
     // Ambil wallet_details_grouped dan ubah menjadi array untuk pengurutan

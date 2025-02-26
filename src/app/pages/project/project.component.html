@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="bantu"></div>
 
-<app-tab [options]="statusOptions" [selectedId]="selectedStatus" (id)="getProjectsByStatus($event)" (outputQuery)="search($event)"></app-tab>
+<app-tab [options]="statusOptions" [selectedId]="selectedStatus" [influencerId]="influencerId" (id)="getProjectsByStatus($event)" (outputQuery)="search($event)"></app-tab>
 
 <app-alert-success [display]="createSuccess" [label]="'Project saved successfully'" (dismissClicked)="createSuccess = false"></app-alert-success>
 <app-alert-success [display]="deleteSuccess" [label]="'Project deleted successfully'" (dismissClicked)="deleteSuccess = false"></app-alert-success>
@@ -11,22 +11,22 @@
 
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 
-<div class="container px-20 py-10">
+<div class="container px-5 md:px-20 py-10">
   <div *ngIf="projectList.length == 0" class="container text-center">
     <img src="../../../assets/images/empty project.png" alt="" class="object-cover mx-auto">
     <h1 class="text-header2 font-semibold text-font-darkGrey">Nothing is here yet</h1>
     <h5 *ngIf="instagramId" class="text-header6 font-medium text-font-lightGrey mb-5">Please wait for your first project</h5>
     <h5 *ngIf="!instagramId" class="text-header6 font-medium text-font-lightGrey mb-5">Create your first project now</h5>
-    <a *ngIf="!instagramId" routerLink="/project/create"  class="bg-blue-80 text-font-white py-2 px-5 rounded-lg">+ New Project</a>
+    <button *ngIf="!instagramId" (click)="addNewProject()"  class="bg-blue-80 text-font-white py-2 px-5 rounded-lg hover:bg-[#3C53B7] active:bg-[#2E3D7D]">+ New Project</button>
   </div>
 
-  <div class="grid grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
     <app-project-card *ngFor="let item of projectList; let i = index" [title]="item.title" [project]="item" [influencerId]="influencerId" [index]="i" (indexClick)="toggleButton($event)" (influencerAlreadySelected)="influencerAlreadySelected = true">
       <div *ngIf="openIndex === i" class="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg">
         <ul>
-          <!-- bisa delete kalau draft / unpaid -->
-          <li *ngIf="selectedStatus < 3" (click)="deleteItem(item)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
+          <!-- bisa delete kalau draft / unpaid / waiting -->
+          <li *ngIf="(selectedStatus <= 3 || selectedStatus == 7) && !instagramId" (click)="deleteItem(item)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
           <!-- bisa report kalau ongoing, review, done -->
           <li *ngIf="selectedStatus > 3 && selectedStatus <= 6" (click)="reportProject(item)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Report</li>
         </ul>

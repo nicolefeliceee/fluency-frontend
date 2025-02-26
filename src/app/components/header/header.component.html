@@ -6,7 +6,7 @@
   <div *ngIf="userId && isDesktop" class="middle flex content-center justify-center items-center">
     <a [routerLink]="pathToHome" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
     <div class="bantu"></div>
-    <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Project</a>
+    <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:false}" class="menu">Project</a>
     <div class="bantu"></div>
     <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:false}" class="menu">Influencer</a>
   </div>
@@ -51,8 +51,8 @@
   </div> -->
 
   <div *ngIf="!isLogin" class="items-center content-center flex">
-      <button routerLink="/login" class="text-blue-80 font-semibold text-[0.9rem] border border-blue-80 px-5 py-2 rounded-md me-5">Login</button>
-      <button routerLink="/signup" class="bg-blue-80 text-[0.9rem] text-font-white font-semibold flex py-2 px-5 rounded-md">Signup</button>
+      <button routerLink="/login" class="text-blue-80 font-semibold text-[0.9rem] border border-blue-80 px-5 py-2 rounded-md me-5 hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Login</button>
+      <button routerLink="/signup" class="bg-blue-80 text-[0.9rem] text-font-white font-semibold flex py-2 px-5 rounded-md hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Signup</button>
   </div>
 
   <div class="end content-center items-center justify-end flex" *ngIf="isLogin">

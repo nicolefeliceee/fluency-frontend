@@ -31,7 +31,7 @@
     <div class="ms-2 block" *ngIf="!project['influencer_id']">
       <p class=" text-body text-font-lightGrey">You haven’t choose influencer yet</p>
     </div>
-    <button *ngIf="!influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">View</button>
-    <button *ngIf="influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2">Add</button>
+    <button *ngIf="!influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2 hover:bg-[#3C53B7] active:bg-[#2E3D7D]">View</button>
+    <button *ngIf="influencerId" (click)="viewProjectDetail(project)" class="bg-blue-80 rounded-lg m-0 p-0 ms-auto text-font-white px-5 py-2 hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Add</button>
   </div>
 </div>

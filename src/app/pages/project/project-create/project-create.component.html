@@ -6,16 +6,16 @@
 <app-alert-error [display]="influencerNotSelected" [label]="'You have not selected any influencer'" (dismissClicked)="this.influencerNotSelected = false"></app-alert-error>
 <app-alert-error [display]="influencerInActive" [label]="'This influencer is no longer active! Please choose another one'" (dismissClicked)="this.influencerInActive = false"></app-alert-error>
 <app-alert-error [display]="generalError" [label]="'Unexpected error occured! Please try again later'" (dismissClicked)="this.generalError = false"></app-alert-error>
-<app-alert-error [display]="requiredNotFilled" [label]="'Please fill out all required field'" (dismissClicked)="this.generalError = false"></app-alert-error>
+<app-alert-error [display]="requiredNotFilled" [label]="'Please fill out all required field'" (dismissClicked)="this.requiredNotFilled = false"></app-alert-error>
 
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <app-project-detail-popup [display]="displayDetail" [header]="detailHeader" [media]="detailMedia" [id]="detailId" [inputForm]="editDetailForm" (cancelClicked)="detailCancel()" (confirmClicked)="detailConfirm($event)"></app-project-detail-popup>
 <app-payment-method-popup [display]="displayPaymentMethod" [orderSummary]="orderSummary" (cancelClicked)="paymentCancel()" (confirmClicked)="checkout($event)"></app-payment-method-popup>
 
-<div class="container">
-  <div class="container p-5">
-    <button (click)="askConfirm(10)" class="mb-5">&lt; Back</button>
-    <div class="grid grid-cols-2 gap-10">
+<div class="container md:p-5">
+  <div class="container md:p-5">
+    <button (click)="askConfirm(10)" class="mb-5 hover:opacity-50">&lt; Back</button>
+    <div class="grid md:grid-cols-2 gap-10">
       <div class="bg-font-white rounded-xl p-5">
         <p class="text-header3 font-bold mb-5">Create Project</p>
         <div class="flex flex-col my-5">
@@ -46,12 +46,12 @@
       </div>
 
       <div class="">
-        <div class="bg-font-white rounded-xl p-5 h-[24rem]">
+        <div class="bg-font-white rounded-xl p-5 md:h-[24rem]">
           <div class="flex justify-between items-center">
             <p class="text-header4 text-bg-blue-100 font-semibold">Find influencer</p>
-            <button (click)="askConfirm(3)" class="border border-blue-80 rounded-xl px-5 py-2 text-blue-80 font-semibold">Find</button>
+            <button (click)="askConfirm(3)" class="border border-blue-80 rounded-xl px-5 py-2 text-blue-80 font-semibold hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Find</button>
           </div>
-          <div *ngIf="!selectedInfluencer" class="bg-font-lightGrey/15 h-5/6 rounded-xl content-center mt-5">
+          <div *ngIf="!selectedInfluencer" class="bg-font-lightGrey/15 h-[12rem] md:h-5/6 rounded-xl content-center mt-5">
             <div class="mx-auto w-fit">
               <svg width="136" height="54" viewBox="0 0 136 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M130.562 5.34375H127.284C125.765 4.44684 124.151 3.72247 122.471 3.18414C117.178 1.4336 110.188 0.53125 101.688 0.53125C93.1874 0.53125 86.1973 1.4336 80.9156 3.18414C76.6866 4.59481 74.8247 6.14984 74.2232 6.75441C72.2811 5.82581 70.1557 5.34381 68.003 5.34381C65.8503 5.34381 63.7249 5.82581 61.7829 6.75441C61.1813 6.15285 59.3195 4.59481 55.0905 3.18414C49.8027 1.4336 42.8126 0.53125 34.3125 0.53125C25.8124 0.53125 18.8223 1.4336 13.5405 3.18414C11.8609 3.72247 10.2467 4.44684 8.72805 5.34375H5.4375C4.16115 5.34375 2.93707 5.85078 2.03455 6.7533C1.13203 7.65582 0.625 8.8799 0.625 10.1562C0.625 11.4326 1.13203 12.6567 2.03455 13.5592C2.93707 14.4617 4.16115 14.9688 5.4375 14.9688H5.48863C5.78941 28.6423 7.42566 36.8596 10.9358 42.7098C13.1346 46.4869 16.5054 49.4437 20.5367 51.1317C24.2153 52.7078 28.724 53.4748 34.3125 53.4748C41.5764 53.4748 51.9022 52.3589 57.6892 42.7158C60.6008 37.8612 62.228 31.3794 62.8657 21.5047C63.0776 20.9548 63.1867 20.3706 63.1875 19.7812C63.1875 18.5049 63.6945 17.2808 64.597 16.3783C65.4996 15.4758 66.7236 14.9688 68 14.9688C69.2764 14.9688 70.5004 15.4758 71.403 16.3783C72.3055 17.2808 72.8125 18.5049 72.8125 19.7812C72.8141 20.3686 72.9232 20.9507 73.1343 21.4987C73.772 31.3734 75.3992 37.8552 78.3108 42.7098C80.5096 46.4869 83.8804 49.4437 87.9117 51.1317C91.5903 52.7078 96.099 53.4748 101.688 53.4748C108.951 53.4748 119.277 52.3589 125.064 42.7158C128.574 36.8656 130.217 28.6483 130.511 14.9748H130.562C131.839 14.9748 133.063 14.4677 133.965 13.5652C134.868 12.6627 135.375 11.4386 135.375 10.1623C135.375 8.88591 134.868 7.66184 133.965 6.75932C133.063 5.8568 131.839 5.34977 130.562 5.34977V5.34375Z" fill="#91A9FD"/>
@@ -61,12 +61,12 @@
           </div>
 
           <div *ngIf="selectedInfluencer" class=" h-5/6 rounded-xl mt-5">
-            <div class="flex rounded-xl">
-              <!-- <div class="w-1/2 overflow-hidden border border-font-darkGrey rounded-l-xl h-[17.5rem]">
-                 <div class="foto" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div>
-              </div> -->
-              <div class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div>
-              <div class="p-5 rounded-r-xl w-1/2 h-[17.5rem] border border-font-darkGrey ">
+            <div class="md:flex rounded-xl">
+              <div class="overflow-hidden md:h-[17.5rem] md:w-[17.5rem] md:rounded-l-xl p-0">
+                 <div class="foto h-[17.5rem]" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div>
+              </div>
+              <!-- <div class="foto rounded-l-xl h-[17.5rem] w-[17.8rem]" [style.background-image]="'url(' + getProfilePictureUrl(selectedInfluencer.profilepicture) + ')'"></div> -->
+              <div class="p-5 md:rounded-r-xl md:w-1/2 md:h-[17.5rem] border border-font-darkGrey ">
                 <p class="text-header5 font-semibold text-font-darkGrey mb-2">&#64;{{ selectedInfluencer.username }}</p>
                 <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.name }}</p>
                 <p class="text-[0.95rem] text-font-darkGrey">{{ selectedInfluencer.followers }} Followers</p>
@@ -244,8 +244,8 @@
       </div>
     </div>
     <div class="flex justify-end gap-5 mt-5">
-      <button (click)="askConfirm(1)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold">Save to draft</button>
-      <button (click)="goToPayment()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold">Go to payment</button>
+      <button (click)="askConfirm(1)" class="px-5 py-2 rounded-xl border border-blue-80 text-blue-80 font-semibold hover:bg-[#91A9FD]/30 active:bg-[#5876F9]/35">Save to draft</button>
+      <button (click)="goToPayment()" class="px-5 py-2 rounded-xl bg-blue-80 text-font-white font-semibold hover:bg-[#3C53B7] active:bg-[#2E3D7D]">Go to payment</button>
     </div>
   </div>
 </div>

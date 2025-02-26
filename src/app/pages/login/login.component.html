@@ -4,10 +4,10 @@
   <app-alert-error label="Your email or password is incorrect" [display]="loginError"></app-alert-error>
 
 <div class="login bg-background flex">
-  <div class="kiri items-center justify-center content-center">
+  <div class="kiri items-center justify-center content-center hidden md:block">
     <div class="foto ms-auto" style="background-image: url(../assets/images/login.png);"></div>
   </div>
-  <div class="kanan">
+  <div class="md:w-[49%] h-full pt-[6.5rem]">
     <div class="judul">
       Brand Login
     </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <button type="submit" class="button bg-blue-80 text-font-white m-auto">
+      <button type="submit" class="button bg-blue-80 text-font-white m-auto hover:bg-[#3C53B7] active:bg-[#2E3D7D]">
         Login
       </button>
       <p class="text-center mt-2 text-body w-[24.5rem]">Don't have an account? <a class="text-blue-80 underline" href="/signup/brand/profile" >Register Now</a></p>

@@ -4,10 +4,10 @@
 <app-confirmation-popup [display]="displayConfirmation" [header]="confirmHeader" [body]="confirmBody" (cancelClicked)="displayConfirmation = false" (confirmClicked)="confirmConfirm()"></app-confirmation-popup>
 
 
-<div class="container bg-background p-5">
-  <div class="container px-2 py-5">
+<div class="container bg-background md:p-5">
+  <div class="container md:px-2 py-5">
     <form class="p-2" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-      <div class="flex w-10/12 mx-auto">
+      <div class="flex flex-col md:flex-row w-10/12 mx-auto">
         <div class="basis-1/4">
           <div class="m-0 p-0 relative justify-items-center">
             <div *ngIf="imagePreview" class="w-52 h-52 rounded-full overflow-hidden border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
@@ -25,8 +25,8 @@
         </div>
 
         <div class="basis-3/4">
-          <p class="mb-2 font-semibold text-header3">My Profile</p>
-          <div class="grid grid-cols-2 gap-x-7">
+          <p class="md:mb-2 mt-5 md:mt-0 font-semibold text-header3">My Profile</p>
+          <div class="grid md:grid-cols-2 gap-x-7">
             <div class="inputContainer">
               <label for="name" class=" inputLabel mb-2 text-font-darkGrey">Name</label>
               <input type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" placeholder="Name" formControlName="name" required>
@@ -100,8 +100,8 @@
 
           <!-- target audience -->
           <p class="mt-5 mb-2 font-semibold text-header5">Campaign Type</p>
-          <div class="flex">
-            <div class="inputContainer w-[12rem] me-5">
+          <div class="flex flex-col md:flex-row">
+            <div class="inputContainer md:w-[12rem] me-5">
               <div class="flex items-center mb-2">
                 <input type="checkbox" [(ngModel)]="storyActive" (change)="storyCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
               <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Story</label>
@@ -113,7 +113,7 @@
               <span class="text-[0.75rem] text-primary-red" *ngIf="storyActive && (profileFormControl['storyPrice'].errors?.['min'] || profileFormControl['storyPrice'].errors?.['required'])">Price must be greater than 0</span>
             </div>
 
-            <div class="inputContainer w-[12rem] me-5 ">
+            <div class="inputContainer md:w-[12rem] me-5 ">
               <div class="flex items-center mb-2">
                 <input type="checkbox" [(ngModel)]="feedsActive" (change)="feedsCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
               <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Feeds</label>
@@ -125,7 +125,7 @@
               <span class="text-[0.75rem] text-primary-red" *ngIf="feedsActive && (profileFormControl['feedsPrice'].errors?.['min'] || profileFormControl['feedsPrice'].errors?.['required'])">Price must be greater than 0</span>
             </div>
 
-            <div class="inputContainer w-[12rem] me-5">
+            <div class="inputContainer md:w-[12rem] me-5">
               <div class="flex items-center mb-2">
                 <input type="checkbox" [(ngModel)]="reelsActive" (change)="reelsCheckBoxToggle()" [ngModelOptions]="{standalone: true}" class="w-4 h-4">
               <label for="storyPrice" class="inputLabel text-font-darkGrey ms-1">Reels</label>

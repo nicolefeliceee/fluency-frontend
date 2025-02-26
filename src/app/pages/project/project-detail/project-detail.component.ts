@@ -16,8 +16,8 @@ import { AlertSuccessComponent } from "../../../components/alert-success/alert-s
 import { FormsModule } from '@angular/forms';
 import { ReviewService } from '../../../services/review.service';
 import { Review } from '../../../models/review';
-import { error } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
+import { WalletService } from '../../../services/wallet.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -56,10 +56,10 @@ export class ProjectDetailComponent implements OnInit{
   feedsDetailList: ProjectDetail[] = [];
   reelsDetailList: ProjectDetail[] = [];
 
-  // for prices from influencer
-  storyPrice?: any;
-  feedsPrice?: any;
-  reelsPrice?: any;
+  // for prices from nominal
+  storyPrice?: any = 0;
+  feedsPrice?: any = 0;
+  reelsPrice?: any = 0;
 
   projectAlreadyReviewed!: boolean;
   fadeOut: boolean = false;
@@ -73,22 +73,21 @@ export class ProjectDetailComponent implements OnInit{
   newProject: any;
   projectId: any;
 
-    constructor(
-      private router: Router,
-      private projectService: ProjectService,
-      private influencerService: InfluencerService,
-      private brandService: BrandService,
-      private instagramService: InstagramService,
-      private midtransService: MidtransService,
-      private reviewService: ReviewService,
-      private ngZone: NgZone,
-      private decimalPipe: DecimalPipe,
-      private sanitizer: DomSanitizer
-    ) {
-      const navigation = this.router.getCurrentNavigation();
-      this.projectId = navigation?.extras.state?.['projectId'];
-      // console.log(this.newProject);;
-      // this.influencerSelectedProject = navigation?.extras.state?.['newProject'];
+  constructor(
+    private router: Router,
+    private projectService: ProjectService,
+    private influencerService: InfluencerService,
+    private brandService: BrandService,
+    private instagramService: InstagramService,
+    private midtransService: MidtransService,
+    private reviewService: ReviewService,
+    private walletService: WalletService,
+    private ngZone: NgZone,
+    private decimalPipe: DecimalPipe,
+    private sanitizer: DomSanitizer
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    this.projectId = navigation?.extras.state?.['projectId'];
   }
 
   ngOnInit(): void {
@@ -111,9 +110,9 @@ export class ProjectDetailComponent implements OnInit{
           this.influencerService.getInfluencerById(this.selectedInfluencerId).subscribe(
             (data) => {
               this.selectedInfluencer = data;
-              this.reelsPrice = this.getNominalNumber(data['reelsprice']);
-              this.feedsPrice = this.getNominalNumber(data['feedsprice']);
-              this.storyPrice = this.getNominalNumber(data['storyprice']);
+              // this.reelsPrice = this.getNominalNumber(data['reelsprice']);
+              // this.feedsPrice = this.getNominalNumber(data['feedsprice']);
+              // this.storyPrice = this.getNominalNumber(data['storyprice']);
               this.instagramService.getProfile(this.selectedInfluencer.token, this.selectedInfluencer['instagramid']).subscribe(
                 (data) => {
                   this.selectedInfluencer.username = data.username
@@ -329,7 +328,6 @@ export class ProjectDetailComponent implements OnInit{
     } else if (this.confirmHeader == 'Mark project as done') {
       this.markAsDone();
     } else if (this.confirmHeader == 'Submit rating & review') {
-      // this.finishProject();
       this.submitReview();
     }
     this.displayConfirmation = false;
@@ -364,6 +362,8 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.instagramMediaId = element['instagram_media_id'];
 
         storyList.push(newDetail);
+
+        this.storyPrice = element['nominal'];
       }
     })
 
@@ -388,8 +388,8 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.id = element.id
         newDetail.instagramMediaId = element['instagram_media_id'];
 
-        console.log(newDetail);
         storyList.push(newDetail);
+        this.feedsPrice = element['nominal'];
       }
     })
 
@@ -413,6 +413,7 @@ export class ProjectDetailComponent implements OnInit{
         newDetail.instagramMediaId = element['instagram_media_id'];
 
         storyList.push(newDetail);
+        this.reelsPrice = element['nominal'];
       }
     })
 
@@ -436,6 +437,8 @@ export class ProjectDetailComponent implements OnInit{
     } else if (id == '4') {
       return 'Ongoing';
     } else if (id == '5') {
+      return 'On Review';
+    } else if (id == '6') {
       return 'Done';
     }
     return '';
@@ -565,6 +568,14 @@ export class ProjectDetailComponent implements OnInit{
   }
 
   markAsDone() {
+
+    // transfer duit ke influencer
+    let amount = this.reelsDetailList.length * this.reelsPrice + this.feedsDetailList.length * this.feedsPrice + this.storyDetailList.length * this.storyPrice;
+    this.walletService.disbursement(amount, this.newProject['influencer_id'], this.newProject['brand_id']).subscribe(
+      (data) => {
+
+      }
+    );
     this.saveProject('6');
   }
 
@@ -595,6 +606,14 @@ export class ProjectDetailComponent implements OnInit{
         this.generalError = true;
       }
     )
+  }
+
+
+  backButton() {
+    let statusId: string = this.newProject['status_id'];
+    this.ngZone.run(() => {
+      this.router.navigate(['/project'], { state: { expectedStatus: statusId} });
+    })
   }
 
 }

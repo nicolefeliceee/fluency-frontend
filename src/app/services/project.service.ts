@@ -66,4 +66,25 @@ export class ProjectService {
     return this.httpClient.delete(this.baseUrl + "/project/" + id);
   }
 
+  getTickets(status: string | null, query: string | null): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("status", status || '');
+    params = params.append("query", query || '');
+          return this.httpClient.get(this.baseUrl + "/project/report", {
+            params: params
+          });
+  }
+
+  getTicketbyId(id: any): Observable<any> {
+    return this.httpClient.get(this.baseUrl + "/project/report/" + id);
+  }
+
+  editTicketStatus(id: any, status: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("status", status);
+    return this.httpClient.put(this.baseUrl + "/project/report/edit/" + id, null, {
+      params: params
+    });
+  }
+
 }

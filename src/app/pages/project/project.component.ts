@@ -64,7 +64,7 @@ export class ProjectComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadData();
+    // this.loadData();
 
     this.instagramId = localStorage.getItem('instagram_id');
 
@@ -77,6 +77,7 @@ export class ProjectComponent implements OnInit, OnChanges {
     if (this.expectedStatus) {
       this.selectedStatus = this.expectedStatus;
     }
+
 
 
     this.statusService.getAllStatus().subscribe(
@@ -207,5 +208,12 @@ export class ProjectComponent implements OnInit, OnChanges {
 
   influencerAlreadySelected: boolean = false;
 
+  addNewProject() {
+    if (this.influencerId) {
+      this.router.navigate(['project/create'], {state: {influencerId: this.influencerId}});
+    } else {
+      this.router.navigate(['project/create']);
+    }
+  }
 
 }

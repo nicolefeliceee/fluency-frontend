@@ -3,9 +3,9 @@
 
 <app-alert-success [display]="editSuccess" [label]="'Your profile is updated successfully'" (dismissClicked)="editSuccess = false"></app-alert-success>
 
-<div class="container bg-background p-5">
-  <div class="container px-2 py-5">
-      <div class="flex w-10/12 mx-auto">
+<div class="container bg-background md:p-5">
+  <div class="container md:px-2 py-5">
+      <div class="flex flex-col md:flex-row w-10/12 mx-auto">
         <div class="basis-1/4">
           <div class="m-0 p-0 relative justify-items-center">
             <div *ngIf="imagePreview" class="w-52 h-52 rounded-full overflow-hidden border-[4px]  border-white  shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] ">
@@ -15,7 +15,7 @@
 
 
             <p class="my-2 font-semibold text-header3">{{ brand['name'] }}</p>
-            <button (click)="openEdit()" class="flex items-center gap-1 text-font-lightGrey font-medium">
+            <button (click)="openEdit()" class="flex items-center gap-1 text-font-lightGrey font-medium hover:opacity-50">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.2366 1.76387C13.9933 1.52031 13.7044 1.3271 13.3863 1.19528C13.0683 1.06346 12.7274 0.995605 12.3831 0.995605C12.0389 0.995605 11.698 1.06346 11.3799 1.19528C11.0619 1.3271 10.773 1.52031 10.5296 1.76387L2.65763 9.63587C2.28396 10.0101 2.01738 10.4777 1.88563 10.9899L1.01563 14.3759C0.994056 14.4601 0.994828 14.5485 1.01787 14.6324C1.04091 14.7162 1.08543 14.7926 1.14703 14.854C1.20862 14.9154 1.28517 14.9597 1.3691 14.9825C1.45303 15.0052 1.54145 15.0057 1.62563 14.9839L5.01063 14.1149C5.52301 13.9836 5.99067 13.7169 6.36463 13.3429L14.2366 5.47087C14.4802 5.22754 14.6734 4.93861 14.8052 4.62057C14.937 4.30254 15.0049 3.96164 15.0049 3.61737C15.0049 3.27309 14.937 2.9322 14.8052 2.61416C14.6734 2.29613 14.4802 2.00719 14.2366 1.76387ZM11.2366 2.47087C11.5407 2.1668 11.9531 1.99597 12.3831 1.99597C12.8132 1.99597 13.2256 2.1668 13.5296 2.47087C13.8337 2.77494 14.0045 3.18735 14.0045 3.61737C14.0045 4.04739 13.8337 4.4598 13.5296 4.76387L12.7506 5.54287L10.4576 3.24987L11.2366 2.47087ZM9.75063 3.95687L12.0436 6.24987L5.65763 12.6359C5.41013 12.8832 5.10064 13.0593 4.76163 13.1459L2.19463 13.8059L2.85463 11.2389C2.94071 10.8997 3.11693 10.5901 3.36463 10.3429L9.75063 3.95687Z" fill="#949C9E" stroke="#949C9E" stroke-width="0.5"/>
               </svg>
@@ -25,8 +25,8 @@
 
         </div>
         <div class="basis-3/4">
-          <p class="mb-2 font-semibold text-header3">My Profile</p>
-          <div class="grid grid-cols-2 gap-x-7">
+          <p class="mb-2 mt-2 md:mt-0 font-semibold text-header3">My Profile</p>
+          <div class="grid md:grid-cols-2 gap-x-7">
             <div class="inputContainer">
               <label for="name" class=" inputLabel text-font-darkGrey">Name</label>
               <div type="text" id="name" name="name" class="w-full inputBox border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ brand['name'] }}</div>
@@ -68,14 +68,14 @@
           <div class="">
             <div class="inputContainer">
               <label for="targetLocation" class="inputLabel text-font-darkGrey">Brand’s Target Location</label>
-              <div class="flex gap-2">
+              <div class="flex flex-wrap gap-2">
                 <div *ngFor="let item of brand['target_location']" name="targetLocation" class="w-fit inputBox px-4 border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ item['label'] }}</div>
               </div>
             </div>
 
             <div class="inputContainer">
               <label for="targetLocation" class="inputLabel text-font-darkGrey">Brand’s Target Age Range</label>
-              <div class="flex gap-2">
+              <div class="flex flex-wrap gap-2">
                 <div *ngFor="let item of brand['target_age_range']" name="targetAgeRange" class="w-fit inputBox px-4 border-font-lightGrey-30 border-[1px] text-font-darkGrey rounded-sm" >{{ item['label'] }}</div>
               </div>
             </div>
@@ -83,7 +83,7 @@
 
            <div class="inputContainer">
             <label for="targetLocation" class="inputLabel text-font-darkGrey">Brand’s Target Gender</label>
-            <div class="mt-2 flex grid grid-cols-2 gap-3 w-1/2">
+            <div class="mt-2 grid grid-cols-2 gap-3 md:w-1/2">
               <div *ngFor="let item of brand['target_gender']">
                 <app-category-card [id]="item.id" [label]="item.label" [logo]="item.logo"></app-category-card>
               </div>

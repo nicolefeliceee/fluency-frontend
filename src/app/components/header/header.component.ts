@@ -126,6 +126,7 @@ export class HeaderComponent implements OnInit{
     localStorage.removeItem('name');
     localStorage.removeItem('instagram_id');
     localStorage.removeItem('long_lived_token');
+    localStorage.removeItem('user_type');
     this.isLogin = false;
     this.router.navigate(['/']);
   }

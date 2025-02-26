@@ -26,6 +26,8 @@ import { ProfileEditComponent } from './pages/profile-brand/profile-edit/profile
 import { ProfileInfViewComponent } from './pages/profile-influencer/profile-inf-view/profile-inf-view.component';
 import { ProfileInfEditComponent } from './pages/profile-influencer/profile-inf-edit/profile-inf-edit.component';
 import { UserComponent } from './pages/admin/user/user.component';
+import { TicketComponent } from './pages/ticket/ticket.component';
+import { TicketDetailComponent } from './pages/ticket/ticket-detail/ticket-detail.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -57,5 +59,7 @@ export const routes: Routes = [
   {path:'project/create', component: ProjectCreateComponent},
   {path:'project/', component: ProjectCreateComponent},
   {path:'project/create', component: ProjectCreateComponent},
-  {path:'user', component: UserComponent}
+  {path:'user', component: UserComponent},
+  {path:'ticket', component: TicketComponent},
+  {path:'ticket/detail', component: TicketDetailComponent}
 ];

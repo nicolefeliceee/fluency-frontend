@@ -5,6 +5,8 @@ import { state } from '@angular/animations';
 import { SignupInfluencer } from '../../models/signup-influencer';
 import { HeaderComponent } from '../header/header.component';
 import { LoadingService } from '../../services/loading.service';
+import { InstagramService } from '../../services/instagram.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login-interceptor',
@@ -15,10 +17,13 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class LoginInterceptorComponent implements OnInit {
 
+  minimumFollowerCount: number = 1000;
+
   constructor(
     private router: Router,
     private userService: UserService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private instagramService: InstagramService
   ) { }
 
   newInfluencer!: SignupInfluencer;
@@ -40,22 +45,32 @@ export class LoginInterceptorComponent implements OnInit {
     setTimeout(() => {
       // kirim ke backend
       this.userService.sendToken(localStorage.getItem('long_lived_token') || '').subscribe(
-        data => {
+        (data: any) => {
       console.log(data);
 
       this.newInfluencer = new SignupInfluencer(
-        "","","","","","","",[],"","","",(data as any)['instagram_id'], localStorage.getItem('long_lived_token') || ''
+        "","","","","","","",[],"","","",data['instagram_id'], localStorage.getItem('long_lived_token') || ''
       )
 
       // belum pernah signup
-      if ((data as any)['id'] == '' || (data as any)['id'] == null) {
-        localStorage.setItem('instagram_id', (data as any)['instagram_id']);
-        this.router.navigate(['/signup/influencer/profile'], {state: {newUser: this.newInfluencer}});
+      if (data['id'] == '' || data['id'] == null) {
+        // validasi jumlah follower
+        this.instagramService.getProfile(localStorage.getItem('long_lived_token'), localStorage.getItem('instagram_id')).subscribe(
+          (data) => {
+            if (data['followers_count'] < this.minimumFollowerCount) {
+              this.router.navigate(['/signup'], {state: {followerCountError: true}});
+            } else {
+              localStorage.setItem('instagram_id', data['instagram_id']);
+              this.router.navigate(['/signup/influencer/profile'], {state: {newUser: this.newInfluencer}});
+            }
+          }
+        )
+
 
       } else { //udh pernah signup
-        localStorage.setItem('user_id', (data as any)['id']);
-        localStorage.setItem('name', (data as any)['name']);
-        localStorage.setItem('instagram_id', (data as any)['instagram_id']);
+        localStorage.setItem('user_id', data['id']);
+        localStorage.setItem('name', data['name']);
+        localStorage.setItem('instagram_id', data['instagram_id']);
 
         this.router.navigate(['/influencer-home']);
       }

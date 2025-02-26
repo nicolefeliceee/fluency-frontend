@@ -43,6 +43,8 @@ export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void {
 
+    console.log(this.projectHeaderId);
+
     this.projectService.getPerformanceAnalyticsById(this.projectDetailId).subscribe(
       (data) => {
         this.projectDetail = data;
@@ -56,7 +58,6 @@ export class PerformanceAnalyticsComponent implements OnInit, AfterViewInit{
     this.projectService.getSentimentById(this.projectDetailId).subscribe(
       (data) => {
         this.topComments = data['top_comments'];
-        console.log(this.topComments);
 
         this.sentimentPositive = Number.parseInt(data['sentiment_positive']);
         this.sentimentNeutral = Number.parseInt(data['sentiment_neutral']);
