@@ -25,6 +25,7 @@ import { ProfileViewComponent } from './pages/profile-brand/profile-view/profile
 import { ProfileEditComponent } from './pages/profile-brand/profile-edit/profile-edit.component';
 import { ProfileInfViewComponent } from './pages/profile-influencer/profile-inf-view/profile-inf-view.component';
 import { ProfileInfEditComponent } from './pages/profile-influencer/profile-inf-edit/profile-inf-edit.component';
+import { UserComponent } from './pages/admin/user/user.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -38,7 +39,7 @@ export const routes: Routes = [
   {path:'header', component: HeaderComponent},
   {path:'influencer', component: InfluencerComponent},
   {path:'influencer-card', component: InfluencerCardComponent},
-  {path:'influencer-detail/:id', component: InfluencerDetailComponent},
+  {path:'influencer/detail/:id', component: InfluencerDetailComponent},
   {path:'saved-influencer', component: SavedInfluencerComponent},
   { path: 'signup/brand/profile', component: CompleteProfileComponent },
   { path: 'signup/brand/category', component: ChooseCategoryComponent },
@@ -55,5 +56,6 @@ export const routes: Routes = [
   {path:'project/detail/performance-analytics', component: PerformanceAnalyticsComponent},
   {path:'project/create', component: ProjectCreateComponent},
   {path:'project/', component: ProjectCreateComponent},
-  {path:'project/create', component: ProjectCreateComponent}
+  {path:'project/create', component: ProjectCreateComponent},
+  {path:'user', component: UserComponent}
 ];

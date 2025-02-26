@@ -38,7 +38,11 @@
             <path d="M17.7495 13.7237C17.9205 13.8947 18.0166 14.1267 18.0166 14.3686C18.0166 14.6105 17.9205 14.8425 17.7495 15.0136L13.6442 19.1189C13.4732 19.2899 13.2412 19.386 12.9993 19.386C12.7573 19.386 12.5253 19.2899 12.3543 19.1189L8.24901 15.0136C8.08283 14.8416 7.99088 14.6111 7.99295 14.3719C7.99503 14.1327 8.09098 13.9039 8.26012 13.7348C8.42926 13.5656 8.65808 13.4697 8.89727 13.4676C9.13647 13.4655 9.36691 13.5575 9.53897 13.7237L12.087 16.1932V7.52654C12.087 7.28459 12.1831 7.05254 12.3542 6.88146C12.5253 6.71037 12.7573 6.61426 12.9993 6.61426C13.2412 6.61426 13.4732 6.71037 13.6443 6.88146C13.8154 7.05254 13.9115 7.28459 13.9115 7.52654V16.1932L16.4595 13.7237C16.6306 13.5526 16.8626 13.4566 17.1045 13.4566C17.3464 13.4566 17.5784 13.5526 17.7495 13.7237Z" fill="white"/>
           </svg>
         </div>
-        <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
+        <div *ngIf="trx.transaction_type_id === 1" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
+        <div *ngIf="trx.transaction_type_id === 2" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}, {{ trx.partner_name }}</div>
+        <div *ngIf="trx.transaction_type_id === 3" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
+        <div *ngIf="trx.transaction_type_id === 4" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }} from {{ trx.partner_name }}</div>
+        <!-- <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div> -->
         <div class="rightTrx w-[30%] flex flex-col">
           <div class="nominal text-end font-semibold text-[0.8rem]" [ngClass]="{
             'text-[#149574]': trx.transaction_type_id === 3 || trx.transaction_type_id === 4,

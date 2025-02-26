@@ -37,3 +37,61 @@
   width: fit-content;
 }
 
+/* CSS untuk Influencer Card agar responsif di handphone */
+@media screen and (max-width: 768px) {
+  .influencer-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 10px;
+    padding: 1rem;
+  }
+  .card {
+    flex: 0 0 auto;
+    width: 10.5rem;
+    border-radius: 15px;
+    padding: 10px;
+  }
+  .foto {
+    width: 9rem;
+    height: 9rem;
+    border-radius: 8%;
+  }
+  .desc, .desc2 {
+    font-size: 0.65rem;
+  }
+  .nameBox, .follCount{
+    font-size: 12px;
+  }
+  .location{
+    font-size: 9.5px;
+  }
+  .desc{
+    padding-bottom: 7px;
+  }
+  .rating, .foll, .adText{
+    font-size: 9.5px;
+  }
+  .category{
+    font-size: 9.5px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .price{
+    font-size: 14px;
+  }
+  .hireBtn {
+    font-size: 0.7rem;
+    padding: 0.3rem 1.2rem;
+  }
+  .chatBtn, .saveBtn {
+    width: 25px;
+    height: 25px;
+  }
+  .chatBtn svg, .saveBtn svg {
+    width: 100%;
+    height: 100%;
+  }
+
+}
+

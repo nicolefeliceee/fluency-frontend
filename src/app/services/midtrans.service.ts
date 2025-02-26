@@ -25,4 +25,10 @@ export class MidtransService {
     );
   }
 
+  // createPaymentLink(orderId: any): Observable<{ paymentUrl: string }> {
+  //   const requestData = { orderId };
+  //   return this.httpClient.post<{ paymentUrl: string }>(
+  //     this.baseUrl + "/midtrans/topup", requestData);
+  // }
+
 }

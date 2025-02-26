@@ -112,9 +112,7 @@ interface InfluencerDetail {
   avgshare?: string;
   totalrating?: TotalRating[];
   similarinfluencer?: SimilarInfluencer[];
-  positiveanalytics?: any[];
-  negativeanalytics?: any[];
-  neutralanalytics?: any[];
+  analytics: Graph;
   totalanalyticspost?: number;
   feedback?: Review[];
   follgrowth: Graph;
@@ -232,6 +230,7 @@ export class InfluencerDetailComponent implements OnInit {
   public topCitiesLeft: any;
   public topCitiesRight: any;
   public ageRangeAudience: any;
+  public analytics: any;
 
   createChart(){
     this.createFollGrowth();
@@ -240,9 +239,11 @@ export class InfluencerDetailComponent implements OnInit {
     this.createOnlineFollAudience();
     this.createTopCitiesAudience();
     this.createAgeRangeAudience();
+    this.createAnalytics();
   }
 
   createFollGrowth(){
+    const isMobile = window.innerWidth <= 768;
     this.follGrowth = new Chart("FollGrowth", {
       type: 'line', //this denotes tha type of chart
 
@@ -261,7 +262,8 @@ export class InfluencerDetailComponent implements OnInit {
       },
       options: {
         // aspectRatio: 1.5,
-        aspectRatio: 2.5,
+        // aspectRatio: 2.5,
+        aspectRatio: isMobile ? 1.5 : 2.5,
         plugins: {
           legend: {
             display: false
@@ -275,7 +277,8 @@ export class InfluencerDetailComponent implements OnInit {
   }
 
   createReach(){
-    this.follGrowth = new Chart("Reach", {
+    const isMobile = window.innerWidth <= 768;
+    this.reach = new Chart("Reach", {
       type: 'line', //this denotes tha type of chart
 
       data: {// values on X-Axis
@@ -293,7 +296,8 @@ export class InfluencerDetailComponent implements OnInit {
       },
       options: {
         // aspectRatio: 1.5,
-        aspectRatio: 2.5,
+        // aspectRatio: 2.5,
+        aspectRatio: isMobile ? 1.5 : 2.5,
         plugins: {
           legend: {
             display: false
@@ -383,6 +387,7 @@ export class InfluencerDetailComponent implements OnInit {
 
 
   createOnlineFollAudience(){
+    const isMobile = window.innerWidth <= 768;
     this.onlineFollAudience = new Chart("OnlineFollowers", {
       type: 'bar', //this denotes tha type of chart
 
@@ -398,7 +403,8 @@ export class InfluencerDetailComponent implements OnInit {
       },
       options: {
         // aspectRatio: 1.5,
-        aspectRatio: 2.5,
+        // aspectRatio: 2.5,
+        aspectRatio: isMobile ? 1.4 : 2.5,
         plugins: {
           legend: {
             display: false
@@ -414,72 +420,106 @@ export class InfluencerDetailComponent implements OnInit {
     const labels = this.influencer?.topcitiesaud.labels || [];
     const data = this.influencer?.topcitiesaud.data?.map(value => Number(value) || 0) || []; // Konversi ke angka
 
-    // Ambil 5 data pertama untuk chart kiri, 5 data berikutnya untuk chart kanan
-    const labelsLeft = labels.slice(0, 5);
-    const dataLeft = data.slice(0, 5);
-    const labelsRight = labels.slice(5, 10);
-    const dataRight = data.slice(5, 10);
+    const isMobile = window.innerWidth <= 768;
 
-    // Dapatkan nilai maksimum dari kedua dataset agar skala seragam
-    const maxValue = Math.max(...dataLeft, ...dataRight);
-
-    // Chart untuk Top 5 Kota (Kiri)
-    this.topCitiesLeft = new Chart("TopCitiesLeft", {
-      type: "bar",
-      data: {
-        labels: labelsLeft,
-        datasets: [{
-          label: "Top Cities",
-          data: dataLeft,
-          backgroundColor: "#EEC9E8",
-        }]
-      },
-      options: {
-        indexAxis: "y",
-        aspectRatio: 1.6,
-        plugins: {
-          legend: { display: false },
-          datalabels:{
-            display: false
-          }
+    if (isMobile) {
+      // Jika di HP, buat satu chart saja dengan semua data
+      this.topCitiesLeft = new Chart("TopCitiesLeft", {
+        type: "bar",
+        data: {
+          labels: labels, // Semua label
+          datasets: [{
+            label: "Top Cities",
+            data: data, // Semua data
+            backgroundColor: "#EEC9E8",
+          }]
         },
-        scales: {
-          x: {
-            beginAtZero: true,
-            suggestedMax: maxValue // Menyamakan skala dengan chart kanan
+        options: {
+          indexAxis: "y",
+          aspectRatio: 1.2, // Lebih besar untuk HP agar lebih enak dilihat
+          plugins: {
+            legend: { display: false },
+            datalabels: { display: false }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              suggestedMax: Math.max(...data) // Ambil nilai maksimum
+            }
           }
         }
-      }
-    });
+      });
 
-    // Chart untuk 5 Kota Berikutnya (Kanan)
-    this.topCitiesRight = new Chart("TopCitiesRight", {
-      type: "bar",
-      data: {
-        labels: labelsRight,
-        datasets: [{
-          label: "Top Cities",
-          data: dataRight,
-          backgroundColor: "#EEC9E8",
-        }]
-      },
-      options: {
-        indexAxis: "y",
-        aspectRatio: 1.6,
-        plugins: {
-          legend: { display: false },
-          datalabels:{
-            display: false
-          }
+    } else{
+      // Ambil 5 data pertama untuk chart kiri, 5 data berikutnya untuk chart kanan
+      const labelsLeft = labels.slice(0, 5);
+      const dataLeft = data.slice(0, 5);
+      const labelsRight = labels.slice(5, 10);
+      const dataRight = data.slice(5, 10);
+
+      // Dapatkan nilai maksimum dari kedua dataset agar skala seragam
+      const maxValue = Math.max(...dataLeft, ...dataRight);
+
+      // Chart untuk Top 5 Kota (Kiri)
+      this.topCitiesLeft = new Chart("TopCitiesLeft", {
+        type: "bar",
+        data: {
+          labels: labelsLeft,
+          datasets: [{
+            label: "Top Cities",
+            data: dataLeft,
+            backgroundColor: "#EEC9E8",
+          }]
         },
-        scales: {
-          x: {
-            beginAtZero: true,
-            suggestedMax: maxValue // Menyamakan skala dengan chart kiri
+        options: {
+          indexAxis: "y",
+          aspectRatio: 1.6,
+          plugins: {
+            legend: { display: false },
+            datalabels:{
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              suggestedMax: maxValue // Menyamakan skala dengan chart kanan
+            }
           }
         }
-      }
-    });
+      });
+
+      // Chart untuk 5 Kota Berikutnya (Kanan)
+      this.topCitiesRight = new Chart("TopCitiesRight", {
+        type: "bar",
+        data: {
+          labels: labelsRight,
+          datasets: [{
+            label: "Top Cities",
+            data: dataRight,
+            backgroundColor: "#EEC9E8",
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          aspectRatio: 1.6,
+          plugins: {
+            legend: { display: false },
+            datalabels:{
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              suggestedMax: maxValue // Menyamakan skala dengan chart kiri
+            }
+          }
+        }
+      });
+    }
+
+
   }
 
   createAgeRangeAudience(){
@@ -510,6 +550,83 @@ export class InfluencerDetailComponent implements OnInit {
       }
     });
   }
+
+  showPlaceholderAnalytics: boolean = false;
+
+  createAnalytics(){
+    const numericData = this.influencer?.analytics.data.map(Number) || [];
+    const total = numericData.reduce((acc, val) => acc + val, 0); // Hitung total, default 1 untuk mencegah error
+
+    if (total === 0) {
+      this.showPlaceholderAnalytics = true; // Variabel untuk menandakan tidak ada data
+      return;
+    }
+
+    this.showPlaceholderAnalytics = false;
+    this.analytics = new Chart("Analytics", {
+      type: 'doughnut', //this denotes the type of chart
+
+      data: {// values on X-Axis
+        labels: this.influencer?.analytics.labels,
+        datasets: [
+          {
+            label: "Project Percentage",
+            data: this.influencer?.analytics.data,
+            backgroundColor: ["#F7ABC7", "#87E1E1", "#FDE781"], // Warna opsional
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1.5,
+        plugins: {
+          datalabels: {
+            formatter: (value) => {
+              const percentage = Number(((value / total) * 100).toFixed(1));
+              return percentage > 0 ? percentage + '%' : ''; // FIX
+            },
+            color: "#000",
+          },
+          legend: {
+            display: true,
+            position: "right",
+          }
+        },
+        cutout: "60%",
+      },
+      plugins: [{
+        id: "centerText",
+        beforeDraw: (chart) => {
+          const { width, height, ctx, chartArea } = chart;
+          ctx.save();
+
+          // Tentukan ukuran font agar proporsional dengan chart
+          const fontSize = Math.min(width, height) / 8; // Ukuran font responsif
+          const labelFontSize = fontSize / 2; // Ukuran font lebih kecil untuk "Total"
+          const marginBottom = labelFontSize / 3; // Tambahkan margin bawah
+
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          // Hitung posisi tengah lebih akurat
+          const textX = (chartArea.left + chartArea.right) / 2;
+          const textY = (chartArea.top + chartArea.bottom) / 2;
+
+          // Gambar teks "Total" di atas angka total
+          ctx.font = `regular ${labelFontSize}px Poppins`;
+          ctx.fillStyle = "#000"; // Warna teks "Total" sedikit lebih redup
+          ctx.fillText("Total", textX, textY - fontSize / 2 - marginBottom); // Geser ke atas
+
+          // Gambar angka total di tengah
+          ctx.font = `bold ${fontSize}px Poppins`;
+          ctx.fillStyle = "#000"; // Warna teks utama
+          ctx.fillText(total.toString(), textX, textY + labelFontSize / 2); // Geser sedikit ke bawah
+
+          ctx.restore();
+        }
+      }]
+    });
+  }
+
 
   activeTab: 'feeds' | 'reels' = 'feeds';
 

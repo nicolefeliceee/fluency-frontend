@@ -2,6 +2,7 @@
 <div class="bantu"></div>
 <app-wallet-history-popup *ngIf="isWalletHistoryPopupVisible" [walletHeader]="walletheader" (close)="closeWalletHistoryPopup()"></app-wallet-history-popup>
 <app-wallet-transfer-popup *ngIf="isWalletTransferPopupVisible" (transferCompleted)="onTransferCompleted()" (close)="closeWalletTransferPopup()" (successAlert)="showSuccessAlert($event)" (errorAlert)="showErrorAlert($event)"></app-wallet-transfer-popup>
+<app-wallet-topup-popup *ngIf="isWalletTopupPopupVisible" (close)="closeWalletTopupPopup()" (topupCompleted)="onTopupCompleted()"></app-wallet-topup-popup>
 
 <app-alert-success *ngIf="successMessage" [label]="successMessage" [display]="true"></app-alert-success>
 <app-alert-error *ngIf="errorMessage" [label]="errorMessage" [display]="true"></app-alert-error>
@@ -131,7 +132,7 @@
             </div>
             <div class="kedua">
               <div class="category flex align-bottom">
-                <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-1 py-[1px] px-4 rounded-xl w-fit" [ngClass]="getCategoryColor(cat.label)" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
+                <div class="cat1 text-[0.7rem] font-normal me-2 py-[1px] px-4 rounded-xl w-fit" [ngClass]="getCategoryColor(cat.label)" *ngFor="let cat of influencer?.category">{{ cat.label}}</div>
                 <!-- <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-2 py-[1px] px-4 rounded-xl w-fit">Fashion</div>
                 <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-3 py-[1px] px-4 rounded-xl w-fit">F&B</div>
                 <div class="cat1 text-[0.7rem] font-normal me-2 bg-pastel-4 py-[1px] px-4 rounded-xl w-fit">Health & Sport</div> -->
@@ -173,7 +174,7 @@
             </div>
             <div class="text font-semibold text-[0.7rem] mt-[1px] text-font-darkGrey">Transfer</div>
           </div>
-          <div class="topup cursor-pointer flex flex-col items-center justify-center">
+          <div class="topup cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTopupPopup()">
             <div class="svg">
               <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="34" height="34" rx="17" fill="#5876F9"/>
@@ -344,7 +345,7 @@
         <!-- <div *ngIf="projectDetails.length > 0; else emptyPlaceholder" > -->
         <div *ngIf="projectDetails && projectDetails.length > 0">
           <div *ngFor="let project of projectDetails" class="dateCard w-full h-[3.3rem] rounded-xl px-[7px] py-[4px] flex mb-[5px] cursor-pointer" (click)="goToProjectDetail(project.projectheaderid)">
-            <div class="dateKiri w-[19%] h-full flex flex-col items-center content-center justify-center rounded-[10px]" [ngClass]="getRandomPastelColor()">
+            <div class="dateKiri w-[19%] h-full flex flex-col items-center content-center justify-center rounded-[10px]" [ngClass]="getRandomColor(project.day)">
               <p class="font-medium text-[0.65rem]">{{ project.day }}</p>
               <p class="font-semibold text-[1.05rem]">{{ project.date }}</p>
             </div>

@@ -1,23 +1,54 @@
 <app-confirmation-popup [display]="displayConfirm" [header]="confirmHeader" [body]="confirmBody" (confirmClicked)="confirmConfirm()" (cancelClicked)="confirmCancel()"></app-confirmation-popup>
 <div class="navbar px-4 flex z-[51]">
-  <div class="logo content-center">
+  <div class="logo content-center" *ngIf="isDesktop">
     <p>L O G O</p>
   </div>
-  <div *ngIf="userId" class="middle flex content-center justify-center items-center">
+  <div *ngIf="userId && isDesktop" class="middle flex content-center justify-center items-center">
     <a [routerLink]="pathToHome" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
     <div class="bantu"></div>
     <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Project</a>
     <div class="bantu"></div>
-    <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Influencer</a>
+    <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:false}" class="menu">Influencer</a>
   </div>
 
-  <div *ngIf="!userId" class="middle flex content-center justify-center items-center">
+  <div *ngIf="!userId && isDesktop" class="middle flex content-center justify-center items-center">
     <a routerLink="/" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
     <div class="bantu"></div>
     <a routerLink="/about-us" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">About us</a>
     <div class="bantu"></div>
     <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Influencer</a>
   </div>
+
+  <!-- Hamburger Menu untuk Mobile -->
+  <div class="menu-toggle" *ngIf="!isDesktop" (click)="toggleMenu()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 6.00098H21M3 12.001H21M3 18.001H21" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div *ngIf="userId && !isDesktop" class="mobile-menu" [class.active]="menuActive">
+    <a [routerLink]="pathToHome" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
+    <div class="bantu"></div>
+    <a routerLink="/project" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Project</a>
+    <div class="bantu"></div>
+    <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:false}" class="menu">Influencer</a>
+  </div>
+
+  <div *ngIf="!userId && !isDesktop" class="mobile-menu">
+    <a routerLink="/" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu content-center">Home</a>
+    <div class="bantu"></div>
+    <a routerLink="/about-us" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">About us</a>
+    <div class="bantu"></div>
+    <a routerLink="/influencer" routerLinkActive="menuActive" [routerLinkActiveOptions]="{exact:true}" class="menu">Influencer</a>
+  </div>
+
+  <!-- Menu Mobile -->
+  <!-- <div class="mobile-menu" *ngIf="!isDesktop" [class.active]="menuActive">
+    <a routerLink="/home">Home</a>
+    <a routerLink="/project">Project</a>
+    <a routerLink="/influencer">Influencer</a>
+  </div> -->
 
   <div *ngIf="!isLogin" class="items-center content-center flex">
       <button routerLink="/login" class="text-blue-80 font-semibold text-[0.9rem] border border-blue-80 px-5 py-2 rounded-md me-5">Login</button>

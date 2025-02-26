@@ -11,6 +11,7 @@ import { WalletTransferPopupComponent } from "../wallet-transfer-popup/wallet-tr
 import { AlertErrorComponent } from '../../components/alert-error/alert-error.component';
 import { HomeService } from '../../services/home.service';
 import { LoadingService } from '../../services/loading.service';
+import { WalletTopupPopupComponent } from "../wallet-topup-popup/wallet-topup-popup.component";
 
 interface Category {
   id: number; // ID kategori
@@ -87,13 +88,14 @@ interface ProjectDetail {
 @Component({
   selector: 'app-home-influencer',
   standalone: true,
-  imports: [HeaderComponent, AlertSuccessComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent],
+  imports: [HeaderComponent, AlertSuccessComponent, CommonModule, WalletHistoryPopupComponent, WalletTransferPopupComponent, AlertSuccessComponent, AlertErrorComponent, WalletTopupPopupComponent],
   templateUrl: './home-influencer.component.html',
   styleUrl: './home-influencer.component.css'
 })
 export class HomeInfluencerComponent implements OnInit{
   influencer: InfluencerDetail | null = null; // Tipe array Influencer
   projectDetails: ProjectDetail[] = []; // Tipe array Influencer
+  // pastelColor: string;
 
   constructor(
     private router: Router,
@@ -105,6 +107,7 @@ export class HomeInfluencerComponent implements OnInit{
     const navigation = this.router.getCurrentNavigation();
     this.signupSuccess = navigation?.extras.state?.['signupSuccess'];
     this.generateDaysInWeek();
+    // this.pastelColor = this.getRandomPastelColor();
   }
 
   influencerId: string | null = null;
@@ -152,6 +155,7 @@ export class HomeInfluencerComponent implements OnInit{
       }
     );
   }
+  
 
   sortWalletDetailsByDate() {
     // Ambil wallet_details_grouped dan ubah menjadi array untuk pengurutan
@@ -179,6 +183,26 @@ export class HomeInfluencerComponent implements OnInit{
     // this.loadWalletInfo();
   }
 
+  // Tangani event dari wallet transfer
+  onTopupCompleted(): void {
+    console.log("ini topup completednya jalan");
+    // Tambahkan delay sebelum memuat ulang wallet info
+    setTimeout(() => {
+      this.isWalletTopupPopupVisible = false;
+      this.loadWalletInfo();
+    }, 100);
+    // this.loadWalletInfo();
+  }
+
+  isWalletTopupPopupVisible: boolean = false;
+
+  showWalletTopupPopup(): void {
+    this.isWalletTopupPopupVisible = true;
+  }
+
+  closeWalletTopupPopup(): void {
+    this.isWalletTopupPopupVisible = false;
+  }
 
   isWalletHistoryPopupVisible: boolean = false;
 
@@ -330,6 +354,20 @@ export class HomeInfluencerComponent implements OnInit{
     return this.categoryColors[category] || "bg-pastel-1"; // Default jika tidak ditemukan
   }
 
+  categoryColorsDay: { [key: string]: string } = {
+    "Mon": "bg-pastel-1",
+    "Tue": "bg-pastel-11",
+    "Wed": "bg-pastel-3",
+    "Thu": "bg-pastel-4",
+    "Fri": "bg-pastel-5",
+    "Sat": "bg-pastel-6",
+    "Sun": "bg-pastel-7",
+  };
+
+  getRandomColor(category: string): string {
+    return this.categoryColorsDay[category] || "bg-pastel-1"; // Default jika tidak ditemukan
+  }
+
 
   goToProjectDetail(id: number | undefined): void {
     if (id) {
@@ -339,11 +377,16 @@ export class HomeInfluencerComponent implements OnInit{
     }
   }
 
-  getRandomPastelColor(): string {
-    // const randomIndex = Math.floor(Math.random() * 12) + 1;
-    // return `bg-pastel-${randomIndex}`;
-    return `bg-pastel-1`;
-  }
+  // getRandomPastelColor(): string {
+  //   // const randomIndex = Math.floor(Math.random() * 12) + 1;
+  //   // return `bg-pastel-${randomIndex}`;
+  //   return `bg-pastel-1`;
+  // }
+
+  // getRandomPastelColor(): string {
+  //   const randomIndex = Math.floor(Math.random() * 12) + 1;
+  //   return `bg-pastel-${randomIndex}`;
+  // }
 
   public projectPct: any;
   public approvalPct: any;

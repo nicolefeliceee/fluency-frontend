@@ -1,22 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { InstagramService } from '../../services/instagram.service';
-import { UserService } from '../../services/user.service';
-import { ConfirmationPopupComponent } from "../confirmation-popup/confirmation-popup.component";
 import { DomSanitizer } from '@angular/platform-browser';
-import { FileHandle } from 'node:fs/promises';
-import { state } from '@angular/animations';
+import { InstagramService } from '../../../services/instagram.service';
+import { UserService } from '../../../services/user.service';
+import { ConfirmationPopupComponent } from '../../confirmation-popup/confirmation-popup.component';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-admin',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, ConfirmationPopupComponent],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.css'
 })
-export class HeaderComponent implements OnInit{
-  isDropdownVisible: boolean = false;
+export class AdminComponent {
+isDropdownVisible: boolean = false;
 
   toggleDropdown(event: MouseEvent): void {
     // Toggle dropdownnya
@@ -138,18 +136,5 @@ export class HeaderComponent implements OnInit{
     }
   }
 
-  menuActive: boolean = false;
-  isDesktop: boolean = window.innerWidth > 568;
 
-  toggleMenu() {
-    this.menuActive = !this.menuActive;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.isDesktop = window.innerWidth > 768;
-    if (this.isDesktop) {
-      this.menuActive = false; // Tutup menu mobile saat beralih ke desktop
-    }
-  }
 }

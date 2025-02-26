@@ -22,3 +22,110 @@
   background-size: contain;
   border-radius: 100%;
 }
+
+
+/* Tambahan CSS untuk tampilan mobile */
+@media screen and (max-width: 568px) {
+  .wallet {
+    width: 90%;
+    height: 3.8rem;
+    padding: 1rem;
+  }
+
+  .kiri, .kanan {
+    width: auto;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .kiri svg {
+    width: 40px;
+    height: 40px;
+  }
+  .tengah {
+    width: auto;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1rem;
+    margin-left: 2px;
+  }
+  .kanan {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .kanan .transfer, .kanan .topup, .kanan .history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .kanan .transfer svg, .kanan .topup svg, .kanan .history svg {
+    width: 25px;
+    height: 25px;
+  }
+  .kanan .transfer .text, .kanan .topup .text, .kanan .history .text {
+    font-size: 0.65rem;
+  }
+
+  .categories .judul{
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .categories{
+    padding-top: 2rem;
+  }
+
+  .projectTitle{
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .categories .isiCategory {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 5px;
+    padding: 0.5rem;
+  }
+  .categories .categoryCard {
+    flex: 0 0 auto;
+    width: 100px;
+    text-align: center;
+  }
+  .categories .categoryCard .img {
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+  }
+  .categories .categoryCard .catText {
+    font-size: 0.9rem;
+  }
+
+  .projects, .recommendInf, .topInf {
+    padding: 2rem 1rem;
+  }
+  .projectCard {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .banner .foto2 {
+    background-size: cover;
+    height: 150px;
+  }
+  .recommendInf .projectCard, .topInf .projectCard {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 10px;
+    padding: 0.5rem;
+  }
+  .recommendInf .projectCard .app-influencer-card,
+  .topInf .projectCard .app-influencer-card {
+    flex: 0 0 auto;
+    width: 140px;
+  }
+
+  .topInf{
+    padding-top: 0rem;
+  }
+
+}

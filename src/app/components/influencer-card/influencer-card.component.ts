@@ -42,7 +42,7 @@ export class InfluencerCardComponent{
 
   goToDetail() {
     console.log("item id: " + this.item['influencer_id']);
-    this.router.navigate(['/influencer-detail', this.item['influencer_id']]); // Redirect ke halaman detail
+    this.router.navigate(['/influencer/detail', this.item['influencer_id']]); // Redirect ke halaman detail
   }
 
 

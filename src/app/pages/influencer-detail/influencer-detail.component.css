@@ -118,3 +118,244 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.foto10{
+  width: 200px;
+  height: 140px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* CSS untuk Influencer Detail di Handphone */
+@media screen and (max-width: 568px) {
+  .isi{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .profileAtas{
+    flex-direction: column;
+    /* height: 30rem; */
+    height: fit-content;
+    /* background-color: pink; */
+  }
+
+  .profile{
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: fit-content;
+  }
+
+  .foto{
+    width: 74px;
+    height: 74px;
+  }
+
+  .profPic{
+    width: 25%;
+    /* background-color: yellow; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center
+  }
+
+  .profAtasKanan{
+    /* background-color: pink; */
+    width: 75%;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+  }
+
+  .nama{
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .svgDetail{
+    display: none;
+  }
+
+  .garisBantu{
+    display: none;
+  }
+
+  .textDetail{
+    font-size: 0.6rem;
+    font-weight: 500;
+  }
+
+  .angkaDetail{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .detail{
+    justify-content: space-between;
+    padding-left: 0px;
+  }
+
+  .name, .bio{
+    font-size: 0.7rem;
+  }
+
+  .number, .locationName{
+    font-size: 0.6rem;
+  }
+
+  .profBawah{
+    padding-top: 4px;
+  }
+
+  .callSvg, .locationSvg{
+    width: 15px;
+    height: 15px;
+  }
+
+  .category{
+    margin-top: 17px;
+    font-size: 0.6rem;
+  }
+
+  .profBawah{
+    /* background-color: yellow; */
+  }
+
+  .profBawahKiri{
+    width: 60%;
+  }
+
+  .profBawahKanan{
+    /* background-color: blue; */
+    height: 100%;
+    width: 40%;
+    margin-top: auto;
+    /* height: 10rem; */
+  }
+
+  .rating{
+    font-size: 0.7rem;
+    padding-top: 2px;
+  }
+
+  .chatBtn svg,
+  .saveBtn svg {
+    width: 24px; /* Ubah ukuran sesuai kebutuhan */
+    height: 24px;
+  }
+
+  .chatBtn,
+  .saveBtn {
+    width: 32px; /* Sesuaikan ukuran tombol */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hireBtn{
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 0.8rem;
+  }
+
+  .similar{
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .card{
+    /* width: 12.5rem; */
+    height: 64px;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    flex: 0 0 10.5rem;
+    margin-right: 10px;
+  }
+
+  .judul{
+    font-size: 1rem;
+  }
+
+  .fotoSim{
+    width: 48px;
+    height: 48px;
+  }
+
+  .nameSim{
+    font-size: 0.8rem;
+  }
+
+  .judulSim{
+    margin-left: 10px;
+  }
+
+  .categorySim{
+    font-size: 0.6rem;
+  }
+
+  .responsiveHelper{
+    display: flex;
+    overflow-y: hidden;
+  }
+
+  .averageSection{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .averageSection{
+    font-size: 1.5rem;
+  }
+
+  .averageSection .text{
+    font-size: 0.65rem;
+  }
+
+  .accGraph{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .accGraph .text{
+    font-size: 0.8rem;
+  }
+
+  .audGraph{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .audGraph .text{
+    font-size: 0.8rem;
+  }
+
+  .topCities{
+    height: 20rem;
+  }
+
+  .dataOnlFoll{
+    display: none;
+  }
+
+  .judulContent{
+    font-size: 0.8rem;
+  }
+
+  .isiContent{
+    flex-direction: column;
+  }
+
+}
