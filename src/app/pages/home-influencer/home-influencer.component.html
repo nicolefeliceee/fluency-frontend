@@ -10,7 +10,7 @@
 
 <app-alert-success [display]="signupSuccess" [label]="'Sign up Success! Welcome to Fluency'"></app-alert-success>
 
-<div *ngIf="!influencer?.isactive" class="bg-yellow-50 mx-12 mt-2 mb-[-24px] border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4" role="alert" tabindex="-1" aria-labelledby="hs-with-description-label">
+<div *ngIf="!influencer?.isactive" class="warn bg-yellow-50 mx-12 mt-2 mb-[-24px] border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4" role="alert" tabindex="-1" aria-labelledby="hs-with-description-label">
   <div class="flex">
     <div class="shrink-0">
       <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -20,17 +20,17 @@
       </svg>
     </div>
     <div class="ms-4">
-      <div id="hs-with-description-label" class="text-[1rem] font-semibold">
+      <div id="hs-with-description-label" class="warn1 text-[1rem] font-semibold">
         Your account is currently inactive
       </div>
-      <div class="mt-1 text-[0.8rem] text-yellow-700">
+      <div class="warn2 mt-1 text-[0.8rem] text-yellow-700">
         Activate your account now to be visible for brands.
       </div>
   </div>
   </div>
 </div>
 
-<div class="isi px-12 pt-5 pb-20">
+<div class="isi px-12 md:pt-5 pt-0 pb-20">
   <div class="profileAtas flex mt-4">
     <div class="kiri w-[72.5%]">
       <div class="kotakPertama bg-white h-[22rem] w-full rounded-3xl pt-[23px] pb-[28px] ps-[48px]">
@@ -42,10 +42,11 @@
             <div class="namaToggle flex justify-between">
               <div class="nama font-semibold text-[1.5rem] mb-[12px]">&#64;{{ influencer?.username }}</div>
               <div class="toggle flex justify-center items-center content-center h-fit">
-                <p class="font-medium text-[0.8rem] me-2">Active</p>
+                <p class="font-medium md:text-[0.8rem] text-[0.65rem] me-2">Active</p>
                 <input type="checkbox" [checked]="influencer?.isactive" (change)="toggleActive($event)" id="hs-small-solid-switch" class="form-input peer relative shrink-0 w-11 h-6 p-px bg-[#949C9E]/30 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none checked:bg-blue-80 checked:text-blue-80 checked:border-blue-80 focus:checked:border-transparent
                 before:inline-block before:size-5 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
                 <label for="hs-small-solid-switch" class="sr-only">Active</label>
+
               </div>
             </div>
             <div class="detail flex ps-[4px] items-center pe-[39px]">
@@ -141,7 +142,7 @@
           </div>
           <div class="profBawahKanan h-full w-[30%] content-end">
             <div class="rateBox flex pt-[2px] items-center justify-end mt-2">
-              <div class="svg">
+              <div class="svg starsvg">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M16.6758 21.1607C16.4289 21.1607 16.1832 21.0849 15.9718 20.934L11.0004 17.3688L6.02899 20.934C5.82302 21.0822 5.57549 21.1615 5.32175 21.1606C5.06802 21.1597 4.82104 21.0787 4.6161 20.9291C4.41089 20.7804 4.25783 20.5708 4.17872 20.3301C4.09961 20.0893 4.09848 19.8298 4.17549 19.5883L6.0296 13.6043L1.10282 10.1326C0.89864 9.98192 0.747002 9.77085 0.669357 9.52925C0.591713 9.28765 0.591993 9.02776 0.670157 8.78633C0.7491 8.54558 0.90162 8.33569 1.10621 8.18625C1.3108 8.03681 1.55714 7.95536 1.81049 7.95338L7.91243 7.94422L9.85516 2.10872C9.93533 1.86832 10.0891 1.65924 10.2947 1.51108C10.5003 1.36293 10.7473 1.2832 11.0007 1.2832C11.2541 1.2832 11.5011 1.36293 11.7067 1.51108C11.9123 1.65924 12.066 1.86832 12.1462 2.10872L14.0559 7.94422L20.189 7.95338C20.4427 7.95482 20.6895 8.03615 20.8944 8.18585C21.0992 8.33554 21.2517 8.54597 21.3301 8.78724C21.4085 9.02852 21.4089 9.28837 21.3312 9.52989C21.2535 9.7714 21.1017 9.98229 20.8973 10.1326L15.9705 13.6043L17.8247 19.5883C17.9017 19.8297 17.9007 20.0892 17.8217 20.3299C17.7427 20.5707 17.5898 20.7804 17.3847 20.9291C17.179 21.0798 16.9307 21.1609 16.6758 21.1607Z" fill="#FFAC33"/>
                 </svg>
@@ -152,18 +153,18 @@
         </div>
       </div>
 
-      <div class="kotakKedua wallet px-7 flex m-auto w-full h-[4.7rem] z-5 rounded-[20px] mt-5 bg-white">
-        <div class="kiri w-[7%] h-full content-center">
+      <div class="kotakKedua wallet px-7 flex m-auto w-full h-[4.7rem] z-5 rounded-[20px] md:mt-5 mt-3 bg-white">
+        <div class="kiriWall w-[7%] h-full content-center flex flex-col justify-center">
           <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="43" height="43" rx="21.5" fill="#949C9E" fill-opacity="0.18"/>
             <path d="M30.458 15.901V13.6615C30.458 12.4263 29.4536 11.4219 28.2184 11.4219H13.6611C11.809 11.4219 10.3018 12.9291 10.3018 14.7812V28.2187C10.3018 30.6834 12.3107 31.5781 13.6611 31.5781H30.458C31.6931 31.5781 32.6976 30.5737 32.6976 29.3385V18.1406C32.6976 16.9055 31.6931 15.901 30.458 15.901ZM28.2184 25.9792H25.9788V21.5H28.2184V25.9792ZM13.6611 15.901C13.3728 15.8881 13.1006 15.7645 12.9011 15.5559C12.7016 15.3474 12.5903 15.0699 12.5903 14.7812C12.5903 14.4926 12.7016 14.2151 12.9011 14.0066C13.1006 13.798 13.3728 13.6744 13.6611 13.6615H28.2184V15.901H13.6611Z" fill="#5876F9"/>
           </svg>
         </div>
-        <div class="tengah w-[70%] h-full content-center font-semibold text-[1.25rem] text-font-black">
+        <div class="tengahWall w-[70%] h-full content-center font-semibold text-[1.25rem] text-font-black">
           {{ walletheader.balance_show}}
           <!-- Rp 100.000 -->
         </div>
-        <div class="kanan w-[23%] h-full content-center flex justify-between">
+        <div class="kananWall w-[23%] h-full content-center flex justify-between">
           <div class="transfer cursor-pointer flex flex-col items-center justify-center" (click)="showWalletTransferPopup()">
           <!-- <div class="transfer cursor-pointer flex flex-col items-center justify-center"> -->
             <div class="svg">
@@ -197,7 +198,7 @@
       </div>
 
       <!-- <div class="projects pt-[6rem] px-[7rem]" *ngIf="projectList.length > 0"> -->
-      <div class="kotakKetiga projects mt-[35px]" *ngIf="projectList.length > 0">
+      <div class="kotakKetiga projects md:mt-[35px] mt-[15px]" *ngIf="projectList.length > 0">
         <div class="flex items-center justify-between mb-2">
           <div class="projectTitle font-semibold text-[1.2rem] ms-2">Waiting for Approval</div>
           <a routerLink="/project"  class="text-font-darkGrey font-normal text-[0.9rem] me-2" *ngIf="projectList.length > 3">See All</a>
@@ -207,9 +208,9 @@
         </div>
       </div>
 
-      <div class="kotakKeempat projectSummary mt-[35px]">
+      <div class="kotakKeempat projectSummary md:mt-[35px] mt-[15px]">
         <div class="summaryTitle font-semibold text-[1.2rem] ms-2 mb-2">Project Summary</div>
-        <div class="summaryCard grid grid-cols-3 gap-3">
+        <div class="summaryCard grid grid-cols-3 md:gap-3 gap-2">
           <div class="cardWaiting rounded-3xl h-[9rem] bg-white flex flex-col items-center justify-center">
             <div class="logo">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -282,8 +283,8 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6727 14.0289C18.1042 13.3283 20.4527 12.5 23.0229 12.5C25.5394 12.5 27.8261 13.2939 29.25 13.9852L29.3305 14.0242C29.7598 14.2366 30.1063 14.4373 30.3502 14.6L28.1953 17.75C33.163 22.8285 37.0002 33.4983 23.0229 33.4983C9.04565 33.4983 12.7796 23.0222 17.7904 17.75L15.6496 14.6C15.8147 14.4921 16.0241 14.3667 16.2737 14.2337C16.3974 14.1672 16.5304 14.0985 16.6727 14.0289ZM26.8105 17.7086L28.5354 15.1868C26.9312 15.3023 25.0226 15.6792 23.1851 16.2112C21.8726 16.5903 20.4142 16.5326 19.0638 16.2835C18.7235 16.2205 18.3855 16.1454 18.0506 16.0583L19.1706 17.7074C21.571 18.562 24.4095 18.562 26.8105 17.7086ZM18.4968 18.7008C21.3056 19.7858 24.6813 19.7858 27.4901 18.6997C28.6622 19.9358 29.6429 21.3403 30.3997 22.8664C31.1884 24.4752 31.6177 26.0835 31.5477 27.4695C31.4801 28.8071 30.9539 29.9498 29.7522 30.7992C28.4998 31.6841 26.3934 32.3316 23.0223 32.3316C19.6477 32.3316 17.5314 31.6952 16.2673 30.8202C15.0569 29.9819 14.5255 28.8543 14.4502 27.5348C14.3715 26.164 14.7915 24.5639 15.5772 22.944C16.3268 21.3993 17.3727 19.9124 18.4968 18.7008ZM17.826 14.7843C18.2927 14.9232 18.7803 15.0439 19.275 15.1355C20.5292 15.3665 21.7868 15.4003 22.8602 15.0894C24.1109 14.7249 25.3831 14.4383 26.6693 14.2313C25.596 13.9082 24.3407 13.6667 23.0223 13.6667C21.0127 13.6667 19.1385 14.2273 17.826 14.7843Z" fill="#09895E" stroke="#09895E" stroke-width="0.5"/>
           </svg>
         </div>
-        <div class="revenueValue text-[2rem] font-semibold mt-1">Rp {{ influencer?.totalrevenue }}</div>
-        <div class="text text-font-darkGrey font-medium text-[0.8rem]">Total Revenue</div>
+        <div class="revenueValue md:text-[2rem] text-[1.5rem] font-semibold mt-1">Rp {{ influencer?.totalrevenue }}</div>
+        <div class="text text-font-darkGrey font-medium text-[0.7rem] md:text-[0.8rem]">Total Revenue</div>
       </div>
 
       <div class="revenuePct rounded-3xl w-full h-[16rem] px-[27px] py-[22px] mt-[14px] bg-white">
@@ -324,7 +325,7 @@
         </div>
 
         <!-- Dates (Weekly View) -->
-        <div class="grid grid-cols-7 font-medium text-[0.7rem] text-center gap-2 place-items-center">
+        <div class="grid grid-cols-7 font-medium text-[0.7rem] text-center gap-2 place-items-center mb-3 md:mb-0">
           <div *ngFor="let date of displayedWeek"
                 class="rounded-full size-[28px] aspect-square flex items-center justify-center cursor-pointer text-black"
                 (click)="selectDate(date)"

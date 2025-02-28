@@ -2,8 +2,8 @@
 <div class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[60]" (click)="onClose()">
 </div>
 
-<div class="isi fixed mt-[2rem] ms-[29%] bg-font-white h-[25rem] w-[42%] rounded-[10px] py-5 px-7 overflow-y-scroll overflow-x-hidden z-[70]">
-  <div class="bagAtas flex justify-between items-center pb-3 px-1">
+<div class="isi fixed mt-[2rem] md:ms-[29%] ms-[5%] bg-font-white h-[25rem] md:w-[42%] w-[90%] rounded-[10px] py-5 md:px-7 px-3 overflow-y-scroll overflow-x-hidden z-[70]">
+  <div class="bagAtas flex justify-between items-center pb-3 md:px-1 px-[0.2px]">
     <div class="font-semibold text-[1.05rem]">
       Transaction History
     </div>
@@ -43,7 +43,7 @@
         <div *ngIf="trx.transaction_type_id === 3" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div>
         <div *ngIf="trx.transaction_type_id === 4" class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }} from {{ trx.partner_name }}</div>
         <!-- <div class="midTrx w-[62%] font-medium text-[0.8rem] ps-1">{{ trx.transaction_type_label }}</div> -->
-        <div class="rightTrx w-[30%] flex flex-col">
+        <div class="rightTrx md:w-[30%] w-[40%] flex flex-col">
           <div class="nominal text-end font-semibold text-[0.8rem]" [ngClass]="{
             'text-[#149574]': trx.transaction_type_id === 3 || trx.transaction_type_id === 4,
             'text-black': trx.transaction_type_id !== 3 && trx.transaction_type_id !== 4

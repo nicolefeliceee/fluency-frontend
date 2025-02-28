@@ -132,6 +132,7 @@
   .isi{
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 10px;
   }
 
   .profileAtas{
@@ -221,6 +222,8 @@
   .category{
     margin-top: 17px;
     font-size: 0.6rem;
+    max-width: 75%;
+    flex-wrap: wrap;
   }
 
   .profBawah{
@@ -246,8 +249,8 @@
 
   .chatBtn svg,
   .saveBtn svg {
-    width: 24px; /* Ubah ukuran sesuai kebutuhan */
-    height: 24px;
+    width: 32px; /* Ubah ukuran sesuai kebutuhan */
+    height: 32px;
   }
 
   .chatBtn,
@@ -260,9 +263,13 @@
   }
 
   .hireBtn{
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 25px;
+    padding-right: 25px;
     font-size: 0.8rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 12px;
+    line-height: 100%;
   }
 
   .similar{
@@ -289,10 +296,12 @@
   .fotoSim{
     width: 48px;
     height: 48px;
+    margin-right: 2px;
   }
 
   .nameSim{
     font-size: 0.8rem;
+    margin-left: 2px;
   }
 
   .judulSim{
@@ -301,6 +310,7 @@
 
   .categorySim{
     font-size: 0.6rem;
+    margin-left: 2px;
   }
 
   .responsiveHelper{
@@ -357,5 +367,149 @@
   .isiContent{
     flex-direction: column;
   }
+
+  .feedsPict{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .foto4{
+    /* width: 100%; */
+    width: 162px;
+    height: 162px;
+    /* aspect-ratio: 1/1; */
+    /* height: 198px; */
+  }
+
+  .rightContent{
+    width: 100%;
+    padding-left: 0.5rem;
+    /* background-color: purple; */
+    margin-top: 15px;
+  }
+
+  .leftContent{
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .foto6{
+    width: 200px;
+    height: 200px;
+  }
+
+  .plch{
+    font-size: 0.8rem;
+  }
+
+  .topCitiesRight{
+    display: none;
+  }
+
+  .isiStory{
+    margin-top: 10px;
+  }
+
+  .rspn{
+    width: 100%;
+    /* background-color: burlywood; */
+    display: flex;
+    justify-content: center;
+  }
+
+  .allBox{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .priceBox{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: fit-content;
+  }
+
+  .priceType{
+    font-size: 0.9rem;
+  }
+
+  .priceNominal{
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
+
+  .priceDesc{
+    font-size: 0.65rem;
+    margin-top: 8px;
+  }
+
+  .prevv{
+    flex-direction: column;
+  }
+
+  .workKiri, .workKanan{
+    width: 100%;
+  }
+
+  .rateBar, .reviewBar{
+    font-size: 0.65rem;
+  }
+
+  .workKiri .text{
+    font-size: 0.8rem;
+  }
+
+  .text2, .review{
+    font-size: 0.65rem;
+  }
+
+  .rateBar, .garisBar{
+    margin-right: 8px;
+  }
+
+  .rateAngka{
+    font-size: 1.2rem;
+  }
+
+  .avgRating{
+    height: fit-content;
+  }
+
+  .workKanan{
+    margin-left: 0px;
+    width: 100%;
+    padding-top: 15px;
+  }
+
+  .starsvg svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .locationSvg svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  .callSvg svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  .cat1{
+    margin-bottom: 2px;
+  }
+
+  /* .nameFeed{
+    font-size: 0.8rem;
+  }
+
+  .dateFeed, .isiFeed{
+    font-size: 0.7rem;
+  } */
+
 
 }

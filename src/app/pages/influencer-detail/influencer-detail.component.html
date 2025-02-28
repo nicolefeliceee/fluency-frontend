@@ -6,7 +6,7 @@
 
 <div class="isi px-14 pt-5 pb-20">
   <div class="back w-full font-semibold text-[0.9rem]"> < Back </div>
-  <div class="profileAtas h-[22rem] flex mt-4">
+  <div class="profileAtas h-[22rem] flex md:mt-4 mt-2">
     <div class="profile bg-white h-full w-[73.7%] rounded-3xl pt-[23px] pb-[28px] ps-[48px] pe-[39px]">
       <div class="profAtas h-[49.4%] flex">
         <div class="profPic w-[19.3%] h-full">
@@ -132,7 +132,7 @@
             <!-- <div class="hireBtn bg-blue-80 text-white font-normal px-10 py-1 rounded-[10px] content-center cursor-pointer" (click)="redirectToProject()">Hire</div> -->
           </div>
           <div class="rateBox flex pt-[2px] items-center justify-end mt-2">
-            <div class="svg">
+            <div class="starsvg svg">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16.6758 21.1607C16.4289 21.1607 16.1832 21.0849 15.9718 20.934L11.0004 17.3688L6.02899 20.934C5.82302 21.0822 5.57549 21.1615 5.32175 21.1606C5.06802 21.1597 4.82104 21.0787 4.6161 20.9291C4.41089 20.7804 4.25783 20.5708 4.17872 20.3301C4.09961 20.0893 4.09848 19.8298 4.17549 19.5883L6.0296 13.6043L1.10282 10.1326C0.89864 9.98192 0.747002 9.77085 0.669357 9.52925C0.591713 9.28765 0.591993 9.02776 0.670157 8.78633C0.7491 8.54558 0.90162 8.33569 1.10621 8.18625C1.3108 8.03681 1.55714 7.95536 1.81049 7.95338L7.91243 7.94422L9.85516 2.10872C9.93533 1.86832 10.0891 1.65924 10.2947 1.51108C10.5003 1.36293 10.7473 1.2832 11.0007 1.2832C11.2541 1.2832 11.5011 1.36293 11.7067 1.51108C11.9123 1.65924 12.066 1.86832 12.1462 2.10872L14.0559 7.94422L20.189 7.95338C20.4427 7.95482 20.6895 8.03615 20.8944 8.18585C21.0992 8.33554 21.2517 8.54597 21.3301 8.78724C21.4085 9.02852 21.4089 9.28837 21.3312 9.52989C21.2535 9.7714 21.1017 9.98229 20.8973 10.1326L15.9705 13.6043L17.8247 19.5883C17.9017 19.8297 17.9007 20.0892 17.8217 20.3299C17.7427 20.5707 17.5898 20.7804 17.3847 20.9291C17.179 21.0798 16.9307 21.1609 16.6758 21.1607Z" fill="#FFAC33"/>
               </svg>
@@ -256,8 +256,8 @@
       <div class="topCities col-span-2 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
         <div class="text font-semibold text-[0.9rem]">Top Cities</div>
         <div class="chartContainer mt-2 flex gap-[20px]" style="position: relative; height:90%; width:100%">
-          <canvas id="TopCitiesLeft">{{ topCitiesLeft }}</canvas>
-          <canvas id="TopCitiesRight">{{ topCitiesRight }}</canvas>
+          <canvas class="topCitiesLeft" id="TopCitiesLeft">{{ topCitiesLeft }}</canvas>
+          <canvas class="topCitiesRight" id="TopCitiesRight">{{ topCitiesRight }}</canvas>
         </div>
       </div>
       <div class="ageRange col-span-1 rounded-3xl h-[17rem] px-[32px] py-[22px] bg-white">
@@ -273,50 +273,52 @@
     <div class="isiContent flex">
       <div class="leftContent w-[27.2%] px-[23px]">
         <div class="judulContent storyText font-semibold text-[0.9rem]">Story</div>
-        <div class="isiStory flex items-center mt-3">
-          <div class="leftArrSvg me-2" (click)="prevStory()">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="20" width="20" height="20" rx="10" transform="rotate(-180 20 20)" fill="#949C9E" fill-opacity="0.25"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.22936 9.52623L11.0007 5.7549L11.9434 6.69757L8.64336 9.99757L11.9434 13.2976L11.0007 14.2402L7.22936 10.4689C7.10438 10.3439 7.03417 10.1743 7.03417 9.99757C7.03417 9.82079 7.10438 9.65125 7.22936 9.52623Z" fill="#494F50"/>
-            </svg>
-          </div>
+        <div class="rspn">
+          <div class="isiStory flex items-center mt-3">
+            <div class="leftArrSvg me-2" (click)="prevStory()">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="20" height="20" rx="10" transform="rotate(-180 20 20)" fill="#949C9E" fill-opacity="0.25"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.22936 9.52623L11.0007 5.7549L11.9434 6.69757L8.64336 9.99757L11.9434 13.2976L11.0007 14.2402L7.22936 10.4689C7.10438 10.3439 7.03417 10.1743 7.03417 9.99757C7.03417 9.82079 7.10438 9.65125 7.22936 9.52623Z" fill="#494F50"/>
+              </svg>
+            </div>
 
-          <!-- Jika ada story, tampilkan story -->
-          <div class="storyPict" *ngIf="stories.length > 0">
-            <div class="foto3 rounded-3xl relative cursor-pointer" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'" (click)="openInstagram(currentStory?.permalink)">
-            <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
-              <div class="absolute top-2 right-2 flex">
-                <div class="likes px-[6px] rounded-full py-[3px] flex items-center me-1">
-                  <div class="likeSvg">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M15 9L10.2 3.75V6.375C7.8 6.375 3 7.95 3 14.25C3 13.3747 4.44 11.625 10.2 11.625V14.25L15 9Z" fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+            <!-- Jika ada story, tampilkan story -->
+            <div class="storyPict" *ngIf="stories.length > 0">
+              <div class="foto3 rounded-3xl relative cursor-pointer" [style.backgroundImage]="'url(' + currentStory?.thumbnailurl + ')'" (click)="openInstagram(currentStory?.permalink)">
+              <!-- <div class="foto3 rounded-3xl relative" style="background-image: url(../assets/images/kar2.jpg);"> -->
+                <div class="absolute top-2 right-2 flex">
+                  <div class="likes px-[6px] rounded-full py-[3px] flex items-center me-1">
+                    <div class="likeSvg">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 9L10.2 3.75V6.375C7.8 6.375 3 7.95 3 14.25C3 13.3747 4.44 11.625 10.2 11.625V14.25L15 9Z" fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <div class="likeAmt font-semibold text-[0.62rem] ms-[1px] text-white">{{ currentStory?.sharecount }}</div>
                   </div>
-                  <div class="likeAmt font-semibold text-[0.62rem] ms-[1px] text-white">{{ currentStory?.sharecount }}</div>
-                </div>
-                <div class="views px-[6px] rounded-full py-[3px] flex items-center">
-                  <div class="viewSvg">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4999 7.99969L14.9149 7.79169V7.78969L14.9119 7.78669L14.9059 7.77469L14.8849 7.73469L14.8049 7.59069C14.7073 7.42229 14.6035 7.25752 14.4939 7.09669C14.128 6.55964 13.7074 6.06198 13.2389 5.61169C12.1129 4.53169 10.3799 3.42969 7.99989 3.42969C5.62189 3.42969 3.88789 4.53069 2.76189 5.61169C2.29335 6.06198 1.87277 6.55964 1.50689 7.09669C1.35843 7.31573 1.22092 7.54201 1.09489 7.77469L1.08889 7.78669L1.08689 7.78969V7.79069C1.08689 7.79069 1.08589 7.79169 1.50089 7.99969L1.08589 7.79069C1.0538 7.85551 1.03711 7.92686 1.03711 7.99919C1.03711 8.07152 1.0538 8.14287 1.08589 8.20769L1.08489 8.20969L1.08789 8.21269L1.09389 8.22469C1.12507 8.28717 1.15842 8.34854 1.19389 8.40869C1.62449 9.1361 2.15124 9.8021 2.75989 10.3887C3.88689 11.4687 5.61989 12.5687 7.99989 12.5687C10.3789 12.5687 12.1129 11.4687 13.2399 10.3877C13.7076 9.93686 14.1278 9.43926 14.4939 8.90269C14.6341 8.69624 14.7646 8.48334 14.8849 8.26469L14.9059 8.22469L14.9119 8.21269L14.9139 8.20969V8.20869C14.9139 8.20869 14.9149 8.20769 14.4999 7.99969ZM14.4999 7.99969L14.9149 8.20869C14.947 8.14387 14.9637 8.07251 14.9637 8.00019C14.9637 7.92786 14.947 7.85651 14.9149 7.79169L14.4999 7.99969ZM7.93989 6.46369C7.53252 6.46369 7.14183 6.62552 6.85377 6.91357C6.56572 7.20163 6.40389 7.59231 6.40389 7.99969C6.40389 8.40706 6.56572 8.79775 6.85377 9.0858C7.14183 9.37386 7.53252 9.53569 7.93989 9.53569C8.34726 9.53569 8.73795 9.37386 9.026 9.0858C9.31406 8.79775 9.47589 8.40706 9.47589 7.99969C9.47589 7.59231 9.31406 7.20163 9.026 6.91357C8.73795 6.62552 8.34726 6.46369 7.93989 6.46369ZM5.47789 7.99969C5.47789 7.34619 5.73749 6.71947 6.19958 6.25738C6.66167 5.79529 7.28839 5.53569 7.94189 5.53569C8.59538 5.53569 9.22211 5.79529 9.6842 6.25738C10.1463 6.71947 10.4059 7.34619 10.4059 7.99969C10.4059 8.65318 10.1463 9.27991 9.6842 9.742C9.22211 10.2041 8.59538 10.4637 7.94189 10.4637C7.28839 10.4637 6.66167 10.2041 6.19958 9.742C5.73749 9.27991 5.47789 8.65318 5.47789 7.99969Z" fill="white"/>
-                    </svg>
+                  <div class="views px-[6px] rounded-full py-[3px] flex items-center">
+                    <div class="viewSvg">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4999 7.99969L14.9149 7.79169V7.78969L14.9119 7.78669L14.9059 7.77469L14.8849 7.73469L14.8049 7.59069C14.7073 7.42229 14.6035 7.25752 14.4939 7.09669C14.128 6.55964 13.7074 6.06198 13.2389 5.61169C12.1129 4.53169 10.3799 3.42969 7.99989 3.42969C5.62189 3.42969 3.88789 4.53069 2.76189 5.61169C2.29335 6.06198 1.87277 6.55964 1.50689 7.09669C1.35843 7.31573 1.22092 7.54201 1.09489 7.77469L1.08889 7.78669L1.08689 7.78969V7.79069C1.08689 7.79069 1.08589 7.79169 1.50089 7.99969L1.08589 7.79069C1.0538 7.85551 1.03711 7.92686 1.03711 7.99919C1.03711 8.07152 1.0538 8.14287 1.08589 8.20769L1.08489 8.20969L1.08789 8.21269L1.09389 8.22469C1.12507 8.28717 1.15842 8.34854 1.19389 8.40869C1.62449 9.1361 2.15124 9.8021 2.75989 10.3887C3.88689 11.4687 5.61989 12.5687 7.99989 12.5687C10.3789 12.5687 12.1129 11.4687 13.2399 10.3877C13.7076 9.93686 14.1278 9.43926 14.4939 8.90269C14.6341 8.69624 14.7646 8.48334 14.8849 8.26469L14.9059 8.22469L14.9119 8.21269L14.9139 8.20969V8.20869C14.9139 8.20869 14.9149 8.20769 14.4999 7.99969ZM14.4999 7.99969L14.9149 8.20869C14.947 8.14387 14.9637 8.07251 14.9637 8.00019C14.9637 7.92786 14.947 7.85651 14.9149 7.79169L14.4999 7.99969ZM7.93989 6.46369C7.53252 6.46369 7.14183 6.62552 6.85377 6.91357C6.56572 7.20163 6.40389 7.59231 6.40389 7.99969C6.40389 8.40706 6.56572 8.79775 6.85377 9.0858C7.14183 9.37386 7.53252 9.53569 7.93989 9.53569C8.34726 9.53569 8.73795 9.37386 9.026 9.0858C9.31406 8.79775 9.47589 8.40706 9.47589 7.99969C9.47589 7.59231 9.31406 7.20163 9.026 6.91357C8.73795 6.62552 8.34726 6.46369 7.93989 6.46369ZM5.47789 7.99969C5.47789 7.34619 5.73749 6.71947 6.19958 6.25738C6.66167 5.79529 7.28839 5.53569 7.94189 5.53569C8.59538 5.53569 9.22211 5.79529 9.6842 6.25738C10.1463 6.71947 10.4059 7.34619 10.4059 7.99969C10.4059 8.65318 10.1463 9.27991 9.6842 9.742C9.22211 10.2041 8.59538 10.4637 7.94189 10.4637C7.28839 10.4637 6.66167 10.2041 6.19958 9.742C5.73749 9.27991 5.47789 8.65318 5.47789 7.99969Z" fill="white"/>
+                      </svg>
+                    </div>
+                    <div class="viewAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ currentStory?.viewcount }}</div>
                   </div>
-                  <div class="viewAmt font-semibold text-[0.62rem] ms-[2px] text-white">{{ currentStory?.viewcount }}</div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="storyPict" *ngIf="stories.length === 0">
-            <div class="bg-gray-200 flex items-center justify-center m-0 p-0 rounded-3xl w-[225px] h-[405px]">
-              <p class="text-gray-500 text-[0.9rem]">No stories available</p>
+            <div class="storyPict" *ngIf="stories.length === 0">
+              <div class="bg-gray-200 flex items-center justify-center m-0 p-0 rounded-3xl w-[225px] h-[405px]">
+                <p class="text-gray-500 text-[0.9rem]">No stories available</p>
+              </div>
             </div>
-          </div>
 
-          <div class="rightArrSvg ms-2" (click)="nextStory()">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="20" height="20" rx="10" fill="#949C9E" fill-opacity="0.25"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7706 10.4738L8.99931 14.2451L8.05664 13.3024L11.3566 10.0024L8.05664 6.70243L8.99931 5.75977L12.7706 9.5311C12.8956 9.65612 12.9658 9.82566 12.9658 10.0024C12.9658 10.1792 12.8956 10.3487 12.7706 10.4738Z" fill="#494F50"/>
-            </svg>
+            <div class="rightArrSvg ms-2" (click)="nextStory()">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="20" height="20" rx="10" fill="#949C9E" fill-opacity="0.25"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7706 10.4738L8.99931 14.2451L8.05664 13.3024L11.3566 10.0024L8.05664 6.70243L8.99931 5.75977L12.7706 9.5311C12.8956 9.65612 12.9658 9.82566 12.9658 10.0024C12.9658 10.1792 12.8956 10.3487 12.7706 10.4738Z" fill="#494F50"/>
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -343,7 +345,7 @@
           <ng-template #noFeeds>
             <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
               <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
-              <div class="text-center text-gray-500 mt-[-30px] z-10">No feeds posted</div>
+              <div class="plch text-center text-gray-500 mt-[-30px] z-10">No feeds posted</div>
             </div>
           </ng-template>
         </div>
@@ -363,7 +365,7 @@
           <ng-template #noReels>
             <div class="w-full flex flex-col justify-center content-center items-center mt-[30px]">
               <div class="foto6 relative" style="background-image: url(../assets/images/empty.png);"></div>
-              <div class="text-center text-gray-500 mt-[-30px] z-10">No reels posted</div>
+              <div class="plch text-center text-gray-500 mt-[-30px] z-10">No reels posted</div>
             </div>
           </ng-template>
         </div>
@@ -371,7 +373,7 @@
     </div>
   </div>
   <div class="pricing mt-6">
-    <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Pricing</p>
+    <p class="judul font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Pricing</p>
     <div class="allBox grid grid-cols-3 gap-[25px]">
       <div *ngIf="influencer?.storyprice && influencer?.storyprice?.trim() !== ''" class="priceBox bg-pastel-6 h-[17.2rem] rounded-3xl py-[35px] px-[41px]">
         <div class="priceType font-semibold text-[1.25rem]">Story</div>
@@ -496,8 +498,8 @@
     </div>
   </div>
   <div class="prevWork mt-6">
-    <p class="font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Previous Work</p>
-    <div class="flex">
+    <p class="judul font-semibold text-[1.15rem] ms-[10px] mb-[10px]">Previous Work</p>
+    <div class="prevv flex">
       <div class="workKiri w-[42%]">
         <div class="avgRating bg-white rounded-3xl w-full h-[16.3rem] py-[23px] px-[34px]">
           <div class="text font-semibold text-[0.9rem]">Average Rating ({{ influencer?.totalreview }} Projects)</div>
@@ -513,7 +515,7 @@
           <div class="allBar mt-[14px]">
             <div *ngFor="let rate of influencer?.totalrating" class="bar flex items-center mt-[5px]">
               <div class="rateBar font-semibold text-[0.8rem] me-4 w-[3%]">{{ rate.rating }}</div>
-              <div class="flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <div class="gairsBar flex me-4 w-[72%] h-1.5 bg-[#E4E6E7] rounded-full overflow-hidden dark:bg-[#E4E6E7]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                 <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500" [style]=" 'width: ' + rate.percentage + '%' "></div>
               </div>
               <div class="reviewBar font-medium text-[0.8rem]">{{ rate.totalreview }} Reviews</div>
@@ -522,12 +524,12 @@
         </div>
         <div class="avgSentiment bg-white rounded-3xl w-full py-[23px] px-[34px] mt-4">
           <div class="text font-semibold text-[0.9rem]">Sentiment Analytics ({{ influencer?.totalanalyticspost }} Projects)</div>
-          <div class="text font-normal text-[0.8rem] text-font-darkGrey mt-2">Comments analytics from previous projects</div>
+          <div class="text2 font-normal text-[0.8rem] text-font-darkGrey mt-2">Comments analytics from previous projects</div>
           <div class="sentimentChart w-full mt-5 px-5" style="position: relative; height:90%; width:100%">
             <canvas *ngIf="!showPlaceholderAnalytics" id="Analytics">{{ analytics }}</canvas>
             <div *ngIf="showPlaceholderAnalytics" class="h-full flex flex-col justify-center items-center content-center py-3">
               <div class="foto10" style="background-image: url(../assets/images/emptygraph.jpg);"></div>
-              <p class="text-[0.8rem] text-font-darkGrey/60">No data available</p>
+              <p class="text2 text-[0.8rem] text-font-darkGrey/60">No data available</p>
             </div>
           </div>
           <!-- <div class="chartContainer mt-2" style="position: relative; height:90%; width:100%">
@@ -543,7 +545,7 @@
         </div>
       </div>
       <div class="workKanan w-[58%] ms-[23px]">
-        <div class="text font-semibold text-[0.9rem] pt-[1px] ps-3 mb-3">Customer Feedback</div>
+        <div class="judul text font-semibold text-[0.9rem] pt-[1px] ps-3 mb-3">Customer Feedback</div>
         <div class="feedbackBox overflow-y-auto h-[33.5rem]">
           <div *ngFor="let item of influencer?.feedback" class="feedback bg-white rounded-3xl w-full h-fit py-[25px] px-[34px] mb-3">
             <div class="feedProfile flex justify-between mb-4">

@@ -35,3 +35,293 @@
   background-position: center;
   background-size: contain;
 }
+
+
+/* CSS untuk Influencer Detail di Handphone */
+@media screen and (max-width: 568px) {
+  .warn{
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+
+  .warn1{
+    font-size: 0.8rem;
+  }
+
+  .warn2{
+    font-size: 0.65rem;
+  }
+
+  .isi{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .profileAtas{
+    flex-direction: column;
+    /* height: 30rem; */
+    height: fit-content;
+    /* background-color: pink; */
+  }
+
+  .kiri{
+    width: 100%;
+  }
+
+  .kotakPertama{
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: fit-content;
+  }
+
+  .foto{
+    width: 74px;
+    height: 74px;
+  }
+
+  .profPic{
+    width: 25%;
+    /* background-color: yellow; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center
+  }
+
+  .profAtasKanan{
+    /* background-color: pink; */
+    width: 75%;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+  }
+
+  .nama{
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .svgDetail{
+    display: none;
+  }
+
+  .garisBantu{
+    display: none;
+  }
+
+  .textDetail{
+    font-size: 0.6rem;
+    font-weight: 500;
+  }
+
+  .angkaDetail{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .detail{
+    justify-content: space-between;
+    padding-left: 0px;
+  }
+
+  .cat1{
+    margin-bottom: 2px;
+  }
+
+  .name, .bio{
+    font-size: 0.7rem;
+  }
+
+  .number, .locationName{
+    font-size: 0.6rem;
+  }
+
+  .profBawah{
+    padding-top: 4px;
+  }
+
+  .callSvg, .locationSvg{
+    width: 15px;
+    height: 15px;
+  }
+
+  .category{
+    margin-top: 17px;
+    font-size: 0.6rem;
+    /* width: 80%; */
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .profBawah{
+    /* background-color: yellow; */
+    padding-right: 4px;
+  }
+
+  .profBawahKiri{
+    width: 72%;
+  }
+
+  .profBawahKanan{
+    /* background-color: blue; */
+    height: 100%;
+    width: 28%;
+    margin-top: auto;
+    /* height: 10rem; */
+  }
+
+  .rating{
+    font-size: 0.65rem;
+    padding-top: 2px;
+  }
+
+  .chatBtn svg,
+  .saveBtn svg {
+    width: 32px; /* Ubah ukuran sesuai kebutuhan */
+    height: 32px;
+  }
+
+  .chatBtn,
+  .saveBtn {
+    width: 32px; /* Sesuaikan ukuran tombol */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hireBtn{
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 0.8rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 12px;
+    line-height: 100%;
+  }
+
+  .starsvg svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .locationSvg svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  .callSvg svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  .wallet {
+    width: 100%;
+    height: 3.8rem;
+    padding: 1rem;
+  }
+
+  .kiriWall, .kananWall {
+    width: auto;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .kiriWall svg {
+    width: 40px;
+    height: 40px;
+  }
+  .tengahWall {
+    width: auto;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1rem;
+    margin-left: 2px;
+  }
+  .kananWall {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .kananWall .transfer, .kananWall .topup, .kananWall .history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .kananWall .transfer svg, .kananWall .topup svg, .kananWall .history svg {
+    width: 25px;
+    height: 25px;
+  }
+  .kananWall .transfer .text, .kananWall .topup .text, .kananWall .history .text {
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+
+  .summaryTitle, .projectTitle{
+    font-size: 1rem;
+  }
+
+  .summaryCard .text{
+    font-size: 0.7rem;
+  }
+
+  .waiting, .ongoing, .completed{
+    font-size: 1.5rem;
+  }
+
+  .cardWaiting, .cardOngoing, .cardCompleted{
+    height: 8rem;
+  }
+
+  .graph{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .graph .text{
+    font-size: 0.8rem;
+  }
+
+  .kanan{
+    width: 100%;
+  }
+
+  .revCard{
+    margin-top: 12px;
+    height: 9rem;
+  }
+
+  .dateCard{
+    height: 3.5rem;
+  }
+
+  .projectCard {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+
+
+
+
+
+
+  /* .toggle input[type="checkbox"] {
+    width: 1.5rem;
+    height: 0.9rem;
+  }
+
+  .toggle input[type="checkbox"]::before {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  .toggle p {
+    font-size: 0.65rem;
+  } */
+}

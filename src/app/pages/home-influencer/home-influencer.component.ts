@@ -415,6 +415,7 @@ export class HomeInfluencerComponent implements OnInit{
   }
 
   createRevenueAcc(){
+    const isMobile = window.innerWidth <= 768;
     this.revenueAcc = new Chart("RevenueAcc", {
       type: 'line', //this denotes tha type of chart
 
@@ -433,7 +434,8 @@ export class HomeInfluencerComponent implements OnInit{
       },
       options: {
         // aspectRatio: 1.5,
-        aspectRatio: 1.3,
+        // aspectRatio: 1.3,
+        aspectRatio: isMobile ? 1.7 : 1.3,
         plugins: {
           legend: {
             display: false

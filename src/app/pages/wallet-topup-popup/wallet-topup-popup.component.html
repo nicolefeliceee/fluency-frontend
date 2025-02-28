@@ -1,7 +1,7 @@
 <div class="fixed top-0 bg-font-darkGrey/80 w-full h-full z-[60]" (click)="onClose()">
 </div>
 
-<div class="isi fixed mt-[1rem] ms-[32.3%] bg-font-white h-[26rem] w-[35.4%] rounded-[10px] py-5 px-7 overflow-y-scroll overflow-x-hidden z-[70]">
+<div class="isi fixed mt-[1rem] md:ms-[32.3%] ms-[5%] bg-font-white h-fit pb-8 md:w-[35.4%] w-[90%] rounded-[10px] py-5 px-7 overflow-y-scroll overflow-x-hidden z-[70]">
   <div class="bagAtas flex justify-between items-center pb-3 px-1">
     <div class="font-semibold text-[1.05rem]">
       Transfer
@@ -15,14 +15,14 @@
   <div class="line h-[1px] w-full bg-font-lightGrey mb-4"></div>
   <div class="transfer">
     <!-- <form #transferForm="ngForm" (ngSubmit)="onSubmit(transferForm)"> -->
-      <div class="inputContainer">
+      <div class="inputContainer md:w-fit w-full">
         <label for="amount" class="inputLabel text-font-darkGrey">Amount</label>
-        <input type="number" id="amount" name="amount" class="inputBox border-[1px] text-font-darkGrey" #amountInput placeholder="Amount" [(ngModel)]="amount" required>
+        <input type="number" id="amount" name="amount" class="inputBox md:w-[24.5rem] w-full border-[1px] text-font-darkGrey" #amountInput placeholder="Amount" [(ngModel)]="amount" required>
         <div *ngIf="submitted && (amount < 1000 || !amount)" class="error-message">Amount must be at least 1000.</div>
       </div>
     <!-- </form> -->
   </div>
-  <button type="submit" class="button bg-blue-80 text-font-white m-auto" (click)="topup(+amountInput.value)">
+  <button type="submit" class="button md:w-[24.5rem] w-full bg-blue-80 text-font-white m-auto md:mt-8 mt-6" (click)="topup(+amountInput.value)">
     Top Up
   </button>
 </div>
