@@ -1,0 +1,57 @@
+<div class="w-full h-full rounded-2xl bg-white">
+  <!-- Messages Area -->
+  <div class="w-full h-[85%]">
+    <div class="h-1/5 w-full flex flex-col justify-center items-center space-y-2">
+      <div class="mt-2 w-11/12 flex justify-start items-center">
+          <img src="assets/landing-page/landing-page-review-2.png" class="object-cover min-w-16 min-h-16 max-w-16 max-h-16 rounded-full">
+          <span class="text-header3 ml-10 font-semibold">Nama Orang</span>
+      </div>
+      <div class="w-11/12 bg-gray-500 h-[1px]"></div>
+    </div>
+    <div class="pt-3 pb-4 overflow-y-auto custom-scrollbar h-4/5 space-y-3" #messageContainer>
+      <div class="px-8" *ngFor="let message of messages; let i = index">
+        
+        <!-- ✅ Show Date Separator if different from the previous message -->
+        <div *ngIf="shouldShowDate(messages, i)" class="text-center text-xs font-semibold text-gray-500 my-8">
+          {{ formatDate(message.date_time) }}
+        </div>
+    
+        <!-- Message Container -->
+        <div class="flex justify-start items-end" *ngIf="loggedUserId != message.sender_id">
+          <!-- Message Bubble Receiver -->
+          <div class="py-3 px-5 rounded-full max-w-xs text-sm shadow-lg outline outline-gray-300 outline-1">
+            {{ message.text }}
+          </div>        
+          <div class="ml-1 text-[10px]">{{ formatTime(message.date_time) }}</div>
+        </div>
+    
+        <!-- Message Bubble Sender -->
+        <div class="flex justify-end items-end" *ngIf="loggedUserId == message.sender_id">
+          <div class="text-[10px]">{{ formatTime(message.date_time) }}</div>
+          <div class="ml-1 py-3 px-5 bg-blue-60 text-white rounded-full max-w-xs text-sm shadow-lg outline outline-gray-300 outline-1">
+            {{ message.text }}
+          </div>        
+        </div>
+      </div>
+    </div>    
+  </div>
+  
+  <!-- Message Input Box -->
+  <div class="w-full h-[15%] justify-center flex p-2">
+    <div class="w-11/12 h-10 rounded-full bg-[#91A9FD] bg-opacity-20 flex items-center justify-center">
+      <div class="flex items-center justify-between rounded-full w-11/12">
+        <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" type="text"
+              class="w-11/12 h-10 p-3 rounded-full text-black focus:outline-none placeholder-gray-500 bg-transparent"
+              placeholder="Type your message here">
+        
+        <button class="text-blue-500 mx-2">📎</button>
+    
+        <button (click)="sendMessage()" 
+                class="bg-blue-60 text-white rounded-full hover:bg-blue-400 transition w-14 h-6">
+          🚀
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  

@@ -13,7 +13,7 @@ import { AlertErrorComponent } from "../../components/alert-error/alert-error.co
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, RoleCardComponent, AlertErrorComponent],
+  imports: [CommonModule, RoleCardComponent, AlertErrorComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })

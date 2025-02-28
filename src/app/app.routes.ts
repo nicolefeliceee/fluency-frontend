@@ -28,6 +28,8 @@ import { ProfileInfEditComponent } from './pages/profile-influencer/profile-inf-
 import { UserComponent } from './pages/admin/user/user.component';
 import { TicketComponent } from './pages/ticket/ticket.component';
 import { TicketDetailComponent } from './pages/ticket/ticket-detail/ticket-detail.component';
+import { ChatComponent } from './pages/chat/chat.component';
+import { MessengerComponent } from './pages/chat/messenger/messenger.component';
 
 export const routes: Routes = [
   {path:'', component: LandingPageComponent},
@@ -61,5 +63,12 @@ export const routes: Routes = [
   {path:'project/create', component: ProjectCreateComponent},
   {path:'user', component: UserComponent},
   {path:'ticket', component: TicketComponent},
-  {path:'ticket/detail', component: TicketDetailComponent}
+  {path:'ticket/detail', component: TicketDetailComponent},
+  {
+    path: 'chat',
+    component: ChatComponent,
+    children: [
+      { path: ':chatId', component: MessengerComponent }, // ✅ Right Panel loads dynamically
+    ]
+  }
 ];

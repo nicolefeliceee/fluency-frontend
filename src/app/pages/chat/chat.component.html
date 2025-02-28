@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="flex h-screen w-full bg-[#F2F4F0]">
+
+  <!-- Left Panel (Chat List) -->
+  <div class="w-1/3 p-4 flex flex-col mt-16 gap-3">
+    <div class="relative w-full">
+      <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 9 16.5a7.5 7.5 0 0 0 7.65-7.65z"></path>
+      </svg>
+      <input type="text" placeholder="Search..."
+             class="w-full p-2 pl-10 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+    </div>
+    
+    <div class="overflow-y-auto max-h-full custom-scrollbar gap-3 flex flex-col">
+      <div *ngFor="let chat of chatList" 
+          class="flex items-center p-3 rounded-3xl cursor-pointer transition duration-200"
+          (click)="selectChat(chat, $event); $event.stopPropagation()"
+          [ngClass]="{
+            'bg-blue-60 text-white': selectedChatId === chat.id,
+            'bg-white hover:bg-blue-60': selectedChatId !== chat.id
+          }">
+        <div class="w-full flex justify-between items-center">
+            <div class="w-2/12 h-12">
+                <img src="assets/about-us/about-us-2.png" alt="avatar" class="w-12 h-12 rounded-full mr-3 object-cover">
+            </div>
+            <div class="w-9/12 flex flex-col items-start justify-center">
+                <span class="font-semibold text-header5" *ngIf="chat.user1_id == loggedUserId">{{ chat.user2_name }}</span>
+                <span class="font-semibold text-header5" *ngIf="chat.user1_id != loggedUserId">{{ chat.user1_name }}</span>
+                <span class="text-sm truncate w-full text-header6">{{ chat.lastMessage }}</span>
+            </div>
+            <span class="w-1/12 text-header6 mb-4 mr-2">{{ chat.time }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Right Panel (Messenger Component Loads Here) -->
+  <div class="w-2/3 rounded-2x mt-20 mb-4 mx-5">
+    <router-outlet></router-outlet> <!-- ✅ MessengerComponent should load here -->
+  </div>
+</div>
