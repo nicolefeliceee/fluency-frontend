@@ -95,7 +95,16 @@ export class InfluencerCardComponent{
     }
   }
 
-
+  addChat(influencerId: number) {
+    this.influencerService.addChat(influencerId).subscribe(
+      response => {
+        console.log('Chat berhasil ditambahkan:', response);
+      },
+      error => {
+        console.error('Terjadi error saat menambahkan chat:', error);
+      }
+    );
+  }
 
 
 }

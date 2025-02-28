@@ -11,7 +11,7 @@ import { state } from '@angular/animations';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, ConfirmationPopupComponent],
+  imports: [CommonModule, RouterLink, RouterModule, ConfirmationPopupComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

@@ -192,5 +192,17 @@ export class InfluencerService {
     return this.httpClient.post(`${this.baseUrl}/influencer/get-project/${influencerId}`, {date});
   }
 
-
+  addChat(influencerId: number){
+    const userId = localStorage.getItem('user_id');
+    if (userId) {
+      const paramsObject = {
+        brandId: userId,
+        influencerId: influencerId
+      };
+      const params = new HttpParams({ fromObject: paramsObject });
+      return this.httpClient.get(`${this.baseUrl}/chat/add`, {params});
+    } else {
+      throw new Error ('Logged User ID tidak ditemukan di Local Storage')
+    }
+  }
 }
